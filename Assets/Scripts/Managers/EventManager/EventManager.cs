@@ -31,7 +31,8 @@ namespace SDD.Events {
     private static EventManager instance = null;
 
     public delegate void EventDelegate<T>(T e) where T : Event;
-    private delegate void EventDelegate(Event e);
+
+   private delegate void EventDelegate(Event e);
 
     /// <summary>
     /// The actual delegate, there is one delegate per unique event. Each

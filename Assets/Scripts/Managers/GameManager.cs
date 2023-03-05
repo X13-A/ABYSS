@@ -5,20 +5,22 @@ using SDD.Events;
 using UnityEngine.SocialPlatforms;
 using System;
 
-public enum GAMESTATE { play, gameOver, mainMenu, pauseMenu, settingsMenu}
+public enum GAMESTATE { play, gameOver, mainMenu, pauseMenu, settingsMenu, loading}
 
 public class GameManager : MonoBehaviour, IEventHandler
 {
     private static GameManager m_Instance;
     public static GameManager Instance { get { return m_Instance; } }
 
-    [SerializeField] // Choix du statut de base dans la scène
+    [SerializeField]
     GAMESTATE m_State;
-    GAMESTATE m_SourceMenu; // Permet de suivre le menu "source" pour pouvoir y retourner
-                          // Exemple: Le menu settings peut être ouvert depuis le menu pause et le menu principal
-
     public GAMESTATE State { get { return m_State; } }
+
+    // Permet de suivre le menu "source" pour pouvoir y retourner
+    // Exemple: Le menu settings peut être ouvert depuis le menu pause et le menu principal
+    GAMESTATE m_SourceMenu;
     public GAMESTATE SourceMenu { get { return m_SourceMenu; } }
+
 
     public void SubscribeEvents()
     {
@@ -27,9 +29,9 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
         EventManager.Instance.AddListener<MainMenuButtonClickedEvent>(MainMenuButtonClicked);
         EventManager.Instance.AddListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
-        EventManager.Instance.AddListener<SaveSettingsButtonClickedEvent>(SaveSettingsButtonClicked);
-        EventManager.Instance.AddListener<CancelSettingsButtonClickedEvent>(CancelSettingsButtonClicked);
+        EventManager.Instance.AddListener<CancelSettingsButtonClickedEvent>(ExitSettingsButtonClicked);
         EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
+        EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
     }
 
     public void UnsubscribeEvents()
@@ -39,8 +41,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
         EventManager.Instance.RemoveListener<MainMenuButtonClickedEvent>(MainMenuButtonClicked);
         EventManager.Instance.RemoveListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
-        EventManager.Instance.RemoveListener<SaveSettingsButtonClickedEvent>(SaveSettingsButtonClicked);
-        EventManager.Instance.RemoveListener<CancelSettingsButtonClickedEvent>(CancelSettingsButtonClicked);
+        EventManager.Instance.RemoveListener<CancelSettingsButtonClickedEvent>(ExitSettingsButtonClicked);
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
     }
 
@@ -61,10 +62,27 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void Start()
     {
-        MainMenu();
+        switch (State)
+        {
+            case GAMESTATE.mainMenu:
+                MainMenu();
+                break;
+            case GAMESTATE.pauseMenu:
+                Pause();
+                break;
+            case GAMESTATE.settingsMenu:
+                Settings();
+                break;
+            case GAMESTATE.play:
+                Play();
+                break;
+            case GAMESTATE.gameOver:
+                GameOver();
+                break;
+        }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
@@ -74,7 +92,6 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void SetState(GAMESTATE newState)
     {
-
         // Mise à jour du menu source
         switch (State)
         {
@@ -147,9 +164,20 @@ public class GameManager : MonoBehaviour, IEventHandler
     {
         SetState(GAMESTATE.settingsMenu);
     }
+
+    void GameOver()
+    {
+        SetState(GAMESTATE.gameOver);
+    }
     #endregion
 
     #region MenuManager event callbacks
+
+    void PrepareSceneChange(SceneAboutToChangeEvent e)
+    {
+        SetState(GAMESTATE.loading);
+    }
+
     void PlayButtonClicked(PlayButtonClickedEvent e)
     {
         Play();
@@ -177,25 +205,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         Settings();
     }
 
-    void SaveSettingsButtonClicked(SaveSettingsButtonClickedEvent e)
-    {
-        // Todo: Save settings
-        EventManager.Instance.Raise(new GameSaveSettingsEvent());
-        switch (SourceMenu)
-        {
-            case GAMESTATE.mainMenu:
-                MainMenu();
-                break;
-            case GAMESTATE.pauseMenu:
-                Pause();
-                break;
-            default:
-                Play();
-                break;
-        }
-    }
-
-    void CancelSettingsButtonClicked(CancelSettingsButtonClickedEvent e)
+    void ExitSettingsButtonClicked(CancelSettingsButtonClickedEvent e)
     {
         EventManager.Instance.Raise(new GameSaveSettingsEvent());
         switch (SourceMenu)

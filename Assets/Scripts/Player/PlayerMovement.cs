@@ -17,15 +17,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.State != GAMESTATE.play) return;
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        vel = new Vector3(xInput, 0, yInput).normalized;
-    }
-
-    private void FixedUpdate()
-    {
-
-        //rb.AddForce(vel , ForceMode.Force);
-        rb.velocity = new Vector3(vel.x * moveSpeed, 0, vel.z * moveSpeed);
+        vel = new Vector3(xInput, 0, yInput).normalized * moveSpeed;
+        rb.transform.position = new Vector3(transform.position.x - vel.x * Time.deltaTime, transform.position.y, transform.position.z - vel.z * Time.deltaTime);
     }
 }

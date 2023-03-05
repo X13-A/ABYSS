@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
+using UnityEditor;
 
 public class MenuManager : MonoBehaviour, IEventHandler
 {
@@ -9,7 +10,6 @@ public class MenuManager : MonoBehaviour, IEventHandler
     [SerializeField] GameObject m_PauseMenuPanel;
     [SerializeField] GameObject m_SettingsMenuPanel;
     [SerializeField] GameObject m_GameOverPanel;
-
     List<GameObject> m_Panels;
 
     void OpenPanel(GameObject panel)
@@ -99,6 +99,7 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     void GameMainMenu(GameMainMenuEvent e)
     {
+        if (m_MainMenuPanel == null) return;
         OpenPanel(m_MainMenuPanel);
     }
 
@@ -110,6 +111,7 @@ public class MenuManager : MonoBehaviour, IEventHandler
     void GameSettingsMenu(GameSettingsMenuEvent e)
     {
         OpenPanel(m_SettingsMenuPanel);
+        
     }
 
     void GamePlay(GamePlayEvent e)

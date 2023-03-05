@@ -3,6 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 
+#region Scene events
+public class SceneAboutToChangeEvent : SDD.Events.Event
+{
+    public string targetScene;
+}
+public class SceneReadyToChangeEvent : SDD.Events.Event
+{
+    public string targetScene;
+}
+#endregion
+
+#region Settings Events
+public class ResolutionScaleSliderChangeEvent : SDD.Events.Event
+{
+    public float value;
+}
+
+#endregion
+
+#region Render Events
+
+public class WindowResizeEvent : SDD.Events.Event
+{
+    public int oldWidth;
+    public int oldHeight;
+
+    public int newWidth;
+    public int newHeight;
+
+    public float resolutionScale;
+}
+
+public class ResolutionScaleUpdateEvent : SDD.Events.Event
+{
+}
+
+public class RenderTextureUpdateEvent : SDD.Events.Event
+{
+    public RenderTexture updatedRt;
+}
+
+#endregion
+
 #region GameManager Events
 public class GameMainMenuEvent : SDD.Events.Event
 {

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
+    public float velocity;
     Rigidbody rb;
-    Vector3 vel;
-    Vector3 rot;
+    private Vector3 movement;
+ 
 
     private void Awake()
     {
@@ -17,10 +17,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.play) return;
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        vel = new Vector3(xInput, 0, yInput).normalized * moveSpeed;
-        rb.transform.position = new Vector3(transform.position.x - vel.x * Time.deltaTime, transform.position.y, transform.position.z - vel.z * Time.deltaTime);
+        movement = new Vector3(xInput, 0, yInput).normalized;
+    }
+
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.State != GAMESTATE.play) return;
+        rb.velocity = new Vector3(movement.x * velocity, 0, movement.z * velocity);
     }
 }

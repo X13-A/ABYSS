@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        movement = Vector3.zero;
+        if (GameManager.Instance.State != GAMESTATE.play) return;
+
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
         movement = new Vector3(xInput, 0, yInput).normalized;
@@ -24,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.Instance.State != GAMESTATE.play) return;
         rb.velocity = new Vector3(movement.x * velocity, 0, movement.z * velocity);
     }
 }

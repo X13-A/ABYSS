@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
         do
         {
-            //await Task.Delay(1000);
+            await Task.Delay(10);
             progressBar.fillAmount = scene.progress;
         }
         while (scene.progress < 0.9f);

@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     public float velocity;
     Rigidbody rb;
     private Vector3 movement;
- 
 
     private void Awake()
     {

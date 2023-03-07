@@ -2,62 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using SDD.Events;
 
-public class PlayerAnimationController : MonoBehaviour
+public class PlayerAnimationController : MonoBehaviour, IEventHandler
 {
     Animator m_Animator;
 
+    [SerializeField] AnimationClip walk;
+    [SerializeField] AnimationClip attack;
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
     }
 
-
-    void oldAnimations()
+    public void SubscribeEvents()
     {
-        if (m_Animator == null) return;
+        EventManager.Instance.AddListener<PlayerAttackEvent>(HandleAttack);
+    }
 
-        float hInput = Input.GetAxisRaw("Horizontal");
-        float vInput = Input.GetAxisRaw("Vertical");
-        float movementMagnitude = Mathf.Clamp(Mathf.Sqrt(hInput * hInput + vInput * vInput), 0, 1);
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<PlayerAttackEvent>(HandleAttack);
+    }
 
-        // States
-        AnimatorStateInfo currentAnimation = m_Animator.GetCurrentAnimatorStateInfo(0);
-        bool attacking = currentAnimation.IsName("Attack");
-        bool moving = movementMagnitude >= float.Epsilon;
+    void OnEnable()
+    {
+        SubscribeEvents();
+    }
 
-        // Let animation finish
-        if (attacking) return;
+    void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
 
-        // Actions
-        if (Input.GetButtonDown("Fire1"))
+    void HandleAttack(PlayerAttackEvent e)
+    {
+        if (e.type == AttackType.Melee)
         {
-            Debug.Log(attacking);
-            m_Animator.speed = 1;
+            // Déclenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
-            return;
-        }
-
-        // Movement
-        if (moving)
-        {
-            m_Animator.speed = Mathf.Clamp(movementMagnitude, 0.25f, 1);
-            if (!currentAnimation.IsName("Move"))
-            {
-                m_Animator.SetTrigger("Move");
-            }
-            return;
-        }
-
-        if (!currentAnimation.IsName("Idle"))
-        {
-            m_Animator.speed = 1;
-            m_Animator.SetTrigger("Idle");
+            float clipLength = attack.length;
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
         }
     }
+
+
     private void Update()
     {
-        // Disable animations on menus
         bool isIdling = m_Animator.GetBool("IsIdling");
         if (GameManager.Instance.State != GAMESTATE.play)
         {
@@ -86,11 +77,6 @@ public class PlayerAnimationController : MonoBehaviour
         {
             m_Animator.SetBool("IsIdling", true);
             m_Animator.SetBool("IsWalking", false);
-        }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            m_Animator.SetTrigger("Attack");
         }
     }
 }

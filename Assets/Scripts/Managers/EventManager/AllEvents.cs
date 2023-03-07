@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 
+
+#region Player events
+public class PlayerAttackEvent : SDD.Events.Event
+{
+    public float damage;
+    public float duration;
+    public AttackType type;
+}
+
+#endregion
+
 #region Scene events
 public class SceneAboutToChangeEvent : SDD.Events.Event
 {

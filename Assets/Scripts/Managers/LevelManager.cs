@@ -49,10 +49,8 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
-        Debug.Log("Starting fade out");
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
             EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene });
-            Debug.Log("Fade out complete");
         }));
     }
 
@@ -67,7 +65,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
         do
         {
-            await Task.Delay(10);
+            await Task.Delay(1000);
             progressBar.fillAmount = scene.progress;
         }
         while (scene.progress < 0.9f);

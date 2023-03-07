@@ -47,7 +47,6 @@ public class RenderManager : MonoBehaviour, IEventHandler
 
     public void FireResizeEvent(dynamic e = null)
     {
-        Debug.Log("Resize");
         if (SettingsManager.Instance == null) return;
         WindowResizeEvent resizeEvent = new WindowResizeEvent
         {

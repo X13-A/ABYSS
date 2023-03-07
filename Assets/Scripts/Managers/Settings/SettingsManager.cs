@@ -80,7 +80,6 @@ public class SettingsManager : MonoBehaviour, IEventHandler
 
     public void ResolutionScaleSliderChange(float value)
     {
-        Debug.Log(value);
         EventManager.Instance.Raise(new ResolutionScaleSliderChangeEvent { value = value });
     }
 

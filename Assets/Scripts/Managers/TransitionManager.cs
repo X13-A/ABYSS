@@ -21,9 +21,7 @@ public class TransitionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        StartCoroutine(FadeIn(1f, () => {
-            Debug.Log("Fade in complete");
-        }));
+        StartCoroutine(FadeIn(1f, () => {}));
     }
     private void OnEnable()
     {
@@ -31,7 +29,6 @@ public class TransitionManager : MonoBehaviour
     }
     public IEnumerator FadeIn(float fadeDuration = 1f, Action actionDelegate = null)
     {
-        Debug.Log("Starting fade in");
         // Instantiate a new panel
         GameObject panel = new GameObject("FadePanel", typeof(RectTransform), typeof(Image));
         panel.transform.SetParent(canvas.transform);

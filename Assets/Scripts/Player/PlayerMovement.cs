@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /**
+     * <summary>
+     * This class is used for the player movement
+     * </summary>
+     **/
+
     public float velocity;
     Rigidbody rb;
     private Vector3 movement;

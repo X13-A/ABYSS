@@ -50,14 +50,16 @@ namespace SDD.Events {
     /// </summary>
     public void AddListener<T>(EventDelegate<T> del) where T : Event {
 
-      if (delegateLookup.ContainsKey(del)) {
+       // Check if del is already added to the list of event listeners
+       // It prevents to call the same event handler multiples times, which can lean to undesirable behavior
+      if (this.delegateLookup.ContainsKey(del)) {
         return;
       }
 
       // Create a new non-generic delegate which calls our generic one.  This
       // is the delegate we actually invoke.
       EventDelegate internalDelegate = (e) => del((T)e);
-      delegateLookup[del] = internalDelegate;
+      this.delegateLookup[del] = internalDelegate;
 
       EventDelegate tempDel;
       if (delegates.TryGetValue(typeof(T), out tempDel)) {

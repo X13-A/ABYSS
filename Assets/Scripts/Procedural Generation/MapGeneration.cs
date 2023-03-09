@@ -59,6 +59,7 @@ public class MapGeneration : MonoBehaviour
             {
                 GameObject currentCube = Instantiate(prefabMap[y * this.mapWidth + x]);
                 currentCube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, y]) * this.heightMultiplier), y);
+                currentCube.AddComponent<BoxCollider>();
                 currentCube.transform.SetParent(gameObject.transform);
             }
         }

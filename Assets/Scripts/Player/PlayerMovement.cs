@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 _velocity = new Vector3(movement.x * velocity, 0, movement.z * velocity);
+
+        // the player may have rotated in his own referential, so,
+        // we need to convert his local position and rotation to a global one
         _velocity = transform.TransformDirection(_velocity);
         rb.velocity = _velocity;
 

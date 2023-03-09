@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(movement.x * velocity, 0, movement.z * velocity);
+        Vector3 _velocity = new Vector3(movement.x * velocity, 0, movement.z * velocity);
+        _velocity = transform.TransformDirection(_velocity);
+        rb.velocity = _velocity;
+
     }
 }

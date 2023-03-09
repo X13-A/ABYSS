@@ -30,7 +30,7 @@ public class MouseLock : MonoBehaviour
     private void FixedUpdate()
     {
         rotY += mouseX * mouseSensitivity;
-        Quaternion localRotation = Quaternion.Euler(0f, rotY, 0f);
-        rb.MoveRotation(localRotation);
+        Quaternion globalRotation = Quaternion.Euler(0f, rotY, 0f);
+        rb.MoveRotation(globalRotation);
     }
 }

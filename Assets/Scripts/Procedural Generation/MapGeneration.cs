@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 [System.Serializable]
@@ -26,6 +27,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] AnimationCurve heightCurve;
 
     [SerializeField] TerrainType[] regions;
+    [SerializeField] PhysicMaterial zeroBounce;
 
     private void Start()
     {

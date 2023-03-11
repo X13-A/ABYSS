@@ -1600,7 +1600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416988232}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Abyss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4175,7 +4175,7 @@ GameObject:
   - component: {fileID: 832678181}
   - component: {fileID: 832678180}
   - component: {fileID: 832678179}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4715,6 +4715,10 @@ PrefabInstance:
     - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_Name
       value: Clifftile Concave (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 469914, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_RootOrder
@@ -5441,7 +5445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 989628154}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Abyss Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6500,7 +6504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721e099fd090c45449fadbbe13a16e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 10000
+  velocity: 7000
+  groundDrag: 15
+  playerHeight: 0
 --- !u!54 &1263046591
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6581,6 +6587,10 @@ PrefabInstance:
     - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_Name
       value: Clifftile Concave (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 469914, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_RootOrder
@@ -7313,7 +7323,7 @@ GameObject:
   - component: {fileID: 1476488784}
   - component: {fileID: 1476488783}
   - component: {fileID: 1476488782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7816,7 +7826,7 @@ GameObject:
   - component: {fileID: 1600570860}
   - component: {fileID: 1600570859}
   - component: {fileID: 1600570858}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8171,7 +8181,7 @@ GameObject:
   - component: {fileID: 1634233740}
   - component: {fileID: 1634233739}
   - component: {fileID: 1634233738}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8713,6 +8723,10 @@ PrefabInstance:
     - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_Name
       value: Clifftile Concave (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 469914, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_RootOrder
@@ -9423,6 +9437,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clifftile Concave
       objectReference: {fileID: 0}
+    - target: {fileID: 151030, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 469914, guid: 0e9835138ad5dba4eba43667ec61532b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -9667,7 +9685,7 @@ GameObject:
   - component: {fileID: 2065320199}
   - component: {fileID: 2065320198}
   - component: {fileID: 2065320197}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

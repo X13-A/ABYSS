@@ -27,12 +27,12 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] AnimationCurve heightCurve;
 
     [SerializeField] TerrainType[] regions;
-    [SerializeField] PhysicMaterial zeroBounce;
 
     private void Start()
     {
         GenerateMap();
     }
+
     public void GenerateMap()
     {
         GameObject[] prefabMap = new GameObject[this.mapWidth * this.mapHeight];
@@ -70,7 +70,7 @@ public class MapGeneration : MonoBehaviour
     private float[,] GenerateNoiseMap()
     {
         float[,] noiseMap = new float[this.mapWidth, this.mapHeight];
-        System.Random randomNumberGenerator = new System.Random(this.seed);
+        System.Random randomNumberGenerator = new(this.seed);
         Vector2[] octaveOffsets = new Vector2[this.octaves];
 
         for (int i = 0; i < this.octaves; i++)

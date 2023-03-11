@@ -1667,7 +1667,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 578031518}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 19.822, y: -180.667, z: -1.506}
+  m_LocalEulerAnglesHint: {x: 11.402, y: -360, z: 0}
 --- !u!114 &419237423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1750,7 +1750,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

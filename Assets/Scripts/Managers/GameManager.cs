@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
-using UnityEngine.SocialPlatforms;
-using System;
 
 public enum GAMESTATE { play, gameOver, mainMenu, pauseMenu, settingsMenu, loading}
 
@@ -92,7 +88,7 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void SetState(GAMESTATE newState)
     {
-        // Mise à jour du menu source
+        // Update of settings menu
         switch (State)
         {
             case GAMESTATE.mainMenu:

@@ -38,29 +38,32 @@ public class MapGeneration : MonoBehaviour
         GameObject[] prefabMap = new GameObject[this.mapWidth * this.mapHeight];
         float[,] noiseMap = this.GenerateNoiseMap();
 
-        for (int y = 0; y < this.mapHeight; y++)
+        for (int z = 0; z < this.mapHeight; z++)
         {
             for (int x = 0; x < this.mapWidth; x++)
             {
-                float currentHeight = noiseMap[x, y];
+                float currentHeight = noiseMap[x, z];
 
                 for (int i = 0; i < this.regions.Length; i++)
                 {
                     if (currentHeight <= this.regions[i].height)
                     {
-                        prefabMap[y * this.mapWidth + x] = this.regions[i].cubePrefab;
+                        prefabMap[z * this.mapWidth + x] = this.regions[i].cubePrefab;
                         break;
                     }
                 }
-            }
-        }
 
-        for (int y = 0; y < this.mapHeight; y++)
-        {
-            for (int x = 0; x < this.mapWidth; x++)
-            {
-                GameObject currentCube = Instantiate(prefabMap[y * this.mapWidth + x]);
-                currentCube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, y]) * this.heightMultiplier), y);
+                for (int y = -2; y < 0; y++)
+                {
+                    GameObject cube = Instantiate(this.regions[2].cubePrefab);
+                    cube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, z]) * this.heightMultiplier) + y, z);
+                    cube.AddComponent<BoxCollider>();
+                    cube.layer = LayerMask.NameToLayer("Ground");
+                    cube.transform.SetParent(gameObject.transform);
+                }
+
+                GameObject currentCube = Instantiate(prefabMap[z * this.mapWidth + x]);
+                currentCube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, z]) * this.heightMultiplier), z);
                 currentCube.AddComponent<BoxCollider>();
                 currentCube.layer = LayerMask.NameToLayer("Ground");
                 currentCube.transform.SetParent(gameObject.transform);

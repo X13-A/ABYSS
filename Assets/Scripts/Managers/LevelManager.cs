@@ -12,15 +12,17 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Image progressBar;
-
+    MapGeneration generator;
     public void SubscribeEvents()
     {
+        EventManager.Instance.AddListener<LoadingProgressUpdateEvent>(UpdateProgress);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.AddListener<SceneReadyToChangeEvent>(LoadScene);
     }
 
     public void UnsubscribeEvents()
     {
+        EventManager.Instance.RemoveListener<LoadingProgressUpdateEvent>(UpdateProgress);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.RemoveListener<SceneReadyToChangeEvent>(LoadScene);
     }
@@ -43,8 +45,14 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+        this.generator = GetComponent<MapGeneration>();
+    }
+
+    void UpdateProgress(LoadingProgressUpdateEvent e)
+    {
+        this.progressBar.fillAmount = e.progress;
     }
 
     void PrepareSceneChange(SceneAboutToChangeEvent e)
@@ -57,24 +65,30 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     async void LoadScene(SceneReadyToChangeEvent e)
     {
-        var scene = SceneManager.LoadSceneAsync(e.targetScene);
+        var operation = SceneManager.LoadSceneAsync(e.targetScene);
 
-        scene.allowSceneActivation = false;
-        progressBar.fillAmount = 0;
-
-        loadingScreen.SetActive(true);
-
+        operation.allowSceneActivation = false;
+        this.progressBar.fillAmount = 0;
+        this.loadingScreen.SetActive(true);
         do
         {
-            await Task.Delay(1000);
-            progressBar.fillAmount = scene.progress;
+            EventManager.Instance.Raise(new LoadingProgressUpdateEvent { progress = operation.progress, message = "Loading scene" });
         }
-        while (scene.progress < 0.9f);
+        while (operation.progress < 0.9f);
 
         // Génération procédurale
+        var scene = SceneManager.GetSceneByName(e.targetScene);
+        GameObject map = await this.generator.GenerateMap();
+        DontDestroyOnLoad(map);
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        operation.allowSceneActivation = true;
 
-        scene.allowSceneActivation = true;
-        loadingScreen.SetActive(false);
+        this.loadingScreen.SetActive(false);
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            SceneManager.MoveGameObjectToScene(map, scene);
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 }

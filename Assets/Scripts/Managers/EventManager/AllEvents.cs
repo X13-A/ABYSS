@@ -110,3 +110,11 @@ public class QuitButtonClickedEvent : SDD.Events.Event
 {
 }
 #endregion
+
+#region UI events
+public class LoadingProgressUpdateEvent : SDD.Events.Event
+{
+    public float progress;
+    public string message;
+}
+#endregion

@@ -34,6 +34,7 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
     }
     void ScaleRenderTexture(WindowResizeEvent e)
     {
+        if (cam == null) return;
         RenderTexture rt = cam.targetTexture;
         RenderTextureDescriptor descriptor = rt.descriptor;
 

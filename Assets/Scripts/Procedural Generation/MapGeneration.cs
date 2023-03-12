@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using SDD.Events;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [System.Serializable]
@@ -30,14 +30,22 @@ public class MapGeneration : MonoBehaviour
 
     private void Start()
     {
-        GenerateMap();
+
     }
 
-    public void GenerateMap()
+    public async Task<GameObject> GenerateMap()
     {
+        IProgress<float> progress = new Progress<float>(p =>
+        {
+            EventManager.Instance.Raise(new LoadingProgressUpdateEvent { progress = p, message = "Generating map" });
+        });
+        
         GameObject[] prefabMap = new GameObject[this.mapWidth * this.mapHeight];
         float[,] noiseMap = this.GenerateNoiseMap();
 
+
+        GameObject map = new GameObject("Map");
+        map.SetActive(false);
         for (int z = 0; z < this.mapHeight; z++)
         {
             for (int x = 0; x < this.mapWidth; x++)
@@ -59,16 +67,23 @@ public class MapGeneration : MonoBehaviour
                     cube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, z]) * this.heightMultiplier) + y, z);
                     cube.AddComponent<BoxCollider>();
                     cube.layer = LayerMask.NameToLayer("Ground");
-                    cube.transform.SetParent(gameObject.transform);
+                    cube.transform.SetParent(map.transform);
                 }
 
                 GameObject currentCube = Instantiate(prefabMap[z * this.mapWidth + x]);
                 currentCube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, z]) * this.heightMultiplier), z);
                 currentCube.AddComponent<BoxCollider>();
                 currentCube.layer = LayerMask.NameToLayer("Ground");
-                currentCube.transform.SetParent(gameObject.transform);
+                currentCube.transform.SetParent(map.transform);
+
             }
+            // Report progress
+            progress.Report((float) z / this.mapHeight);
+            // Yield control to the caller
+            await Task.Yield();
         }
+        map.SetActive(true);
+        return map;
     }
 
     private float[,] GenerateNoiseMap()
@@ -123,7 +138,6 @@ public class MapGeneration : MonoBehaviour
             for (int x = 0; x < this.mapWidth; x++)
                 noiseMap[x, y] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[x, y]);
         }
-
         return noiseMap;
     }
 }

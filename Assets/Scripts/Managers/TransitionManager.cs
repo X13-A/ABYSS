@@ -67,13 +67,6 @@ public class TransitionManager : MonoBehaviour
 
     public IEnumerator FadeOut(float fadeDuration = 1f, Action actionDelegate = null)
     {
-        // Instantiate a new panel
-        //GameObject panel = new GameObject("FadePanel");
-        //panel.AddComponent<Image>();
-        //panel.transform.SetParent(canvas.transform);
-        //panel.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        //panel.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
-
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
         Color panelColor = panelImage.color;
@@ -95,8 +88,5 @@ public class TransitionManager : MonoBehaviour
 
         // Call the action delegate
         actionDelegate?.Invoke();
-
-        // Destroy the panel
-        //Destroy(panel);
     }
 }

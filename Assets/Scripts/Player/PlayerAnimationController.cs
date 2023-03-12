@@ -9,7 +9,8 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     Animator m_Animator;
 
     [SerializeField] AnimationClip walk;
-    [SerializeField] AnimationClip attack;
+    [SerializeField] AnimationClip meleeAttack;
+    [SerializeField] AnimationClip wandAttack;
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
@@ -41,7 +42,13 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         {
             // Déclenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
-            float clipLength = attack.length;
+            float clipLength = meleeAttack.length;
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
+        }
+        else if (e.type == AttackType.Wand)
+        {
+            m_Animator.SetTrigger("Wand Attack");
+            float clipLength = wandAttack.length;
             m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
         }
     }

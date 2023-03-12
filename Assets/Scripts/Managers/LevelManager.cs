@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
+        // Préparation au changement de scene
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
             EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene });
         }));
@@ -69,6 +70,9 @@ public class LevelManager : MonoBehaviour, IEventHandler
             progressBar.fillAmount = scene.progress;
         }
         while (scene.progress < 0.9f);
+
+        // Génération procédurale
+
 
         scene.allowSceneActivation = true;
         loadingScreen.SetActive(false);

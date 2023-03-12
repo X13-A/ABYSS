@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1280830913543736, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}
       propertyPath: m_Name
-      value: rock_cube_4
+      value: rock_cube_4 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4021252955828606, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}
       propertyPath: m_RootOrder
@@ -58,14 +58,14 @@ PrefabInstance:
     - target: {fileID: 23003250742819940, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d0211bd71afa2e14faab6058679b23a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 7718506944b26684980bb64f511af99e, type: 2}
     - target: {fileID: 23017397994634708, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d0211bd71afa2e14faab6058679b23a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 7718506944b26684980bb64f511af99e, type: 2}
     - target: {fileID: 23763158732210290, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d0211bd71afa2e14faab6058679b23a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 7718506944b26684980bb64f511af99e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32fd45d637212cc4e9facd8cc7d8a4cf, type: 3}

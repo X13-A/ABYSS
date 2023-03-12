@@ -2,49 +2,28 @@ using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Damager : MonoBehaviour, IDamager, IEventHandler
+public class Damager : MonoBehaviour, IDamager
 {
-    float damage;
-    float duration;
-    float startTime;
+    [SerializeField] float damage;
     new Collider collider;
     AttackType type = AttackType.Melee;
-
     public AttackType Type { get { return type; } }
-
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
     private void Awake()
     {
-        startTime = Time.time - 1000;
         collider = GetComponent<Collider>();
-    }
-
-    public void SubscribeEvents()
-    {
-        EventManager.Instance.AddListener<PlayerAttackEvent>(Activate);
-    }
-
-    public void UnsubscribeEvents()
-    {
-        EventManager.Instance.RemoveListener<PlayerAttackEvent>(Activate);
-    }
-
-    void OnEnable()
-    {
-        SubscribeEvents();
-    }
-
-    void OnDisable()
-    {
-        UnsubscribeEvents();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         // Inflige des dégats si l'ennemi n'a pas déjà été touché
         IDamageable damageable = other.GetComponent<IDamageable>();
+        Debug.Log(other.gameObject.name);
+        Debug.Log(damageable);
+        Debug.Log(' ');
         if (damageable != null && !collides.Contains(damageable))
         {
             damageable.Damage(damage);
@@ -52,26 +31,25 @@ public class Damager : MonoBehaviour, IDamager, IEventHandler
         }
     }
 
-    public void Activate(PlayerAttackEvent e)
+    public void Damage(float damage, float duration)
     {
-        if (e.type != type) return;
-        damage = e.damage;
-        duration = e.duration;
-        startTime = Time.time;
-        collider.enabled = true;
-    }
-
-    public void Deactivate()
-    {
-        collider.enabled = false;
-        collides.Clear();
-    }
-
-    void Update()
-    {
-        if (Time.time - startTime >= duration && collider.enabled)
+        // Enable
+        StartCoroutine(CoroutineUtil.DelayAction(duration * 0.4f, () =>
         {
-            Deactivate();
-        }
+            collides.Clear();
+            this.damage = damage;
+            collider.enabled = true;
+        }));
+
+        // Never disable (arrows, projectiles)
+        if (duration <= 0) return;
+        
+        // Disable
+        StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
+        {
+            this.damage = 0;
+            collider.enabled = false;
+            collides.Clear();
+        }));
     }
 }

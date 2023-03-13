@@ -76,7 +76,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
                 wandCast.Stop(true);
                 wandCast.Play(true);
                 Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
-                magicProjectilePosition.transform.rotation.eulerAngles.x + 90,
+                magicProjectilePosition.transform.rotation.eulerAngles.x,
                 magicProjectilePosition.transform.rotation.eulerAngles.y,
                 magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
                 projectile.Init(magicProjectileSpeed, magicProjectileDamage);

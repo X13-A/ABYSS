@@ -45,8 +45,8 @@ public class Projectile : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void Update()
+    private void Update()
     {
-        this.transform.position += Vector3.forward * this.speed;
+        this.transform.position += transform.forward * this.speed * Time.deltaTime;
     }
 }

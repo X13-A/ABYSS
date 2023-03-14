@@ -28,10 +28,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     float attackStartTime;
     public float AttackElaspedTime 
     {
-        get 
-        {
-            return Time.time - attackStartTime; 
-        } 
+        get { return Time.time - attackStartTime; } 
     }
 
     public void SubscribeEvents()
@@ -60,28 +57,32 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
         UnsubscribeEvents();
     }
 
+    void MeleeAttack(PlayerAttackEvent e)
+    {
+        meleeDamager.Damage(meleeDamage, meleeDuration);
+        meleeTrail.Play(true);
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => { meleeTrail.Stop(); }));
+    }
+
+    void WandAttack(PlayerAttackEvent e)
+    {
+        wandTrail.Play();
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () => {
+            wandTrail.Stop(true);
+            wandCast.Stop(true);
+            wandCast.Play(true);
+            Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
+            magicProjectilePosition.transform.rotation.eulerAngles.x,
+            magicProjectilePosition.transform.rotation.eulerAngles.y,
+            magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
+            projectile.Init(magicProjectileSpeed, magicProjectileDamage);
+        }));
+    }
+
     void Attack(PlayerAttackEvent e)
     {
-        if (e.type == AttackType.Melee) 
-        {
-            meleeDamager.Damage(meleeDamage, meleeDuration);
-            meleeTrail.Play(true);
-            StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => { meleeTrail.Stop(); }));
-        }
-        else if (e.type == AttackType.Wand)
-        {
-            wandTrail.Play();
-            StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () => {
-                wandTrail.Stop(true);
-                wandCast.Stop(true);
-                wandCast.Play(true);
-                Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
-                magicProjectilePosition.transform.rotation.eulerAngles.x,
-                magicProjectilePosition.transform.rotation.eulerAngles.y,
-                magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
-                projectile.Init(magicProjectileSpeed, magicProjectileDamage);
-            }));
-        }
+        if (e.type == AttackType.Melee) MeleeAttack(e);
+        else if (e.type == AttackType.Wand) WandAttack(e);
     }
 
     void Update()

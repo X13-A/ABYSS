@@ -7,18 +7,19 @@ public class MouseLock : MonoBehaviour
     public float mouseSensitivity;
     public float clampAngle;
 
-    Rigidbody rb;
+    private CharacterController characterController;
     private float rotY;
     private float mouseX;
 
-    void Start()
+    private void Start()
     {
         Vector3 rot = transform.localRotation.eulerAngles;
         rotY = rot.y;
     }
+
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -31,6 +32,6 @@ public class MouseLock : MonoBehaviour
     {
         rotY += mouseX * mouseSensitivity;
         Quaternion globalRotation = Quaternion.Euler(0f, rotY, 0f);
-        rb.MoveRotation(globalRotation);
+        characterController.transform.rotation = globalRotation;
     }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,14 +12,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float velocity;
     [SerializeField] private float jumpForce;
     [SerializeField] private float groundDrag;
+    [SerializeField] private float gravity;
 
-    private Rigidbody rb;
+    private CharacterController characterController;
     private Vector3 direction;
     private bool isJumping;
-
-    [Header("Ground check")]
-    [SerializeField] private float playerHeight;
-    private bool isGrounded;
+    private float verticalVelocity;
 
     private void Start()
     {
@@ -35,7 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
+        characterController.center = new Vector3(0, 0.5f, 0); // relative height (so 0.5 is the center of our gameObject)
+        characterController.height = transform.lossyScale.y;
     }
 
     private void MovePlayer()
@@ -44,39 +41,51 @@ public class PlayerMovement : MonoBehaviour
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);
-        rb.AddForce(movement * 10, ForceMode.Force);
-        if (this.isJumping)
-        {
-            this.rb.AddForce(new Vector3(0f, this.jumpForce, 0f), ForceMode.Impulse);
-            this.isJumping = false;
-        }
+        movement.y = verticalVelocity;
+        characterController.Move(movement);
     }
-
     private void HandleInput()
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        this.isJumping = Input.GetButtonDown("Jump") && this.isGrounded;
-        this.direction = new Vector3(xInput, 0, yInput).normalized;
+        isJumping = Input.GetButtonDown("Jump") && characterController.isGrounded;
+        direction = new Vector3(xInput, 0, yInput).normalized;
     }
 
-    void Update()
+    private void UpdateGravity()
     {
-        if (GameManager.Instance.State != GAMESTATE.play)
-            return;
-        this.isGrounded = Physics.Raycast(rb.position, Vector3.down, playerHeight * 0.5f + 0.2f, LayerMask.GetMask("Ground"));
-        this.HandleInput();
-        if (this.isGrounded)
-            this.rb.drag = this.groundDrag;
+        if (characterController.isGrounded)
+        {
+
+            verticalVelocity = 0f;
+        }
         else
         {
-            this.rb.drag = 10;
-            this.rb.AddForce(Physics.gravity, ForceMode.VelocityChange);
+            verticalVelocity -= gravity;
         }
+    }
+
+    private float GetDrag()
+    {
+        if (characterController.isGrounded)
+        {
+            return 5f;
+        }
+        return 0f;
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.State != GAMESTATE.play)
+        {
+            return;
+        }
+        HandleInput();
     }
 
     private void FixedUpdate()
     {
-        this.MovePlayer();
+        UpdateGravity();
+        MovePlayer();
     }
 }

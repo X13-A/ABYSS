@@ -38,14 +38,14 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
 
     void HandleAttack(PlayerAttackEvent e)
     {
-        if (e.type == AttackType.Melee)
+        if (e.type == AttackType.MELEE)
         {
             // Déclenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
             float clipLength = meleeAttack.length;
             m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
         }
-        else if (e.type == AttackType.Wand)
+        else if (e.type == AttackType.WAND)
         {
             m_Animator.SetTrigger("Wand Attack");
             float clipLength = wandAttack.length;
@@ -57,7 +57,7 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     private void Update()
     {
         bool isIdling = m_Animator.GetBool("IsIdling");
-        if (GameManager.Instance.State != GAMESTATE.play)
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
         {
             if (!isIdling)
             {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using SDD.Events;
 
-public enum GAMESTATE { play, gameOver, mainMenu, pauseMenu, settingsMenu, loading}
+public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING}
 
 public class GameManager : MonoBehaviour, IEventHandler
 {
@@ -60,19 +60,19 @@ public class GameManager : MonoBehaviour, IEventHandler
     {
         switch (State)
         {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 MainMenu();
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 Pause();
                 break;
-            case GAMESTATE.settingsMenu:
+            case GAMESTATE.SETTINGS_MENU:
                 Settings();
                 break;
-            case GAMESTATE.play:
+            case GAMESTATE.PLAY:
                 Play();
                 break;
-            case GAMESTATE.gameOver:
+            case GAMESTATE.GAME_OVER:
                 GameOver();
                 break;
         }
@@ -91,14 +91,14 @@ public class GameManager : MonoBehaviour, IEventHandler
         // Update of settings menu
         switch (State)
         {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 m_SourceMenu = m_State;
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 m_SourceMenu = m_State;
                 break;
             default:
-                m_SourceMenu = GAMESTATE.play;
+                m_SourceMenu = GAMESTATE.PLAY;
                 break;
         }
 
@@ -106,19 +106,19 @@ public class GameManager : MonoBehaviour, IEventHandler
 
         switch (m_State)
         {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 EventManager.Instance.Raise(new GameMainMenuEvent());
                 break;
-            case GAMESTATE.play:
+            case GAMESTATE.PLAY:
                 EventManager.Instance.Raise(new GamePlayEvent());
                 break;
-            case GAMESTATE.settingsMenu:
+            case GAMESTATE.SETTINGS_MENU:
                 EventManager.Instance.Raise(new GameSettingsMenuEvent());
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 EventManager.Instance.Raise(new GamePauseMenuEvent());
                 break;
-            case GAMESTATE.gameOver:
+            case GAMESTATE.GAME_OVER:
                 EventManager.Instance.Raise(new GameOverEvent());
                 break;
         }
@@ -133,12 +133,12 @@ public class GameManager : MonoBehaviour, IEventHandler
     void Play()
     {
         InitGame();
-        SetState(GAMESTATE.play);
+        SetState(GAMESTATE.PLAY);
     }
 
     void Resume()
     {
-        SetState(GAMESTATE.play);
+        SetState(GAMESTATE.PLAY);
     }
 
     void Quit()
@@ -148,22 +148,22 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void MainMenu()
     {
-        SetState(GAMESTATE.mainMenu);
+        SetState(GAMESTATE.MAIN_MENU);
     }
 
     void Pause()
     {
-        SetState(GAMESTATE.pauseMenu);
+        SetState(GAMESTATE.PAUSE_MENU);
     }
 
     void Settings()
     {
-        SetState(GAMESTATE.settingsMenu);
+        SetState(GAMESTATE.SETTINGS_MENU);
     }
 
     void GameOver()
     {
-        SetState(GAMESTATE.gameOver);
+        SetState(GAMESTATE.GAME_OVER);
     }
     #endregion
 
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
-        SetState(GAMESTATE.loading);
+        SetState(GAMESTATE.LOADING);
     }
 
     void PlayButtonClicked(PlayButtonClickedEvent e)
@@ -186,11 +186,11 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void EscapeButtonClicked(EscapeButtonClickedEvent e)
     {
-        if (State == GAMESTATE.play)
+        if (State == GAMESTATE.PLAY)
         {
             Pause();
         }
-        else if (State == GAMESTATE.pauseMenu)
+        else if (State == GAMESTATE.PAUSE_MENU)
         {
             Resume();
         }
@@ -206,10 +206,10 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new GameSaveSettingsEvent());
         switch (SourceMenu)
         {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 MainMenu();
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 Pause();
                 break;
             default:

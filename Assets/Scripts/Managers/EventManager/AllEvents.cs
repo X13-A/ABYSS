@@ -117,4 +117,11 @@ public class LoadingProgressUpdateEvent : SDD.Events.Event
     public float progress;
     public string message;
 }
+
+public class CursorUpdateEvent : SDD.Events.Event
+{
+    public CursorType type;
+    public Sprite sprite;
+}
+
 #endregion

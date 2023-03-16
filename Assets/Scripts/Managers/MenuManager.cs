@@ -67,12 +67,13 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     void GameSaveSettings(GameSaveSettingsEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         GAMESTATE source = GameManager.Instance.SourceMenu;
         switch (source) {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 OpenPanel(m_MainMenuPanel);
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 OpenPanel(m_PauseMenuPanel); 
                 break;
             default:
@@ -82,13 +83,14 @@ public class MenuManager : MonoBehaviour, IEventHandler
     }
     void GameCancelSettings(GameCancelSettingsEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         GAMESTATE source = GameManager.Instance.SourceMenu;
         switch (source)
         {
-            case GAMESTATE.mainMenu:
+            case GAMESTATE.MAIN_MENU:
                 OpenPanel(m_MainMenuPanel);
                 break;
-            case GAMESTATE.pauseMenu:
+            case GAMESTATE.PAUSE_MENU:
                 OpenPanel(m_PauseMenuPanel);
                 break;
             default:
@@ -99,33 +101,39 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     void GameMainMenu(GameMainMenuEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         if (m_MainMenuPanel == null) return;
         OpenPanel(m_MainMenuPanel);
     }
 
     void GamePauseMenu(GamePauseMenuEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_PauseMenuPanel);
     }
 
     void GameSettingsMenu(GameSettingsMenuEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_SettingsMenuPanel);
         
     }
 
     void GamePlay(GamePlayEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MELEE);
         OpenPanel(null);
     }
 
     void GameResume(GameResumeEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MELEE);
         OpenPanel(null);
     }
 
     void GameOver(GameOverEvent e)
     {
+        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_GameOverPanel);
     }
 

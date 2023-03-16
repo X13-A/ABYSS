@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum AttackType { Melee, Wand };
+public enum AttackType { MELEE, WAND };
 public class PlayerCombat : MonoBehaviour, IEventHandler
 {
     [SerializeField] Damager meleeDamager;
@@ -22,7 +22,16 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     [SerializeField] ParticleSystem wandTrail;
     [SerializeField] ParticleSystem wandCast;
 
-    [SerializeField] AttackType attackType;
+    [SerializeField] AttackType activeAttackType;
+    public AttackType ActiveAttackType
+    {
+        get { return activeAttackType; }
+        set 
+        {
+            activeAttackType = value;
+            CursorManager.Instance.SetCursorType(this.CursorTypeFromAttackType(value));
+        }
+    }
 
     float currentAttackDuration;
     float attackStartTime;
@@ -45,11 +54,11 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     {
         SubscribeEvents();
         // startTime is in the past by default to let the player attack when he just appeared
-        attackStartTime = Time.time - 1000;
-        currentAttackDuration = 0;
-        meleeTrail.Stop(true); // true makes the child animations stop too
-        wandTrail.Stop(true);
-        wandCast.Stop(true);
+        this.attackStartTime = Time.time - 1000;
+        this.currentAttackDuration = 0;
+        this.meleeTrail.Stop(true); // true makes the child animations stop too
+        this.wandTrail.Stop(true);
+        this.wandCast.Stop(true);
     }
 
     void OnDisable()
@@ -57,61 +66,75 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
         UnsubscribeEvents();
     }
 
+    CursorType CursorTypeFromAttackType(AttackType type)
+    {
+        return type switch
+        {
+            AttackType.MELEE => CursorType.MELEE,
+            AttackType.WAND => CursorType.MAGIC,
+            _ => CursorType.MELEE,
+        };
+    }
+
     void MeleeAttack(PlayerAttackEvent e)
     {
-        meleeDamager.Damage(meleeDamage, meleeDuration);
-        meleeTrail.Play(true);
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => { meleeTrail.Stop(); }));
+        this.meleeDamager.Damage(this.meleeDamage, this.meleeDuration);
+        this.meleeTrail.Play(true);
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.meleeStartPercentage, () => { this.meleeTrail.Stop(); }));
     }
 
     void WandAttack(PlayerAttackEvent e)
     {
-        wandTrail.Play();
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () => {
-            wandTrail.Stop(true);
-            wandCast.Stop(true);
-            wandCast.Play(true);
-            Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
-            magicProjectilePosition.transform.rotation.eulerAngles.x,
-            magicProjectilePosition.transform.rotation.eulerAngles.y,
-            magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
-            projectile.Init(magicProjectileSpeed, magicProjectileDamage);
+        this.wandTrail.Play();
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.wandStartPercentage, () => {
+            this.wandTrail.Stop(true);
+            this.wandCast.Stop(true);
+            this.wandCast.Play(true);
+            Projectile projectile = Instantiate(this.magicProjectilePrefab, this.magicProjectilePosition.transform.position, Quaternion.Euler(
+            this.magicProjectilePosition.transform.rotation.eulerAngles.x,
+            this.magicProjectilePosition.transform.rotation.eulerAngles.y,
+            this.magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
+            projectile.Init(this.magicProjectileSpeed, this.magicProjectileDamage);
         }));
     }
 
     void Attack(PlayerAttackEvent e)
     {
-        if (e.type == AttackType.Melee) MeleeAttack(e);
-        else if (e.type == AttackType.Wand) WandAttack(e);
+        if (e.type == AttackType.MELEE) MeleeAttack(e);
+        else if (e.type == AttackType.WAND) WandAttack(e);
     }
 
     void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.play) return;
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
 
-        if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration)
+
+        if (Input.GetButtonDown("Quick Melee")) this.ActiveAttackType = AttackType.MELEE;
+        if (Input.GetButtonDown("Quick Magic")) this.ActiveAttackType = AttackType.WAND;
+
+        if (Input.GetButtonDown("Fire1") && this.AttackElaspedTime > this.currentAttackDuration)
         {
-            if (attackType == AttackType.Melee)
+            if (this.activeAttackType == AttackType.MELEE)
             {
-                currentAttackDuration = meleeDuration;
+                this.currentAttackDuration = this.meleeDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
                 {
-                    type = AttackType.Melee,
-                    damage = meleeDamage,
-                    duration = meleeDuration,
+                    type = AttackType.MELEE,
+                    damage = this.meleeDamage,
+                    duration = this.meleeDuration,
                 });
             }
-            else if (attackType == AttackType.Wand)
+            else if (this.activeAttackType == AttackType.WAND)
             {
-                currentAttackDuration = wandDuration;
+                this.currentAttackDuration = this.wandDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
                 {
-                    type = AttackType.Wand,
-                    damage = magicProjectileDamage,
-                    duration = wandDuration,
+                    type = AttackType.WAND,
+                    damage = this.magicProjectileDamage,
+                    duration = this.wandDuration,
                 });
             }
-            attackStartTime = Time.time;
+            this.attackStartTime = Time.time;
         }
     }
 }

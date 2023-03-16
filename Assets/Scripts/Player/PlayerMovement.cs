@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.play)
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
             return;
         this.isGrounded = Physics.Raycast(rb.position, Vector3.down, playerHeight * 0.5f + 0.2f, LayerMask.GetMask("Ground"));
         this.HandleInput();

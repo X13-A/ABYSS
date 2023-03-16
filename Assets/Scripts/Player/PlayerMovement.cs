@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.play)
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
         {
             return;
         }

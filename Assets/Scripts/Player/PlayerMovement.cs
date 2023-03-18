@@ -31,32 +31,36 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        characterController.center = new Vector3(0, 0.5f, 0); // relative height (so 0.5 is the center of our gameObject)
-        characterController.height = transform.lossyScale.y;
+       // characterController.center = new Vector3(0, 0.5f, 0); // relative height (so 0.5 is the center of our gameObject)
+       // characterController.height = transform.lossyScale.y;
     }
 
     private void MovePlayer()
     {
-        Vector3 movement = new Vector3(direction.x * velocity, 0, direction.z * velocity);
+        Vector3 movement = new Vector3(direction.x * velocity, direction.y * jumpForce, direction.z * velocity);
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);
-        movement.y = verticalVelocity;
+        //movement.y = verticalVelocity;
         characterController.Move(movement);
     }
     private void HandleInput()
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        isJumping = Input.GetButtonDown("Jump") && characterController.isGrounded;
-        direction = new Vector3(xInput, 0, yInput).normalized;
+        float jump;
+        //isJumping = Input.GetButtonDown("Jump") && characterController.isGrounded;
+        if (characterController.isGrounded)
+            jump = 0;
+        else
+            jump = 0;
+        direction = new Vector3(xInput, jump, yInput).normalized;
     }
 
     private void UpdateGravity()
     {
         if (characterController.isGrounded)
         {
-
             verticalVelocity = 0f;
         }
         else
@@ -85,7 +89,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateGravity();
+        //UpdateGravity();
         MovePlayer();
+        Debug.Log(characterController.isGrounded);
     }
 }

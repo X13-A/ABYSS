@@ -73,6 +73,9 @@ public class MapGeneration : MonoBehaviour
                 GameObject currentCube = Instantiate(prefabMap[z * this.mapWidth + x]);
                 currentCube.transform.position = new Vector3(x, (int)(this.heightCurve.Evaluate(noiseMap[x, z]) * this.heightMultiplier), z);
                 currentCube.AddComponent<BoxCollider>();
+                currentCube.AddComponent<Rigidbody>();
+                currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                currentCube.GetComponent<Rigidbody>().isKinematic = true;
                 currentCube.layer = LayerMask.NameToLayer("Ground");
                 currentCube.transform.SetParent(map.transform);
 

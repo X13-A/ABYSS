@@ -40,7 +40,7 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     {
         if (e.type == AttackType.MELEE)
         {
-            // Déclenche l'animation avec la bonne vitesse
+            // DÃ©clenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
             float clipLength = meleeAttack.length;
             m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);

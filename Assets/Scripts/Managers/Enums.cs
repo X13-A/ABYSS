@@ -2,6 +2,7 @@
 public enum CursorType { MELEE, RANGE, MAGIC, UNARMED, PICKAXE, AXE, MENU };
 public enum PlayerMode { MELEE, RANGE, MAGIC, UNARMED, PICKAXE, AXE };
 public enum AttackType { MELEE, RANGE, MAGIC };
+public enum AimingMode { CAMERA, CURSOR };
 public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING };
 
 public class EnumConverter

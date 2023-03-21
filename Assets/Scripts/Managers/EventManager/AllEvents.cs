@@ -17,6 +17,11 @@ public class PlayerAttackEvent : SDD.Events.Event
     public AttackType type;
 }
 
+public class AimingModeUpdateEvent : SDD.Events.Event
+{
+    public AimingMode mode;
+}
+
 #endregion
 
 #region Scene events

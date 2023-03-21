@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 using UnityEngine.Events;
+using System;
 
 public class RenderManager : MonoBehaviour, IEventHandler
 {
     private static RenderManager m_Instance;
-    public static RenderManager Instance { get; }
+    public static RenderManager Instance { get { return m_Instance; } }
 
-    int screenWidth;
-    int screenHeight;
+    private int screenWidth;
+    private int screenHeight;
+    public int ScreenWidth { get { return screenWidth; } }
+    public int ScreenHeight { get { return screenHeight; } }
 
     private void Awake()
     {
@@ -25,12 +28,12 @@ public class RenderManager : MonoBehaviour, IEventHandler
         FireResizeEvent();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -61,7 +64,7 @@ public class RenderManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(resizeEvent);
     }
 
-    void Update()
+    private void Update()
     {
         if (Screen.width != screenWidth || Screen.height != screenHeight)
         {

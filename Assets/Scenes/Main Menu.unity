@@ -1441,6 +1441,10 @@ PrefabInstance:
       value: 31.499998
       objectReference: {fileID: 0}
     - target: {fileID: 1003219964445299843, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9711324
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219964445299843, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.22727342
       objectReference: {fileID: 0}
@@ -1452,9 +1456,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.016508814
       objectReference: {fileID: 0}
+    - target: {fileID: 1003219964445299844, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219964445299844, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: near clip plane
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1003219964964764818, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219964964764818, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: mouseSensitivity
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1003219964964764819, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: gravity
@@ -1482,7 +1498,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1003219964964764840, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.174
+      value: -1.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219964964764840, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219965206504332, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: aiming
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219965206504332, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219965249903182, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003219965300827102, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: sensitivity
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859140748863705772, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: aimingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5085724582314919098, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: m_Enabled

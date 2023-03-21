@@ -7,6 +7,9 @@ public class CursorManager : MonoBehaviour, IEventHandler
 {
     public static CursorManager Instance;
 
+    [SerializeField] private float sensitivity;
+    public float Sensitivity { get { return sensitivity; } }
+
     [SerializeField] private Sprite menuCursor;
     [SerializeField] private Sprite meleeCursor;
     [SerializeField] private Sprite bowCursor;

@@ -257,7 +257,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: 0791e523b7f1b2740a3b1cde42b6aeac, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -366,7 +366,7 @@ AnimatorStateMachine:
     m_Position: {x: 1040, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2360757953082361875}
-    m_Position: {x: -200, y: -170, z: 0}
+    m_Position: {x: -200, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -954224608718234529}
     m_Position: {x: 220, y: 340, z: 0}
@@ -384,7 +384,7 @@ AnimatorStateMachine:
     m_Position: {x: 220, y: 400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 891576666302446609}
-    m_Position: {x: 210, y: 230, z: 0}
+    m_Position: {x: -200, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3916185026152732334}
     m_Position: {x: 210, y: 270, z: 0}
@@ -533,6 +533,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 1
     m_Controller: {fileID: 0}
+  - m_Name: IsJumping
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
@@ -622,8 +628,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JumpFull_Normal_RM_SwordAndShield
-  m_Speed: 0.1
+  m_Name: Jump
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -637,10 +643,10 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: dd2792b75214ec24793124d449bacd3a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_SpeedParameter: AttackSpeed
+  m_MirrorParameter: IsWalking
+  m_CycleOffsetParameter: AttackSpeed
+  m_TimeParameter: AttackSpeed
 --- !u!1102 &1871567119455281485
 AnimatorState:
   serializedVersion: 6

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,29 +11,19 @@ public class PlayerMovement : MonoBehaviour
      **/
     [Header("Movement")]
     [SerializeField] private float velocity;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpSpeed;
     [SerializeField] private float groundDrag;
     [SerializeField] private float gravity;
 
     private CharacterController characterController;
     private Vector3 direction;
     private bool isJumping;
+    private bool isGrounded;
     private float verticalVelocity;
-
-    private void Start()
-    {
-        /*
-         * Alexis : Mis en commentaire parce qu'on peut plus cliquer sur les menus sinon
-         */
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-    }
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        characterController.center = new Vector3(0, 0.5f, 0); // relative height (so 0.5 is the center of our gameObject)
-        characterController.height = transform.lossyScale.y;
     }
 
     private void MovePlayer()
@@ -41,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);
+        if (this.isJumping && this.isGrounded)
+            verticalVelocity = jumpSpeed;
         movement.y = verticalVelocity;
         characterController.Move(movement);
     }
@@ -48,30 +41,18 @@ public class PlayerMovement : MonoBehaviour
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        isJumping = Input.GetButtonDown("Jump") && characterController.isGrounded;
-        direction = new Vector3(xInput, 0, yInput).normalized;
+        this.isJumping = Input.GetButton("Jump");
+        direction = new Vector3(xInput, 0, yInput);
     }
 
     private void UpdateGravity()
     {
-        if (characterController.isGrounded)
+        if (this.isGrounded)
         {
-
-            verticalVelocity = 0f;
+            this.verticalVelocity = 0;
+            return;
         }
-        else
-        {
-            verticalVelocity -= gravity;
-        }
-    }
-
-    private float GetDrag()
-    {
-        if (characterController.isGrounded)
-        {
-            return 5f;
-        }
-        return 0f;
+        this.verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
     }
 
     private void Update()
@@ -80,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        this.isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
         HandleInput();
     }
 

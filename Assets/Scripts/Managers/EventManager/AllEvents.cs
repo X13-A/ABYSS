@@ -1,10 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 
 
 #region Player events
+public class PlayerSwitchModeEvent : SDD.Events.Event
+{
+    public PlayerMode mode;
+}
+
 public class PlayerAttackEvent : SDD.Events.Event
 {
     public float damage;

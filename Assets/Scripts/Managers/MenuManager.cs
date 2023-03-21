@@ -99,14 +99,14 @@ public class MenuManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void GameMainMenu(GameMainMenuEvent e)
+    private void GameMainMenu(GameMainMenuEvent e)
     {
         CursorManager.Instance.SetCursorType(CursorType.MENU);
         if (m_MainMenuPanel == null) return;
         OpenPanel(m_MainMenuPanel);
     }
 
-    void GamePauseMenu(GamePauseMenuEvent e)
+    private void GamePauseMenu(GamePauseMenuEvent e)
     {
         CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_PauseMenuPanel);

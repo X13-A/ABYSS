@@ -6,11 +6,11 @@ using SDD.Events;
 
 public class PlayerAnimationController : MonoBehaviour, IEventHandler
 {
-    Animator m_Animator;
+    private Animator m_Animator;
 
-    [SerializeField] AnimationClip walk;
-    [SerializeField] AnimationClip meleeAttack;
-    [SerializeField] AnimationClip wandAttack;
+    [SerializeField] private AnimationClip walk;
+    [SerializeField] private AnimationClip meleeAttack;
+    [SerializeField] private AnimationClip wandAttack;
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
@@ -26,26 +26,26 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<PlayerAttackEvent>(HandleAttack);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        SubscribeEvents();
+        this.SubscribeEvents();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        UnsubscribeEvents();
+        this.UnsubscribeEvents();
     }
 
-    void HandleAttack(PlayerAttackEvent e)
+    private void HandleAttack(PlayerAttackEvent e)
     {
         if (e.type == AttackType.MELEE)
         {
-            // Déclenche l'animation avec la bonne vitesse
+            // DÃ©clenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
             float clipLength = meleeAttack.length;
             m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
         }
-        else if (e.type == AttackType.WAND)
+        else if (e.type == AttackType.MAGIC)
         {
             m_Animator.SetTrigger("Wand Attack");
             float clipLength = wandAttack.length;

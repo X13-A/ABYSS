@@ -3,45 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 
-public enum CursorType { MENU, MELEE, BOW, MAGIC }
-
-public class CursorManager : MonoBehaviour
+public class CursorManager : MonoBehaviour, IEventHandler
 {
     public static CursorManager Instance;
 
-    [SerializeField] Sprite menuCursor;
-    [SerializeField] Sprite meleeCursor;
-    [SerializeField] Sprite bowCursor;
-    [SerializeField] Sprite magicCursor;
-    [SerializeField] CursorType activeCursorType;
-    public CursorType ActiveCursorType { get { return activeCursorType; } }
+    [SerializeField] private Sprite menuCursor;
+    [SerializeField] private Sprite meleeCursor;
+    [SerializeField] private Sprite bowCursor;
+    [SerializeField] private Sprite magicCursor;
+    [SerializeField] private CursorType activeCursorType;
+    public CursorType ActiveCursorType { get { return this.activeCursorType; } }
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetCursorType);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetCursorType);
+    }
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else Destroy(this.gameObject);
     }
 
     private void Start()
     {
-        SetCursorType(activeCursorType);
+        SetCursorType(this.activeCursorType);
     }
 
     public void SetCursorType(CursorType type)
     {
         this.activeCursorType = type;
-        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = GetSprite(type) });
+        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = this.GetSprite(type) });
     }
 
-    public Sprite GetSprite(CursorType type)
+    private void SetCursorType(PlayerSwitchModeEvent e)
+    {
+        this.activeCursorType = EnumConverter.CursorTypeFromPlayerMode(e.mode);
+        EventManager.Instance.Raise(new CursorUpdateEvent { type = this.activeCursorType, sprite = this.GetSprite(this.activeCursorType) });
+    }
+
+    private Sprite GetSprite(CursorType type)
     {
         return type switch
         {
-            CursorType.MENU => menuCursor,
-            CursorType.MELEE => meleeCursor,
-            CursorType.MAGIC => magicCursor,
-            CursorType.BOW => bowCursor,
-            _ => menuCursor,
+            CursorType.MENU => this.menuCursor,
+            CursorType.MELEE => this.meleeCursor,
+            CursorType.MAGIC => this.magicCursor,
+            CursorType.RANGE => this.bowCursor,
+            _ => this.menuCursor,
         };
     }
 }

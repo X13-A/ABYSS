@@ -1,8 +1,6 @@
 using UnityEngine;
 using SDD.Events;
 
-public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING}
-
 public class GameManager : MonoBehaviour, IEventHandler
 {
     private static GameManager m_Instance;
@@ -13,7 +11,7 @@ public class GameManager : MonoBehaviour, IEventHandler
     public GAMESTATE State { get { return m_State; } }
 
     // Permet de suivre le menu "source" pour pouvoir y retourner
-    // Exemple: Le menu settings peut être ouvert depuis le menu pause et le menu principal
+    // Exemple: Le menu settings peut Ãªtre ouvert depuis le menu pause et le menu principal
     GAMESTATE m_SourceMenu;
     public GAMESTATE SourceMenu { get { return m_SourceMenu; } }
 

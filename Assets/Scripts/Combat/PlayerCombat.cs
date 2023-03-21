@@ -4,37 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum AttackType { MELEE, WAND };
 public class PlayerCombat : MonoBehaviour, IEventHandler
 {
-    [SerializeField] Damager meleeDamager;
-    [SerializeField] float meleeDamage;
-    [SerializeField] float meleeDuration;
-    [SerializeField] float meleeStartPercentage; // Percentage of the animation at which the damage actually occurs
-    [SerializeField] ParticleSystem meleeTrail;
+    [SerializeField] private Damager meleeDamager;
+    [SerializeField] private float meleeDamage;
+    [SerializeField] private float meleeDuration;
+    [SerializeField] private float meleeStartPercentage; // Percentage of the animation at which the damage actually occurs
+    [SerializeField] private ParticleSystem meleeTrail;
 
-    [SerializeField] GameObject magicProjectilePrefab;
-    [SerializeField] GameObject magicProjectilePosition;
-    [SerializeField] float magicProjectileSpeed;
-    [SerializeField] float magicProjectileDamage;
-    [SerializeField] float wandDuration;
-    [SerializeField] float wandStartPercentage; // Percentage of the animation at which the projectile is fired
-    [SerializeField] ParticleSystem wandTrail;
-    [SerializeField] ParticleSystem wandCast;
+    [SerializeField] private GameObject magicProjectilePrefab;
+    [SerializeField] private GameObject magicProjectilePosition;
+    [SerializeField] private float magicProjectileSpeed;
+    [SerializeField] private float magicProjectileDamage;
+    [SerializeField] private float wandDuration;
+    [SerializeField] private float wandStartPercentage; // Percentage of the animation at which the projectile is fired
+    [SerializeField] private ParticleSystem wandTrail;
+    [SerializeField] private ParticleSystem wandCast;
 
-    [SerializeField] AttackType activeAttackType;
-    public AttackType ActiveAttackType
+    [SerializeField] private AttackType activeAttackMode;
+    public AttackType ActiveAttackMode
     {
-        get { return activeAttackType; }
+        get { return activeAttackMode; }
         set 
         {
-            activeAttackType = value;
-            CursorManager.Instance.SetCursorType(this.CursorTypeFromAttackType(value));
+            activeAttackMode = value;
+            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = EnumConverter.PlayerModeFromAttackType(value) });
         }
     }
 
-    float currentAttackDuration;
-    float attackStartTime;
+    private float currentAttackDuration;
+    private float attackStartTime;
     public float AttackElaspedTime 
     {
         get { return Time.time - attackStartTime; } 
@@ -50,7 +49,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<PlayerAttackEvent>(Attack);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
         // startTime is in the past by default to let the player attack when he just appeared
@@ -61,29 +60,19 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
         this.wandCast.Stop(true);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
 
-    CursorType CursorTypeFromAttackType(AttackType type)
-    {
-        return type switch
-        {
-            AttackType.MELEE => CursorType.MELEE,
-            AttackType.WAND => CursorType.MAGIC,
-            _ => CursorType.MELEE,
-        };
-    }
-
-    void MeleeAttack(PlayerAttackEvent e)
+    private void MeleeAttack(PlayerAttackEvent e)
     {
         this.meleeDamager.Damage(this.meleeDamage, this.meleeDuration);
         this.meleeTrail.Play(true);
         StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.meleeStartPercentage, () => { this.meleeTrail.Stop(); }));
     }
 
-    void WandAttack(PlayerAttackEvent e)
+    private void WandAttack(PlayerAttackEvent e)
     {
         this.wandTrail.Play();
         StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.wandStartPercentage, () => {
@@ -91,30 +80,31 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
             this.wandCast.Stop(true);
             this.wandCast.Play(true);
             Projectile projectile = Instantiate(this.magicProjectilePrefab, this.magicProjectilePosition.transform.position, Quaternion.Euler(
-            this.magicProjectilePosition.transform.rotation.eulerAngles.x,
-            this.magicProjectilePosition.transform.rotation.eulerAngles.y,
-            this.magicProjectilePosition.transform.rotation.eulerAngles.z)).GetComponent<Projectile>();
+                this.magicProjectilePosition.transform.rotation.eulerAngles.x,
+                this.magicProjectilePosition.transform.rotation.eulerAngles.y,
+                this.magicProjectilePosition.transform.rotation.eulerAngles.z)
+            ).GetComponent<Projectile>();
             projectile.Init(this.magicProjectileSpeed, this.magicProjectileDamage);
         }));
     }
 
-    void Attack(PlayerAttackEvent e)
+    private void Attack(PlayerAttackEvent e)
     {
         if (e.type == AttackType.MELEE) MeleeAttack(e);
-        else if (e.type == AttackType.WAND) WandAttack(e);
+        else if (e.type == AttackType.MAGIC) WandAttack(e);
     }
 
-    void Update()
+    private void Update()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
 
 
-        if (Input.GetButtonDown("Quick Melee")) this.ActiveAttackType = AttackType.MELEE;
-        if (Input.GetButtonDown("Quick Magic")) this.ActiveAttackType = AttackType.WAND;
+        if (Input.GetButtonDown("Quick Melee")) this.ActiveAttackMode = AttackType.MELEE;
+        if (Input.GetButtonDown("Quick Magic")) this.ActiveAttackMode = AttackType.MAGIC;
 
         if (Input.GetButtonDown("Fire1") && this.AttackElaspedTime > this.currentAttackDuration)
         {
-            if (this.activeAttackType == AttackType.MELEE)
+            if (this.ActiveAttackMode == AttackType.MELEE)
             {
                 this.currentAttackDuration = this.meleeDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
@@ -124,12 +114,12 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
                     duration = this.meleeDuration,
                 });
             }
-            else if (this.activeAttackType == AttackType.WAND)
+            else if (this.ActiveAttackMode == AttackType.MAGIC)
             {
                 this.currentAttackDuration = this.wandDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
                 {
-                    type = AttackType.WAND,
+                    type = AttackType.MAGIC,
                     damage = this.magicProjectileDamage,
                     duration = this.wandDuration,
                 });

@@ -14,6 +14,7 @@ public class CursorManager : MonoBehaviour, IEventHandler
     [SerializeField] private Sprite meleeCursor;
     [SerializeField] private Sprite bowCursor;
     [SerializeField] private Sprite magicCursor;
+    [SerializeField] private Sprite buildCursor;
     [SerializeField] private CursorType activeCursorType;
     public CursorType ActiveCursorType { get { return this.activeCursorType; } }
     private void OnEnable()
@@ -56,6 +57,7 @@ public class CursorManager : MonoBehaviour, IEventHandler
     private void SetCursorType(PlayerSwitchModeEvent e)
     {
         this.activeCursorType = EnumConverter.CursorTypeFromPlayerMode(e.mode);
+        Debug.Log(e.mode);
         EventManager.Instance.Raise(new CursorUpdateEvent { type = this.activeCursorType, sprite = this.GetSprite(this.activeCursorType) });
     }
 
@@ -67,6 +69,7 @@ public class CursorManager : MonoBehaviour, IEventHandler
             CursorType.MELEE => this.meleeCursor,
             CursorType.MAGIC => this.magicCursor,
             CursorType.RANGE => this.bowCursor,
+            CursorType.BUILD => this.buildCursor,
             _ => this.menuCursor,
         };
     }

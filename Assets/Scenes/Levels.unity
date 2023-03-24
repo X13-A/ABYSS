@@ -282,3 +282,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+--- !u!20 &1600960254 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1003219964445299844, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+  m_PrefabInstance: {fileID: 1600960253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1600960255 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1003219964964764841, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+  m_PrefabInstance: {fileID: 1600960253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1600960256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600960255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d34351463e6fb4f8f8307559d6181c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1600960254}
+  target: {fileID: 0}
+  rt: {fileID: 8400000, guid: 48137d1a46adc4643a88edaff148ac5f, type: 2}
+  blocInHand: {fileID: 479223089414624322, guid: 97fbcee1f03cd17489b8dd9a84df60f7, type: 3}

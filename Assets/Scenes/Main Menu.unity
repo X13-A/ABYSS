@@ -185,6 +185,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1947386494211874055, guid: e4c821e6398cd7249a8a344e37dcc1fe, type: 3}
   m_PrefabInstance: {fileID: 14165347}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &20277722 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1003219964445299844, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+  m_PrefabInstance: {fileID: 1353082107}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &78341532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -992,6 +997,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1947386494211874055, guid: e4c821e6398cd7249a8a344e37dcc1fe, type: 3}
   m_PrefabInstance: {fileID: 1034714339}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1063940538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1003219964964764841, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+  m_PrefabInstance: {fileID: 1353082107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1063940544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063940538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d34351463e6fb4f8f8307559d6181c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 20277722}
+  target: {fileID: 0}
+  rt: {fileID: 8400000, guid: 48137d1a46adc4643a88edaff148ac5f, type: 2}
+  blocInHand: {fileID: 7111405392252246440, guid: e1fa0f0aadf413f41b99152adad1e70d, type: 3}
 --- !u!1 &1075257946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,6 +1542,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1003219965300827102, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
+      propertyPath: buildCursor
+      value: 
+      objectReference: {fileID: 21300000, guid: 0aa27db467d01e0449d2dd2ed8e0225d, type: 3}
     - target: {fileID: 1003219965300827102, guid: 3c1161046c68d8f49bafa7b2e9f8ce02, type: 3}
       propertyPath: sensitivity
       value: 1000

@@ -98,9 +98,10 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
 
-
         if (Input.GetButtonDown("Quick Melee")) this.ActiveAttackMode = AttackType.MELEE;
         if (Input.GetButtonDown("Quick Magic")) this.ActiveAttackMode = AttackType.MAGIC;
+
+        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD) return;
 
         if (Input.GetButtonDown("Fire1") && this.AttackElaspedTime > this.currentAttackDuration)
         {

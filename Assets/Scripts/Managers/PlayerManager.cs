@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public static PlayerManager Instance;
 
     [SerializeField] private PlayerMode activePlayerMode;
-    public PlayerMode ActivePlayerMode { get { return this.activePlayerMode; } }
+    public PlayerMode ActivePlayerMode => activePlayerMode;
     private void OnEnable()
     {
         SubscribeEvents();
@@ -31,17 +31,23 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(this.gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        
+
     }
 
     private void SetPlayerMode(PlayerSwitchModeEvent e)
     {
-        this.activePlayerMode = e.mode;
+        activePlayerMode = e.mode;
     }
 }

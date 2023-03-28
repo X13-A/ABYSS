@@ -6,7 +6,7 @@ using UnityEngine;
 public class MouseLock : MonoBehaviour
 {
     private static MouseLock m_Instance;
-    public static MouseLock Instance { get { return m_Instance; } }
+    public static MouseLock Instance => m_Instance;
 
     public float mouseSensitivity;
 
@@ -25,8 +25,14 @@ public class MouseLock : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -50,7 +56,7 @@ public class MouseLock : MonoBehaviour
     private void FixedUpdate()
     {
         
-        if (this.IsActive())
+        if (IsActive())
         {
             rotY += mouseX * mouseSensitivity;
             Quaternion globalRotation = Quaternion.Euler(0f, rotY, 0f);

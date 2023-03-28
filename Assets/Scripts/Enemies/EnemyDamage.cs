@@ -5,10 +5,10 @@ using System;
 
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
-    [SerializeField] float health;
-    [SerializeField] ParticleSystem hitParticles;
-    [SerializeField] GameObject corpse;
-    public float Health { get { return health; } }
+    [SerializeField] private float health;
+    [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject corpse;
+    public float Health => health;
 
     public void Start()
     {
@@ -20,7 +20,10 @@ public class EnemyDamage : MonoBehaviour, IDamageable
         health = Mathf.Max(0, health - damage);
         hitParticles.Stop();
         hitParticles.Play();
-        if (health <= 0 + Mathf.Epsilon) Die();
+        if (health <= 0 + Mathf.Epsilon)
+        {
+            Die();
+        }
     }
 
     public void Die()

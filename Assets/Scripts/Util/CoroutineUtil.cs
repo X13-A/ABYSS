@@ -16,7 +16,10 @@ public class CoroutineUtil : MonoBehaviour
             yield return null;
         }
         meshRenderer.material.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
-        if (onComplete != null) onComplete();
+        if (onComplete != null)
+        {
+            onComplete();
+        }
     }
 
     public static IEnumerator DelayAction(float delay, Action action)

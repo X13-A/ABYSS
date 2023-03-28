@@ -8,16 +8,15 @@ using UnityEngine.UI;
 public class ResolutionSlider : MonoBehaviour, IEventHandler
 {
     [SerializeField]
+    private TextMeshProUGUI text;
 
-    TextMeshProUGUI text;
-
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
         Init();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -34,19 +33,23 @@ public class ResolutionSlider : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ResolutionScaleSliderChangeEvent>(UpdateText);
     }
 
-    void Init()
+    private void Init()
     {
-        if (SettingsManager.Instance == null) return;
+        if (SettingsManager.Instance == null)
+        {
+            return;
+        }
+
         GetComponent<Slider>().value = SettingsManager.Instance.ResolutionScale;
         EventManager.Instance.Raise(new ResolutionScaleSliderChangeEvent() { value = SettingsManager.Instance.ResolutionScale });
     }
 
-    void UpdateText(ResolutionScaleSliderChangeEvent e)
+    private void UpdateText(ResolutionScaleSliderChangeEvent e)
     {
         text.text = (e.value * 100).ToString("F0") + "%";
     }
 
-    void UpdateValue(WindowResizeEvent e)
+    private void UpdateValue(WindowResizeEvent e)
     {
         GetComponent<Slider>().value = e.resolutionScale;
         EventManager.Instance.Raise(new ResolutionScaleSliderChangeEvent() { value = e.resolutionScale });

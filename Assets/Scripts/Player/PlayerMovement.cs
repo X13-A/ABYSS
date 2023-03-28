@@ -32,8 +32,11 @@ public class PlayerMovement : MonoBehaviour
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);
-        if (this.isJumping && this.isGrounded)
+        if (isJumping && isGrounded)
+        {
             verticalVelocity = jumpSpeed;
+        }
+
         movement.y = verticalVelocity;
         characterController.Move(movement);
     }
@@ -41,18 +44,18 @@ public class PlayerMovement : MonoBehaviour
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        this.isJumping = Input.GetButton("Jump");
+        isJumping = Input.GetButton("Jump");
         direction = new Vector3(xInput, 0, yInput);
     }
 
     private void UpdateGravity()
     {
-        if (this.isGrounded)
+        if (isGrounded)
         {
-            this.verticalVelocity = 0;
+            verticalVelocity = 0;
             return;
         }
-        this.verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
+        verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
     }
 
     private void Update()
@@ -61,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        this.isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
         HandleInput();
     }
 

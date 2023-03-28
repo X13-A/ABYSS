@@ -9,8 +9,8 @@ using static UnityEditorInternal.VersionControl.ListControl;
 public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance;
-    [SerializeField] Canvas canvas;
-    [SerializeField] GameObject fadePanel;
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject fadePanel;
     private void Awake()
     {
         if (Instance == null)
@@ -21,11 +21,7 @@ public class TransitionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        StartCoroutine(FadeIn(1f, () => {}));
-    }
-    private void OnEnable()
-    {
-
+        StartCoroutine(FadeIn(1f, () => { }));
     }
     public IEnumerator FadeIn(float fadeDuration = 1f, Action actionDelegate = null)
     {

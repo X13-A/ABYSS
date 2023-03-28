@@ -9,19 +9,25 @@ using static UnityEditor.PlayerSettings;
 public class Aiming : MonoBehaviour, IEventHandler
 {
     private static Aiming m_Instance;
-    public static Aiming Instance { get { return m_Instance; } }
+    public static Aiming Instance => m_Instance;
 
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject target;
     [SerializeField] private RenderTexture rt;
     [SerializeField] private GameObject rotatingBody;
     [SerializeField] private AimingMode aimingMode;
-    public AimingMode AimingMode { get { return aimingMode; } }
+    public AimingMode AimingMode => aimingMode;
 
     private void Awake()
     {
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnEnable()
@@ -46,35 +52,42 @@ public class Aiming : MonoBehaviour, IEventHandler
     }
     private void UpdateRenderTexture(RenderTextureUpdateEvent e)
     {
-        this.rt = e.updatedRt;
+        rt = e.updatedRt;
     }
     private void ToggleAim(AimingModeUpdateEvent e)
     {
         // Reset rotation of model to face camera
-        this.rotatingBody.transform.localRotation = Quaternion.identity;
-        this.aimingMode = e.mode;
+        rotatingBody.transform.localRotation = Quaternion.identity;
+        aimingMode = e.mode;
 
         // Lock or free cursor
-        if (e.mode == AimingMode.CAMERA) Cursor.lockState = CursorLockMode.Locked;
-        if (e.mode == AimingMode.CURSOR) Cursor.lockState = CursorLockMode.None;
+        if (e.mode == AimingMode.CAMERA)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if (e.mode == AimingMode.CURSOR)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     private void Aim()
     {
         // Convert screen position to camera position
         Vector3 mousePos = Input.mousePosition;
-        float xRatio = (float) this.rt.width / Screen.width;
-        float yRatio = (float) this.rt.height / Screen.height;
+        float xRatio = (float) rt.width / Screen.width;
+        float yRatio = (float) rt.height / Screen.height;
         mousePos.x *= xRatio;
         mousePos.y *= yRatio;
 
         // Cast ray from camera to find where to aim
-        Ray ray = this.cam.ScreenPointToRay(mousePos);
+        Ray ray = cam.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Aim")))
         {
-            this.target.transform.position = hit.point;
-            this.rotatingBody.transform.LookAt(new Vector3(this.target.transform.position.x, this.transform.position.y, this.target.transform.position.z));
+            target.transform.position = hit.point;
+            rotatingBody.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
         }
     }
 
@@ -91,7 +104,7 @@ public class Aiming : MonoBehaviour, IEventHandler
     }
     private bool IsAiming()
     {
-        return GameManager.Instance.State == GAMESTATE.PLAY && this.AimingMode == AimingMode.CURSOR;
+        return GameManager.Instance.State == GAMESTATE.PLAY && AimingMode == AimingMode.CURSOR;
     }
 
     private bool IsActive()
@@ -101,13 +114,13 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     private void Update()
     {
-        if (this.IsActive())
+        if (IsActive())
         {
-            this.Controls();
+            Controls();
         }
-        if (this.IsAiming())
+        if (IsAiming())
         {
-            this.Aim();
+            Aim();
         }
     }
 }

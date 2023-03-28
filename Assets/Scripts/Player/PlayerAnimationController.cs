@@ -28,12 +28,12 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     private void HandleAttack(PlayerAttackEvent e)

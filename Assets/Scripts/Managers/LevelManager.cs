@@ -10,9 +10,9 @@ public class LevelManager : MonoBehaviour, IEventHandler
 {
     public static LevelManager Instance;
 
-    [SerializeField] GameObject loadingScreen;
-    [SerializeField] Image progressBar;
-    MapGeneration generator;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Image progressBar;
+    private MapGeneration generator;
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<LoadingProgressUpdateEvent>(UpdateProgress);
@@ -45,17 +45,17 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
-        this.generator = GetComponent<MapGeneration>();
+        generator = GetComponent<MapGeneration>();
     }
 
-    void UpdateProgress(LoadingProgressUpdateEvent e)
+    private void UpdateProgress(LoadingProgressUpdateEvent e)
     {
-        this.progressBar.fillAmount = e.progress;
+        progressBar.fillAmount = e.progress;
     }
 
-    void PrepareSceneChange(SceneAboutToChangeEvent e)
+    private void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
         // Préparation au changement de scene
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
@@ -63,13 +63,13 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }));
     }
 
-    async void LoadScene(SceneReadyToChangeEvent e)
+    private async void LoadScene(SceneReadyToChangeEvent e)
     {
         var operation = SceneManager.LoadSceneAsync(e.targetScene);
 
         operation.allowSceneActivation = false;
-        this.progressBar.fillAmount = 0;
-        this.loadingScreen.SetActive(true);
+        progressBar.fillAmount = 0;
+        loadingScreen.SetActive(true);
         do
         {
             EventManager.Instance.Raise(new LoadingProgressUpdateEvent { progress = operation.progress, message = "Loading scene" });
@@ -78,13 +78,13 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
         // Génération procédurale
         var scene = SceneManager.GetSceneByName(e.targetScene);
-        GameObject map = await this.generator.GenerateMap();
+        GameObject map = await generator.GenerateMap();
         DontDestroyOnLoad(map);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         operation.allowSceneActivation = true;
 
-        this.loadingScreen.SetActive(false);
+        loadingScreen.SetActive(false);
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneManager.MoveGameObjectToScene(map, scene);

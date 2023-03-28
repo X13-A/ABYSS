@@ -8,12 +8,12 @@ using System.IO;
 public class SettingsManager : MonoBehaviour, IEventHandler
 {
     private static SettingsManager m_Instance;
-    public static SettingsManager Instance { get { return m_Instance; } }
+    public static SettingsManager Instance => m_Instance;
 
-    SettingsStore m_SettingsStore;
-    SettingsStore m_SettingsBeforeChanges;
-    SettingsStore m_SettingsAfterChanges;
-    string savePath;
+    private SettingsStore m_SettingsStore;
+    private SettingsStore m_SettingsBeforeChanges;
+    private SettingsStore m_SettingsAfterChanges;
+    private string savePath;
 
     public float ResolutionScale
     {
@@ -27,8 +27,14 @@ public class SettingsManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         savePath = Application.dataPath + "/settings.json";
         m_SettingsStore = LoadSettingsFromFile(savePath);
@@ -64,11 +70,12 @@ public class SettingsManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ResolutionScaleSliderChangeEvent>(SetResolutionScaleEditMode);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -99,9 +106,9 @@ public class SettingsManager : MonoBehaviour, IEventHandler
     public void ApplyChanges(SaveSettingsButtonClickedEvent e)
     {
         if (ResolutionScale != m_SettingsAfterChanges.ResolutionScale)
-        ResolutionScale = m_SettingsAfterChanges.ResolutionScale;
-
-
+        {
+            ResolutionScale = m_SettingsAfterChanges.ResolutionScale;
+        }
 
         m_SettingsBeforeChanges = new SettingsStore(m_SettingsStore);
         SaveSettingsToFile(m_SettingsStore, savePath);

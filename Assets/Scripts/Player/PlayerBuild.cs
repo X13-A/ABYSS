@@ -15,31 +15,40 @@ public class PlayerBuild : MonoBehaviour
     {
         // Convert screen position to camera position
         Vector3 mousePos = Input.mousePosition;
-        float xRatio = (float) this.rt.width / Screen.width;
-        float yRatio = (float) this.rt.height / Screen.height;
+        float xRatio = (float) rt.width / Screen.width;
+        float yRatio = (float) rt.height / Screen.height;
         mousePos.x *= xRatio;
         mousePos.y *= yRatio;
 
         // Cast ray from camera to find where to aim
-        Ray ray = this.cam.ScreenPointToRay(mousePos);
+        Ray ray = cam.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            this.blocInHand.transform.position = new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y), Mathf.Round(hit.point.z));
+            blocInHand.transform.position = new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y), Mathf.Round(hit.point.z));
         }
     }
     private void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
+        {
+            return;
+        }
 
-        if (Input.GetButtonDown("Build")) EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD});
+        if (Input.GetButtonDown("Build"))
+        {
+            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD});
+        }
 
-        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.BUILD) return;
+        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.BUILD)
+        {
+            return;
+        }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            this.Aim();
-            Instantiate(this.blocInHand);
+            Aim();
+            Instantiate(blocInHand);
         }
     }
 }

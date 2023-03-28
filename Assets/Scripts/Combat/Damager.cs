@@ -6,10 +6,10 @@ using UnityEngine.UIElements;
 
 public class Damager : MonoBehaviour, IDamager
 {
-    [SerializeField] float damage;
-    new Collider collider;
-    AttackType type = AttackType.MELEE;
-    public AttackType Type { get { return type; } }
+    [SerializeField] private float damage;
+    private new Collider collider;
+    private AttackType type = AttackType.MELEE;
+    public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
     private void Awake()
@@ -42,8 +42,11 @@ public class Damager : MonoBehaviour, IDamager
         }));
 
         // Never disable (arrows, projectiles)
-        if (duration <= 0) return;
-        
+        if (duration <= 0)
+        {
+            return;
+        }
+
         // Disable
         StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
         {

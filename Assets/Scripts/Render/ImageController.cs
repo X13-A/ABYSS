@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class ImageController : MonoBehaviour, IEventHandler
 {
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }

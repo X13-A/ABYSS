@@ -11,7 +11,7 @@ public class CustomCursor : MonoBehaviour
     private void Awake()
     {
         Cursor.visible = false;
-        this.image = GetComponent<Image>();
+        image = GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -35,7 +35,7 @@ public class CustomCursor : MonoBehaviour
 
     private void UpdateCursor(CursorUpdateEvent e)
     {
-        this.image.sprite = e.sprite;
+        image.sprite = e.sprite;
     }
 
     private void ClampPosition()
@@ -52,9 +52,9 @@ public class CustomCursor : MonoBehaviour
     }
     private void ToggleImage(bool value)
     {
-        if (this.image != null && this.image.enabled != value)
+        if (image != null && image.enabled != value)
         {
-            this.image.enabled = value;
+            image.enabled = value;
         }
     }
 
@@ -73,15 +73,15 @@ public class CustomCursor : MonoBehaviour
     private void Update()
     {
 
-        if (this.IsActive())
+        if (IsActive())
         {
-            this.Move();
-            this.ClampPosition();
-            this.ToggleImage(true);
+            Move();
+            ClampPosition();
+            ToggleImage(true);
         }
         else
         {
-            this.ToggleImage(false);
+            ToggleImage(false);
         }
     }
 }

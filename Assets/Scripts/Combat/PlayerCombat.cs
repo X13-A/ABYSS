@@ -34,10 +34,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
 
     private float currentAttackDuration;
     private float attackStartTime;
-    public float AttackElaspedTime 
-    {
-        get { return Time.time - attackStartTime; } 
-    }
+    public float AttackElaspedTime => Time.time - attackStartTime;
 
     public void SubscribeEvents()
     {
@@ -53,11 +50,11 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     {
         SubscribeEvents();
         // startTime is in the past by default to let the player attack when he just appeared
-        this.attackStartTime = Time.time - 1000;
-        this.currentAttackDuration = 0;
-        this.meleeTrail.Stop(true); // true makes the child animations stop too
-        this.wandTrail.Stop(true);
-        this.wandCast.Stop(true);
+        attackStartTime = Time.time - 1000;
+        currentAttackDuration = 0;
+        meleeTrail.Stop(true); // true makes the child animations stop too
+        wandTrail.Stop(true);
+        wandCast.Stop(true);
     }
 
     private void OnDisable()
@@ -67,65 +64,84 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
 
     private void MeleeAttack(PlayerAttackEvent e)
     {
-        this.meleeDamager.Damage(this.meleeDamage, this.meleeDuration);
-        this.meleeTrail.Play(true);
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.meleeStartPercentage, () => { this.meleeTrail.Stop(); }));
+        meleeDamager.Damage(meleeDamage, meleeDuration);
+        meleeTrail.Play(true);
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => { meleeTrail.Stop(); }));
     }
 
     private void WandAttack(PlayerAttackEvent e)
     {
-        this.wandTrail.Play();
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * this.wandStartPercentage, () => {
-            this.wandTrail.Stop(true);
-            this.wandCast.Stop(true);
-            this.wandCast.Play(true);
-            Projectile projectile = Instantiate(this.magicProjectilePrefab, this.magicProjectilePosition.transform.position, Quaternion.Euler(
-                this.magicProjectilePosition.transform.rotation.eulerAngles.x,
-                this.magicProjectilePosition.transform.rotation.eulerAngles.y,
-                this.magicProjectilePosition.transform.rotation.eulerAngles.z)
+        wandTrail.Play();
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () => {
+            wandTrail.Stop(true);
+            wandCast.Stop(true);
+            wandCast.Play(true);
+            Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
+                magicProjectilePosition.transform.rotation.eulerAngles.x,
+                magicProjectilePosition.transform.rotation.eulerAngles.y,
+                magicProjectilePosition.transform.rotation.eulerAngles.z)
             ).GetComponent<Projectile>();
-            projectile.Init(this.magicProjectileSpeed, this.magicProjectileDamage);
+            projectile.Init(magicProjectileSpeed, magicProjectileDamage);
         }));
     }
 
     private void Attack(PlayerAttackEvent e)
     {
-        if (e.type == AttackType.MELEE) MeleeAttack(e);
-        else if (e.type == AttackType.MAGIC) WandAttack(e);
+        if (e.type == AttackType.MELEE)
+        {
+            MeleeAttack(e);
+        }
+        else if (e.type == AttackType.MAGIC)
+        {
+            WandAttack(e);
+        }
     }
 
     private void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-
-        if (Input.GetButtonDown("Quick Melee")) this.ActiveAttackMode = AttackType.MELEE;
-        if (Input.GetButtonDown("Quick Magic")) this.ActiveAttackMode = AttackType.MAGIC;
-
-        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD) return;
-
-        if (Input.GetButtonDown("Fire1") && this.AttackElaspedTime > this.currentAttackDuration)
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
         {
-            if (this.ActiveAttackMode == AttackType.MELEE)
+            return;
+        }
+
+        if (Input.GetButtonDown("Quick Melee"))
+        {
+            ActiveAttackMode = AttackType.MELEE;
+        }
+
+        if (Input.GetButtonDown("Quick Magic"))
+        {
+            ActiveAttackMode = AttackType.MAGIC;
+        }
+
+        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD)
+        {
+            return;
+        }
+
+        if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration)
+        {
+            if (ActiveAttackMode == AttackType.MELEE)
             {
-                this.currentAttackDuration = this.meleeDuration;
+                currentAttackDuration = meleeDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
                 {
                     type = AttackType.MELEE,
-                    damage = this.meleeDamage,
-                    duration = this.meleeDuration,
+                    damage = meleeDamage,
+                    duration = meleeDuration,
                 });
             }
-            else if (this.ActiveAttackMode == AttackType.MAGIC)
+            else if (ActiveAttackMode == AttackType.MAGIC)
             {
-                this.currentAttackDuration = this.wandDuration;
+                currentAttackDuration = wandDuration;
                 EventManager.Instance.Raise(new PlayerAttackEvent
                 {
                     type = AttackType.MAGIC,
-                    damage = this.magicProjectileDamage,
-                    duration = this.wandDuration,
+                    damage = magicProjectileDamage,
+                    duration = wandDuration,
                 });
             }
-            this.attackStartTime = Time.time;
+            attackStartTime = Time.time;
         }
     }
 }

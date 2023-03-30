@@ -5,9 +5,10 @@ using System;
 
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
-    [SerializeField] float health;
-    [SerializeField] ParticleSystem hitParticles;
-    [SerializeField] GameObject corpse;
+    [SerializeField] private float health;
+    [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject corpse;
+    private DamageTextEmitter textEmitter;
     public float Health { get { return health; } }
 
     private void Start()

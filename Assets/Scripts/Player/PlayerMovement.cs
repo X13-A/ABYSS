@@ -52,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
         {
             verticalVelocity = jumpSpeed;
         }
-        Debug.Log(currentVelocity);
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);

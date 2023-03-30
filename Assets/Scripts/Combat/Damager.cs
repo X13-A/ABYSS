@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 
 public class Damager : MonoBehaviour, IDamager
 {
-    [SerializeField] float damage;
-    new Collider collider;
-    AttackType type = AttackType.MELEE;
+    [SerializeField] private float damage;
+    private new Collider collider;
+    private AttackType type = AttackType.MELEE;
     public AttackType Type { get { return type; } }
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
@@ -19,11 +19,8 @@ public class Damager : MonoBehaviour, IDamager
 
     private void OnTriggerEnter(Collider other)
     {
-        // Inflige des dÈgats si l'ennemi n'a pas dÈj‡ ÈtÈ touchÈ
+        // Inflige des d√©gats si l'ennemi n'a pas d√©j√† √©t√© touch√©
         IDamageable damageable = other.GetComponent<IDamageable>();
-        Debug.Log(other.gameObject.name);
-        Debug.Log(damageable);
-        Debug.Log(' ');
         if (damageable != null && !collides.Contains(damageable))
         {
             damageable.Damage(damage);

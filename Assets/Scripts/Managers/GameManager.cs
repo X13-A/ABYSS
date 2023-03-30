@@ -131,11 +131,13 @@ public class GameManager : MonoBehaviour, IEventHandler
     void Play()
     {
         InitGame();
+        Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 
     void Resume()
     {
+        Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 
@@ -218,7 +220,7 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
     {
-        MainMenu();
+        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = "Main Menu", generateLevel = false });
     }
 
     void QuitButtonClicked(QuitButtonClickedEvent e)

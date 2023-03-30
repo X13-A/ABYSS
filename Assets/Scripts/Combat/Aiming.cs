@@ -51,12 +51,16 @@ public class Aiming : MonoBehaviour, IEventHandler
     private void ToggleAim(AimingModeUpdateEvent e)
     {
         // Reset rotation of model to face camera
-        this.rotatingBody.transform.localRotation = Quaternion.identity;
+        if (e.mode == AimingMode.CAMERA)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            StartCoroutine(CoroutineUtil.RotateTo(this.rotatingBody.transform, 0.1f, Quaternion.identity));
+        }
+        else if (e.mode == AimingMode.CURSOR)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         this.aimingMode = e.mode;
-
-        // Lock or free cursor
-        if (e.mode == AimingMode.CAMERA) Cursor.lockState = CursorLockMode.Locked;
-        if (e.mode == AimingMode.CURSOR) Cursor.lockState = CursorLockMode.None;
     }
 
     private void Aim()

@@ -7,8 +7,8 @@ using SDD.Events;
 
 public class ScenePortal : MonoBehaviour
 {
-    [SerializeField] string targetScene;
-
+    [SerializeField] private string targetScene;
+    [SerializeField] private bool generateLevel;
 
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
@@ -16,6 +16,6 @@ public class ScenePortal : MonoBehaviour
         IPlayerCollider player = other.gameObject.GetComponent(typeof(IPlayerCollider)) as IPlayerCollider;
         if (player == null) return;
 
-        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = targetScene });
+        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = this.targetScene, generateLevel = this.generateLevel });;
     }
 }

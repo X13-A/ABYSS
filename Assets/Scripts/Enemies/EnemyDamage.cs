@@ -5,29 +5,31 @@ using System;
 
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
-    [SerializeField] float health;
-    [SerializeField] ParticleSystem hitParticles;
-    [SerializeField] GameObject corpse;
+    [SerializeField] private float health;
+    [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject corpse;
+    private DamageTextEmitter textEmitter;
     public float Health { get { return health; } }
 
-    public void Start()
+    private void Start()
     {
-        hitParticles.Stop();
+        this.textEmitter = GetComponent<DamageTextEmitter>();
+        this.hitParticles.Stop();
     }
 
     public void Damage(float damage)
     {
-        health = Mathf.Max(0, health - damage);
-        hitParticles.Stop();
-        hitParticles.Play();
-        if (health <= 0 + Mathf.Epsilon) Die();
+        this.health = Mathf.Max(0, this.health - damage);
+        this.hitParticles.Stop();
+        this.hitParticles.Play();
+        if (this.health <= 0 + Mathf.Epsilon) Die();
+        this.textEmitter.AddDamage(damage);
     }
 
     public void Die()
     {
-        Debug.Log("die");
-        Instantiate(corpse, transform.position, transform.rotation);
+        Instantiate(this.corpse, this.transform.position, this.transform.rotation);
         GetComponent<Collider>().enabled = false;
-        StartCoroutine(CoroutineUtil.FadeTo(GetComponent<MeshRenderer>(), 0.1f, 0, () => { Destroy(gameObject); }));
+        StartCoroutine(CoroutineUtil.FadeTo(GetComponent<MeshRenderer>(), 0.1f, 0, () => { Destroy(this.gameObject); }));
     }
 }

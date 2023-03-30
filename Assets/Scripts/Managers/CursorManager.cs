@@ -49,14 +49,23 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     public void SetCursorType(CursorType type)
     {
+        if (type == CursorType.MENU)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         this.activeCursorType = type;
         EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = this.GetSprite(type) });
     }
 
     private void SetCursorType(PlayerSwitchModeEvent e)
     {
-        this.activeCursorType = EnumConverter.CursorTypeFromPlayerMode(e.mode);
-        EventManager.Instance.Raise(new CursorUpdateEvent { type = this.activeCursorType, sprite = this.GetSprite(this.activeCursorType) });
+        CursorType type = EnumConverter.CursorTypeFromPlayerMode(e.mode);
+        if (type == CursorType.MENU)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        this.activeCursorType = type;
+        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = this.GetSprite(type) });
     }
 
     private Sprite GetSprite(CursorType type)

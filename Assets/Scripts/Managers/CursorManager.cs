@@ -8,14 +8,15 @@ public class CursorManager : MonoBehaviour, IEventHandler
     public static CursorManager Instance;
 
     [SerializeField] private float sensitivity;
-    public float Sensitivity { get { return sensitivity; } }
+    public float Sensitivity => sensitivity;
 
     [SerializeField] private Sprite menuCursor;
     [SerializeField] private Sprite meleeCursor;
     [SerializeField] private Sprite bowCursor;
     [SerializeField] private Sprite magicCursor;
+    [SerializeField] private Sprite buildCursor;
     [SerializeField] private CursorType activeCursorType;
-    public CursorType ActiveCursorType { get { return this.activeCursorType; } }
+    public CursorType ActiveCursorType => activeCursorType;
     private void OnEnable()
     {
         SubscribeEvents();
@@ -38,13 +39,19 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(this.gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        SetCursorType(this.activeCursorType);
+        SetCursorType(activeCursorType);
     }
 
     public void SetCursorType(CursorType type)

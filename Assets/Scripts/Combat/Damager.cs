@@ -9,7 +9,7 @@ public class Damager : MonoBehaviour, IDamager
     [SerializeField] private float damage;
     private new Collider collider;
     private AttackType type = AttackType.MELEE;
-    public AttackType Type { get { return type; } }
+    public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
     private void Awake()
@@ -19,7 +19,7 @@ public class Damager : MonoBehaviour, IDamager
 
     private void OnTriggerEnter(Collider other)
     {
-        // Inflige des dégats si l'ennemi n'a pas déjà été touché
+        // Inflige des d�gats si l'ennemi n'a pas d�j� �t� touch�
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (damageable != null && !collides.Contains(damageable))
         {
@@ -39,8 +39,11 @@ public class Damager : MonoBehaviour, IDamager
         }));
 
         // Never disable (arrows, projectiles)
-        if (duration <= 0) return;
-        
+        if (duration <= 0)
+        {
+            return;
+        }
+
         // Disable
         StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
         {

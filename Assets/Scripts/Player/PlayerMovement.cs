@@ -1,4 +1,6 @@
+using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,16 +12,22 @@ public class PlayerMovement : MonoBehaviour
      * </summary>
      **/
     [Header("Movement")]
-    [SerializeField] private float velocity;
+    [SerializeField] private float maxVelocity;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float groundDrag;
     [SerializeField] private float gravity;
 
     private CharacterController characterController;
-    private Vector3 direction;
     private bool isJumping;
     private bool isGrounded;
     private float verticalVelocity;
+    private float xInput;
+    private float yInput;
+    private Vector3 inputVector;
+    private float currentVelocity = 0f;
+    private float accelerationRate;
 
     private void Awake()
     {
@@ -28,31 +36,44 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        Vector3 movement = new Vector3(direction.x * velocity, 0, direction.z * velocity);
+        inputVector = new Vector3(xInput, 0, yInput).normalized;
+        float targetVelocity = inputVector.magnitude * maxVelocity;
+        if (Mathf.Abs(targetVelocity) < Mathf.Abs(currentVelocity))
+        {
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+        }
+        currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
+        Vector3 movement = currentVelocity * Time.fixedDeltaTime * inputVector;
+        if (isJumping && isGrounded)
+        {
+            verticalVelocity = jumpSpeed;
+        }
+        Debug.Log(currentVelocity);
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement = transform.TransformDirection(movement);
-        if (this.isJumping && this.isGrounded)
-            verticalVelocity = jumpSpeed;
         movement.y = verticalVelocity;
         characterController.Move(movement);
     }
     private void HandleInput()
     {
-        float xInput = Input.GetAxis("Horizontal");
-        float yInput = Input.GetAxis("Vertical");
-        this.isJumping = Input.GetButton("Jump");
-        direction = new Vector3(xInput, 0, yInput);
+        xInput = Input.GetAxis("Horizontal");
+        yInput = Input.GetAxis("Vertical");
+        isJumping = Input.GetButton("Jump");
     }
 
     private void UpdateGravity()
     {
-        if (this.isGrounded)
+        if (isGrounded)
         {
-            this.verticalVelocity = 0;
+            verticalVelocity = 0;
             return;
         }
-        this.verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
+        verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
     }
 
     private void Update()
@@ -61,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        this.isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
         HandleInput();
     }
 

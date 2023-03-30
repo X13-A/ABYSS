@@ -43,8 +43,8 @@ namespace TravisGameAssets
 		private bool floorVisible;
 		private bool slowMotion;
 		private bool lighting;
-		
-		void Start()
+
+        private void Start()
 		{
 			hitIndex = 0;
 			cameraRotating = false;
@@ -66,7 +66,7 @@ namespace TravisGameAssets
 			RefreshHitUI();
 		}
 
-		void Update()
+        private void Update()
 		{
 			if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 			{

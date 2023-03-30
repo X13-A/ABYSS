@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] bool AOE;
-    [SerializeField] bool destroyOnCollision;
-    [SerializeField] GameObject damager;
-    [SerializeField] GameObject collideEffect; // Object created when projectile collides with something
-    float damage;
-    float speed;
+    [SerializeField] private bool AOE;
+    [SerializeField] private bool destroyOnCollision;
+    [SerializeField] private GameObject damager;
+    [SerializeField] private GameObject collideEffect; // Object created when projectile collides with something
+    private float damage;
+    private float speed;
 
     public void Init(float speed, float damage, float lifespan = 2)
     {
@@ -19,34 +19,34 @@ public class Projectile : MonoBehaviour
         {
             damager.GetComponent<Damager>().Damage(damage, 0);
         }
-        Invoke("Die", lifespan);
+        Invoke(nameof(Die), lifespan);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (this.destroyOnCollision && other.GetComponent<StopProjectiles>() != null)
+        if (destroyOnCollision && other.GetComponent<StopProjectiles>() != null)
         {
             Die();
         }
     }
 
-    void Die()
+    private void Die()
     {
-        if (this.collideEffect != null)
+        if (collideEffect != null)
         {
-            GameObject effectInstance = Instantiate(this.collideEffect, this.transform.position, this.transform.rotation);
+            GameObject effectInstance = Instantiate(collideEffect, transform.position, transform.rotation);
             if (AOE)
             {
                 // Activate damage on explosion object
-                this.damager.transform.SetParent(effectInstance.transform);
-                this.damager.GetComponent<Damager>().Damage(this.damage, 0);
+                damager.transform.SetParent(effectInstance.transform);
+                damager.GetComponent<Damager>().Damage(damage, 0);
             }
         }
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     private void Update()
     {
-        this.transform.position += transform.forward * this.speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 }

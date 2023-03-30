@@ -6,18 +6,19 @@ using UnityEditor.SceneManagement;
 
 public class RenderTextureController : MonoBehaviour, IEventHandler
 {
-    Camera cam;
+    private Camera cam;
 
-    void Start()
+    private void Start()
     {
         cam = GetComponent<Camera>();
     }
-    void OnEnable()
+
+    private void OnEnable()
     {
         SubscribeEvents();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -32,9 +33,14 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<WindowResizeEvent>(ScaleRenderTexture);
         EventManager.Instance.RemoveListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
     }
-    void ScaleRenderTexture(WindowResizeEvent e)
+
+    private void ScaleRenderTexture(WindowResizeEvent e)
     {
-        if (cam == null) return;
+        if (cam == null)
+        {
+            return;
+        }
+
         RenderTexture rt = cam.targetTexture;
         RenderTextureDescriptor descriptor = rt.descriptor;
 
@@ -47,7 +53,7 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(updateEvent);
     }
 
-    void UpdateRenderTexture(RenderTextureUpdateEvent e)
+    private void UpdateRenderTexture(RenderTextureUpdateEvent e)
     {
         cam.targetTexture.Release();
         cam.targetTexture = e.updatedRt;

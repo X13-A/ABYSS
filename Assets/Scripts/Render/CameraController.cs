@@ -5,12 +5,12 @@ using SDD.Events;
 
 public class CameraController : MonoBehaviour, IEventHandler
 {
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -23,7 +23,8 @@ public class CameraController : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.RemoveListener<WindowResizeEvent>(Resize);
     }
-    void Resize(WindowResizeEvent e)
+
+    private void Resize(WindowResizeEvent e)
     {
         GetComponent<Camera>().aspect = (float)(e.newWidth) / e.newHeight;
     }

@@ -6,33 +6,23 @@ using UnityEngine;
 public class MouseLock : MonoBehaviour
 {
     private static MouseLock m_Instance;
-    public static MouseLock Instance { get { return m_Instance; } }
+    public static MouseLock Instance => m_Instance;
 
-    public float mouseSensitivity;
-
-    public float clampAngle;
+    [SerializeField] private Cinemachine.CinemachineFreeLook freeLookCamera;
 
     private CharacterController characterController;
-    private float rotY;
-    private float mouseX;
-
-    private void Start()
-    {
-        Vector3 rot = transform.localRotation.eulerAngles;
-        rotY = rot.y;
-    }
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        mouseX = Input.GetAxis("Mouse X");
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private bool IsActive()
@@ -49,12 +39,11 @@ public class MouseLock : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        if (this.IsActive())
+
+        if (IsActive())
         {
-            rotY += mouseX * mouseSensitivity;
-            Quaternion globalRotation = Quaternion.Euler(0f, rotY, 0f);
-            characterController.transform.rotation = globalRotation;
+            float cameraRotationY = freeLookCamera.m_XAxis.Value;
+            characterController.transform.rotation = Quaternion.Euler(0f, cameraRotationY, 0f);
         }
     }
 }

@@ -8,17 +8,23 @@ using System;
 public class RenderManager : MonoBehaviour, IEventHandler
 {
     private static RenderManager m_Instance;
-    public static RenderManager Instance { get { return m_Instance; } }
+    public static RenderManager Instance => m_Instance;
 
     private int screenWidth;
     private int screenHeight;
-    public int ScreenWidth { get { return screenWidth; } }
-    public int ScreenHeight { get { return screenHeight; } }
+    public int ScreenWidth => screenWidth;
+    public int ScreenHeight => screenHeight;
 
     private void Awake()
     {
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -50,7 +56,11 @@ public class RenderManager : MonoBehaviour, IEventHandler
 
     public void FireResizeEvent(dynamic e = null)
     {
-        if (SettingsManager.Instance == null) return;
+        if (SettingsManager.Instance == null)
+        {
+            return;
+        }
+
         WindowResizeEvent resizeEvent = new WindowResizeEvent
         {
             oldWidth = screenWidth,

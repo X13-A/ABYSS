@@ -5,11 +5,11 @@ using SDD.Events;
 
 public class CameraManager : MonoBehaviour, IEventHandler
 {
-    [SerializeField] GameObject m_PlayCamera;
-    [SerializeField] GameObject m_MainMenuCamera;
-    List<GameObject> m_Cameras;
+    [SerializeField] private GameObject m_PlayCamera;
+    [SerializeField] private GameObject m_MainMenuCamera;
+    private List<GameObject> m_Cameras;
 
-    void SwitchCamera(GameObject camera)
+    private void SwitchCamera(GameObject camera)
     {
         m_Cameras.ForEach(item => item.SetActive(camera == item));
     }
@@ -26,11 +26,12 @@ public class CameraManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GamePlayEvent>(GamePlay);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
@@ -47,13 +48,17 @@ public class CameraManager : MonoBehaviour, IEventHandler
     }
 
     // CameraManager events' callbacks
-    void GameMainMenu(GameMainMenuEvent e)
+    private void GameMainMenu(GameMainMenuEvent e)
     {
-        if (m_MainMenuCamera == null) return;
+        if (m_MainMenuCamera == null)
+        {
+            return;
+        }
+
         SwitchCamera(m_MainMenuCamera);
     }
 
-    void GamePlay(GamePlayEvent e)
+    private void GamePlay(GamePlayEvent e)
     {
         SwitchCamera(m_PlayCamera);
     }

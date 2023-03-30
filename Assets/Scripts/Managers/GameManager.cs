@@ -4,16 +4,16 @@ using SDD.Events;
 public class GameManager : MonoBehaviour, IEventHandler
 {
     private static GameManager m_Instance;
-    public static GameManager Instance { get { return m_Instance; } }
+    public static GameManager Instance => m_Instance;
 
     [SerializeField]
-    GAMESTATE m_State;
-    public GAMESTATE State { get { return m_State; } }
+    private GAMESTATE m_State;
+    public GAMESTATE State => m_State;
 
     // Permet de suivre le menu "source" pour pouvoir y retourner
     // Exemple: Le menu settings peut être ouvert depuis le menu pause et le menu principal
-    GAMESTATE m_SourceMenu;
-    public GAMESTATE SourceMenu { get { return m_SourceMenu; } }
+    private GAMESTATE m_SourceMenu;
+    public GAMESTATE SourceMenu => m_SourceMenu;
 
 
     public void SubscribeEvents()
@@ -39,22 +39,29 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         SubscribeEvents();
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
         UnsubscribeEvents();
     }
 
     private void Awake()
     {
-        if (!m_Instance) m_Instance = this;
-        else Destroy(gameObject);
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void Start()
+    private void Start()
     {
         switch (State)
         {
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
@@ -84,7 +91,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void SetState(GAMESTATE newState)
+    private void SetState(GAMESTATE newState)
     {
         // Update of settings menu
         switch (State)
@@ -122,46 +129,46 @@ public class GameManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void InitGame()
+    private void InitGame()
     {
         // Load save data
     }
 
     #region MenuManager Actions
-    void Play()
+    private void Play()
     {
         InitGame();
         Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 
-    void Resume()
+    private void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 
-    void Quit()
+    private void Quit()
     {
         // Quit game
     }
 
-    void MainMenu()
+    private void MainMenu()
     {
         SetState(GAMESTATE.MAIN_MENU);
     }
 
-    void Pause()
+    private void Pause()
     {
         SetState(GAMESTATE.PAUSE_MENU);
     }
 
-    void Settings()
+    private void Settings()
     {
         SetState(GAMESTATE.SETTINGS_MENU);
     }
 
-    void GameOver()
+    private void GameOver()
     {
         SetState(GAMESTATE.GAME_OVER);
     }
@@ -169,22 +176,22 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     #region MenuManager event callbacks
 
-    void PrepareSceneChange(SceneAboutToChangeEvent e)
+    private void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
         SetState(GAMESTATE.LOADING);
     }
 
-    void PlayButtonClicked(PlayButtonClickedEvent e)
+    private void PlayButtonClicked(PlayButtonClickedEvent e)
     {
         Play();
     }
 
-    void ResumeButtonClicked(ResumeButtonClickedEvent e)
+    private void ResumeButtonClicked(ResumeButtonClickedEvent e)
     {
         Resume();
     }
 
-    void EscapeButtonClicked(EscapeButtonClickedEvent e)
+    private void EscapeButtonClicked(EscapeButtonClickedEvent e)
     {
         if (State == GAMESTATE.PLAY)
         {
@@ -196,12 +203,12 @@ public class GameManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void SettingsButtonClicked(SettingsButtonClickedEvent e)
+    private void SettingsButtonClicked(SettingsButtonClickedEvent e)
     {
         Settings();
     }
 
-    void ExitSettingsButtonClicked(CancelSettingsButtonClickedEvent e)
+    private void ExitSettingsButtonClicked(CancelSettingsButtonClickedEvent e)
     {
         EventManager.Instance.Raise(new GameSaveSettingsEvent());
         switch (SourceMenu)
@@ -218,12 +225,12 @@ public class GameManager : MonoBehaviour, IEventHandler
         }
     }
 
-    void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
+    private void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
     {
         EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = "Main Menu", generateLevel = false });
     }
 
-    void QuitButtonClicked(QuitButtonClickedEvent e)
+    private void QuitButtonClicked(QuitButtonClickedEvent e)
     {
         Quit();
     }

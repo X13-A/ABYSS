@@ -45,19 +45,19 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
-        this.generator = GetComponent<MapGeneration>();
+        generator = GetComponent<MapGeneration>();
     }
 
     private void UpdateProgress(LoadingProgressUpdateEvent e)
     {
-        this.progressBar.fillAmount = e.progress;
+        progressBar.fillAmount = e.progress;
     }
 
     private void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
-        // Préparation au changement de scene
+        // Pr�paration au changement de scene
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
             EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, generateLevel = e.generateLevel });
         }));
@@ -68,15 +68,15 @@ public class LevelManager : MonoBehaviour, IEventHandler
         var operation = SceneManager.LoadSceneAsync(e.targetScene);
 
         operation.allowSceneActivation = false;
-        this.progressBar.fillAmount = 0;
-        this.loadingScreen.SetActive(true);
+        progressBar.fillAmount = 0;
+        loadingScreen.SetActive(true);
         do
         {
             EventManager.Instance.Raise(new LoadingProgressUpdateEvent { progress = operation.progress, message = "Loading scene" });
         }
         while (operation.progress < 0.9f);
 
-        // Génération procédurale
+        // G�n�ration proc�durale
         if (e.generateLevel == true)
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);

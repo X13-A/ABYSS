@@ -91,10 +91,10 @@ public class CoroutineUtil : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, t);
             yield return null;
         }
-        if (transform != null)
+        meshRenderer.material.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+        if (onComplete != null)
         {
-            transform.localRotation = targetRotation;
-            if (onComplete != null) onComplete();
+            onComplete();
         }
     }
 

@@ -33,6 +33,7 @@ public class Aiming : MonoBehaviour, IEventHandler
     {
         UnsubscribeEvents();
     }
+
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
@@ -44,41 +45,43 @@ public class Aiming : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(ToggleAim);
     }
+
     private void UpdateRenderTexture(RenderTextureUpdateEvent e)
     {
-        this.rt = e.updatedRt;
+        rt = e.updatedRt;
     }
+
     private void ToggleAim(AimingModeUpdateEvent e)
     {
         // Reset rotation of model to face camera
         if (e.mode == AimingMode.CAMERA)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            StartCoroutine(CoroutineUtil.RotateTo(this.rotatingBody.transform, 0.1f, Quaternion.identity));
+            StartCoroutine(CoroutineUtil.RotateTo(rotatingBody.transform, 0.1f, Quaternion.identity));
         }
         else if (e.mode == AimingMode.CURSOR)
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        this.aimingMode = e.mode;
+        aimingMode = e.mode;
     }
 
     private void Aim()
     {
         // Convert screen position to camera position
         Vector3 mousePos = Input.mousePosition;
-        float xRatio = (float) this.rt.width / Screen.width;
-        float yRatio = (float) this.rt.height / Screen.height;
+        float xRatio = (float) rt.width / Screen.width;
+        float yRatio = (float) rt.height / Screen.height;
         mousePos.x *= xRatio;
         mousePos.y *= yRatio;
 
         // Cast ray from camera to find where to aim
-        Ray ray = this.cam.ScreenPointToRay(mousePos);
+        Ray ray = cam.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Aim")))
         {
-            this.target.transform.position = hit.point;
-            this.rotatingBody.transform.LookAt(new Vector3(this.target.transform.position.x, this.transform.position.y, this.target.transform.position.z));
+            target.transform.position = hit.point;
+            rotatingBody.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
         }
     }
 
@@ -95,7 +98,7 @@ public class Aiming : MonoBehaviour, IEventHandler
     }
     private bool IsAiming()
     {
-        return GameManager.Instance.State == GAMESTATE.PLAY && this.AimingMode == AimingMode.CURSOR;
+        return GameManager.Instance.State == GAMESTATE.PLAY && AimingMode == AimingMode.CURSOR;
     }
 
     private bool IsActive()
@@ -105,13 +108,13 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     private void Update()
     {
-        if (this.IsActive())
+        if (IsActive())
         {
-            this.Controls();
+            Controls();
         }
-        if (this.IsAiming())
+        if (IsAiming())
         {
-            this.Aim();
+            Aim();
         }
     }
 }

@@ -13,23 +13,23 @@ public class EnemyDamage : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        this.textEmitter = GetComponent<DamageTextEmitter>();
-        this.hitParticles.Stop();
+        textEmitter = GetComponent<DamageTextEmitter>();
+        hitParticles.Stop();
     }
 
     public void Damage(float damage)
     {
-        this.health = Mathf.Max(0, this.health - damage);
-        this.hitParticles.Stop();
-        this.hitParticles.Play();
-        if (this.health <= 0 + Mathf.Epsilon) Die();
-        this.textEmitter.AddDamage(damage);
+        health = Mathf.Max(0, health - damage);
+        hitParticles.Stop();
+        hitParticles.Play();
+        if (health <= 0 + Mathf.Epsilon) Die();
+        textEmitter.AddDamage(damage);
     }
 
     public void Die()
     {
-        Instantiate(this.corpse, this.transform.position, this.transform.rotation);
+        Instantiate(corpse, transform.position, transform.rotation);
         GetComponent<Collider>().enabled = false;
-        StartCoroutine(CoroutineUtil.FadeTo(GetComponent<MeshRenderer>(), 0.1f, 0, () => { Destroy(this.gameObject); }));
+        StartCoroutine(CoroutineUtil.FadeTo(GetComponent<MeshRenderer>(), 0.1f, 0, () => { Destroy(gameObject); }));
     }
 }

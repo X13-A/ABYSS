@@ -80,13 +80,13 @@ public class LevelManager : MonoBehaviour, IEventHandler
         if (e.generateLevel == true)
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);
-            GameObject map = await this.generator.GenerateMap();
+            GameObject map = await generator.GenerateMap();
             DontDestroyOnLoad(map);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
             operation.allowSceneActivation = true;
 
-            this.loadingScreen.SetActive(false);
+            loadingScreen.SetActive(false);
             void OnSceneLoaded(Scene scene, LoadSceneMode mode)
             {
                 SceneManager.MoveGameObjectToScene(map, scene);
@@ -96,7 +96,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
         else
         {
             operation.allowSceneActivation = true;
-            this.loadingScreen.SetActive(false);
+            loadingScreen.SetActive(false);
         }
     }
 }

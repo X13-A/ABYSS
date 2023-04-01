@@ -16,6 +16,6 @@ public class ScenePortal : MonoBehaviour
         IPlayerCollider player = other.gameObject.GetComponent(typeof(IPlayerCollider)) as IPlayerCollider;
         if (player == null) return;
 
-        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = this.targetScene, generateLevel = this.generateLevel });;
+        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = targetScene, generateLevel = generateLevel });;
     }
 }

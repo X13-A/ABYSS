@@ -16,15 +16,15 @@ public class DamageTextEmitter : MonoBehaviour
     {
         if (Time.time - lastDamageTime > resetDelay)
         {
-            this.totalDamage = 0;
+            totalDamage = 0;
         }
-        this.totalDamage += damage;
+        totalDamage += damage;
         lastDamageTime = Time.time;
-        Debug.Log(this.totalDamage);
+        Debug.Log(totalDamage);
 
         GameObject textInstance = Instantiate(textPrefab, emitPos.transform.position, Quaternion.identity);
         TextMeshPro textMeshPro = textInstance.GetComponent<TextMeshPro>();
-        textMeshPro.text = this.totalDamage.ToString();
+        textMeshPro.text = totalDamage.ToString();
 
         Vector3 textScale = textInstance.transform.localScale;
         CoroutineUtil.Instance.StartPermanentCoroutine(CoroutineUtil.FadeTextTo(textMeshPro, fadeDelay, 0f, () => { Destroy(textInstance); }));

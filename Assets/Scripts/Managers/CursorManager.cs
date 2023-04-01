@@ -60,8 +60,8 @@ public class CursorManager : MonoBehaviour, IEventHandler
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        this.activeCursorType = type;
-        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = this.GetSprite(type) });
+        activeCursorType = type;
+        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = GetSprite(type) });
     }
 
     private void SetCursorType(PlayerSwitchModeEvent e)
@@ -71,19 +71,19 @@ public class CursorManager : MonoBehaviour, IEventHandler
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        this.activeCursorType = type;
-        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = this.GetSprite(type) });
+        activeCursorType = type;
+        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = GetSprite(type) });
     }
 
     private Sprite GetSprite(CursorType type)
     {
         return type switch
         {
-            CursorType.MENU => this.menuCursor,
-            CursorType.MELEE => this.meleeCursor,
-            CursorType.MAGIC => this.magicCursor,
-            CursorType.RANGE => this.bowCursor,
-            _ => this.menuCursor,
+            CursorType.MENU => menuCursor,
+            CursorType.MELEE => meleeCursor,
+            CursorType.MAGIC => magicCursor,
+            CursorType.RANGE => bowCursor,
+            _ => menuCursor,
         };
     }
 }

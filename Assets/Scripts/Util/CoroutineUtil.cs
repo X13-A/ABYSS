@@ -53,7 +53,6 @@ public class CoroutineUtil : MonoBehaviour
             float t = (Time.time - startTime) / duration;
             text.color = Color.Lerp(startColor, targetColor, t);
             yield return null;
-            Debug.Log(t);
         }
         if (text != null)
         {

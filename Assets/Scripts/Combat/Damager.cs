@@ -21,7 +21,7 @@ public class Damager : MonoBehaviour, IDamager
     {
         // Inflige des d�gats si l'ennemi n'a pas d�j� �t� touch�
         IDamageable damageable = other.GetComponent<IDamageable>();
-        if (damageable != null && !collides.Contains(damageable))
+        if (damageable != null && !collides.Contains(damageable) && damageable.ModeGivingDamage == PlayerManager.Instance.ActivePlayerMode)
         {
             damageable.Damage(damage);
             collides.Add(damageable);

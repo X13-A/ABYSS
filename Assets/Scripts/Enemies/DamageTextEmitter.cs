@@ -20,7 +20,6 @@ public class DamageTextEmitter : MonoBehaviour
         }
         totalDamage += damage;
         lastDamageTime = Time.time;
-        Debug.Log(totalDamage);
 
         GameObject textInstance = Instantiate(textPrefab, emitPos.transform.position, Quaternion.identity);
         TextMeshPro textMeshPro = textInstance.GetComponent<TextMeshPro>();

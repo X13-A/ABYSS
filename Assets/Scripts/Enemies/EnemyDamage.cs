@@ -6,10 +6,12 @@ using System;
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
     [SerializeField] private float health;
+    [SerializeField] private PlayerMode modeGivingDamage;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject corpse;
     private DamageTextEmitter textEmitter;
-    public float Health { get { return health; } }
+    public float Health { get { return this.health; } }
+    public PlayerMode ModeGivingDamage { get { return this.modeGivingDamage; } }
 
     private void Start()
     {

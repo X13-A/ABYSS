@@ -22,11 +22,11 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private float persistance;
     [SerializeField] private float lacunarity;
 
-    [SerializeField] private int seed;
     [SerializeField] private float heightMultiplier;
     [SerializeField] private AnimationCurve heightCurve;
 
     [SerializeField] private TerrainType[] regions;
+
 
     private void Start()
     {
@@ -61,10 +61,10 @@ public class MapGeneration : MonoBehaviour
                     }
                 }
 
-                for (int y = -2; y < 0; y++)
+                for (int y = 0; y < (int) (heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier); y++)
                 {
                     GameObject cube = Instantiate(regions[2].cubePrefab);
-                    cube.transform.position = new Vector3(x, (int)(heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier) + y, z);
+                    cube.transform.position = new Vector3(x, y, z);
                     cube.AddComponent<BoxCollider>();
                     cube.layer = LayerMask.NameToLayer("Ground");
                     cube.transform.SetParent(map.transform);
@@ -76,7 +76,6 @@ public class MapGeneration : MonoBehaviour
                 currentCube.AddComponent<Rigidbody>();
                 currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 currentCube.GetComponent<Rigidbody>().isKinematic = true;
-                currentCube.layer = LayerMask.NameToLayer("Ground");
                 currentCube.transform.SetParent(map.transform);
 
             }
@@ -91,8 +90,9 @@ public class MapGeneration : MonoBehaviour
 
     private float[,] GenerateNoiseMap()
     {
+        System.Random rnd = new();
         float[,] noiseMap = new float[mapWidth, mapHeight];
-        System.Random randomNumberGenerator = new(seed);
+        System.Random randomNumberGenerator = new(rnd.Next(-100000, 100000));
         Vector2[] octaveOffsets = new Vector2[octaves];
 
         for (int i = 0; i < octaves; i++)

@@ -10,6 +10,11 @@ public class PlayerSwitchModeEvent : SDD.Events.Event
     public PlayerMode mode;
 }
 
+public class PlayerSwitchLookModeEvent : SDD.Events.Event
+{
+    public PlayerLook lookMode;
+}
+
 public class PlayerAttackEvent : SDD.Events.Event
 {
     public float damage;

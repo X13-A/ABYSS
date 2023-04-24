@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using SDD.Events;
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -75,6 +76,35 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
     }
 
+    private void UpdateLookMode()
+    {
+        if (Input.GetButtonDown("Look Downwards"))
+        {
+            if (PlayerManager.Instance.ActivePlayerLook == PlayerLook.DOWNWARDS)
+            {
+                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.AHEAD });
+
+            }
+            else
+            {
+                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.DOWNWARDS });
+
+            }
+            return;
+        }
+        if (Input.GetButtonDown("Look Upwards"))
+        {
+            if (PlayerManager.Instance.ActivePlayerLook == PlayerLook.UPWARDS)
+            {
+                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.AHEAD });
+            }
+            else
+            {
+                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.UPWARDS });
+            }
+        }
+    }
+
     private void Update()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY)
@@ -82,7 +112,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
-        HandleInput();
+        this.HandleInput();
+        this.UpdateLookMode();
     }
 
     private void FixedUpdate()

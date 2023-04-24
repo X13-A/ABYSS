@@ -8,25 +8,29 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public static PlayerManager Instance;
 
     [SerializeField] private PlayerMode activePlayerMode;
-    public PlayerMode ActivePlayerMode => activePlayerMode;
+    [SerializeField] private PlayerLook activePlayerLook;
+    public PlayerMode ActivePlayerMode => this.activePlayerMode;
+    public PlayerLook ActivePlayerLook => this.activePlayerLook;
     private void OnEnable()
     {
-        SubscribeEvents();
+        this.SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        UnsubscribeEvents();
+        this.UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerMode);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
+        EventManager.Instance.AddListener<PlayerSwitchLookModeEvent>(this.SetPlayerLook);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetPlayerMode);
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
+        EventManager.Instance.RemoveListener<PlayerSwitchLookModeEvent>(this.SetPlayerLook);
     }
 
     private void Awake()
@@ -48,6 +52,11 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetPlayerMode(PlayerSwitchModeEvent e)
     {
-        activePlayerMode = e.mode;
+        this.activePlayerMode = e.mode;
+    }
+
+    private void SetPlayerLook(PlayerSwitchLookModeEvent e)
+    {
+        this.activePlayerLook = e.lookMode;
     }
 }

@@ -11,21 +11,13 @@ public class PlayerBuild : MonoBehaviour
 
     [SerializeField] private GameObject blocInHand;
 
-    private void Aim()
+    private void Build()
     {
-        // Convert screen position to camera position
-        Vector3 mousePos = Input.mousePosition;
-        float xRatio = (float) rt.width / Screen.width;
-        float yRatio = (float) rt.height / Screen.height;
-        mousePos.x *= xRatio;
-        mousePos.y *= yRatio;
-
-        // Cast ray from camera to find where to aim
-        Ray ray = cam.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        RaycastHit hit = AimUtil.Instance.Aim();
+        if (hit.collider)
         {
             blocInHand.transform.position = new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y), Mathf.Round(hit.point.z));
+            Instantiate(blocInHand);
         }
     }
     private void Update()
@@ -38,12 +30,11 @@ public class PlayerBuild : MonoBehaviour
         if (Input.GetButtonDown("Pickaxe"))
         {
             EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.PICKAXE });
-            Debug.Log(PlayerManager.Instance.ActivePlayerMode);
         }
 
         if (Input.GetButtonDown("Build"))
         {
-            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD});
+            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD });
         }
 
         if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.BUILD)
@@ -51,10 +42,9 @@ public class PlayerBuild : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && Aiming.Instance.AimingMode == AimingMode.CURSOR)
         {
-            Aim();
-            Instantiate(blocInHand);
+            Build();
         }
     }
 }

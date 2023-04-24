@@ -68,17 +68,8 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     private void Aim()
     {
-        // Convert screen position to camera position
-        Vector3 mousePos = Input.mousePosition;
-        float xRatio = (float) rt.width / Screen.width;
-        float yRatio = (float) rt.height / Screen.height;
-        mousePos.x *= xRatio;
-        mousePos.y *= yRatio;
-
-        // Cast ray from camera to find where to aim
-        Ray ray = cam.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Aim")))
+        RaycastHit hit = AimUtil.Instance.Aim();
+        if (hit.collider)
         {
             target.transform.position = hit.point;
             rotatingBody.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));

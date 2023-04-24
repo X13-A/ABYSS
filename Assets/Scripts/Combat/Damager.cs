@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 public class Damager : MonoBehaviour, IDamager
 {
     [SerializeField] private float damage;
-    [SerializeField] private Transform bodyPosition;
     private new Collider collider;
     private AttackType type = AttackType.MELEE;
     public AttackType Type => type;
@@ -32,31 +31,21 @@ public class Damager : MonoBehaviour, IDamager
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            Vector3 direction = Vector3.forward;
-            RaycastHit hit;
-
-            switch (PlayerManager.Instance.ActivePlayerLook)
-            {
-                case PlayerLook.DOWNWARDS:
-                    direction = Vector3.down;
-                    break;
-                case PlayerLook.UPWARDS:
-                    direction = Vector3.up;
-                    break;
-            }
-
-
-            if (Physics.Raycast(this.bodyPosition.position, transform.TransformDirection(direction), out hit, 1.5f))
+            RaycastHit hit = AimUtil.Instance.Aim();
+            if (hit.collider)
             {
                 this.CauseDamage(hit.collider);
             }
         }
     }
 
-/*    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        this.CauseDamage(other);
-    }*/
+        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.MELEE)
+        {
+            this.CauseDamage(other);
+        }
+    }
 
     public void Damage(float damage, float duration)
     {
@@ -87,7 +76,7 @@ public class Damager : MonoBehaviour, IDamager
     {
         // Inflige des d�gats si l'ennemi n'a pas d�j� �t� touch�
         IDamageable damageable = other.GetComponent<IDamageable>();
-        if (damageable != null && !collides.Contains(damageable))
+        if (damageable != null && !collides.Contains(damageable) && damageable.ModeGivingDamage == PlayerManager.Instance.ActivePlayerMode)
         {
             damageable.Damage(damage);
             collides.Add(damageable);

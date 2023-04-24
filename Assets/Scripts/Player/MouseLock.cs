@@ -31,7 +31,7 @@ public class MouseLock : MonoBehaviour
     {
         if (GameManager.Instance.State == GAMESTATE.PLAY)
         {
-            return Aiming.Instance.AimingMode == AimingMode.CAMERA;
+            return PlayerManager.Instance.ActiveAimingMode == AimingMode.CAMERA;
         }
         else
         {

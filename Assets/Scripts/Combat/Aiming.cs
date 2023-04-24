@@ -15,8 +15,6 @@ public class Aiming : MonoBehaviour, IEventHandler
     [SerializeField] private GameObject target;
     [SerializeField] private RenderTexture rt;
     [SerializeField] private GameObject rotatingBody;
-    [SerializeField] private AimingMode aimingMode;
-    public AimingMode AimingMode { get { return aimingMode; } }
 
     private void Awake()
     {
@@ -37,13 +35,13 @@ public class Aiming : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
-        EventManager.Instance.AddListener<AimingModeUpdateEvent>(ToggleAim);
+        EventManager.Instance.AddListener<AimingModeUpdateEvent>(RotatePlayer);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
-        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(ToggleAim);
+        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(RotatePlayer);
     }
 
     private void UpdateRenderTexture(RenderTextureUpdateEvent e)
@@ -51,19 +49,13 @@ public class Aiming : MonoBehaviour, IEventHandler
         rt = e.updatedRt;
     }
 
-    private void ToggleAim(AimingModeUpdateEvent e)
+    private void RotatePlayer(AimingModeUpdateEvent e)
     {
         // Reset rotation of model to face camera
         if (e.mode == AimingMode.CAMERA)
         {
-            Cursor.lockState = CursorLockMode.Locked;
             StartCoroutine(CoroutineUtil.RotateTo(rotatingBody.transform, 0.1f, Quaternion.identity));
         }
-        else if (e.mode == AimingMode.CURSOR)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        aimingMode = e.mode;
     }
 
     private void Aim()
@@ -98,7 +90,8 @@ public class Aiming : MonoBehaviour, IEventHandler
     }
     private bool IsAiming()
     {
-        return GameManager.Instance.State == GAMESTATE.PLAY && AimingMode == AimingMode.CURSOR;
+        if (PlayerManager.Instance == null) return false;
+        return GameManager.Instance.State == GAMESTATE.PLAY && PlayerManager.Instance.ActiveAimingMode == AimingMode.CURSOR;
     }
 
     private bool IsActive()

@@ -38,7 +38,6 @@ public class PlayerBuild : MonoBehaviour
         if (Input.GetButtonDown("Pickaxe"))
         {
             EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.PICKAXE });
-            Debug.Log(PlayerManager.Instance.ActivePlayerMode);
         }
 
         if (Input.GetButtonDown("Build"))

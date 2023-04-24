@@ -68,7 +68,6 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     private void GameSaveSettings(GameSaveSettingsEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         GAMESTATE source = GameManager.Instance.SourceMenu;
         switch (source)
         {
@@ -86,7 +85,6 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     private void GameCancelSettings(GameCancelSettingsEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         GAMESTATE source = GameManager.Instance.SourceMenu;
         switch (source)
         {
@@ -104,7 +102,6 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     private void GameMainMenu(GameMainMenuEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         if (m_MainMenuPanel == null)
         {
             return;
@@ -115,32 +112,27 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     private void GamePauseMenu(GamePauseMenuEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_PauseMenuPanel);
     }
 
     private void GameSettingsMenu(GameSettingsMenuEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_SettingsMenuPanel);
 
     }
 
     private void GamePlay(GamePlayEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MELEE);
         OpenPanel(null);
     }
 
     private void GameResume(GameResumeEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MELEE);
         OpenPanel(null);
     }
 
     private void GameOver(GameOverEvent e)
     {
-        CursorManager.Instance.SetCursorType(CursorType.MENU);
         OpenPanel(m_GameOverPanel);
     }
 

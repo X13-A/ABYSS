@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
         EventManager.Instance.RemoveListener<CancelSettingsButtonClickedEvent>(ExitSettingsButtonClicked);
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
+        EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
     }
 
     private void OnEnable()
@@ -138,13 +139,11 @@ public class GameManager : MonoBehaviour, IEventHandler
     private void Play()
     {
         InitGame();
-        Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 
     private void Resume()
     {
-        Cursor.lockState = CursorLockMode.Locked; // Hack
         SetState(GAMESTATE.PLAY);
     }
 

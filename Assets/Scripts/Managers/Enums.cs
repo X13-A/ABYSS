@@ -24,4 +24,18 @@ public class EnumConverter
         // Assumes both enums have the same value at the same index, might change in the future
         return (PlayerMode) type;
     }
+
+    public static string StringFromPlayerMode(PlayerMode mode)
+    {
+        return mode switch
+        {
+            PlayerMode.MELEE => "Melee",
+            PlayerMode.MAGIC => "Magic",
+            PlayerMode.RANGE => "Range",
+            PlayerMode.UNARMED => "Unarmed",
+            PlayerMode.PICKAXE => "Pickaxe",
+            PlayerMode.BUILD => "Build",
+            _ => "Unknown",
+        };
+    }
 }

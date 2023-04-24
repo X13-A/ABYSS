@@ -16,6 +16,8 @@ public class Aiming : MonoBehaviour, IEventHandler
     [SerializeField] private RenderTexture rt;
     [SerializeField] private GameObject rotatingBody;
 
+   
+
     private void Awake()
     {
         if (!m_Instance) m_Instance = this;

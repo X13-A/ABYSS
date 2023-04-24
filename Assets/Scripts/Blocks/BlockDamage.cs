@@ -24,6 +24,6 @@ public class BlockDamage : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

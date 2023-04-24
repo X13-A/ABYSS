@@ -42,7 +42,7 @@ public class PlayerBuild : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1") && Aiming.Instance.AimingMode == AimingMode.CURSOR)
+        if (Input.GetButtonDown("Fire1") && PlayerManager.Instance.ActiveAimingMode == AimingMode.CURSOR)
         {
             Build();
         }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 using TMPro;
+using System.ComponentModel;
 
 public class HudManager : MonoBehaviour, IEventHandler
 {
-    public static HudManager Instance;
+    private static HudManager m_Instance;
+    public static HudManager Instance => m_Instance;
+
     [SerializeField] private TextMeshProUGUI playerModeText;
 
     private void OnEnable()
@@ -30,9 +33,9 @@ public class HudManager : MonoBehaviour, IEventHandler
     }
     private void Awake()
     {
-        if (Instance == null)
+        if (m_Instance == null)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {
@@ -43,5 +46,10 @@ public class HudManager : MonoBehaviour, IEventHandler
     private void SetPlayerModeText(PlayerSwitchModeEvent e)
     {
         this.playerModeText.text = EnumConverter.StringFromPlayerMode(e.mode);
+    }
+
+    private void Update()
+    {
+        this.playerModeText.text = Cursor.lockState.ToString(); 
     }
 }

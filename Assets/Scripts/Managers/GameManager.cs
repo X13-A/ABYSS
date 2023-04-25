@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
     }
 
-    public void UnsubscribeEvents()
+    public void UnsubscribeEvents() 
     {
         EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
         EventManager.Instance.RemoveListener<PlayButtonClickedEvent>(PlayButtonClicked);
@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        SubscribeEvents();
+        this.SubscribeEvents();
+        this.SetState(m_State);
     }
-
     private void OnDisable()
     {
         UnsubscribeEvents();

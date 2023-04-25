@@ -47,9 +47,4 @@ public class HudManager : MonoBehaviour, IEventHandler
     {
         this.playerModeText.text = EnumConverter.StringFromPlayerMode(e.mode);
     }
-
-    private void Update()
-    {
-        this.playerModeText.text = Cursor.lockState.ToString(); 
-    }
 }

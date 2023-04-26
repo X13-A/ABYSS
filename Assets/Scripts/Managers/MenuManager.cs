@@ -6,11 +6,27 @@ using UnityEditor;
 
 public class MenuManager : MonoBehaviour, IEventHandler
 {
+    private static MenuManager m_Instance;
+    public static MenuManager Instance => m_Instance;
+
     [SerializeField] private GameObject m_MainMenuPanel;
     [SerializeField] private GameObject m_PauseMenuPanel;
     [SerializeField] private GameObject m_SettingsMenuPanel;
     [SerializeField] private GameObject m_GameOverPanel;
     private List<GameObject> m_Panels;
+
+    public bool HasMenuOpened
+    {
+        get
+        {
+            GAMESTATE state = GameManager.Instance.State;
+            return (state == GAMESTATE.MAIN_MENU
+                || state == GAMESTATE.SETTINGS_MENU
+                || state == GAMESTATE.GAME_OVER
+                || state == GAMESTATE.LOADING
+                || state == GAMESTATE.PAUSE_MENU);
+        }
+    }
 
     private void OpenPanel(GameObject panel)
     {
@@ -53,6 +69,15 @@ public class MenuManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
+        if (m_Instance == null)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         m_Panels = new List<GameObject>(
             new GameObject[]
             {

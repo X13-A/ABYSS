@@ -5,7 +5,8 @@ using SDD.Events;
 
 public class CursorManager : MonoBehaviour, IEventHandler
 {
-    public static CursorManager Instance;
+    private static CursorManager m_Instance;
+    public static CursorManager Instance => m_Instance;
 
     [SerializeField] private float sensitivity;
     public float Sensitivity => sensitivity;
@@ -101,9 +102,9 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null)
+        if (!m_Instance)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {
@@ -139,7 +140,11 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     private void SetCursorLockMode(AimingModeUpdateEvent e)
     {
-        if (e.mode == AimingMode.CAMERA)
+        if (MenuManager.Instance.HasMenuOpened)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else if (e.mode == AimingMode.CAMERA)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }

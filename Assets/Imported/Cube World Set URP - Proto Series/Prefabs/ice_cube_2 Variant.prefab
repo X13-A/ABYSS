@@ -69,3 +69,28 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7718506944b26684980bb64f511af99e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7fa96b48946ec940b995b1f1eb27543, type: 3}
+--- !u!111 &1455143250512766764 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 217989231510601314, guid: c7fa96b48946ec940b995b1f1eb27543, type: 3}
+  m_PrefabInstance: {fileID: 1673018124222486862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1671265802317107662 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1766343104579712, guid: c7fa96b48946ec940b995b1f1eb27543, type: 3}
+  m_PrefabInstance: {fileID: 1673018124222486862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3295012029707707640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671265802317107662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e657cdae3450b4481ea5e55872930a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  modeGivingDamage: 4
+  animationHit: {fileID: 1455143250512766764}

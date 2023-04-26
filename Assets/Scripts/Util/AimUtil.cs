@@ -29,8 +29,9 @@ public class AimUtil : MonoBehaviour
 
         // Cast ray from camera to find where to aim
         Ray ray = cam.ScreenPointToRay(mousePos);
+       ;
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, Mathf.Infinity);
+        Physics.Raycast(ray, out hit, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Aim")));
         return hit;
     }
 }

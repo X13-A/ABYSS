@@ -1325,13 +1325,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   regions:
   - height: 0.3
-    cubePrefab: {fileID: 5378107964362565663, guid: d859290380277914a9c9d1dfca9138c6, type: 3}
+    cubePrefab: {fileID: 1326326222139795307, guid: 32b7673284ba2744aa3b47dafa563561, type: 3}
   - height: 0.5
-    cubePrefab: {fileID: 6113813131884923007, guid: 125a2c9491cfec044b8e4a5dd641225b, type: 3}
+    cubePrefab: {fileID: 8266192892992117370, guid: 5e09bc6c382a03941b1e88121d4ede6f, type: 3}
   - height: 0.7
-    cubePrefab: {fileID: 7579255562787383942, guid: a9ba67834f2b7e548994769764137fce, type: 3}
+    cubePrefab: {fileID: 2791975638628756612, guid: 4d638cb996e97eb4daa642e5c9a1c2a3, type: 3}
   - height: 1
-    cubePrefab: {fileID: 615526867097617360, guid: 39238ac466788844d9a3e99486b677d4, type: 3}
+    cubePrefab: {fileID: 3364458495166410535, guid: 6132774677c6f0f4caa8404ea3cbdc10, type: 3}
 --- !u!1 &1003219964579762382
 GameObject:
   m_ObjectHideFlags: 0

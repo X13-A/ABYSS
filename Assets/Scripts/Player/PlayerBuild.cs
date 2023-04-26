@@ -16,10 +16,14 @@ public class PlayerBuild : MonoBehaviour
         RaycastHit hit = AimUtil.Instance.Aim();
         if (hit.collider)
         {
-            blocInHand.transform.position = new Vector3(Mathf.Round(hit.point.x), Mathf.Round(hit.point.y), Mathf.Round(hit.point.z));
-            Instantiate(blocInHand);
+            GameObject currentCube = Instantiate(blocInHand);
+            currentCube.transform.position = hit.collider.transform.position + hit.normal;
+            currentCube.AddComponent<Rigidbody>();
+            currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            currentCube.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
+
     private void Update()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY)

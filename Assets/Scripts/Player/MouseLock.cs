@@ -43,6 +43,8 @@ public class MouseLock : MonoBehaviour
     {
         freeLookCamera.m_XAxis.m_InputAxisName = "";
         freeLookCamera.m_YAxis.m_InputAxisName = "";
+        freeLookCamera.m_XAxis.m_InputAxisValue = 0f;
+        freeLookCamera.m_YAxis.m_InputAxisValue = 0f;
         isCameraRotationEnabled = false;
     }
 
@@ -67,7 +69,6 @@ public class MouseLock : MonoBehaviour
             {
                 EnableFreeLookRotation();
             }
-            EnableFreeLookRotation();
             RotatePlayerAccordingly();
         }
         else

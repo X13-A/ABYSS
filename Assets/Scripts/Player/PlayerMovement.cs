@@ -109,6 +109,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY)
         {
+            xInput = 0;
+            yInput = 0;
+            isJumping = false;
             return;
         }
         isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);

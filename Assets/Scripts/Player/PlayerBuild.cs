@@ -9,14 +9,14 @@ public class PlayerBuild : MonoBehaviour
     [SerializeField] private GameObject target;
     [SerializeField] private RenderTexture rt;
 
-    [SerializeField] private GameObject blocInHand;
+    [SerializeField] private GameObject blockInHand;
 
     private void Build()
     {
         RaycastHit hit = AimUtil.Instance.Aim();
         if (hit.collider)
         {
-            GameObject currentCube = Instantiate(blocInHand);
+            GameObject currentCube = Instantiate(blockInHand);
             currentCube.transform.position = hit.collider.transform.position + hit.normal;
             currentCube.AddComponent<Rigidbody>();
             currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

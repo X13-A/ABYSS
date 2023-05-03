@@ -1,6 +1,7 @@
 using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,8 +9,8 @@ using UnityEngine.UIElements;
 public class Damager : MonoBehaviour, IDamager
 {
     [SerializeField] private float damage;
+    [SerializeField] private AttackType type;
     private new Collider collider;
-    private AttackType type = AttackType.MELEE;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
@@ -18,43 +19,14 @@ public class Damager : MonoBehaviour, IDamager
         collider = GetComponent<Collider>();
     }
 
-    public void Update()
-    {
-        if (GameManager.Instance.State != GAMESTATE.PLAY)
-        {
-            return;
-        }
-
-        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.AXE)
-        {
-            return;
-        }
-        if (Input.GetButtonDown("Fire1"))
-        {
-            RaycastHit hit = AimUtil.Instance.Aim();
-            if (hit.collider)
-            {
-                this.CauseDamage(hit.collider);
-            }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.MELEE)
-        {
-            this.CauseDamage(other);
-        }
-    }
-
     public void Damage(float damage, float duration)
     {
         // Enable
         StartCoroutine(CoroutineUtil.DelayAction(duration * 0.4f, () =>
         {
-            collides.Clear();
+            this.collides.Clear();
             this.damage = damage;
-            collider.enabled = true;
+            this.collider.enabled = true;
         }));
 
         // Never disable (arrows, projectiles)
@@ -67,19 +39,25 @@ public class Damager : MonoBehaviour, IDamager
         StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
         {
             this.damage = 0;
-            collider.enabled = false;
-            collides.Clear();
+            this.collider.enabled = false;
+            this.collides.Clear();
         }));
     }
 
-    private void CauseDamage(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        // Inflige des d�gats si l'ennemi n'a pas d�j� �t� touch�
         IDamageable damageable = other.GetComponent<IDamageable>();
-        if (damageable != null && !collides.Contains(damageable) && damageable.ModeGivingDamage == PlayerManager.Instance.ActivePlayerMode)
-        {
-            damageable.Damage(damage);
-            collides.Add(damageable);
-        }
+
+        if (damageable == null) return;
+        if (this.collides.Contains(damageable)) return;
+        if (!damageable.DamagerTypes.Contains(this.type)) return;
+
+        this.CauseDamage(damageable);
+    }
+
+    private void CauseDamage(IDamageable damageable)
+    {
+        damageable.Damage(this.damage, this.type);
+        this.collides.Add(damageable);
     }
 }

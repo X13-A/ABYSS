@@ -5,8 +5,10 @@ using UnityEngine;
 public interface IDamageable
 {
     public float Health { get; }
+    public List<AttackType> DamagerTypes { get; }
 
-    public PlayerMode ModeGivingDamage { get;  }
-    public void Damage(float damage);
+    public List<float> DamagerTypesFactors { get; }
+
+    public void Damage(float damage, AttackType type);
     public void Die();
 }

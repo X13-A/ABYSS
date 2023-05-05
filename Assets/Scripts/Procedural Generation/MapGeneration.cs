@@ -1,6 +1,7 @@
 using SDD.Events;
 using System;
 using System.Threading.Tasks;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,15 +26,20 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private float heightMultiplier;
     [SerializeField] private AnimationCurve heightCurve;
 
-    [SerializeField] private TerrainType[] regions;
+    [SerializeField] private TerrainType[] firstLevel;
+    [SerializeField] private TerrainType[] secondLevel;
+    [SerializeField] private TerrainType[] thirdLevel;
+    [SerializeField] private TerrainType[] fourthLevel;
+
+    private TerrainType[][] levelArray;
 
 
     private void Start()
     {
-
+        this.levelArray = new TerrainType[][] { firstLevel, secondLevel, thirdLevel, fourthLevel };
     }
 
-    public async Task<GameObject> GenerateMap()
+    public async Task<GameObject> GenerateMap(int level)
     {
         IProgress<float> progress = new Progress<float>(p =>
         {
@@ -52,24 +58,23 @@ public class MapGeneration : MonoBehaviour
             {
                 float currentHeight = noiseMap[x, z];
 
-                for (int i = 0; i < regions.Length; i++)
+                for (int i = 0; i < levelArray[level].Length; i++)
                 {
-                    if (currentHeight <= regions[i].height)
+                    if (currentHeight <= levelArray[level][i].height)
                     {
-                        prefabMap[z * mapWidth + x] = regions[i].cubePrefab;
+                        prefabMap[z * mapWidth + x] = levelArray[level][i].cubePrefab;
                         break;
                     }
                 }
 
                 for (int y = 0; y < (int) (heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier); y++)
                 {
-                    GameObject cube = Instantiate(regions[2].cubePrefab);
+                    GameObject cube = Instantiate(levelArray[level][2].cubePrefab);
                     cube.transform.position = new Vector3(x, y, z);
                     cube.AddComponent<BoxCollider>();
                     cube.layer = LayerMask.NameToLayer("Ground");
                     cube.transform.SetParent(map.transform);
                 }
-
                 GameObject currentCube = Instantiate(prefabMap[z * mapWidth + x]);
                 currentCube.transform.position = new Vector3(x, (int)(heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier), z);
                 currentCube.AddComponent<Rigidbody>();
@@ -83,6 +88,10 @@ public class MapGeneration : MonoBehaviour
             // Yield control to the caller
             await Task.Yield();
         }
+        GameObject portal = Resources.Load<GameObject>("Prefabs/Portal");
+        portal = Instantiate(portal, new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portal.transform.localScale.y / 2, 50), Quaternion.identity);
+        portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
+        portal.transform.SetParent(map.transform);
         map.SetActive(true);
         return map;
     }

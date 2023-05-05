@@ -19,6 +19,18 @@ public class Damager : MonoBehaviour, IDamager
         collider = GetComponent<Collider>();
     }
 
+    public void Update()
+    {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
+
+        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.AXE) return;
+        if (Input.GetButtonDown("Fire1"))
+        {
+            RaycastHit hit = AimUtil.Instance.Aim();
+            if (hit.collider) this.CauseDamage(hit.collider.GetComponent<IDamageable>());
+        }
+    }
+
     public void Damage(float damage, float duration)
     {
         // Enable

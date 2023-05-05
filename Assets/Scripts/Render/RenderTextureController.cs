@@ -22,6 +22,7 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
     {
         UnsubscribeEvents();
     }
+    
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<WindowResizeEvent>(ScaleRenderTexture);

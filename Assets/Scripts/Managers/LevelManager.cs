@@ -12,7 +12,14 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Image progressBar;
+    [SerializeField] private int currentLevel;
     private MapGeneration generator;
+
+    public int CurrentLevel
+    {
+        get => currentLevel;
+        set => currentLevel = value;
+    }
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<LoadingProgressUpdateEvent>(UpdateProgress);
@@ -59,7 +66,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
     {
         // Pr�paration au changement de scene
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
-            EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, generateLevel = e.generateLevel });
+            EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, levelGenerated = e.levelGenerated });
         }));
     }
 
@@ -76,11 +83,13 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }
         while (operation.progress < 0.9f);
 
+        this.currentLevel = e.levelGenerated;
+
         // G�n�ration proc�durale
-        if (e.generateLevel == true)
+        if (this.currentLevel != 0)
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);
-            GameObject map = await generator.GenerateMap();
+            GameObject map = await generator.GenerateMap(this.currentLevel - 1);
             DontDestroyOnLoad(map);
 
             SceneManager.sceneLoaded += OnSceneLoaded;

@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     private void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
     {
-        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = "Main Menu", generateLevel = false });
+        EventManager.Instance.Raise(new SceneAboutToChangeEvent { targetScene = "Main Menu", levelGenerated = 0 });
     }
 
     private void QuitButtonClicked(QuitButtonClickedEvent e)

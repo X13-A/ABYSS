@@ -72,7 +72,7 @@ Material:
     - _GlossyReflections: 1
     - _Lumin: 0
     - _MaxLight: 1
-    - _Metallic: 1
+    - _Metallic: 0.48
     - _MinLight: 0
     - _Mode: 0
     - _OcclusionStrength: 1

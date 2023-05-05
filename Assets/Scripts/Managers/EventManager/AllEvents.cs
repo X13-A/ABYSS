@@ -32,12 +32,12 @@ public class AimingModeUpdateEvent : SDD.Events.Event
 #region Scene events
 public class SceneAboutToChangeEvent : SDD.Events.Event
 {
-    public bool generateLevel;
+    public int levelGenerated;
     public string targetScene;
 }
 public class SceneReadyToChangeEvent : SDD.Events.Event
 {
-    public bool generateLevel;
+    public int levelGenerated;
     public string targetScene;
 }
 #endregion

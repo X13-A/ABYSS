@@ -16,7 +16,7 @@ public class BlockDamage : MonoBehaviour, IDamageable
     public void Damage(float damage, AttackType type)
     {
         // Scale damage according to factors
-        Debug.Log(damagerTypes.IndexOf(type));
+        //Debug.Log(damagerTypes.IndexOf(type));
         float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
 
         this.health = Mathf.Max(0, health - scaledDamage);

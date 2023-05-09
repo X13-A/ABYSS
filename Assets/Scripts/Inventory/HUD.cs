@@ -47,7 +47,7 @@ public class HUD : MonoBehaviour
             {
                 image.enabled = false;
                 image.sprite = null;
-                itemDragHandler.Item = null;
+                //itemDragHandler.Item = null;
 
                 break;
             }

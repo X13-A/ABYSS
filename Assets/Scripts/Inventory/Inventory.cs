@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour
 
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
+    public event EventHandler<InventoryEventArgs> ItemUsed;
+
     public void AddItem(IInventoryItem item)
     {
         if (mItems.Count < SLOTS)
@@ -52,6 +54,14 @@ public class Inventory : MonoBehaviour
             {
                 ItemRemoved(this, new InventoryEventArgs(item));
             }
+        }
+    }
+
+    internal void UseItem(IInventoryItem item)
+    {
+        if (ItemUsed != null)
+        {
+            ItemUsed(this, new InventoryEventArgs(item));
         }
     }
 }

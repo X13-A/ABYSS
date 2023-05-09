@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Lava : InventoryItemBase
+public class Arrow : InventoryItemBase
 {
     public override string Name
     {
         get
         {
-            return "Lava";
+            return "Arrow";
         }
-    }
-
-    public override void OnUse()
-    {
-        base.OnUse();
     }
 }

@@ -62,7 +62,7 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     private void Aim()
     {
-        RaycastHit hit = AimUtil.Instance.Aim();
+        RaycastHit hit = AimUtil.Instance.Aim(LayerMask.GetMask("Aim"));
         if (hit.collider)
         {
             target.transform.position = hit.point;

@@ -13,7 +13,7 @@ public class PlayerBuild : MonoBehaviour
 
     private void Build()
     {
-        RaycastHit hit = AimUtil.Instance.Aim();
+        RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
         if (hit.collider)
         {
             GameObject currentCube = Instantiate(blockInHand);

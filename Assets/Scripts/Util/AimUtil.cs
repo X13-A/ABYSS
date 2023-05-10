@@ -18,7 +18,7 @@ public class AimUtil : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public RaycastHit Aim(int layer = 0)
+    public RaycastHit Aim(int layerMask)
     {
         // Convert screen position to camera position
         Vector3 mousePos = Input.mousePosition;
@@ -30,7 +30,7 @@ public class AimUtil : MonoBehaviour
         // Cast ray from camera to find where to aim
         Ray ray = cam.ScreenPointToRay(mousePos);
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, Mathf.Infinity, layer);
+        Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask);
         return hit;
     }
 }

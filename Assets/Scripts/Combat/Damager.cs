@@ -26,7 +26,7 @@ public class Damager : MonoBehaviour, IDamager
         if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.AXE) return;
         if (Input.GetButtonDown("Fire1"))
         {
-            RaycastHit hit = AimUtil.Instance.Aim();
+            RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
             if (hit.collider) this.CauseDamage(hit.collider.GetComponent<IDamageable>());
         }
     }

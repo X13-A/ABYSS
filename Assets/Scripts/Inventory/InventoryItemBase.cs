@@ -32,7 +32,7 @@ public class InventoryItemBase : MonoBehaviour, IInventoryItem
 
     public virtual void OnDrop()
     {
-        RaycastHit hit = AimUtil.Instance.Aim();
+        RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
 
         if (hit.collider != null)
         {

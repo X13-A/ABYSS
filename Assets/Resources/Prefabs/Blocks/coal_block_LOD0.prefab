@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8096078812625550740}
   - component: {fileID: -6054202915534302585}
   - component: {fileID: -2428987234976106341}
+  - component: {fileID: -6646847166759271617}
   m_Layer: 0
   m_Name: coal_block_LOD0
   m_TagString: Untagged
@@ -133,3 +134,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1428876, y: 1.1542883, z: 1.1756761}
   m_Center: {x: -0.0026443303, y: 0.006750971, z: 0.0013410151}
+--- !u!114 &-6646847166759271617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744445200523159928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

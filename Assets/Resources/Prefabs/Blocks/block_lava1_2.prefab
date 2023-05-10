@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7981710707899942092}
   - component: {fileID: 1803333132621741572}
   - component: {fileID: 6112176710770804268}
+  - component: {fileID: -124616853990615281}
   m_Layer: 0
   m_Name: block_lava1_2
   m_TagString: Untagged
@@ -133,3 +134,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0864273, y: 1.093592, z: 1.0864365}
   m_Center: {x: -0.0008428693, y: 0.0038073063, z: -0.00022923946}
+--- !u!114 &-124616853990615281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364458495166410535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

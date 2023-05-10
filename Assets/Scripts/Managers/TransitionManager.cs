@@ -43,7 +43,6 @@ public class TransitionManager : MonoBehaviour
             panelColor.a = Mathf.Lerp(1f, 0f, fadeTime / fadeDuration);
             panelImage.color = panelColor;
             fadeTime += Time.deltaTime;
-            Debug.Log(fadeTime);
             yield return null;
         }
 
@@ -85,6 +84,8 @@ public class TransitionManager : MonoBehaviour
 
         panelColor.a = 1f;
         panelImage.color = panelColor;
+
+        Destroy(this.fadePanel);
 
         // Call the action delegate
         actionDelegate?.Invoke();

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -5656159762347272027}
   - component: {fileID: 4657880264371779086}
   - component: {fileID: 8020297308325704085}
+  - component: {fileID: 4548764523265770326}
   m_Layer: 0
   m_Name: sand1_block
   m_TagString: Untagged
@@ -133,3 +134,15 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &4548764523265770326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522870749343784298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

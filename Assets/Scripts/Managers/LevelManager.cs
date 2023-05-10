@@ -95,7 +95,6 @@ public class LevelManager : MonoBehaviour, IEventHandler
             SceneManager.sceneLoaded += OnSceneLoaded;
             operation.allowSceneActivation = true;
 
-            loadingScreen.SetActive(false);
             void OnSceneLoaded(Scene scene, LoadSceneMode mode)
             {
                 SceneManager.MoveGameObjectToScene(map, scene);
@@ -105,7 +104,6 @@ public class LevelManager : MonoBehaviour, IEventHandler
         else
         {
             operation.allowSceneActivation = true;
-            loadingScreen.SetActive(false);
         }
     }
 }

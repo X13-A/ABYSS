@@ -31,8 +31,9 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private TerrainType[] thirdLevel;
     [SerializeField] private TerrainType[] fourthLevel;
 
-    private TerrainType[][] levelArray;
+    [SerializeField] private GameObject portalPrefab;
 
+    private TerrainType[][] levelArray;
 
     private void Start()
     {
@@ -88,8 +89,8 @@ public class MapGeneration : MonoBehaviour
             // Yield control to the caller
             await Task.Yield();
         }
-        GameObject portal = Resources.Load<GameObject>("Prefabs/Portal");
-        portal = Instantiate(portal, new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portal.transform.localScale.y / 2, 50), Quaternion.identity);
+
+        GameObject portal = Instantiate(this.portalPrefab, new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portalPrefab.transform.localScale.y / 2, 50), Quaternion.identity);
         portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
         portal.transform.SetParent(map.transform);
         map.SetActive(true);

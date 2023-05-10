@@ -2,6 +2,7 @@ using SDD.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditorInternal.VersionControl.ListControl;
@@ -10,7 +11,9 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance;
     [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject fadePanel;
+    [SerializeField] private GameObject fadePanelPrefab;
+    private GameObject fadePanel;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,18 +28,10 @@ public class TransitionManager : MonoBehaviour
     }
     public IEnumerator FadeIn(float fadeDuration = 1f, Action actionDelegate = null)
     {
-        // Instantiate a new panel
-        GameObject panel = new GameObject("FadePanel", typeof(RectTransform), typeof(Image));
-        panel.transform.SetParent(canvas.transform);
-
-        RectTransform rectTransform = panel.GetComponent<RectTransform>();
-        rectTransform.anchorMin = Vector2.zero;
-        rectTransform.anchorMax = Vector2.one;
-        rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
-        rectTransform.anchoredPosition = Vector2.zero;
+        CreateFadePanel();
 
         // Set the panel color to transparent
-        Image panelImage = panel.GetComponent<Image>();
+        Image panelImage = fadePanel.GetComponent<Image>();
         Color panelColor = Color.black;
         panelColor.a = 1f;
         panelImage.color = panelColor;
@@ -48,6 +43,7 @@ public class TransitionManager : MonoBehaviour
             panelColor.a = Mathf.Lerp(1f, 0f, fadeTime / fadeDuration);
             panelImage.color = panelColor;
             fadeTime += Time.deltaTime;
+            Debug.Log(fadeTime);
             yield return null;
         }
 
@@ -58,11 +54,19 @@ public class TransitionManager : MonoBehaviour
         actionDelegate?.Invoke();
 
         // Destroy the panel
-        Destroy(panel);
+        Destroy(fadePanel);
+    }
+
+    private void CreateFadePanel()
+    {
+        if (this.fadePanel != null) Destroy(this.fadePanel);
+        this.fadePanel = Instantiate(this.fadePanelPrefab, this.canvas.transform);
     }
 
     public IEnumerator FadeOut(float fadeDuration = 1f, Action actionDelegate = null)
     {
+        CreateFadePanel();
+
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
         Color panelColor = panelImage.color;

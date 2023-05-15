@@ -18,10 +18,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float groundDrag;
-    [SerializeField] private float gravity;
 
     private CharacterController characterController;
-    private bool isJumping;
+    private bool isPressingJump;
     private bool isGrounded;
     private float verticalVelocity;
     private float xInput;
@@ -29,51 +28,85 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 inputVector;
     private float currentVelocity = 0f;
     private float accelerationRate;
+    private float groundCheckDistance;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
     }
 
+    private void Update()
+    {
+        // all of the code inside this function will be executed each frame
+        // the physics should be puted inside fixedUpdate
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
+        {
+            xInput = 0;
+            yInput = 0;
+            isPressingJump = false;
+            return;
+        }
+        PerformGroundCheck();
+        HandleInput();
+        UpdateLookMode();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyGravity();
+        MovePlayer();
+    }
+
+    private void HandleInput()
+    {
+        xInput = Input.GetAxis("Horizontal");
+        yInput = Input.GetAxis("Vertical");
+        isPressingJump = Input.GetButton("Jump");
+    }
+
+    /*
+		Move the player each fixedTimeDelta
+		this function is meant to be called in fixedUpdate
+    */
     private void MovePlayer()
     {
         inputVector = new Vector3(xInput, 0, yInput).normalized;
         float targetVelocity = inputVector.magnitude * maxVelocity;
         if (Mathf.Abs(targetVelocity) < Mathf.Abs(currentVelocity))
         {
-            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration * Time.fixedDeltaTime);
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration);
         }
         else
         {
-            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration);
         }
         currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
-        Vector3 movement = currentVelocity * Time.fixedDeltaTime * inputVector;
-        if (isJumping && isGrounded)
+        if (isPressingJump && isGrounded)
         {
             verticalVelocity = jumpSpeed;
         }
+        Vector3 movement = currentVelocity * inputVector;
+
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
-        movement = transform.TransformDirection(movement);
         movement.y = verticalVelocity;
+        movement = transform.TransformDirection(movement);
         characterController.Move(movement);
     }
-    private void HandleInput()
-    {
-        xInput = Input.GetAxis("Horizontal");
-        yInput = Input.GetAxis("Vertical");
-        isJumping = Input.GetButton("Jump");
-    }
 
-    private void UpdateGravity()
+    /*
+	    Apply the gravity to the player verticalVelocity 
+	    meant to be called inside fixedUpdate
+    */
+    private void ApplyGravity()
     {
-        if (isGrounded)
+        if (isGrounded) // if he is grounded, don't make the player fall
         {
             verticalVelocity = 0;
             return;
         }
-        verticalVelocity += Physics.gravity.y * Time.deltaTime / 6f;
+        // no need to call TimeDelta because the function is called inside fixedUpdate
+        verticalVelocity += (Physics.gravity.y / 1000f);
     }
 
     private void UpdateLookMode()
@@ -105,23 +138,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (GameManager.Instance.State != GAMESTATE.PLAY)
-        {
-            xInput = 0;
-            yInput = 0;
-            isJumping = false;
-            return;
-        }
-        isGrounded = Physics.Raycast(transform.position, -Vector3.up, 0.1f);
-        this.HandleInput();
-        this.UpdateLookMode();
-    }
-
-    private void FixedUpdate()
-    {
-        UpdateGravity();
-        MovePlayer();
+    private void PerformGroundCheck()
+    { 
+        groundCheckDistance = (characterController.height / 2) + 0.1f;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
     }
 }

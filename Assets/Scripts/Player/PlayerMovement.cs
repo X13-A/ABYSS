@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     /**
      * <summary>
-     * This class main purpoose is the player movement
+     * This class main purpose is the player movement
      * this include horizontal and vertical movement, and jump.
      * </summary>
      **/
@@ -100,11 +100,6 @@ public class PlayerMovement : MonoBehaviour
     */
     private void ApplyGravity()
     {
-        if (isGrounded) // if he is grounded, don't make the player fall
-        {
-            verticalVelocity = 0;
-            return;
-        }
         // no need to call TimeDelta because the function is called inside fixedUpdate
         verticalVelocity += (Physics.gravity.y / 1000f);
     }
@@ -140,7 +135,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void PerformGroundCheck()
     { 
-        groundCheckDistance = (characterController.height / 2) + 0.1f;
+        groundCheckDistance = 0.2f;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
+
+        // Debugging purpose
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance))
+        {
+            Debug.DrawRay(transform.position, Vector3.down * hit.distance, Color.red);
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.down * 1000, Color.green);
+        }
     }
 }

@@ -16,7 +16,6 @@ public class ScenePortal : MonoBehaviour
         set => levelGenerated = value;
     }
 
-
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {

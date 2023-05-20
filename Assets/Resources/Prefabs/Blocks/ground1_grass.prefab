@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3709190085583754860}
   - component: {fileID: 7699105587562268999}
   - component: {fileID: 9208501385581823727}
+  - component: {fileID: 836499732949591145}
   m_Layer: 0
   m_Name: ground1_grass
   m_TagString: Untagged
@@ -99,6 +100,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 5c7df256d99252847b4542c750dec051, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5c7df256d99252847b4542c750dec051, type: 2}
+  - {fileID: 7400000, guid: 05d1268342f6ed446a08769e2221c972, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -146,3 +148,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &836499732949591145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266192892992117370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Name: block grass dirt
+  _Image: {fileID: 21300000, guid: 8990ddf5cfb7c9a4e8ffa700bf3ca436, type: 3}

@@ -6,15 +6,13 @@ using UnityEngine;
 
 public class InventoryItemBase : MonoBehaviour, IInventoryItem
 {
-    public virtual string Name
+    [SerializeField] private string _Name;
+    public string Name
     {
-        get
-        {
-            return "_base item_";
-        }
+        get { return _Name; }
     }
 
-    public Sprite _Image;
+    [SerializeField] private Sprite _Image;
     public Sprite Image
     {
         get { return _Image; }

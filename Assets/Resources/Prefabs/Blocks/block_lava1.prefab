@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2597600169158765686}
   - component: {fileID: 4650847713644245895}
   - component: {fileID: 4701686177247188678}
+  - component: {fileID: -6357101858323929427}
   m_Layer: 0
   m_Name: block_lava1
   m_TagString: Untagged
@@ -112,6 +113,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 5c7df256d99252847b4542c750dec051, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5c7df256d99252847b4542c750dec051, type: 2}
+  - {fileID: 7400000, guid: 05d1268342f6ed446a08769e2221c972, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -146,3 +148,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6357101858323929427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098480241167722029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Name: block_lava1
+  _Image: {fileID: 21300000, guid: 9751da55e8a4b1f49a572ea5b9bb0a56, type: 3}

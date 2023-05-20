@@ -18,11 +18,13 @@ public interface IInventoryItem
 
 public class InventoryEventArgs : EventArgs
 {
-    public InventoryEventArgs(IInventoryItem item)
+    public InventoryEventArgs(IInventoryItem item, int count)
     {
         Item = item;
+        Count = count;
     }
 
     public IInventoryItem Item;
+    public int Count;
 }
 

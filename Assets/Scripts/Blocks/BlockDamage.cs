@@ -13,6 +13,12 @@ public class BlockDamage : MonoBehaviour, IDamageable
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }
     public List<float> DamagerTypesFactors { get { return damagerTypesFactors; } }
 
+    public void Update()
+    {
+        if (this.health > 0 + Mathf.Epsilon) return;
+        transform.Rotate(Vector3.up * Time.deltaTime * 100);
+    }
+
     public void Damage(float damage, AttackType type)
     {
         // Scale damage according to factors
@@ -20,12 +26,17 @@ public class BlockDamage : MonoBehaviour, IDamageable
         float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
 
         this.health = Mathf.Max(0, health - scaledDamage);
-        this.animationHit.Play();
+        this.animationHit.Play("ChangeScalingHit");
         if (this.health <= 0 + Mathf.Epsilon) this.Die();
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        this.animationHit.Play("ChangeScalingDestruction");
+        BoxCollider collider = gameObject.GetComponent<BoxCollider>();
+        if (collider != null)
+        {
+            collider.isTrigger = true;
+        }
     }
 }

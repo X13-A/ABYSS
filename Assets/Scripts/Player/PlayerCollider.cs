@@ -16,33 +16,27 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         {
             inventory.AddItem(mItemToPickup);
             mItemToPickup.OnPickup();
-            Hud.CloseMessagePanel();
+            //Hud.CloseMessagePanel();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         IInventoryItem item = other.GetComponent<IInventoryItem>();
-
         if (item != null)
         {
             mItemToPickup = item;
             //inventory.AddItem(item);
             //item.OnPickup();
 
-            Hud.OpenMessagePanel("");
+            //Hud.OpenMessagePanel("");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        IInventoryItem item = other.GetComponent<IInventoryItem>();
-
-        if (item != null)
-        {
-            Hud.CloseMessagePanel();
-            mItemToPickup = null;
-        }
+        //Hud.CloseMessagePanel();
+        mItemToPickup = null;
     }
 }
 

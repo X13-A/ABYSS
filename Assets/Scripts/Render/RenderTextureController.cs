@@ -8,7 +8,7 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
 {
     private Camera cam;
 
-    private void Start()
+    private void Awake()
     {
         cam = GetComponent<Camera>();
     }

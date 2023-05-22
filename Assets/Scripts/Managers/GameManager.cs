@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
         EventManager.Instance.AddListener<CancelSettingsButtonClickedEvent>(ExitSettingsButtonClicked);
         EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
+        EventManager.Instance.AddListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
     }
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
         EventManager.Instance.RemoveListener<CancelSettingsButtonClickedEvent>(ExitSettingsButtonClicked);
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
+        EventManager.Instance.RemoveListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
     }
 
@@ -152,6 +154,15 @@ public class GameManager : MonoBehaviour, IEventHandler
         // Quit game
     }
 
+    private void Credits()
+    {
+        EventManager.Instance.Raise(new SceneAboutToChangeEvent
+        {
+            levelGenerated = 0,
+            targetScene = "Credits"
+        });
+    }
+
     private void MainMenu()
     {
         SetState(GAMESTATE.MAIN_MENU);
@@ -232,6 +243,11 @@ public class GameManager : MonoBehaviour, IEventHandler
     private void QuitButtonClicked(QuitButtonClickedEvent e)
     {
         Quit();
+    }
+
+    private void CreditsButtonClicked(CreditsButtonClickedEvent e)
+    {
+        Credits();
     }
     #endregion
 }

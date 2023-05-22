@@ -172,6 +172,11 @@ public class MenuManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new QuitButtonClickedEvent());
     }
 
+    public void CreditsButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CreditsButtonClickedEvent());
+    }
+
     public void SettingsButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new SettingsButtonClickedEvent());

@@ -142,3 +142,23 @@ public class CursorUpdateEvent : SDD.Events.Event
 }
 
 #endregion
+
+#region Inventory
+
+public class ItemAddedEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+    public int count;
+}
+
+public class ItemRemovedEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+    public int count;
+}
+
+public class ItemUsedEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+}
+#endregion

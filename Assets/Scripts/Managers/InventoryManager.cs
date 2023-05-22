@@ -1,21 +1,50 @@
+using SDD.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IEventHandler
 {
+    public static InventoryManager Instance;
+
     private const int SLOTS = 9;
 
     private Dictionary<string, IInventoryItem> mItems = new Dictionary<string, IInventoryItem>();
     private Dictionary<string, int> mItemsCount = new Dictionary<string, int>();
 
-    public event EventHandler<InventoryEventArgs> ItemAdded;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    public event EventHandler<InventoryEventArgs> ItemRemoved;
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
 
-    public event EventHandler<InventoryEventArgs> ItemUsed;
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+
+    }
+
+    public void UnsubscribeEvents()
+    {
+
+    }
 
     public void AddItem(IInventoryItem item)
     {
@@ -39,9 +68,13 @@ public class Inventory : MonoBehaviour
 
                 item.OnPickup();
 
-                if (ItemAdded != null)
+                if (item != null)
                 {
-                    ItemAdded(this, new InventoryEventArgs(item, this.mItemsCount[item.Name]));
+                    EventManager.Instance.Raise(new ItemAddedEvent
+                    {
+                        item = item,
+                        count = this.mItemsCount[item.Name]
+                    });
                 }
             }
         }
@@ -66,18 +99,25 @@ public class Inventory : MonoBehaviour
                 collider.enabled = true;
             }
 
-            if (ItemRemoved != null)
+            if (item != null)
             {
-                ItemRemoved(this, new InventoryEventArgs(item, 0));
+                EventManager.Instance.Raise(new ItemRemovedEvent
+                {
+                    item = item,
+                    count = 0
+                });
             }
         }
     }
 
     internal void UseItem(IInventoryItem item)
     {
-        if (ItemUsed != null)
+        if (item != null)
         {
-            ItemUsed(this, new InventoryEventArgs(item, this.mItemsCount[item.Name]));
+            EventManager.Instance.Raise(new ItemUsedEvent
+            {
+                item = item,
+            });
         }
     }
 }

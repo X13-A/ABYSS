@@ -1,23 +1,37 @@
+using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+public class InventoryHud : MonoBehaviour, IEventHandler
 {
-    public Inventory Inventory;
+    [SerializeField] private GameObject messagePanel;
 
-    public GameObject MessagePanel;
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        Inventory.ItemAdded += InventoryScript_ItemAdded;
-        Inventory.ItemRemoved += InventoryScript_ItemRemoved;
+        SubscribeEvents();
     }
 
-    private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
+        EventManager.Instance.AddListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
+        EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
+    }
+
+    private void InventoryScript_ItemAdded(ItemAddedEvent e)
     {
         Transform inventoryPanel = transform.Find("InventoryPanel");
         foreach (Transform slot in inventoryPanel)
@@ -26,9 +40,9 @@ public class HUD : MonoBehaviour
             Transform countItem = imageTransform.GetChild(0);
             Image image = imageTransform.GetComponent<Image>();
             TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
-            if (image.enabled && image.sprite == e.Item.Image)
+            if (image.enabled && image.sprite == e.item.Image)
             {
-                textCountItem.text = e.Count.ToString();
+                textCountItem.text = e.count.ToString();
                 return;
             }
         }
@@ -44,15 +58,15 @@ public class HUD : MonoBehaviour
             {
                 image.enabled = true;
                 textCountItem.enabled = true;
-                image.sprite = e.Item.Image;
-                itemDragHandler.Item = e.Item;
-                textCountItem.text = e.Count.ToString();
+                image.sprite = e.item.Image;
+                itemDragHandler.Item = e.item;
+                textCountItem.text = e.count.ToString();
                 break;
             }
         }
     }
 
-    private void InventoryScript_ItemRemoved(object sender, InventoryEventArgs e)
+    private void InventoryScript_ItemRemoved(ItemRemovedEvent e)
     {
         Transform inventoryPanel = transform.Find("InventoryPanel");
         foreach (Transform slot in inventoryPanel)
@@ -63,7 +77,7 @@ public class HUD : MonoBehaviour
             TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
             ItemDragHandler itemDragHandler = imageTransform.GetComponent<ItemDragHandler>();
 
-            if (itemDragHandler.Item.Equals(e.Item))
+            if (itemDragHandler.Item.Equals(e.item))
             {
                 image.enabled = false;
                 image.sprite = null;
@@ -77,11 +91,12 @@ public class HUD : MonoBehaviour
 
     public void OpenMessagePanel(string text)
     {
-        MessagePanel.SetActive(true);
+        messagePanel.SetActive(true);
     }
 
     public void CloseMessagePanel()
     {
-        MessagePanel.SetActive(false);
+        messagePanel.SetActive(false);
     }
+
 }

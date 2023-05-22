@@ -33,7 +33,6 @@ public class CursorManager : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetCursorType);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetCursorLockMode);
-
         // Menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(this.SetCursorFromMainMenuEvent);
         EventManager.Instance.AddListener<GamePauseMenuEvent>(this.SetCursorFromPauseMenuEvent);

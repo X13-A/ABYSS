@@ -4,13 +4,26 @@ using UnityEngine;
 using SDD.Events;
 using TMPro;
 using System.ComponentModel;
+using System;
+using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour, IEventHandler
 {
     private static HudManager m_Instance;
     public static HudManager Instance => m_Instance;
-
     [SerializeField] private TextMeshProUGUI playerModeText;
+
+    private void Awake()
+    {
+        if (m_Instance == null)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void OnEnable()
     {
@@ -30,17 +43,6 @@ public class HudManager : MonoBehaviour, IEventHandler
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
-    }
-    private void Awake()
-    {
-        if (m_Instance == null)
-        {
-            m_Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void SetPlayerModeText(PlayerSwitchModeEvent e)

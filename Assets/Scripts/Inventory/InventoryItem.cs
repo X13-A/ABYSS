@@ -15,16 +15,3 @@ public interface IInventoryItem
 
     void OnUse();
 }
-
-public class InventoryEventArgs : EventArgs
-{
-    public InventoryEventArgs(IInventoryItem item, int count)
-    {
-        Item = item;
-        Count = count;
-    }
-
-    public IInventoryItem Item;
-    public int Count;
-}
-

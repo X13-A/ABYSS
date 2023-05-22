@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour, IPlayerCollider
 {
-    public Inventory inventory;
-
-    public HUD Hud;
-
     private IInventoryItem mItemToPickup = null;
 
     private void Update()
     {
         if (mItemToPickup != null && Input.GetKeyUp(KeyCode.F))
         {
-            inventory.AddItem(mItemToPickup);
+            InventoryManager.Instance.AddItem(mItemToPickup);
             mItemToPickup.OnPickup();
             //Hud.CloseMessagePanel();
         }

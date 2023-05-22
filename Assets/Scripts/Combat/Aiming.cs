@@ -13,7 +13,6 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject target;
-    [SerializeField] private RenderTexture rt;
     [SerializeField] private GameObject rotatingBody;
 
    
@@ -36,19 +35,12 @@ public class Aiming : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(RotatePlayer);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<RenderTextureUpdateEvent>(UpdateRenderTexture);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(RotatePlayer);
-    }
-
-    private void UpdateRenderTexture(RenderTextureUpdateEvent e)
-    {
-        rt = e.updatedRt;
     }
 
     private void RotatePlayer(AimingModeUpdateEvent e)

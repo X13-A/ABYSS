@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour, IEventHandler
 {
-    public static LevelManager Instance;
+    public static LevelManager m_Instance;
+    public static LevelManager Instance => m_Instance;
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Image progressBar;
@@ -46,9 +47,9 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null)
+        if (m_Instance == null)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {

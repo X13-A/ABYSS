@@ -5,6 +5,9 @@ using SDD.Events;
 
 public class CameraManager : MonoBehaviour, IEventHandler
 {
+    private static CameraManager m_Instance;
+    public static CameraManager Instance => m_Instance;
+
     [SerializeField] private GameObject m_PlayCamera;
     [SerializeField] private GameObject m_MainMenuCamera;
     private List<GameObject> m_Cameras;
@@ -38,6 +41,14 @@ public class CameraManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         m_Cameras = new List<GameObject>(
             new GameObject[]
             {

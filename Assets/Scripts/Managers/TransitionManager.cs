@@ -9,16 +9,18 @@ using static UnityEditorInternal.VersionControl.ListControl;
 
 public class TransitionManager : MonoBehaviour
 {
-    public static TransitionManager Instance;
+    public static TransitionManager m_Instance;
+    public static TransitionManager Instance => m_Instance;
+
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject fadePanelPrefab;
     private GameObject fadePanel;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (m_Instance == null)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {

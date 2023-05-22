@@ -5,7 +5,8 @@ using SDD.Events;
 
 public class PlayerManager : MonoBehaviour, IEventHandler
 {
-    public static PlayerManager Instance;
+    private static PlayerManager m_Instance;
+    public static PlayerManager Instance => m_Instance;
 
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private PlayerLook activePlayerLook;
@@ -83,9 +84,9 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null)
+        if (m_Instance == null)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {

@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour, IEventHandler
 {
-    public static InventoryManager Instance;
+    public static InventoryManager m_Instance;
+    public static InventoryManager Instance => m_Instance;
 
     private const int SLOTS = 9;
 
@@ -16,9 +17,9 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     private void Awake()
     {
-        if (Instance == null)
+        if (!m_Instance)
         {
-            Instance = this;
+            m_Instance = this;
         }
         else
         {

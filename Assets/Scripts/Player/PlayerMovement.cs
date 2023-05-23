@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private float yInput;
     private Vector3 inputVector;
     private float currentVelocity = 0f;
-    private float accelerationRate;
     private float groundCheckDistance;
+    private float targetVelocity;
 
     private void Awake()
     {
@@ -48,7 +48,18 @@ public class PlayerMovement : MonoBehaviour
         }
         PerformGroundCheck();
         HandleInput();
+        UpdateTargetVelocity();
         UpdateLookMode();
+    }
+
+    private void UpdateTargetVelocity()
+    {
+        inputVector = new Vector3(xInput, 0, yInput);
+        if (inputVector.magnitude > 1)
+        {
+            inputVector = inputVector.normalized;
+        }
+        targetVelocity = inputVector.magnitude * maxVelocity;
     }
 
     private void FixedUpdate()
@@ -70,23 +81,25 @@ public class PlayerMovement : MonoBehaviour
     */
     private void MovePlayer()
     {
-        inputVector = new Vector3(xInput, 0, yInput).normalized;
-        float targetVelocity = inputVector.magnitude * maxVelocity;
-        if (Mathf.Abs(targetVelocity) < Mathf.Abs(currentVelocity))
+        Debug.Log("vitesse target : " + targetVelocity);
+        if (Mathf.Abs(currentVelocity) < Mathf.Abs(targetVelocity))
         {
-            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration);
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration);
         }
         else
         {
-            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration);
+            currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration);
+        }
+        if (isGrounded)
+        {
+            currentVelocity *= (1 - groundDrag);
         }
         currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
         if (isPressingJump && isGrounded)
         {
             verticalVelocity = jumpSpeed;
         }
-        Vector3 movement = currentVelocity * inputVector;
-
+        Vector3 movement = inputVector * currentVelocity;
         // the player may have rotated in his own referential, so,
         // we need to convert his local position and rotation to a global one
         movement.y = verticalVelocity;
@@ -134,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void PerformGroundCheck()
-    { 
+    {
         groundCheckDistance = 0.2f;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
 

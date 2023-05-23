@@ -636,7 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 9, z: -5}
+  m_FollowOffset: {x: 0, y: 12, z: -4}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -1266,11 +1266,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
-  far clip plane: 5000
+  near clip plane: 0.3
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2622,7 +2622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003219964862986493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.3400002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2901,13 +2901,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.45
-  m_Radius: 0.5
+  m_Height: 1.4
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.62, z: 0}
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!114 &1003219964964764819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,10 +2920,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721e099fd090c45449fadbbe13a16e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 0.15
-  acceleration: 0.01
-  deceleration: 10
-  jumpSpeed: 0.2
+  maxVelocity: 0.1
+  acceleration: 0.2
+  deceleration: 1
+  jumpSpeed: 0.13
   groundDrag: 0
 --- !u!114 &1003219964964764818
 MonoBehaviour:
@@ -3213,7 +3213,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1003219966224878658}
   m_HandleRect: {fileID: 1003219965104882183}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.01
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -3911,8 +3911,8 @@ RectTransform:
   m_Father: {fileID: 1003219964553511586}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25, y: 0}
-  m_AnchorMax: {x: 0.25, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: -4}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4250,7 +4250,7 @@ MonoBehaviour:
   meleeTrail: {fileID: 1003219966257827567}
   magicProjectilePrefab: {fileID: 8047378608784370723, guid: d01f8fa9df6fb2c448e1e826db2e6c2e, type: 3}
   magicProjectilePosition: {fileID: 1003219964921108688}
-  magicProjectileSpeed: 100
+  magicProjectileSpeed: 40
   magicProjectileDamage: 5
   wandDuration: 1
   wandStartPercentage: 0.5
@@ -5729,7 +5729,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003219965780253081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.54, z: -1.5999985}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7426,7 +7426,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.25, y: 1}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11450,7 +11450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 9, z: -5}
+  m_FollowOffset: {x: 0, y: 12, z: -4}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -13111,7 +13111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 9, z: -5}
+  m_FollowOffset: {x: 0, y: 12, z: -4}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -13283,8 +13283,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 972485547668634210}
-  m_Follow: {fileID: 972485547668634210}
+  m_LookAt: {fileID: 1003219964862986492}
+  m_Follow: {fileID: 1003219965780253080}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 60
@@ -13356,14 +13356,14 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_BindingMode: 4
-  m_SplineCurvature: 0.844
+  m_SplineCurvature: 0.49
   m_Orbits:
-  - m_Height: 10
-    m_Radius: 4
-  - m_Height: 9
-    m_Radius: 5
-  - m_Height: 8
+  - m_Height: 15
     m_Radius: 6
+  - m_Height: 12
+    m_Radius: 4
+  - m_Height: 8
+    m_Radius: 3
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 4515533420129509864}
@@ -13762,7 +13762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3871198102164816963
 Transform:
   m_ObjectHideFlags: 0
@@ -15742,6 +15742,10 @@ PrefabInstance:
     - target: {fileID: 1655055733313902, guid: fddf800ed57475046abc53cef83a95da, type: 3}
       propertyPath: m_Name
       value: pickaxe_diamond
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655055733313902, guid: fddf800ed57475046abc53cef83a95da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4595190395155674, guid: fddf800ed57475046abc53cef83a95da, type: 3}
       propertyPath: m_RootOrder

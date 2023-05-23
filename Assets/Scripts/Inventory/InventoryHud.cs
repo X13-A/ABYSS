@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryHud : MonoBehaviour, IEventHandler
 {
-    [SerializeField] private GameObject messagePanel;
+    [SerializeField] private GameObject pickUpMessagePanel;
 
     private void OnEnable()
     {
@@ -23,16 +23,31 @@ public class InventoryHud : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.AddListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
         EventManager.Instance.AddListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
+        EventManager.Instance.AddListener<ItemCollideWithPlayerEvent>(this.OpenMessagePanel);
+        EventManager.Instance.AddListener<ItemEndCollideWithPlayerEvent>(this.CloseMessagePanel);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
         EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
+        EventManager.Instance.RemoveListener<ItemCollideWithPlayerEvent>(this.OpenMessagePanel);
+        EventManager.Instance.RemoveListener<ItemEndCollideWithPlayerEvent>(this.CloseMessagePanel);
+    }
+
+    private void OpenMessagePanel(ItemCollideWithPlayerEvent e)
+    {
+        pickUpMessagePanel.SetActive(true);
+    }
+
+    private void CloseMessagePanel(ItemEndCollideWithPlayerEvent e)
+    {
+        pickUpMessagePanel.SetActive(false);
     }
 
     private void InventoryScript_ItemAdded(ItemAddedEvent e)
     {
+        pickUpMessagePanel.SetActive(false);
         Transform inventoryPanel = transform.Find("InventoryPanel");
         foreach (Transform slot in inventoryPanel)
         {
@@ -88,15 +103,4 @@ public class InventoryHud : MonoBehaviour, IEventHandler
             }
         }
     }
-
-    public void OpenMessagePanel(string text)
-    {
-        messagePanel.SetActive(true);
-    }
-
-    public void CloseMessagePanel()
-    {
-        messagePanel.SetActive(false);
-    }
-
 }

@@ -165,4 +165,12 @@ public class ItemUsedEvent : SDD.Events.Event
 {
     public IInventoryItem item;
 }
+
+public class ItemCollideWithPlayerEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+}
+
+public class ItemEndCollideWithPlayerEvent : SDD.Events.Event {}
+
 #endregion

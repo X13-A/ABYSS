@@ -1,6 +1,8 @@
+using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerCollider : MonoBehaviour, IPlayerCollider
 {
@@ -12,7 +14,6 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         {
             InventoryManager.Instance.AddItem(mItemToPickup);
             mItemToPickup.OnPickup();
-            //Hud.CloseMessagePanel();
         }
     }
 
@@ -22,17 +23,20 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         if (item != null)
         {
             mItemToPickup = item;
-            //inventory.AddItem(item);
-            //item.OnPickup();
 
-            //Hud.OpenMessagePanel("");
+            EventManager.Instance.Raise(new ItemCollideWithPlayerEvent { item = item });
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //Hud.CloseMessagePanel();
-        mItemToPickup = null;
+        IInventoryItem item = other.GetComponent<IInventoryItem>();
+        if (item != null)
+        {
+            EventManager.Instance.Raise(new ItemEndCollideWithPlayerEvent { });
+
+            mItemToPickup = null;
+        }
     }
 }
 

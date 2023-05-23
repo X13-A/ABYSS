@@ -17,9 +17,9 @@ public class CreditsBehavior : MonoBehaviour
     private void Update()
     {
         if (finished) return;
-        float screenTop = Screen.height;
+
         float creditsBottom = rectTransform.position.y - (rectTransform.rect.height / 2);
-        if (creditsBottom < screenTop)
+        if (creditsBottom < Screen.height)
         {
             transform.position = new Vector3(
                 transform.position.x,

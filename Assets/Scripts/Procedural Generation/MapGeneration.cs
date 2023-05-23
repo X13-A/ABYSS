@@ -32,6 +32,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private TerrainType[] fourthLevel;
 
     [SerializeField] private GameObject portalPrefab;
+    [SerializeField] private Vector3 playerSpawnCoords;
 
     private TerrainType[][] levelArray;
 
@@ -90,11 +91,32 @@ public class MapGeneration : MonoBehaviour
             await Task.Yield();
         }
 
+        // Set player spawn
+        GameObject playerSpawnObject = Instantiate(new GameObject("PlayerSpawn"));
+        playerSpawnObject.AddComponent<PlayerSpawn>();
+        playerSpawnObject.transform.SetParent(map.transform);
+        this.setPlayerSpawnHeight(playerSpawnObject, noiseMap);
+
+        // Generate portal
         GameObject portal = Instantiate(this.portalPrefab, new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portalPrefab.transform.localScale.y / 2, 50), Quaternion.identity);
         portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
         portal.transform.SetParent(map.transform);
         map.SetActive(true);
-        return map;
+        return map; 
+    }
+
+    private void setPlayerSpawnHeight(GameObject spawn, float[,] noiseMap)
+    {
+        int x = Mathf.RoundToInt(this.playerSpawnCoords.x);
+        int z = Mathf.RoundToInt(this.playerSpawnCoords.z);
+
+        float height = Mathf.Ceil(noiseMap[x, z]);
+        spawn.transform.position = new Vector3
+        (
+            this.playerSpawnCoords.x,
+            height,
+            this.playerSpawnCoords.z
+        );
     }
 
     private float[,] GenerateNoiseMap()

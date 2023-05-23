@@ -1,11 +1,7 @@
-using SDD.Events;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditorInternal.VersionControl.ListControl;
 
 public class TransitionManager : MonoBehaviour
 {

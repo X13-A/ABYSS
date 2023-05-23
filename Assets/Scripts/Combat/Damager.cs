@@ -1,16 +1,11 @@
-using SDD.Events;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Damager : MonoBehaviour, IDamager
 {
     [SerializeField] private float damage;
     [SerializeField] private AttackType type;
-    private new Collider collider;
+    private Collider collider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 

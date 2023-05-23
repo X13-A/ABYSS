@@ -1,10 +1,5 @@
 using SDD.Events;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class Aiming : MonoBehaviour, IEventHandler
 {

@@ -52,16 +52,6 @@ public class PlayerMovement : MonoBehaviour
         UpdateLookMode();
     }
 
-    private void UpdateTargetVelocity()
-    {
-        inputVector = new Vector3(xInput, 0, yInput);
-        if (inputVector.magnitude > 1)
-        {
-            inputVector = inputVector.normalized;
-        }
-        targetVelocity = inputVector.magnitude * maxVelocity;
-    }
-
     private void FixedUpdate()
     {
         ApplyGravity();
@@ -75,13 +65,22 @@ public class PlayerMovement : MonoBehaviour
         isPressingJump = Input.GetButton("Jump");
     }
 
+    private void UpdateTargetVelocity()
+    {
+        inputVector = new Vector3(xInput, 0, yInput);
+        if (inputVector.magnitude > 1)
+        {
+            inputVector = inputVector.normalized;
+        }
+        targetVelocity = inputVector.magnitude * maxVelocity;
+    }
+
     /*
 		Move the player each fixedTimeDelta
 		this function is meant to be called in fixedUpdate
     */
     private void MovePlayer()
     {
-        Debug.Log("vitesse target : " + targetVelocity);
         if (Mathf.Abs(currentVelocity) < Mathf.Abs(targetVelocity))
         {
             currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, acceleration);

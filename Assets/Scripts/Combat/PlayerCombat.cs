@@ -24,8 +24,8 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     [SerializeField] private AttackType activeAttackMode;
     public AttackType ActiveAttackMode
     {
-        get { return activeAttackMode; }
-        set 
+        get => activeAttackMode;
+        set
         {
             activeAttackMode = value;
             EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = EnumConverter.PlayerModeFromAttackType(value) });
@@ -66,7 +66,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     {
         meleeDamager.Damage(meleeDamage, meleeDuration);
         meleeTrail.Play(true);
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => { meleeTrail.Stop(); }));
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => meleeTrail.Stop()));
     }
 
     private void WandAttack(PlayerAttackEvent e)

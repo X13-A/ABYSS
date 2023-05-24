@@ -173,4 +173,9 @@ public class ItemCollideWithPlayerEvent : SDD.Events.Event
 
 public class ItemEndCollideWithPlayerEvent : SDD.Events.Event {}
 
+public class CactusAttackEvent : SDD.Events.Event 
+{
+    public float damage;
+}
+
 #endregion

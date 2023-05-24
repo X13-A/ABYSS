@@ -11,6 +11,7 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     [SerializeField] private AnimationClip walk;
     [SerializeField] private AnimationClip meleeAttack;
     [SerializeField] private AnimationClip wandAttack;
+
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();

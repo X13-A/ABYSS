@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
 	{
-        attackOffset = 0.1f;        
+        attackOffset = 2f;        
         attackStartTime = Time.time - 1000;
 	}
 
@@ -81,7 +81,7 @@ public class EnemyAI : MonoBehaviour
             m_Rigidbody.MoveRotation(Quaternion.LookRotation(directionToPlayer));
             m_Rigidbody.MovePosition(transform.position + directionToPlayer * Velocity);
         }
-        else if (distanceToPlayer > 0 && distanceToPlayer < attackOffset && AttackElaspedTime > currentAttackDuration)
+        else if (distanceToPlayer > 0 && distanceToPlayer <= attackOffset && AttackElaspedTime > currentAttackDuration)
         {
             EventManager.Instance.Raise(new CactusAttackEvent
             {

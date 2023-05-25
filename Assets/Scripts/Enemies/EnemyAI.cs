@@ -86,6 +86,8 @@ public class EnemyAI : MonoBehaviour
 	        } 
 	        else if (AttackElaspedTime > currentAttackDuration)
 	        {
+                isRunning = false;
+                isWalking = false;
 			    EventManager.Instance.Raise(new CactusAttackEvent
 			    {
 			    	damage = 10f

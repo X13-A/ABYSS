@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
 	{
-        attackOffset = 2f;        
+        attackOffset = 1f;        
         attackStartTime = Time.time - 1000;
 	}
 
@@ -77,23 +77,26 @@ public class EnemyAI : MonoBehaviour
     {
         if (distanceToPlayer <= detectionRadius)
         {
-            if (distanceToPlayer >= attackOffset)
+            if (distanceToPlayer > attackOffset)
             { 
 			    MoveTowardPlayer();
 	        } 
-	        else
-	        { 
+	        else if (AttackElaspedTime > currentAttackDuration)
+	        {
 			    EventManager.Instance.Raise(new CactusAttackEvent
 			    {
 			    	damage = 10f
 			    });
+                attackStartTime = Time.time;
 	        }
         }
     }
 
     private void MoveTowardPlayer()
-    { 
-	    Vector3 directionToPlayer = (playerReference.position - transform.position).normalized;
+    {
+        Vector3 player_width = new Vector3(playerReference.GetComponent<CharacterController>().radius, 0, 0);
+        Vector3 enemy_width = new Vector3(GetComponent<CapsuleCollider>().radius, 0, 0);
+	    Vector3 directionToPlayer = ((playerReference.position + player_width) - (transform.position + enemy_width)).normalized;
 	    m_Rigidbody.MoveRotation(Quaternion.LookRotation(directionToPlayer));
 	    m_Rigidbody.MovePosition(transform.position + directionToPlayer * Velocity);
     }

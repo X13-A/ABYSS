@@ -22,6 +22,16 @@ public class CactusAnimationController : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<CactusAttackEvent>(HandleAttack);
     }
 
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+        SubscribeEvents();
+    }
+
     private void HandleAttack(CactusAttackEvent e)
     {
         m_Animator.SetTrigger("attack");

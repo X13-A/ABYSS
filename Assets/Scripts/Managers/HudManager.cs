@@ -13,6 +13,8 @@ public class HudManager : MonoBehaviour, IEventHandler
     public static HudManager Instance => m_Instance;
     [SerializeField] private TextMeshProUGUI playerModeText;
 
+    private GameObject HUD;
+
     private void Awake()
     {
         if (m_Instance == null)
@@ -23,6 +25,8 @@ public class HudManager : MonoBehaviour, IEventHandler
         {
             Destroy(gameObject);
         }
+
+        HUD = GameObject.Find("HUD");
     }
 
     private void OnEnable()
@@ -38,11 +42,51 @@ public class HudManager : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
+        EventManager.Instance.AddListener<GameMainMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameSettingsMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GamePauseMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameResumeEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GamePlayEvent>(this.OpenHud);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
+        EventManager.Instance.RemoveListener<GameMainMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameResumeEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GamePlayEvent>(this.OpenHud);
+    }
+
+    #region Close HUD
+    private void CloseHud(GameMainMenuEvent e)
+    {
+        HUD.SetActive(false);
+    }
+    private void CloseHud(GameSettingsMenuEvent e)
+    {
+        HUD.SetActive(false);
+    }
+    private void CloseHud(GamePauseMenuEvent e)
+    {
+        HUD.SetActive(false);
+    }
+    private void CloseHud(GameOverEvent e)
+    {
+        HUD.SetActive(false);
+    }
+    private void CloseHud(GameResumeEvent e)
+    {
+        HUD.SetActive(false);
+    }
+    #endregion
+
+    private void OpenHud(GamePlayEvent e)
+    {
+        HUD.SetActive(true);
     }
 
     private void SetPlayerModeText(PlayerSwitchModeEvent e)

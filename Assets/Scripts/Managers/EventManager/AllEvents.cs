@@ -35,6 +35,7 @@ public class SceneAboutToChangeEvent : SDD.Events.Event
     public int levelGenerated;
     public string targetScene;
 }
+
 public class SceneReadyToChangeEvent : SDD.Events.Event
 {
     public int levelGenerated;
@@ -177,5 +178,6 @@ public class CactusAttackEvent : SDD.Events.Event
 {
     public float damage;
 }
+
 
 #endregion

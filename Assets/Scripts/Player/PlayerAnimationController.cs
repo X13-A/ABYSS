@@ -75,6 +75,7 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         bool hasMovement = movementMagnitude >= float.Epsilon;
         bool isWalking = m_Animator.GetBool("IsWalking");
 
+
         if (!isWalking && hasMovement)
         {
             m_Animator.SetBool("IsWalking", true);

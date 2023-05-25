@@ -75,19 +75,27 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (distanceToPlayer <= detectionRadius && distanceToPlayer >= attackOffset)
+        if (distanceToPlayer <= detectionRadius)
         {
-            Vector3 directionToPlayer = (playerReference.position - transform.position).normalized;
-            m_Rigidbody.MoveRotation(Quaternion.LookRotation(directionToPlayer));
-            m_Rigidbody.MovePosition(transform.position + directionToPlayer * Velocity);
+            if (distanceToPlayer >= attackOffset)
+            { 
+			    MoveTowardPlayer();
+	        } 
+	        else
+	        { 
+			    EventManager.Instance.Raise(new CactusAttackEvent
+			    {
+			    	damage = 10f
+			    });
+	        }
         }
-        else if (distanceToPlayer > 0 && distanceToPlayer <= attackOffset && AttackElaspedTime > currentAttackDuration)
-        {
-            EventManager.Instance.Raise(new CactusAttackEvent
-            {
-                damage = 10f
-            });
-        }
+    }
+
+    private void MoveTowardPlayer()
+    { 
+	    Vector3 directionToPlayer = (playerReference.position - transform.position).normalized;
+	    m_Rigidbody.MoveRotation(Quaternion.LookRotation(directionToPlayer));
+	    m_Rigidbody.MovePosition(transform.position + directionToPlayer * Velocity);
     }
 
     private void UpdateCurrentVelocity()

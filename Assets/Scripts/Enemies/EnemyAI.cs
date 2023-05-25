@@ -17,6 +17,7 @@ public class EnemyAI : MonoBehaviour
     private bool isWalking;
     private bool isRunning;
     private float attackOffset;
+    private bool senseSomething;
 
     public float Velocity { get; private set; }
     private float attackStartTime;
@@ -30,6 +31,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
 	{
+        senseSomething = false; 
         attackOffset = 1f;        
         attackStartTime = Time.time - 1000;
 	}
@@ -59,7 +61,8 @@ public class EnemyAI : MonoBehaviour
 	    {
             isWalking = true;
             isRunning = false;
-	    } else if (distanceToPlayer > 0 && distanceToPlayer <= detectionRadius / runningWhenModifier) // running
+	    } 
+	    else if (distanceToPlayer > 0 && distanceToPlayer <= detectionRadius / runningWhenModifier) // running
 	    {
             isRunning = true;
             isWalking = false;

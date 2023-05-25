@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5e1e039529fb841817c5d349dfac36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 9
+  detectionRadius: 8
   runningVelocity: 0.04
   walkingVelocity: 0.01
   runningWhenModifier: 1.5

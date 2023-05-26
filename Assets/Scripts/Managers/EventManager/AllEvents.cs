@@ -29,6 +29,16 @@ public class AimingModeUpdateEvent : SDD.Events.Event
 
 #endregion
 
+#region enemy
+
+public class EnemyAttackEvent : SDD.Events.Event
+{
+    public float damage;
+    // peut être rajouté un paramètre de son, @Alexou
+}
+
+#endregion
+
 #region Scene events
 public class SceneAboutToChangeEvent : SDD.Events.Event
 {
@@ -172,12 +182,8 @@ public class ItemCollideWithPlayerEvent : SDD.Events.Event
     public IInventoryItem item;
 }
 
-public class ItemEndCollideWithPlayerEvent : SDD.Events.Event {}
+public class ItemEndCollideWithPlayerEvent : SDD.Events.Event { }
 
-public class CactusAttackEvent : SDD.Events.Event 
-{
-    public float damage;
-}
 
 
 #endregion

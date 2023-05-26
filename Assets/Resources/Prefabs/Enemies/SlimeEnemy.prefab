@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 6372115040672019814}
   - component: {fileID: 6372115040672019815}
   - component: {fileID: 6372115040672019812}
+  - component: {fileID: 1378855907}
+  - component: {fileID: 1378855908}
   m_Layer: 0
   m_Name: SlimeEnemy
   m_TagString: Untagged
@@ -133,12 +135,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5e1e039529fb841817c5d349dfac36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 12
   runningVelocity: 0.03
   walkingVelocity: 0.02
   runningWhenModifier: 1.5
   playerReference: {fileID: 0}
   currentAttackDuration: 3
+  detectionRadius: 12
+--- !u!114 &1378855907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6370514893178482396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a786807d616d545b28a3d3207d791b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 20
+  damagerTypes: 
+  damagerTypesFactors: []
+  hitParticles: {fileID: 0}
+  corpse: {fileID: 0}
+--- !u!114 &1378855908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6370514893178482396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d91468bbac9c4d9bb967d2afc89b659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6370725469876677340
 GameObject:
   m_ObjectHideFlags: 0

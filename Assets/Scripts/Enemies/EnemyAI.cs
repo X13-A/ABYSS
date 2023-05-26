@@ -102,7 +102,6 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        animator.SetFloat("distanceToPlayer", distanceToPlayer);
         animator.SetBool("isWalking", isWalking);
         animator.SetBool("isRunning", isRunning);
         animator.SetInteger("attackVariant", attackVariant);
@@ -135,7 +134,7 @@ public class EnemyAI : MonoBehaviour
 
     private void RaiseAttackEvent()
     {
-        EventManager.Instance.Raise(new CactusAttackEvent
+        EventManager.Instance.Raise(new EnemyAttackEvent
         {
             damage = 10f
         });

@@ -3,77 +3,50 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    private Animator m_Animator;
-    private Rigidbody m_Rigidbody;
-
-    public float detectionRadius;
     [SerializeField] private float runningVelocity;
     [SerializeField] private float walkingVelocity;
     [SerializeField] private float runningWhenModifier;
     [SerializeField] private Transform playerReference;
     [SerializeField] private float currentAttackDuration;
+    public float detectionRadius;
+
+    private Animator animator;
+    private Rigidbody rb;
+    private CharacterController playerCharacterController;
+    private CapsuleCollider enemyCollider;
 
     private float distanceToPlayer;
     private bool isWalking;
     private bool isRunning;
     private float attackOffset;
-    private bool senseSomething;
+    private float attackStartTime;
+    private int attackVariant;
+    private int attackCounter;
 
     public float Velocity { get; private set; }
-    private float attackStartTime;
     public float AttackElaspedTime => Time.time - attackStartTime;
 
     private void Awake()
     {
-        m_Animator = GetComponent<Animator>();
-        m_Rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        playerCharacterController = playerReference.GetComponent<CharacterController>();
+        enemyCollider = GetComponent<CapsuleCollider>();
     }
 
     private void OnEnable()
-	{
-        senseSomething = false; 
-        attackOffset = 1f;        
+    {
+        attackOffset = 1f;
         attackStartTime = Time.time - 1000;
-	}
+        attackVariant = 0;
+        attackCounter = 0;
+    }
 
     private void Update()
     {
         UpdateCurrentVelocity();
-        SearchPlayer();
+        UpdateStatus();
         UpdateAnimator();
-    }
-
-    private void SearchPlayer()
-    {
-        if (playerReference == null)
-        {
-            return;
-        }
-
-        distanceToPlayer = Vector3.Distance(transform.position, playerReference.position);
-
-        if (distanceToPlayer >= detectionRadius) // OOD
-        {
-            isWalking = false;
-            isRunning = false;
-	    }
-        if (distanceToPlayer <= detectionRadius && distanceToPlayer > detectionRadius / runningWhenModifier) // walking
-	    {
-            isWalking = true;
-            isRunning = false;
-	    } 
-	    else if (distanceToPlayer > 0 && distanceToPlayer <= detectionRadius / runningWhenModifier) // running
-	    {
-            isRunning = true;
-            isWalking = false;
-	    }
-    }
-
-    private void UpdateAnimator()
-    {
-        m_Animator.SetFloat("distanceToPlayer", distanceToPlayer);
-        m_Animator.SetBool("isWalking", isWalking);
-        m_Animator.SetBool("isRunning", isRunning);
     }
 
     private void FixedUpdate()
@@ -81,29 +54,67 @@ public class EnemyAI : MonoBehaviour
         if (distanceToPlayer <= detectionRadius)
         {
             if (distanceToPlayer > attackOffset)
-            { 
-			    MoveTowardPlayer();
-	        } 
-	        else if (AttackElaspedTime > currentAttackDuration)
-	        {
-                isRunning = false;
-                isWalking = false;
-			    EventManager.Instance.Raise(new CactusAttackEvent
-			    {
-			    	damage = 10f
-			    });
+            {
+                MoveAndRotateTowardPlayer();
+            }
+            else if (AttackElaspedTime > currentAttackDuration)
+            {
+                RaiseAttackEvent();
                 attackStartTime = Time.time;
-	        }
+            }
         }
     }
 
-    private void MoveTowardPlayer()
+    private void UpdateStatus()
     {
-        Vector3 player_width = new Vector3(playerReference.GetComponent<CharacterController>().radius, 0, 0);
-        Vector3 enemy_width = new Vector3(GetComponent<CapsuleCollider>().radius, 0, 0);
-	    Vector3 directionToPlayer = ((playerReference.position + player_width) - (transform.position + enemy_width)).normalized;
-	    m_Rigidbody.MoveRotation(Quaternion.LookRotation(directionToPlayer));
-	    m_Rigidbody.MovePosition(transform.position + directionToPlayer * Velocity);
+        if (playerReference == null)
+        {
+            return;
+        }
+
+        distanceToPlayer = Vector3.Distance(transform.position, playerReference.position);
+        UpdateRunningAndWalkingStatus();
+    }
+
+    private void UpdateRunningAndWalkingStatus()
+    {
+        if (distanceToPlayer <= attackOffset)
+        {
+            isRunning = false;
+            isWalking = false;
+        }
+        else if (distanceToPlayer >= detectionRadius)
+        {
+            isWalking = false;
+            isRunning = false;
+        }
+        else if (distanceToPlayer <= detectionRadius && distanceToPlayer > detectionRadius / runningWhenModifier)
+        {
+            isWalking = true;
+            isRunning = false;
+        }
+        else if (distanceToPlayer > 0 && distanceToPlayer <= detectionRadius / runningWhenModifier)
+        {
+            isRunning = true;
+            isWalking = false;
+        }
+    }
+
+    private void UpdateAnimator()
+    {
+        animator.SetFloat("distanceToPlayer", distanceToPlayer);
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+        animator.SetInteger("attackVariant", attackVariant);
+    }
+
+    private void MoveAndRotateTowardPlayer()
+    {
+        Vector3 player_width = new Vector3(playerCharacterController.radius, 0, 0);
+        Vector3 enemy_width = new Vector3(enemyCollider.radius, 0, 0);
+        Vector3 directionToPlayer = ((playerReference.position + player_width) - (transform.position + enemy_width)).normalized;
+        rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
+        rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }
 
     private void UpdateCurrentVelocity()
@@ -115,10 +126,20 @@ public class EnemyAI : MonoBehaviour
         else if (isRunning && !isWalking)
         {
             Velocity = runningVelocity;
-        } 
-	    else 
+        }
+        else
         {
             Velocity = 0f;
         }
+    }
+
+    private void RaiseAttackEvent()
+    {
+        EventManager.Instance.Raise(new CactusAttackEvent
+        {
+            damage = 10f
+        });
+        attackCounter++;
+        attackVariant = attackCounter % 3 == 0 ? 1 : 0;
     }
 }

@@ -5,12 +5,9 @@ using UnityEngine;
 
 public class CactusAnimationController : MonoBehaviour, IEventHandler
 {
-    private Animator m_Animator;
-    private Rigidbody m_Rigidbody;
-    private EnemyAI m_EnemyAI;
-
-    [SerializeField] private AnimationClip walk;
-    [SerializeField] private AnimationClip run;
+    private Animator animator;
+    private Rigidbody rb;
+    private EnemyAI enemyAI;
 
     public void SubscribeEvents()
     {
@@ -20,6 +17,13 @@ public class CactusAnimationController : MonoBehaviour, IEventHandler
     public void UnsubscribeEvents()
     { 
         EventManager.Instance.RemoveListener<CactusAttackEvent>(HandleAttack);
+    }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        enemyAI = GetComponent<EnemyAI>();
     }
 
     private void OnEnable()
@@ -34,17 +38,7 @@ public class CactusAnimationController : MonoBehaviour, IEventHandler
 
     private void HandleAttack(CactusAttackEvent e)
     {
-        m_Animator.SetTrigger("attack");
+        animator.SetTrigger("attack");
     }
 
-    private void Awake()
-    {
-        m_Animator = GetComponent<Animator>();
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_EnemyAI = GetComponent<EnemyAI>();
-    }
-
-    private void Update()
-    {
-    }
 }

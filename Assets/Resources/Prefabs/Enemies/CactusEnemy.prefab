@@ -579,12 +579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5e1e039529fb841817c5d349dfac36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 8
   runningVelocity: 0.04
   walkingVelocity: 0.01
   runningWhenModifier: 1.5
   playerReference: {fileID: 0}
   currentAttackDuration: 2
+  detectionRadius: 8
 --- !u!114 &8865440481292938101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,8 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d91468bbac9c4d9bb967d2afc89b659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walk: {fileID: 1827226128182048838, guid: 9b9279213c434f60bfdd45c1f0e4d752, type: 3}
-  run: {fileID: 1827226128182048838, guid: 93edfaa62ef343799630a119e6b5b00d, type: 3}
 --- !u!114 &8865440481292938096
 MonoBehaviour:
   m_ObjectHideFlags: 0

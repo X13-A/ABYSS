@@ -5,18 +5,25 @@ public class Minimap : MonoBehaviour
 {
     [SerializeField] private float exploreRadius;
     [SerializeField] private RawImage rawImage;
-    [SerializeField] private Vector2 mapSize;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerMarker;
+
     private Vector2 playerPos;
     private bool[,] exploredMap;
-
+    private RectTransform rectTransform;
+    private RectTransform playerMarkerRect;
     private Texture2D imageTexture;
 
     private void Start()
     {
-        imageTexture = new Texture2D((int) mapSize.x, (int) mapSize.y);
+        imageTexture = new Texture2D(LevelData.Instance.MapWidth, LevelData.Instance.MapHeight);
         rawImage.texture = imageTexture;
-        exploredMap = new bool[(int) mapSize.x, (int) mapSize.y];
+        exploredMap = new bool[LevelData.Instance.MapWidth, LevelData.Instance.MapWidth];
+        rectTransform = GetComponent<RectTransform>();
+        if (playerMarker != null )
+        {
+            playerMarkerRect = playerMarker.GetComponent<RectTransform>();
+        }
     }
 
     private void ExploreMinimap()
@@ -30,9 +37,16 @@ public class Minimap : MonoBehaviour
         if (playerPos == newPlayerPos) return;
         playerPos = newPlayerPos;
 
-        for (int x = 0; x < mapSize.x; x++)
+        playerMarkerRect.anchoredPosition = new Vector3
+        (
+            (newPlayerPos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
+            (newPlayerPos.y / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+            0
+        );
+
+        for (int x = 0; x < LevelData.Instance.MapWidth; x++)
         {
-            for (int y = 0; y < mapSize.y; y++)
+            for (int y = 0; y < LevelData.Instance.MapHeight; y++)
             {
                 Vector2 pixelPos = new Vector2(x, y);
                 float dist = Vector2.Distance(playerPos, pixelPos);
@@ -47,21 +61,43 @@ public class Minimap : MonoBehaviour
         }
     }
 
+    private Color FindPixelColor(int x, int z)
+    {
+        // Get height of block at x, z
+        BlockType[,,] topBlocksHeight = LevelData.Instance.BlocksMap;
+        if (topBlocksHeight == null) return Color.clear;
+        int y = LevelData.Instance.TopBlocksHeight[x, z];
+
+        // Get block type
+        BlockType[,,] blocksMap = LevelData.Instance.BlocksMap;
+        if (blocksMap == null) return Color.clear;
+        BlockType type = LevelData.Instance.BlocksMap[x, y, z];
+        Color color = EnumConverter.ColorFromBlockType(type);
+
+        // Set alpha depending on depth
+        float alpha = 1f - Mathf.Clamp(0.2f + ((float)y / 5f)*0.8f, 0f, 1f);
+        color = new Color (color.r, color.g, color.b, alpha);
+
+        return color;
+    }
+
     private void UpdatePixels()
     {
         Color32[] pixelColors = imageTexture.GetPixels32();
 
-        for (int y = 0; y < imageTexture.height; y++)
+        for (int z = 0; z < imageTexture.height; z++)
         {
             for (int x = 0; x < imageTexture.width; x++)
             {
-                if (exploredMap[x, y] == true)
+
+                if (exploredMap[x, z] == true)
                 {
-                    pixelColors[y * imageTexture.width + x] = Color.clear;
+                    Color color = FindPixelColor(x, z);
+                    pixelColors[z * imageTexture.width + x] = color;
                 }
                 else
                 {
-                    pixelColors[y * imageTexture.width + x] = Color.black;
+                    pixelColors[z * imageTexture.width + x] = Color.black;
                 }
             }
         }

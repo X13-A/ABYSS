@@ -5,7 +5,7 @@ public class Damager : MonoBehaviour, IDamager
 {
     [SerializeField] private float damage;
     [SerializeField] private AttackType type;
-    private Collider collider;
+    private new Collider collider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 

@@ -2,13 +2,15 @@ using SDD.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minimap : MonoBehaviour
+public class Minimap : MonoBehaviour, IEventHandler
 {
     [SerializeField] private float exploreRadius;
     [SerializeField] private RawImage rawImage;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject playerMarker;
     [SerializeField] private GameObject portalMarker;
+
+    private bool exploring = false;
 
     private Vector2 playerPos;
     private bool[,] exploredMap;
@@ -19,6 +21,31 @@ public class Minimap : MonoBehaviour
 
     private Texture2D imageTexture;
     private bool portalDiscovered = false;
+
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<PlayerSpawnedEvent>(StartExploration);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<PlayerSpawnedEvent>(StartExploration);
+    }
+
+    private void StartExploration(PlayerSpawnedEvent e)
+    {
+        this.exploring = true;
+    }
 
     private void Start()
     {
@@ -37,7 +64,7 @@ public class Minimap : MonoBehaviour
         portalMarkerRect.anchoredPosition = new Vector3
         (
             (LevelData.Instance.PortalPos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
-            (LevelData.Instance.PortalPos.y / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+            (LevelData.Instance.PortalPos.z / LevelData.Instance.MapHeight) * rectTransform.rect.height,
             0
         );
     }
@@ -71,11 +98,11 @@ public class Minimap : MonoBehaviour
                 {
                     if (exploredMap[x, y] == false)
                     {
-                        if (portalDiscovered == false && x == (int) LevelData.Instance.PortalPos.x && y == (int) LevelData.Instance.PortalPos.y)
+                        exploredMap[x, y] = true;
+                        if (LevelData.Instance.PortalPos != null && portalDiscovered == false && x == (int) LevelData.Instance.PortalPos.x && y == (int) LevelData.Instance.PortalPos.z)
                         {
                             OnPortalDiscover();
                         }
-                        exploredMap[x, y] = true;
                     }
                 }
             }
@@ -99,6 +126,7 @@ public class Minimap : MonoBehaviour
         // Get block type
         BlockType[,,] blocksMap = LevelData.Instance.BlocksMap;
         if (blocksMap == null) return Color.clear;
+
         BlockType type = LevelData.Instance.BlocksMap[x, y, z];
         Color color = EnumConverter.ColorFromBlockType(type);
 
@@ -136,7 +164,10 @@ public class Minimap : MonoBehaviour
 
     private void Update()
     {
-        ExploreMinimap();
-        UpdatePixels();
+        if (this.exploring == true)
+        {
+            ExploreMinimap();
+            UpdatePixels();
+        }
     }
 }

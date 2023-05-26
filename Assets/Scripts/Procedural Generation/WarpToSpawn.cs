@@ -1,3 +1,4 @@
+using SDD.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ public class WarpToSpawn : MonoBehaviour
         this.characterController = GetComponent<CharacterController>();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (!this.spawned && this.spawn != null && this.characterController != null)
         {
@@ -23,6 +24,8 @@ public class WarpToSpawn : MonoBehaviour
             this.transform.position = spawn.transform.position;
             this.characterController.enabled = true;
             this.spawned = true;
+            this.gameObject.SetActive(true);
+            EventManager.Instance.Raise(new PlayerSpawnedEvent { });
         }
     }
 }

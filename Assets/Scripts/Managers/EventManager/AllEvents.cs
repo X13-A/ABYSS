@@ -22,6 +22,10 @@ public class PlayerAttackEvent : SDD.Events.Event
     public AttackType type;
 }
 
+public class PlayerSpawnedEvent : SDD.Events.Event
+{
+}
+
 public class AimingModeUpdateEvent : SDD.Events.Event
 {
     public AimingMode mode;

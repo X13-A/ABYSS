@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private CharacterController playerCharacterController;
-    private CapsuleCollider enemyCollider;
+    private Collider enemyCollider;
 
     private float distanceToPlayer;
     private bool isWalking;
@@ -125,11 +125,28 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
-        Vector3 player_width = new Vector3(playerCharacterController.radius, 0, 0);
-        Vector3 enemy_width = new Vector3(enemyCollider.radius, 0, 0);
-        Vector3 directionToPlayer = ((playerReference.position + player_width) - (transform.position + enemy_width)).normalized;
+        Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
+
+        Vector3 enemyWidth = GetEnemyWidth();
+        Vector3 directionToPlayer = ((playerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
         rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
+    }
+
+    private Vector3 GetEnemyWidth()
+    {
+        if (enemyCollider is CapsuleCollider)
+        {
+            CapsuleCollider capsule = (CapsuleCollider) enemyCollider;
+            return new Vector3(capsule.radius, 0, 0);
+        }
+        if (enemyCollider is BoxCollider)
+        {
+            BoxCollider box = (BoxCollider) enemyCollider;
+            return new Vector3(box.size.x, 0, 0);
+        }
+        Debug.Log("You need to implement this method with the new collider");
+        return new Vector3(0, 0, 0);
     }
 
     private void UpdateCurrentVelocity()

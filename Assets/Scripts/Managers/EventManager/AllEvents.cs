@@ -27,6 +27,10 @@ public class AimingModeUpdateEvent : SDD.Events.Event
     public AimingMode mode;
 }
 
+public class PortalDiscoveredEvent : SDD.Events.Event
+{
+}
+
 #endregion
 
 #region Scene events

@@ -18,6 +18,8 @@ public class LevelData : MonoBehaviour
     private int mapHeight;
     public int MapHeight { get; set; }
 
+    private Vector3 portalPos { get; set; }
+    public Vector3 PortalPos { get; set; }
 
     private void Awake()
     {

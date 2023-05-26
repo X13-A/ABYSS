@@ -135,11 +135,6 @@ public class MapGeneration : MonoBehaviour
             await Task.Yield();
         }
 
-        // Save data across scenes
-        LevelData.Instance.BlocksMap = this.blocksMap;
-        LevelData.Instance.TopBlocksHeight = this.topBlocksHeight;
-        LevelData.Instance.MapHeight = this.mapHeight;
-        LevelData.Instance.MapWidth = this.mapWidth;
 
         // Set player spawn
         GameObject playerSpawnObject = Instantiate(new GameObject("PlayerSpawn"));
@@ -148,9 +143,18 @@ public class MapGeneration : MonoBehaviour
         this.setPlayerSpawnHeight(playerSpawnObject, this.noiseMap);
 
         // Generate portal
-        GameObject portal = Instantiate(this.portalPrefab, new Vector3(50, (int) (this.heightCurve.Evaluate(this.noiseMap[50, 50]) * this.heightMultiplier) + this.portalPrefab.transform.localScale.y / 2, 50), Quaternion.identity);
+        Vector3 portalPos = new Vector3(50, (int) (this.heightCurve.Evaluate(this.noiseMap[50, 50]) * this.heightMultiplier) + this.portalPrefab.transform.localScale.y / 2, 50);
+        GameObject portal = Instantiate(this.portalPrefab, portalPos, Quaternion.identity);
         portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
         portal.transform.SetParent(map.transform);
+
+        // Save data across scenes
+        LevelData.Instance.BlocksMap = this.blocksMap;
+        LevelData.Instance.TopBlocksHeight = this.topBlocksHeight;
+        LevelData.Instance.MapHeight = this.mapHeight;
+        LevelData.Instance.MapWidth = this.mapWidth;
+        LevelData.Instance.PortalPos = portalPos;
+
         map.SetActive(true);
         return map; 
     }

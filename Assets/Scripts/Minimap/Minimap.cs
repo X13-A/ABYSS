@@ -1,3 +1,4 @@
+using SDD.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,17 @@ public class Minimap : MonoBehaviour
     [SerializeField] private RawImage rawImage;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject playerMarker;
+    [SerializeField] private GameObject portalMarker;
 
     private Vector2 playerPos;
     private bool[,] exploredMap;
     private RectTransform rectTransform;
+
     private RectTransform playerMarkerRect;
+    private RectTransform portalMarkerRect;
+
     private Texture2D imageTexture;
+    private bool portalDiscovered = false;
 
     private void Start()
     {
@@ -24,6 +30,16 @@ public class Minimap : MonoBehaviour
         {
             playerMarkerRect = playerMarker.GetComponent<RectTransform>();
         }
+        if (portalMarker != null )
+        {
+            portalMarkerRect = portalMarker.GetComponent<RectTransform>();
+        }
+        portalMarkerRect.anchoredPosition = new Vector3
+        (
+            (LevelData.Instance.PortalPos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
+            (LevelData.Instance.PortalPos.y / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+            0
+        );
     }
 
     private void ExploreMinimap()
@@ -50,15 +66,27 @@ public class Minimap : MonoBehaviour
             {
                 Vector2 pixelPos = new Vector2(x, y);
                 float dist = Vector2.Distance(playerPos, pixelPos);
+
                 if (dist < exploreRadius)
                 {
                     if (exploredMap[x, y] == false)
                     {
+                        if (portalDiscovered == false && x == (int) LevelData.Instance.PortalPos.x && y == (int) LevelData.Instance.PortalPos.y)
+                        {
+                            OnPortalDiscover();
+                        }
                         exploredMap[x, y] = true;
                     }
                 }
             }
         }
+    }
+
+    private void OnPortalDiscover()
+    {
+        EventManager.Instance.Raise(new PortalDiscoveredEvent { });
+        portalDiscovered = true;
+        portalMarker.SetActive(true);
     }
 
     private Color FindPixelColor(int x, int z)

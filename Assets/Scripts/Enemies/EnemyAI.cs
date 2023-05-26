@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour
     private float attackStartTime;
     private int attackVariant;
     private int attackCounter;
+    private bool isReadyToBattle;
 
     public float Velocity { get; private set; }
     public float AttackElaspedTime => Time.time - attackStartTime;
@@ -65,6 +66,13 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private bool IsSensing()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        string layer = "FindPlayerAndWalk";
+        return (stateInfo.IsName(layer + "." + "SenseSomethingStart") || stateInfo.IsName(layer + "." + "SenseSomethingMain")) && stateInfo.normalizedTime < 1;
+    }
+
     private void UpdateStatus()
     {
         if (playerReference == null)
@@ -78,25 +86,28 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateRunningAndWalkingStatus()
     {
+        isRunning = false;
+        isWalking = false;
+        isReadyToBattle = false;
+
         if (distanceToPlayer <= attackOffset)
         {
-            isRunning = false;
-            isWalking = false;
+            isReadyToBattle = true;
+            return;
         }
-        else if (distanceToPlayer >= detectionRadius)
+
+        if (distanceToPlayer >= detectionRadius)
         {
-            isWalking = false;
-            isRunning = false;
+            return;
         }
-        else if (distanceToPlayer <= detectionRadius && distanceToPlayer > detectionRadius / runningWhenModifier)
+
+        if (distanceToPlayer > detectionRadius / runningWhenModifier)
         {
             isWalking = true;
-            isRunning = false;
         }
-        else if (distanceToPlayer > 0 && distanceToPlayer <= detectionRadius / runningWhenModifier)
+        else
         {
             isRunning = true;
-            isWalking = false;
         }
     }
 
@@ -104,11 +115,16 @@ public class EnemyAI : MonoBehaviour
     {
         animator.SetBool("isWalking", isWalking);
         animator.SetBool("isRunning", isRunning);
+        animator.SetBool("isReadyToBattle", isReadyToBattle);
         animator.SetInteger("attackVariant", attackVariant);
     }
 
     private void MoveAndRotateTowardPlayer()
     {
+        if (IsSensing()) // do not move if the enemy is sensing something
+        {
+            return;
+        }
         Vector3 player_width = new Vector3(playerCharacterController.radius, 0, 0);
         Vector3 enemy_width = new Vector3(enemyCollider.radius, 0, 0);
         Vector3 directionToPlayer = ((playerReference.position + player_width) - (transform.position + enemy_width)).normalized;

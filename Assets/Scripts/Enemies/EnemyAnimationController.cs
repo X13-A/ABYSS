@@ -44,7 +44,6 @@ public class EnemyAnimationController : MonoBehaviour, IEventHandler
         bool actionActive = animator.GetBool(action);
         if (!isAnimating && actionActive)
         {
-            Debug.Log("test");
             animator.SetBool(animating, true);
         }
         else

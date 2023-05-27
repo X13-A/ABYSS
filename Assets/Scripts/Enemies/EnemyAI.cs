@@ -47,7 +47,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("distanceToPlayer: " + distanceToPlayer + " offset : " + attackDistanceOffset);
         UpdateCurrentVelocity();
         UpdateStatus();
         UpdateAnimator();

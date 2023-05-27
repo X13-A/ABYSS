@@ -27,6 +27,7 @@ public class BlockDamage : MonoBehaviour, IDamageable
 
         this.health = Mathf.Max(0, health - scaledDamage);
         this.animationHit.Play("ChangeScalingHit");
+        Debug.Log(damage);
         if (this.health <= 0 + Mathf.Epsilon) this.Die();
     }
 

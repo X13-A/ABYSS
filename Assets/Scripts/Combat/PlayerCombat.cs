@@ -87,6 +87,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
 
     private void Attack(PlayerAttackEvent e)
     {
+        Debug.Log(e.type);
         if (e.type == AttackType.MELEE)
         {
             MeleeAttack(e);
@@ -114,7 +115,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
             ActiveAttackMode = AttackType.MAGIC;
         }
 
-        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD)
+        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD || PlayerManager.Instance.ActivePlayerMode == PlayerMode.PICKAXE)
         {
             return;
         }

@@ -1,3 +1,4 @@
+using SDD.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,10 +20,17 @@ public class Damager : MonoBehaviour, IDamager
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
 
         if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.AXE) return;
+        type = AttackType.PICKAXE;
+        damage = 5;
         if (Input.GetButtonDown("Fire1"))
         {
+            EventManager.Instance.Raise(new PlayerAttackEvent { type = type, damage = damage, duration = 0.5f });
             RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
-            if (hit.collider) this.CauseDamage(hit.collider.GetComponent<IDamageable>());
+            if (hit.collider)
+            {
+                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+                if (damageable != null) this.CauseDamage(damageable);
+            }
         }
     }
 

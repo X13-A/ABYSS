@@ -11,6 +11,7 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     [SerializeField] private AnimationClip walk;
     [SerializeField] private AnimationClip meleeAttack;
     [SerializeField] private AnimationClip wandAttack;
+    [SerializeField] private AnimationClip pickaxeAttack;
 
     private void Awake()
     {
@@ -50,6 +51,12 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         {
             m_Animator.SetTrigger("Wand Attack");
             float clipLength = wandAttack.length;
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
+        }
+        else if (e.type == AttackType.PICKAXE)
+        {
+            m_Animator.SetTrigger("Pickaxe Attack");
+            float clipLength = pickaxeAttack.length;
             m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
         }
     }

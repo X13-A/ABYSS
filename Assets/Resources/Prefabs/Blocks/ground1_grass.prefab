@@ -118,10 +118,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  damagerTypes: 0300000004000000
+  damagerTypes: 030000000400000000000000
   damagerTypesFactors:
   - 1
   - 0.5
+  - 1
   animationHit: {fileID: 1230237325060146366}
 --- !u!65 &7699105587562268999
 BoxCollider:

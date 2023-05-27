@@ -39,6 +39,6 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     {
         Instantiate(corpse, transform.position, transform.rotation);
         GetComponent<Collider>().enabled = false;
-        StartCoroutine(CoroutineUtil.FadeTo(GetComponent<MeshRenderer>(), 0.1f, 0, () => { Destroy(gameObject); }));
+        StartCoroutine(CoroutineUtil.FadeTo(GetComponentInChildren<SkinnedMeshRenderer>(), 0.1f, 0, () => { Destroy(gameObject); }));
     }
 }

@@ -21,22 +21,22 @@ public class CoroutineUtil : MonoBehaviour
         return m_Instance.StartCoroutine(coroutine);
     }
 
-    public static IEnumerator FadeTo(MeshRenderer meshRenderer, float duration, float targetAlpha, Action onComplete = null)
+    public static IEnumerator FadeTo(SkinnedMeshRenderer skinnedMeshRenderer, float duration, float targetAlpha, Action onComplete = null)
     {
         float startTime = Time.time;
-        Color startColor = meshRenderer.material.color;
+        Color startColor = skinnedMeshRenderer.material.color;
         Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
         while (Time.time - startTime < duration)
         {
-            if (meshRenderer == null) yield break; // Important, prevents crash if object is destroyed during coroutine
+            if (skinnedMeshRenderer == null) yield break; // Important, prevents crash if object is destroyed during coroutine
             float t = (Time.time - startTime) / duration;
-            meshRenderer.material.color = Color.Lerp(startColor, targetColor, t);
+            skinnedMeshRenderer.material.color = Color.Lerp(startColor, targetColor, t);
             yield return null;
         }
-        if (meshRenderer != null)
+        if (skinnedMeshRenderer != null)
         {
-            meshRenderer.material.color = targetColor;
+            skinnedMeshRenderer.material.color = targetColor;
             if (onComplete != null) onComplete();
         }
     }

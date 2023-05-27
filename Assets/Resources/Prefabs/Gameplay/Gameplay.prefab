@@ -3020,6 +3020,7 @@ GameObject:
   - component: {fileID: 8145038285225150766}
   - component: {fileID: 3648839241044713155}
   - component: {fileID: 2830724171743585856}
+  - component: {fileID: 1256147472927233857}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3147,6 +3148,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f40fc35756a594abbd15206bce25b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1256147472927233857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003219964964764841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e919bc752b5fb5942a19481b6504d442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &1003219964976978194
 GameObject:
   m_ObjectHideFlags: 0
@@ -5820,7 +5834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  type: 3
+  type: 0
 --- !u!1 &1003219965717370890
 GameObject:
   m_ObjectHideFlags: 0
@@ -8822,6 +8836,7 @@ MonoBehaviour:
   walk: {fileID: 1827226128182048838, guid: 0791e523b7f1b2740a3b1cde42b6aeac, type: 3}
   meleeAttack: {fileID: 1827226128182048838, guid: db509ad77f9b4f84a8eb1989f589b24c, type: 3}
   wandAttack: {fileID: 1827226128182048838, guid: 9a6c3585df66f2e4782635fc7a23494c, type: 3}
+  pickaxeAttack: {fileID: 1827226128182048838, guid: 8283fadf2c89507469495f30db8680db, type: 3}
 --- !u!1 &2181965853538776186
 GameObject:
   m_ObjectHideFlags: 0
@@ -13489,8 +13504,8 @@ MonoBehaviour:
   m_Orbits:
   - m_Height: 15
     m_Radius: 6
-  - m_Height: 12
-    m_Radius: 4
+  - m_Height: 11
+    m_Radius: 8
   - m_Height: 8
     m_Radius: 3
   m_LegacyHeadingBias: 3.4028235e+38

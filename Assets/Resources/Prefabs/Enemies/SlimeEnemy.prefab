@@ -137,9 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runningVelocity: 0.03
   walkingVelocity: 0.02
-  runningWhenModifier: 1.5
+  runningWhenModifier: 1.8
   playerReference: {fileID: 0}
-  currentAttackDuration: 3
+  attackDuration: 0
+  attackVariantDuration: 0
+  attackDistanceOffset: 0
   detectionRadius: 12
 --- !u!114 &1378855907
 MonoBehaviour:

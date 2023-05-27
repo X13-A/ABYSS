@@ -700,8 +700,10 @@ MonoBehaviour:
   walkingVelocity: 0.01
   runningWhenModifier: 1.5
   playerReference: {fileID: 0}
-  currentAttackDuration: 1.2
-  detectionRadius: 15
+  attackDuration: 0
+  attackVariantDuration: 0
+  attackDistanceOffset: 0
+  detectionRadius: 9
 --- !u!114 &6930203705514255341
 MonoBehaviour:
   m_ObjectHideFlags: 0

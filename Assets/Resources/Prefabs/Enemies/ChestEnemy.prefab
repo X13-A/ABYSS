@@ -423,10 +423,11 @@ GameObject:
   - component: {fileID: 852653880768968650}
   - component: {fileID: 852653880759113774}
   - component: {fileID: 6116858119716225930}
-  - component: {fileID: 6116858119716225929}
+  - component: {fileID: 1044208273}
   - component: {fileID: 6116858119716225934}
   - component: {fileID: 6116858119716225935}
   - component: {fileID: 6116858119716225928}
+  - component: {fileID: 1044208274}
   m_Layer: 0
   m_Name: ChestEnemy
   m_TagString: Untagged
@@ -487,7 +488,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!65 &6116858119716225929
+--- !u!65 &1044208273
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -496,10 +497,10 @@ BoxCollider:
   m_GameObject: {fileID: 852653880768474090}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.9811261, y: 1.2975318, z: 0.8766327}
-  m_Center: {x: -0.003548354, y: 0.6736156, z: -0.007297516}
+  m_Size: {x: 1, y: 1.3254365, z: 0.89839554}
+  m_Center: {x: 0, y: 0.6699695, z: 0.007966995}
 --- !u!114 &6116858119716225934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,10 +544,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runningVelocity: 0.07
   walkingVelocity: 0.03
-  runningWhenModifier: 1.3
+  runningWhenModifier: 2
   playerReference: {fileID: 0}
-  currentAttackDuration: 2
+  attackDuration: 1
+  attackVariantDuration: 2
+  attackDistanceOffset: 2
   detectionRadius: 10
+--- !u!136 &1044208274
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852653880768474090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.65307236
+  m_Height: 1.5235469
+  m_Direction: 1
+  m_Center: {x: 0.03819275, y: 0.6300651, z: 0}
 --- !u!1 &852653880768474092
 GameObject:
   m_ObjectHideFlags: 0

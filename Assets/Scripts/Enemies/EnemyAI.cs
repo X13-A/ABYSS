@@ -7,7 +7,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float walkingVelocity;
     [SerializeField] private float runningWhenModifier;
     [SerializeField] private Transform playerReference;
-    [SerializeField] private float currentAttackDuration;
+    [SerializeField] private float attackDuration;
+    [SerializeField] private float attackVariantDuration;
+    // the distance the enemy will keep with the player when attacking
+    [SerializeField] private float attackDistanceOffset;
     public float detectionRadius;
 
     private Animator animator;
@@ -18,7 +21,6 @@ public class EnemyAI : MonoBehaviour
     private float distanceToPlayer;
     private bool isWalking;
     private bool isRunning;
-    private float attackOffset;
     private float attackStartTime;
     private int attackVariant;
     private int attackCounter;
@@ -32,19 +34,20 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         playerCharacterController = playerReference.GetComponent<CharacterController>();
-        enemyCollider = GetComponent<CapsuleCollider>();
+        enemyCollider = GetComponent<Collider>();
     }
 
     private void OnEnable()
     {
-        attackOffset = 1f;
         attackStartTime = Time.time - 1000;
         attackVariant = 0;
         attackCounter = 0;
+        distanceToPlayer = Mathf.Infinity;
     }
 
     private void Update()
     {
+        Debug.Log("distanceToPlayer: " + distanceToPlayer + " offset : " + attackDistanceOffset);
         UpdateCurrentVelocity();
         UpdateStatus();
         UpdateAnimator();
@@ -54,14 +57,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (distanceToPlayer <= detectionRadius)
         {
-            if (distanceToPlayer > attackOffset)
-            {
-                MoveAndRotateTowardPlayer();
-            }
-            else if (AttackElaspedTime > currentAttackDuration)
+            if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)
             {
                 RaiseAttackEvent();
                 attackStartTime = Time.time;
+            }
+            else
+            {
+                MoveAndRotateTowardPlayer();
             }
         }
     }
@@ -90,7 +93,7 @@ public class EnemyAI : MonoBehaviour
         isWalking = false;
         isReadyToBattle = false;
 
-        if (distanceToPlayer <= attackOffset)
+        if (distanceToPlayer <= attackDistanceOffset)
         {
             isReadyToBattle = true;
             return;
@@ -127,23 +130,24 @@ public class EnemyAI : MonoBehaviour
         }
         Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
 
-        Vector3 enemyWidth = GetEnemyWidth();
+        Vector3 enemyWidth = GetEnemyHalfWidth();
         Vector3 directionToPlayer = ((playerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
         rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }
 
-    private Vector3 GetEnemyWidth()
+    private Vector3 GetEnemyHalfWidth()
     {
-        if (enemyCollider is CapsuleCollider)
+        if (enemyCollider != null)
         {
-            CapsuleCollider capsule = (CapsuleCollider) enemyCollider;
-            return new Vector3(capsule.radius, 0, 0);
-        }
-        if (enemyCollider is BoxCollider)
-        {
-            BoxCollider box = (BoxCollider) enemyCollider;
-            return new Vector3(box.size.x, 0, 0);
+            if (enemyCollider is CapsuleCollider capsule)
+            {
+                return new Vector3(capsule.radius, 0, 0);
+            }
+            if (enemyCollider is BoxCollider box)
+            {
+                return new Vector3(box.size.x / 2, 0, 0);
+            }
         }
         Debug.Log("You need to implement this method with the new collider");
         return new Vector3(0, 0, 0);
@@ -172,6 +176,6 @@ public class EnemyAI : MonoBehaviour
             damage = 10f
         });
         attackCounter++;
-        attackVariant = attackCounter % 3 == 0 ? 1 : 0;
+        attackVariant = attackCounter % 3 == 0 ? 1 : 0; // to make the enemy switch attack
     }
 }

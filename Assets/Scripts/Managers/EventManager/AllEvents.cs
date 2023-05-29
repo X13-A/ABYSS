@@ -190,7 +190,10 @@ public class ItemCollideWithPlayerEvent : SDD.Events.Event
     public IInventoryItem item;
 }
 
-public class ItemEndCollideWithPlayerEvent : SDD.Events.Event { }
+public class ItemEndCollideWithPlayerEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+}
 
 
 

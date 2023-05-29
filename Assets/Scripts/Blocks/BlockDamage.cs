@@ -23,6 +23,7 @@ public class BlockDamage : MonoBehaviour, IDamageable
     {
         // Scale damage according to factors
         //Debug.Log(damagerTypes.IndexOf(type));
+        if (this.health < 0 + Mathf.Epsilon) return;
         float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
 
         this.health = Mathf.Max(0, health - scaledDamage);

@@ -15,25 +15,7 @@ public class Damager : MonoBehaviour, IDamager
         collider = GetComponent<Collider>();
     }
 
-    public void Update()
-    {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-
-        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.AXE) return;
-        type = AttackType.PICKAXE;
-        damage = 5;
-        if (Input.GetButtonDown("Fire1"))
-        {
-            EventManager.Instance.Raise(new PlayerAttackEvent { type = type, damage = damage, duration = 0.5f });
-            RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
-            if (hit.collider)
-            {
-                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                if (damageable != null) this.CauseDamage(damageable);
-            }
-        }
-    }
-
+    // Enables damage
     public void Damage(float damage, float duration)
     {
         // Enable
@@ -70,6 +52,7 @@ public class Damager : MonoBehaviour, IDamager
         this.CauseDamage(damageable);
     }
 
+    // Actually causes damage
     private void CauseDamage(IDamageable damageable)
     {
         damageable.Damage(this.damage, this.type);

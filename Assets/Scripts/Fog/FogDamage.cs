@@ -7,7 +7,12 @@ public class FogDamage : MonoBehaviour
 {
     [SerializeField] float dps = 10;
     private bool damaging = false;
-    private float lastDamageTime = Time.time;
+    private float lastDamageTime;
+
+    private void Start()
+    {
+        lastDamageTime = Time.time;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

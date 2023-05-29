@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block_lava2
   _Image: {fileID: 21300000, guid: 06571dcda2b15394fb32ed5cf137a4fa, type: 3}
+  playerModeObject: 6

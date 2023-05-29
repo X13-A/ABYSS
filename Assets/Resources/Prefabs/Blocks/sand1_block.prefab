@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block sand
   _Image: {fileID: 21300000, guid: 55a0ebacc59948d4ab37330c3732960e, type: 3}
+  playerModeObject: 6

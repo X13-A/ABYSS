@@ -72,6 +72,7 @@ public class InventoryHud : MonoBehaviour, IEventHandler
             if (!image.enabled)
             {
                 image.enabled = true;
+                slot.GetComponent<gameObjectSlot>().gameObjectInSlot = (e.item as MonoBehaviour).gameObject;
                 textCountItem.enabled = true;
                 image.sprite = e.item.Image;
                 itemDragHandler.Item = e.item;

@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         PerformGroundCheck();
         HandleInput();
         UpdateTargetVelocity();
-        UpdateLookMode();
     }
 
     private void FixedUpdate()
@@ -114,35 +113,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // no need to call TimeDelta because the function is called inside fixedUpdate
         verticalVelocity += (Physics.gravity.y / 1000f);
-    }
-
-    private void UpdateLookMode()
-    {
-        if (Input.GetButtonDown("Look Downwards"))
-        {
-            if (PlayerManager.Instance.ActivePlayerLook == PlayerLook.DOWNWARDS)
-            {
-                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.AHEAD });
-
-            }
-            else
-            {
-                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.DOWNWARDS });
-
-            }
-            return;
-        }
-        if (Input.GetButtonDown("Look Upwards"))
-        {
-            if (PlayerManager.Instance.ActivePlayerLook == PlayerLook.UPWARDS)
-            {
-                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.AHEAD });
-            }
-            else
-            {
-                EventManager.Instance.Raise(new PlayerSwitchLookModeEvent { lookMode = PlayerLook.UPWARDS });
-            }
-        }
     }
 
     private void PerformGroundCheck()

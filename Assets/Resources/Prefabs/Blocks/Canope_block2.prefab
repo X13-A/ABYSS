@@ -179,3 +179,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block_canopy
   _Image: {fileID: 21300000, guid: 029cdde9e6bd70e4b9436328d3e47a4a, type: 3}
+  playerModeObject: 6

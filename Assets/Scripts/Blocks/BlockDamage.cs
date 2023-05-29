@@ -9,7 +9,7 @@ public class BlockDamage : MonoBehaviour, IDamageable
     [SerializeField] private List<float> damagerTypesFactors;
     [SerializeField] private Animation animationHit;
 
-    public float Health { get { return this.health; } }
+    public float Health { get { return this.health; } set { this.health = value; } }
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }
     public List<float> DamagerTypesFactors { get { return damagerTypesFactors; } }
 

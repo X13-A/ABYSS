@@ -6,10 +6,29 @@ using UnityEngine;
 public class PlayerBuild : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private GameObject target;
     [SerializeField] private RenderTexture rt;
 
-    [SerializeField] private GameObject blockInHand;
+    private GameObject blockInHand;
+
+    private void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<UpdateObjectInhand>(setBlockInHand);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<UpdateObjectInhand>(setBlockInHand);
+    }
 
     private void Build()
     {
@@ -17,8 +36,12 @@ public class PlayerBuild : MonoBehaviour
         if (hit.collider)
         {
             GameObject currentCube = Instantiate(blockInHand);
+            currentCube.SetActive(true);
             currentCube.transform.position = hit.collider.transform.position + hit.normal;
-            currentCube.AddComponent<Rigidbody>();
+            currentCube.transform.localScale = Vector3.one;
+            currentCube.transform.rotation = Quaternion.identity;
+            currentCube.GetComponent<BoxCollider>().enabled = true;
+            currentCube.GetComponent<BoxCollider>().isTrigger = false;
             currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentCube.GetComponent<Rigidbody>().isKinematic = true;
         }
@@ -31,16 +54,6 @@ public class PlayerBuild : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Pickaxe"))
-        {
-            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.PICKAXE });
-        }
-
-        if (Input.GetButtonDown("Build"))
-        {
-            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD });
-        }
-
         if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.BUILD)
         {
             return;
@@ -50,5 +63,10 @@ public class PlayerBuild : MonoBehaviour
         {
             Build();
         }
+    }
+
+    private void setBlockInHand(UpdateObjectInhand e)
+    {
+        blockInHand = e.objectInSlot;
     }
 }

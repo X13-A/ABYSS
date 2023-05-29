@@ -10,11 +10,6 @@ public class PlayerSwitchModeEvent : SDD.Events.Event
     public PlayerMode mode;
 }
 
-public class PlayerSwitchLookModeEvent : SDD.Events.Event
-{
-    public PlayerLook lookMode;
-}
-
 public class PlayerAttackEvent : SDD.Events.Event
 {
     public float damage;
@@ -192,6 +187,14 @@ public class ItemCollideWithPlayerEvent : SDD.Events.Event
 
 public class ItemEndCollideWithPlayerEvent : SDD.Events.Event { }
 
+public class SwitchSlot : SDD.Events.Event
+{
+    public int slot;
+}
 
+public class UpdateObjectInhand : SDD.Events.Event
+{
+    public GameObject objectInSlot;
+}
 
 #endregion

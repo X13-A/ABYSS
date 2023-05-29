@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block ice
   _Image: {fileID: 21300000, guid: 5f2327de8752b2749ae9942ebc56eddd, type: 3}
+  playerModeObject: 6

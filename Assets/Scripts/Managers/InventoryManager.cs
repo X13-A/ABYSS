@@ -12,8 +12,17 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     private const int SLOTS = 9;
 
+    [SerializeField] private GameObject inventoryPanel;
+
+    private int activeSlot;
+
+    public int ActiveSlot => this.activeSlot;
+
     private Dictionary<string, IInventoryItem> mItems = new Dictionary<string, IInventoryItem>();
     private Dictionary<string, int> mItemsCount = new Dictionary<string, int>();
+
+    public Dictionary<string, IInventoryItem> Items => mItems;
+    public Dictionary<string, int> ItemsCount => mItemsCount;
 
     private void Awake()
     {
@@ -39,12 +48,12 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-
+        EventManager.Instance.AddListener<SwitchSlot>(this.setActiveSlot);
     }
 
     public void UnsubscribeEvents()
     {
-
+        EventManager.Instance.RemoveListener<SwitchSlot>(this.setActiveSlot);
     }
 
     public void AddItem(IInventoryItem item)
@@ -75,6 +84,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
                     {
                         item = item,
                         count = this.mItemsCount[item.Name]
+                    });
+                    EventManager.Instance.Raise(new SwitchSlot
+                    {
+                        slot = InventoryManager.Instance.ActiveSlot
                     });
                 }
             }
@@ -120,5 +133,25 @@ public class InventoryManager : MonoBehaviour, IEventHandler
                 item = item,
             });
         }
+    }
+
+    private void setActiveSlot(SwitchSlot e)
+    {
+        PlayerMode newPlayerMode;
+        this.activeSlot = e.slot;
+        GameObject activeGameObject = inventoryPanel.transform.GetChild(this.activeSlot).GetComponent<gameObjectSlot>().gameObjectInSlot;
+        if (activeGameObject != null)
+        {
+            newPlayerMode = activeGameObject.GetComponent<InventoryItemBase>().PlayerModeObject;
+            BlockDamage scriptBlockDamage = activeGameObject.GetComponent<BlockDamage>();
+            if (scriptBlockDamage != null) scriptBlockDamage.Health = 10;
+        }
+        else
+        {
+            newPlayerMode = PlayerMode.UNARMED;
+        }
+        
+        EventManager.Instance.Raise(new UpdateObjectInhand { objectInSlot = activeGameObject });
+        EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = newPlayerMode});
     }
 }

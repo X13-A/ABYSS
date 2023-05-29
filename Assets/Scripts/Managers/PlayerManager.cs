@@ -9,11 +9,12 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public static PlayerManager Instance => m_Instance;
 
     [SerializeField] private PlayerMode activePlayerMode;
-    [SerializeField] private PlayerLook activePlayerLook;
     [SerializeField] private AimingMode activeAimingMode;
+    [SerializeField] private float health;
     public PlayerMode ActivePlayerMode => this.activePlayerMode;
-    public PlayerLook ActivePlayerLook => this.activePlayerLook;
     public AimingMode ActiveAimingMode => this.activeAimingMode;
+    public float Health => this.health;
+
 
     private void OnEnable()
     {
@@ -28,8 +29,8 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.AddListener<PlayerSwitchLookModeEvent>(this.SetPlayerLook);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetPlayerAim);
+        EventManager.Instance.AddListener<EnemyAttackEvent>(this.SetHealth);
 
         // Reset aim mode on menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(this.SetAimingModeFromUIEvent);
@@ -43,7 +44,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.RemoveListener<PlayerSwitchLookModeEvent>(this.SetPlayerLook);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
 
         // Reset aim mode on menus
@@ -99,13 +99,13 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         this.activePlayerMode = e.mode;
     }
 
-    private void SetPlayerLook(PlayerSwitchLookModeEvent e)
-    {
-        this.activePlayerLook = e.lookMode;
-    }
-
     private void SetPlayerAim(AimingModeUpdateEvent e)
     {
         this.activeAimingMode = e.mode;
+    }
+
+    private void SetHealth(EnemyAttackEvent e)
+    {
+        this.health = Mathf.Max(this.health - e.damage, 0);
     }
 }

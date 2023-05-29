@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block_dirt1
   _Image: {fileID: 21300000, guid: daec72bab20237c4da3681ffcaa5396c, type: 3}
+  playerModeObject: 6

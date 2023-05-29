@@ -18,6 +18,12 @@ public class InventoryItemBase : MonoBehaviour, IInventoryItem
         get { return _Image; }
     }
 
+    [SerializeField] private PlayerMode playerModeObject;
+    public PlayerMode PlayerModeObject
+    {
+        get { return playerModeObject; }
+    }
+
     public virtual void OnUse()
     {
 

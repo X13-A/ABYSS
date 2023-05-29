@@ -5,7 +5,6 @@ using UnityEngine;
 public enum CursorType { MELEE, RANGE, MAGIC, PICKAXE, AXE, UNARMED, BUILD, MENU };
 public enum PlayerMode { MELEE, RANGE, MAGIC, PICKAXE, AXE, UNARMED, BUILD };
 public enum AttackType { MELEE, RANGE, MAGIC, PICKAXE, AXE };
-public enum PlayerLook { AHEAD, UPWARDS, DOWNWARDS };
 public enum AimingMode { CAMERA, CURSOR };
 public enum BlockType { AIR, DIRT, DIRT_2, SAND, SANDSTONE, LAVA, LAVA_2, ROCK, SNOW, ICE  };
 public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING };

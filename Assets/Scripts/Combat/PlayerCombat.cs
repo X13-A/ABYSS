@@ -65,8 +65,8 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
     private void MeleeAttack(PlayerAttackEvent e)
     {
         meleeDamager.Damage(meleeDamage, meleeDuration);
-        meleeTrail.Play(true);
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => meleeTrail.Stop()));
+        //meleeTrail.Play(true);
+        //StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => meleeTrail.Stop()));
     }
 
     private void WandAttack(PlayerAttackEvent e)
@@ -87,7 +87,6 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
 
     private void Attack(PlayerAttackEvent e)
     {
-        Debug.Log(e.type);
         if (e.type == AttackType.MELEE)
         {
             MeleeAttack(e);
@@ -105,17 +104,7 @@ public class PlayerCombat : MonoBehaviour, IEventHandler
             return;
         }
 
-        if (Input.GetButtonDown("Quick Melee"))
-        {
-            ActiveAttackMode = AttackType.MELEE;
-        }
-
-        if (Input.GetButtonDown("Quick Magic"))
-        {
-            ActiveAttackMode = AttackType.MAGIC;
-        }
-
-        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD || PlayerManager.Instance.ActivePlayerMode == PlayerMode.PICKAXE)
+        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.MELEE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE)
         {
             return;
         }

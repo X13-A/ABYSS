@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block sandstone
   _Image: {fileID: 21300000, guid: 0be285d085749884fa324f791b2956e1, type: 3}
+  playerModeObject: 6

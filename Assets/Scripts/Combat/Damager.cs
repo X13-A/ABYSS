@@ -36,6 +36,7 @@ public class Damager : MonoBehaviour, IDamager
 
     public void Damage(float damage, float duration)
     {
+        type = AttackType.MELEE;
         // Enable
         StartCoroutine(CoroutineUtil.DelayAction(duration * 0.4f, () =>
         {
@@ -66,7 +67,6 @@ public class Damager : MonoBehaviour, IDamager
         if (damageable == null) return;
         if (this.collides.Contains(damageable)) return;
         if (!damageable.DamagerTypes.Contains(this.type)) return;
-
         this.CauseDamage(damageable);
     }
 

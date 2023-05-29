@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block ground
   _Image: {fileID: 21300000, guid: 0759bc66dd7a42f47a7421c4226f9f51, type: 3}
+  playerModeObject: 6

@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Name: block_rock1
   _Image: {fileID: 21300000, guid: fcacce6daaa51b0459dcec5e75dced3a, type: 3}
+  playerModeObject: 6

@@ -37,7 +37,7 @@ public class DamagePlayerEvent : SDD.Events.Event
 
 #endregion
 
-#region enemy
+#region Enemy
 
 public class EnemyAttackEvent : SDD.Events.Event
 {
@@ -203,6 +203,16 @@ public class SwitchSlot : SDD.Events.Event
 public class UpdateObjectInhand : SDD.Events.Event
 {
     public GameObject objectInSlot;
+}
+
+#endregion
+
+#region Animation
+
+public class AnimateItemEvent : SDD.Events.Event
+{
+    public string itemId;
+    public Dictionary<string, float> animations; // First string is the animation name, Second one is the delay before it triggers
 }
 
 #endregion

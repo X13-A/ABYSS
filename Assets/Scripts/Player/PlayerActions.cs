@@ -10,7 +10,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     [SerializeField] private float meleeDamage;
     [SerializeField] private float meleeDuration;
     [SerializeField] private float meleeStartPercentage; // Percentage of the animation at which the damage actually occurs
-    [SerializeField] private ParticleSystem meleeTrail;
 
     [SerializeField] private GameObject magicProjectilePrefab;
     [SerializeField] private GameObject magicProjectilePosition;
@@ -24,16 +23,11 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     [SerializeField] private GameObject selectedBlock;
 
 
-    [SerializeField] private ParticleSystem wandTrail;
-    [SerializeField] private ParticleSystem wandCast;
-    [SerializeField] private AttackType activeAttackMode;
-
     public AttackType ActiveAttackMode
     {
-        get => activeAttackMode;
+        get => EnumConverter.AttackTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
         set
         {
-            activeAttackMode = value;
             EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = EnumConverter.PlayerModeFromAttackType(value) });
         }
     }
@@ -58,9 +52,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         // startTime is in the past by default to let the player attack when he just appeared
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
-        meleeTrail.Stop(true); // true makes the child animations stop too
-        wandTrail.Stop(true);
-        wandCast.Stop(true);
     }
 
     private void OnDisable()
@@ -71,17 +62,32 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     private void MeleeAttack(PlayerAttackEvent e)
     {
         meleeDamager.Damage(meleeDamage, meleeDuration);
-        //meleeTrail.Play(true);
-        //StartCoroutine(CoroutineUtil.DelayAction(e.duration * meleeStartPercentage, () => meleeTrail.Stop()));
+        EventManager.Instance.Raise(new AnimateItemEvent
+        {
+            itemId = "PlayerSword",
+            animations = new Dictionary<string, float>
+            {
+                { "startTrail", 0f },
+                { "stopTrail", e.duration * meleeStartPercentage }
+            }
+        });
     }
 
     private void WandAttack(PlayerAttackEvent e)
     {
-        wandTrail.Play();
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () => {
-            wandTrail.Stop(true);
-            wandCast.Stop(true);
-            wandCast.Play(true);
+        EventManager.Instance.Raise(new AnimateItemEvent
+        {
+            itemId = "PlayerWand",
+            animations = new Dictionary<string, float>
+            {
+                { "startTrail", 0f },
+                { "stopTrail", e.duration * wandStartPercentage },
+                { "startWandCast", e.duration * wandStartPercentage }
+            }
+        });
+
+        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () =>
+        {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
                 magicProjectilePosition.transform.rotation.eulerAngles.x,
                 magicProjectilePosition.transform.rotation.eulerAngles.y,

@@ -50,11 +50,6 @@ public class InventoryHud : MonoBehaviour, IEventHandler
         }
     }
 
-    private void Update()
-    {
-        Debug.Log(this.collidingItems.Count);   
-    }
-
     private void InventoryScript_ItemAdded(ItemAddedEvent e)
     {
         pickUpMessagePanel.SetActive(false);

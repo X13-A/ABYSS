@@ -35,6 +35,11 @@ public class PortalDiscoveredEvent : SDD.Events.Event
 {
 }
 
+public class DamagePlayerEvent : SDD.Events.Event
+{
+    public float damage;
+}
+
 #endregion
 
 #region enemy

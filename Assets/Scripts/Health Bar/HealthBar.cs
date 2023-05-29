@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : MonoBehaviour, IEventHandler
 {
     [SerializeField] private Slider slider;
     [SerializeField] private Gradient gradient;
@@ -23,12 +23,12 @@ public class HealthBar : MonoBehaviour
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<EnemyAttackEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<DamagePlayerEvent>(this.SetHealth);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<EnemyAttackEvent>(this.SetHealth);
+        EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetHealth);
     }
 
     public void Start()
@@ -38,9 +38,9 @@ public class HealthBar : MonoBehaviour
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void SetHealth(EnemyAttackEvent e)
+    public void SetHealth(DamagePlayerEvent e)
     {
-        slider.value -= 10;
+        slider.value -= e.damage;
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

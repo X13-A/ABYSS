@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class InventoryHud : MonoBehaviour, IEventHandler
 {
     [SerializeField] private GameObject pickUpMessagePanel;
-
+    private HashSet<IInventoryItem> collidingItems = new HashSet<IInventoryItem>();
     private void OnEnable()
     {
         SubscribeEvents();
@@ -23,26 +23,31 @@ public class InventoryHud : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.AddListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
         EventManager.Instance.AddListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
-        EventManager.Instance.AddListener<ItemCollideWithPlayerEvent>(this.OpenMessagePanel);
-        EventManager.Instance.AddListener<ItemEndCollideWithPlayerEvent>(this.CloseMessagePanel);
+        EventManager.Instance.AddListener<ItemCollideWithPlayerEvent>(this.addPickableItem);
+        EventManager.Instance.AddListener<ItemEndCollideWithPlayerEvent>(this.removePickableItem);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
         EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
-        EventManager.Instance.RemoveListener<ItemCollideWithPlayerEvent>(this.OpenMessagePanel);
-        EventManager.Instance.RemoveListener<ItemEndCollideWithPlayerEvent>(this.CloseMessagePanel);
+        EventManager.Instance.RemoveListener<ItemCollideWithPlayerEvent>(this.addPickableItem);
+        EventManager.Instance.RemoveListener<ItemEndCollideWithPlayerEvent>(this.removePickableItem);
     }
 
-    private void OpenMessagePanel(ItemCollideWithPlayerEvent e)
+    private void addPickableItem(ItemCollideWithPlayerEvent e)
     {
+        this.collidingItems.Add(e.item);
         pickUpMessagePanel.SetActive(true);
     }
 
-    private void CloseMessagePanel(ItemEndCollideWithPlayerEvent e)
+    private void removePickableItem(ItemEndCollideWithPlayerEvent e)
     {
-        pickUpMessagePanel.SetActive(false);
+        this.collidingItems.Remove(e.item);
+        if (this.collidingItems.Count == 0)
+        {
+            pickUpMessagePanel.SetActive(false);
+        }
     }
 
     private void InventoryScript_ItemAdded(ItemAddedEvent e)

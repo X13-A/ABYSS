@@ -30,6 +30,11 @@ public class PortalDiscoveredEvent : SDD.Events.Event
 {
 }
 
+public class DamagePlayerEvent : SDD.Events.Event
+{
+    public float damage;
+}
+
 #endregion
 
 #region enemy
@@ -185,7 +190,10 @@ public class ItemCollideWithPlayerEvent : SDD.Events.Event
     public IInventoryItem item;
 }
 
-public class ItemEndCollideWithPlayerEvent : SDD.Events.Event { }
+public class ItemEndCollideWithPlayerEvent : SDD.Events.Event
+{
+    public IInventoryItem item;
+}
 
 public class SwitchSlot : SDD.Events.Event
 {

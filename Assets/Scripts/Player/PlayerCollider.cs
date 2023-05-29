@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour, IPlayerCollider
 {
-    private IInventoryItem mItemToPickup = null;
+    private HashSet<IInventoryItem> mItemsToPickup = new HashSet<IInventoryItem>();
 
     private void Update()
     {
-        if (mItemToPickup != null && Input.GetKeyUp(KeyCode.F))
+        if (mItemsToPickup.Count != 0 && Input.GetKey(KeyCode.F))
         {
-            InventoryManager.Instance.AddItem(mItemToPickup);
-            mItemToPickup.OnPickup();
+            foreach (IInventoryItem item in mItemsToPickup)
+            {
+                InventoryManager.Instance.AddItem(item);
+                item.OnPickup();
+                EventManager.Instance.Raise(new ItemEndCollideWithPlayerEvent { item = item });
+            }
+            mItemsToPickup.Clear();
         }
     }
 
@@ -21,8 +26,7 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
         if (item != null)
         {
-            mItemToPickup = item;
-
+            mItemsToPickup.Add(item);
             EventManager.Instance.Raise(new ItemCollideWithPlayerEvent { item = item });
         }
     }
@@ -32,9 +36,8 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         IInventoryItem item = other.GetComponent<IInventoryItem>();
         if (item != null)
         {
-            EventManager.Instance.Raise(new ItemEndCollideWithPlayerEvent { });
-
-            mItemToPickup = null;
+            mItemsToPickup.Remove(item);
+            EventManager.Instance.Raise(new ItemEndCollideWithPlayerEvent { item = item });
         }
     }
 }

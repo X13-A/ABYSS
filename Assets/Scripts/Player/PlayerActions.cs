@@ -123,8 +123,12 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         if (hit.collider)
         {
             GameObject currentCube = Instantiate(selectedBlock);
+            currentCube.SetActive(true);
             currentCube.transform.position = hit.collider.transform.position + hit.normal;
-            currentCube.AddComponent<Rigidbody>();
+            currentCube.transform.localScale = Vector3.one;
+            currentCube.transform.rotation = Quaternion.identity;
+            currentCube.GetComponent<BoxCollider>().enabled = true;
+            currentCube.GetComponent<BoxCollider>().isTrigger = false;
             currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             currentCube.GetComponent<Rigidbody>().isKinematic = true;
         }
@@ -137,32 +141,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
             return;
         }
 
-<<<<<<< HEAD:Assets/Scripts/Combat/PlayerCombat.cs
-        if (PlayerManager.Instance.ActivePlayerMode != PlayerMode.MELEE && PlayerManager.Instance.ActivePlayerMode != PlayerMode.PICKAXE)
-=======
-        // Switch modes
-        if (Input.GetButtonDown("Quick Melee"))
-        {
-            ActiveAttackMode = AttackType.MELEE;
-        }
-
-        if (Input.GetButtonDown("Quick Magic"))
-        {
-            ActiveAttackMode = AttackType.MAGIC;
-        }
-
-        if (Input.GetButtonDown("Pickaxe"))
->>>>>>> b34155d9e8dcc6c39620577823262251645f0e6b:Assets/Scripts/Player/PlayerActions.cs
-        {
-            ActiveAttackMode = AttackType.PICKAXE;
-        }
-
-        if (Input.GetButtonDown("Build"))
-        {
-            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = PlayerMode.BUILD });
-        }
-
-
         // Build
         if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD)
         {
@@ -174,7 +152,7 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         }
 
         // Damage
-        if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration)
+        if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration && PlayerManager.Instance.ActivePlayerMode != PlayerMode.UNARMED)
         {
             if (ActiveAttackMode == AttackType.MELEE)
             {

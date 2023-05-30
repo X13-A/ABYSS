@@ -805,8 +805,11 @@ MonoBehaviour:
   walkingVelocity: 0.02
   runningWhenModifier: 1.2
   playerReference: {fileID: 0}
-  attackDuration: 2
+  attackDuration: 1
   attackVariantDuration: 3
+  attackDamage: 2
+  attackVariantDamage: 4
+  attackVariantFrequency: 3
   attackDistanceOffset: 2
   detectionRadius: 10
 --- !u!114 &7583272907918091915

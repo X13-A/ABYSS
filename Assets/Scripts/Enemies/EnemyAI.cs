@@ -9,6 +9,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform playerReference;
     [SerializeField] private float attackDuration;
     [SerializeField] private float attackVariantDuration;
+    [SerializeField] private float attackDamage;
+    [SerializeField] private float attackVariantDamage;
+    [SerializeField] private int attackVariantFrequency;
     // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
     public float detectionRadius;
@@ -170,11 +173,11 @@ public class EnemyAI : MonoBehaviour
 
     private void RaiseAttackEvent()
     {
+        attackCounter++;
+        attackVariant = attackCounter % attackVariantFrequency == 0 ? 1 : 0;
         EventManager.Instance.Raise(new EnemyAttackEvent
         {
-            damage = 10f
+            damage = attackVariant == 0 ? attackDamage : attackVariantDamage
         });
-        attackCounter++;
-        attackVariant = attackCounter % 3 == 0 ? 1 : 0; // to make the enemy switch attack
     }
 }

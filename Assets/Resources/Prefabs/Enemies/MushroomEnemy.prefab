@@ -740,6 +740,9 @@ MonoBehaviour:
   playerReference: {fileID: 0}
   attackDuration: 1
   attackVariantDuration: 2
+  attackDamage: 5
+  attackVariantDamage: 8
+  attackVariantFrequency: 2
   attackDistanceOffset: 1.5
   detectionRadius: 9
 --- !u!114 &6930203705514255341

@@ -39,6 +39,7 @@ public class HandleObject : MonoBehaviour
             GameObject objectInHand = Instantiate(e.objectInSlot, hand.transform);
             objectInHand.SetActive(true);
             objectInHand.transform.localPosition = Vector3.zero;
+
             BlockDamage blockDamage = objectInHand.GetComponent<BlockDamage>();
             if (blockDamage != null)
             {

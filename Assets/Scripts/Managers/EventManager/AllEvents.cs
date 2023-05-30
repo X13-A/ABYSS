@@ -164,6 +164,11 @@ public class CursorUpdateEvent : SDD.Events.Event
     public Sprite sprite;
 }
 
+public class ToggleMapEvent : SDD.Events.Event
+{
+    public bool value;
+}
+
 #endregion
 
 #region Inventory

@@ -30,6 +30,7 @@ public class TransitionManager : MonoBehaviour
 
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
+        if (panelImage == null) yield break;
         Color panelColor = Color.black;
         panelColor.a = 1f;
         panelImage.color = panelColor;
@@ -66,6 +67,7 @@ public class TransitionManager : MonoBehaviour
 
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
+        if (panelImage == null) yield break;
         Color panelColor = panelImage.color;
         panelColor.a = 0f;
         panelImage.color = panelColor;

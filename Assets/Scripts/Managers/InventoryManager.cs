@@ -18,11 +18,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     public int ActiveSlot => this.activeSlot;
 
-    private Dictionary<string, IInventoryItem> mItems = new Dictionary<string, IInventoryItem>();
-    private Dictionary<string, int> mItemsCount = new Dictionary<string, int>();
-
-    public Dictionary<string, IInventoryItem> Items => mItems;
-    public Dictionary<string, int> ItemsCount => mItemsCount;
+    // HACK: Use restrictive methods instead
+    public Dictionary<string, GameObject> Items => PlayerData.Instance.Items;
+    public Dictionary<string, int> ItemsCount => PlayerData.Instance.ItemsCount;
+    public Dictionary<string, int> ItemsSlot => PlayerData.Instance.ItemsSlot;
 
     private void Awake()
     {
@@ -56,58 +55,83 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<SwitchSlot>(this.setActiveSlot);
     }
 
-    public void AddItem(IInventoryItem item)
+    private int FindFreeSlot()
     {
-        if (this.mItems.Count < SLOTS || this.mItems.ContainsKey(item.Name))
+        bool[] slots = new bool[SLOTS];
+
+        foreach (KeyValuePair<string, GameObject> kvp in this.Items)
         {
-            Collider collider = (item as MonoBehaviour).GetComponent<Collider>();
+            string name = kvp.Key;
+            int slot = this.ItemsSlot[name];
+            slots[slot] = true;
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == false) // Slot is available
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void AddItem(GameObject item)
+    {
+        IInventoryItem inventoryItem = item.GetComponent<IInventoryItem>();
+        if (this.Items.Count < SLOTS || this.Items.ContainsKey(inventoryItem.Name))
+        {
+            Collider collider = item.GetComponent<Collider>();
             if (collider.enabled)
             {
                 collider.enabled = false;
 
-                if (this.mItems.ContainsKey(item.Name))
+                if (this.Items.ContainsKey(inventoryItem.Name))
                 {
-                    Debug.Log(mItemsCount[item.Name]);
-                    mItemsCount[item.Name] += 1;
+                    ItemsCount[inventoryItem.Name] += 1;
                 }
                 else
                 {
-                    this.mItems.Add(item.Name, item);
-                    this.mItemsCount.Add(item.Name, 1);
+                    this.ItemsSlot.Add(inventoryItem.Name, FindFreeSlot());
+                    this.Items.Add(inventoryItem.Name, item);
+                    this.ItemsCount.Add(inventoryItem.Name, 1);
                 }
 
-                item.OnPickup();
+                inventoryItem.OnPickup();
 
                 if (item != null)
                 {
                     EventManager.Instance.Raise(new ItemAddedEvent
                     {
-                        item = item,
-                        count = this.mItemsCount[item.Name]
+                        item = inventoryItem,
+                        count = this.ItemsCount[inventoryItem.Name]
                     });
                     EventManager.Instance.Raise(new SwitchSlot
                     {
-                        slot = InventoryManager.Instance.ActiveSlot
+                        slot = ActiveSlot
                     });
                 }
             }
         }
     }
 
-    public void RemovedItem(IInventoryItem item)
+    public void RemovedItem(GameObject item)
     {
-        if (this.mItems.ContainsKey(item.Name))
+        IInventoryItem inventoryItem = item.GetComponent<IInventoryItem>();
+
+        if (this.Items.ContainsKey(inventoryItem.Name))
         {
-            mItemsCount[item.Name] -= 1;
-            if (this.mItemsCount[item.Name] <= 0)
+            ItemsCount[inventoryItem.Name] -= 1;
+            if (this.ItemsCount[inventoryItem.Name] <= 0)
             {
-                this.mItemsCount.Remove(item.Name);
-                this.mItems.Remove(item.Name);
+                this.ItemsCount.Remove(inventoryItem.Name);
+                this.ItemsSlot.Remove(inventoryItem.Name);
+                this.Items.Remove(inventoryItem.Name);
             }
 
-            item.OnDrop();
+            inventoryItem.OnDrop();
 
-            Collider collider = (item as MonoBehaviour).GetComponent<Collider>();
+            Collider collider = item.GetComponent<Collider>();
             if (collider != null)
             {
                 collider.enabled = true;
@@ -117,7 +141,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
             {
                 EventManager.Instance.Raise(new ItemRemovedEvent
                 {
-                    item = item,
+                    item = inventoryItem,
                     count = 0
                 });
             }
@@ -140,18 +164,31 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         PlayerMode newPlayerMode;
         this.activeSlot = e.slot;
         GameObject activeGameObject = inventoryPanel.transform.GetChild(this.activeSlot).GetComponent<gameObjectSlot>().gameObjectInSlot;
+        bool mapSelected = false;
+
         if (activeGameObject != null)
         {
             newPlayerMode = activeGameObject.GetComponent<InventoryItemBase>().PlayerModeObject;
             BlockDamage scriptBlockDamage = activeGameObject.GetComponent<BlockDamage>();
             if (scriptBlockDamage != null) scriptBlockDamage.Health = 10;
+
+            // Display map if held
+            if (activeGameObject.GetComponent<MinimapItem>() != null)
+            {
+                mapSelected = true;
+            }
         }
         else
         {
             newPlayerMode = PlayerMode.UNARMED;
         }
-        
+
+
+        if (mapSelected) EventManager.Instance.Raise(new ToggleMapEvent { value = true });
+        else  EventManager.Instance.Raise(new ToggleMapEvent { value = false });
+
         EventManager.Instance.Raise(new UpdateObjectInhand { objectInSlot = activeGameObject });
         EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = newPlayerMode});
+
     }
 }

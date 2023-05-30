@@ -10,10 +10,13 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
-    [SerializeField] private float health;
+
     public PlayerMode ActivePlayerMode => this.activePlayerMode;
     public AimingMode ActiveAimingMode => this.activeAimingMode;
-    public float Health => this.health;
+
+    // HACK: Use restrictive methods as setter instead
+    public float Health { get { return PlayerData.Instance.Health; } set { PlayerData.Instance.Health = value; } }
+    public float MaxHealth { get { return PlayerData.Instance.MaxHealth; } set { PlayerData.Instance.MaxHealth = value; } }
 
 
     private void OnEnable()
@@ -106,6 +109,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetHealth(EnemyAttackEvent e)
     {
-        this.health = Mathf.Max(this.health - e.damage, 0);
+        this.Health = Mathf.Max(this.Health - e.damage, 0);
     }
 }

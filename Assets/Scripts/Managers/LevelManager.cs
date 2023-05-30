@@ -65,8 +65,9 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
     private void PrepareSceneChange(SceneAboutToChangeEvent e)
     {
-        // Pr�paration au changement de scene
-        StartCoroutine(TransitionManager.Instance.FadeOut(1f, () => {
+        // Préparation au changement de scene
+        StartCoroutine(TransitionManager.Instance.FadeOut(1f, () =>
+        {
             EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, levelGenerated = e.levelGenerated });
         }));
     }
@@ -86,7 +87,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
 
         currentLevel = e.levelGenerated;
 
-        // G�n�ration proc�durale
+        // Génération proécdurale
         if (currentLevel != 0)
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);

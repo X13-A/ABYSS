@@ -164,6 +164,12 @@ public class CursorUpdateEvent : SDD.Events.Event
     public Sprite sprite;
 }
 
+public class TextEvent : SDD.Events.Event
+{
+    public string text;
+    public float duration;
+}
+
 #endregion
 
 #region Inventory

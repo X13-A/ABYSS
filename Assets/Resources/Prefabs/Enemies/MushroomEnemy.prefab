@@ -738,9 +738,9 @@ MonoBehaviour:
   walkingVelocity: 0.01
   runningWhenModifier: 1.5
   playerReference: {fileID: 0}
-  attackDuration: 0
-  attackVariantDuration: 0
-  attackDistanceOffset: 0
+  attackDuration: 1
+  attackVariantDuration: 2
+  attackDistanceOffset: 1.5
   detectionRadius: 9
 --- !u!114 &6930203705514255341
 MonoBehaviour:

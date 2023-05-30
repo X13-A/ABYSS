@@ -39,6 +39,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GameOverEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<EnemyAttackEvent>(UpdatePlayerHealth);
     }
 
     public void UnsubscribeEvents()
@@ -54,6 +55,8 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
     }
+
+    private void UpdatePlayerHealth(EnemyAttackEvent e) => health -= e.damage;
 
     #region UI events callbacks
     private void SetAimingModeFromUIEvent(GameMainMenuEvent e)

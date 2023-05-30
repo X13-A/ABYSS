@@ -11,48 +11,48 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
-    public PlayerMode ActivePlayerMode => this.activePlayerMode;
-    public AimingMode ActiveAimingMode => this.activeAimingMode;
-    public float Health => this.health;
+    public PlayerMode ActivePlayerMode => activePlayerMode;
+    public AimingMode ActiveAimingMode => activeAimingMode;
+    public float Health => health;
 
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetPlayerAim);
-        EventManager.Instance.AddListener<EnemyAttackEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerMode);
+        EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
+        EventManager.Instance.AddListener<EnemyAttackEvent>(SetHealth);
 
         // Reset aim mode on menus
-        EventManager.Instance.AddListener<GameMainMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<GamePauseMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<GameSettingsMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<GameOverEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<GameSaveSettingsEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<GameCancelSettingsEvent>(this.SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GamePauseMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GameSettingsMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GameOverEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.AddListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetPlayerMode);
+        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(SetPlayerAim);
 
         // Reset aim mode on menus
-        EventManager.Instance.RemoveListener<GameMainMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<GameOverEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(this.SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(this.SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GameOverEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
+        EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
     }
 
     #region UI events callbacks
@@ -96,16 +96,16 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetPlayerMode(PlayerSwitchModeEvent e)
     {
-        this.activePlayerMode = e.mode;
+        activePlayerMode = e.mode;
     }
 
     private void SetPlayerAim(AimingModeUpdateEvent e)
     {
-        this.activeAimingMode = e.mode;
+        activeAimingMode = e.mode;
     }
 
     private void SetHealth(EnemyAttackEvent e)
     {
-        this.health = Mathf.Max(this.health - e.damage, 0);
+        health = Mathf.Max(health - e.damage, 0);
     }
 }

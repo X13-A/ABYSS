@@ -12,19 +12,19 @@ public class WarpToSpawn : MonoBehaviour
     private bool spawned = false;
     private void Start()
     {
-        this.spawn = FindObjectOfType<PlayerSpawn>();
-        this.characterController = GetComponent<CharacterController>();
+        spawn = FindObjectOfType<PlayerSpawn>();
+        characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        if (!this.spawned && this.spawn != null && this.characterController != null)
+        if (!spawned && spawn != null && characterController != null)
         {
-            this.characterController.enabled = false;
-            this.transform.position = spawn.transform.position;
-            this.characterController.enabled = true;
-            this.spawned = true;
-            this.gameObject.SetActive(true);
+            characterController.enabled = false;
+            transform.position = spawn.transform.position;
+            characterController.enabled = true;
+            spawned = true;
+            gameObject.SetActive(true);
             EventManager.Instance.Raise(new PlayerSpawnedEvent { });
         }
     }

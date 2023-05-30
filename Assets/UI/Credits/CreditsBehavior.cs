@@ -23,7 +23,7 @@ public class CreditsBehavior : MonoBehaviour
         {
             transform.position = new Vector3(
                 transform.position.x,
-                transform.position.y + this.scrollSpeed * Time.deltaTime,
+                transform.position.y + scrollSpeed * Time.deltaTime,
                 transform.position.z
             );
         }

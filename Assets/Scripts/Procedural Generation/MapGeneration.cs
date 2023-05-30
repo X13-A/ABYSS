@@ -36,7 +36,7 @@ public class MapGeneration : MonoBehaviour
 
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private Vector3 playerSpawnCoords;
-    
+
     private BlockType[,,] blocksMap;
     private TerrainType[][] levelArray;
     private float[,] noiseMap;
@@ -49,17 +49,17 @@ public class MapGeneration : MonoBehaviour
 
     private void Start()
     {
-        this.levelArray = new TerrainType[][] { firstLevel, secondLevel, thirdLevel, fourthLevel };
+        levelArray = new TerrainType[][] { firstLevel, secondLevel, thirdLevel, fourthLevel };
     }
 
     private void initBlocksMap()
     {
-        this.blocksMap = new BlockType[this.mapWidth, this.mapHeight, this.mapWidth];
-        for (int x = 0; x < this.mapWidth; x++)
+        blocksMap = new BlockType[mapWidth, mapHeight, mapWidth];
+        for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                for (int z = 0; z < this.mapWidth; z++)
+                for (int z = 0; z < mapWidth; z++)
                 {
                     blocksMap[x, y, z] = BlockType.AIR;
                 }
@@ -76,42 +76,42 @@ public class MapGeneration : MonoBehaviour
         });
 
         // Init NoiseMap and Blocks Storage
-        this.GenerateNoiseMap();
-        this.initBlocksMap();
-        this.topBlocksHeight = new int[this.mapWidth, this.mapWidth];
+        GenerateNoiseMap();
+        initBlocksMap();
+        topBlocksHeight = new int[mapWidth, mapWidth];
 
         // Init map object
         GameObject map = new GameObject("Map");
         map.SetActive(false);
 
-        for (int z = 0; z < this.mapHeight; z++)
+        for (int z = 0; z < mapHeight; z++)
         {
-            for (int x = 0; x < this.mapWidth; x++)
+            for (int x = 0; x < mapWidth; x++)
             {
                 // Read noise map
-                float currentHeight = this.noiseMap[x, z];
+                float currentHeight = noiseMap[x, z];
 
                 // Pick block type
                 GameObject currentBlockPrefab = null;
                 BlockType currentBlockType = BlockType.AIR;
-                for (int i = 0; i < this.levelArray[level].Length; i++)
+                for (int i = 0; i < levelArray[level].Length; i++)
                 {
-                    if (currentHeight <= this.levelArray[level][i].height)
+                    if (currentHeight <= levelArray[level][i].height)
                     {
-                        currentBlockPrefab = this.levelArray[level][i].cubePrefab;
-                        currentBlockType = this.levelArray[level][i].blockType;
+                        currentBlockPrefab = levelArray[level][i].cubePrefab;
+                        currentBlockType = levelArray[level][i].blockType;
                         break;
                     }
                 }
 
                 // Fill underneath the block
-                int blockHeight = (int) (this.heightCurve.Evaluate(this.noiseMap[x, z]) * this.heightMultiplier);
-                this.topBlocksHeight[x, z] = blockHeight;
+                int blockHeight = (int) (heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier);
+                topBlocksHeight[x, z] = blockHeight;
                 for (int y = 0; y < blockHeight; y++)
                 {
-                    GameObject cube = Instantiate(this.levelArray[level][2].cubePrefab);
+                    GameObject cube = Instantiate(levelArray[level][2].cubePrefab);
                     cube.transform.position = new Vector3(x, y, z);
-                    
+
                     cube.AddComponent<BoxCollider>();
                     cube.layer = LayerMask.NameToLayer("Ground");
                     cube.transform.SetParent(map.transform);
@@ -119,7 +119,7 @@ public class MapGeneration : MonoBehaviour
 
                 // Fill Blocks Storage
                 Vector3 blockPos = new Vector3(x, blockHeight, z);
-                this.blocksMap[(int) blockPos.x, (int) blockPos.y, (int) blockPos.z] = currentBlockType;
+                blocksMap[(int) blockPos.x, (int) blockPos.y, (int) blockPos.z] = currentBlockType;
 
                 // Place the top block
                 GameObject currentCube = Instantiate(currentBlockPrefab);
@@ -131,7 +131,7 @@ public class MapGeneration : MonoBehaviour
             }
 
             // Progress
-            progress.Report((float) z / this.mapHeight);
+            progress.Report((float) z / mapHeight);
             await Task.Yield();
         }
 
@@ -140,36 +140,36 @@ public class MapGeneration : MonoBehaviour
         GameObject playerSpawnObject = Instantiate(new GameObject("PlayerSpawn"));
         playerSpawnObject.AddComponent<PlayerSpawn>();
         playerSpawnObject.transform.SetParent(map.transform);
-        this.setPlayerSpawnHeight(playerSpawnObject, this.noiseMap);
+        setPlayerSpawnHeight(playerSpawnObject, noiseMap);
 
         // Generate portal
-        Vector3 portalPos = new Vector3(50, (int) (this.heightCurve.Evaluate(this.noiseMap[50, 50]) * this.heightMultiplier) + this.portalPrefab.transform.localScale.y / 2, 50);
-        GameObject portal = Instantiate(this.portalPrefab, portalPos, Quaternion.identity);
+        Vector3 portalPos = new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portalPrefab.transform.localScale.y / 2, 50);
+        GameObject portal = Instantiate(portalPrefab, portalPos, Quaternion.identity);
         portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
         portal.transform.SetParent(map.transform);
 
         // Save data across scenes
-        LevelData.Instance.BlocksMap = this.blocksMap;
-        LevelData.Instance.TopBlocksHeight = this.topBlocksHeight;
-        LevelData.Instance.MapHeight = this.mapHeight;
-        LevelData.Instance.MapWidth = this.mapWidth;
+        LevelData.Instance.BlocksMap = blocksMap;
+        LevelData.Instance.TopBlocksHeight = topBlocksHeight;
+        LevelData.Instance.MapHeight = mapHeight;
+        LevelData.Instance.MapWidth = mapWidth;
         LevelData.Instance.PortalPos = portalPos;
 
         map.SetActive(true);
-        return map; 
+        return map;
     }
 
     private void setPlayerSpawnHeight(GameObject spawn, float[,] noiseMap)
     {
-        int x = Mathf.RoundToInt(this.playerSpawnCoords.x);
-        int z = Mathf.RoundToInt(this.playerSpawnCoords.z);
+        int x = Mathf.RoundToInt(playerSpawnCoords.x);
+        int z = Mathf.RoundToInt(playerSpawnCoords.z);
 
         float height = Mathf.Ceil(noiseMap[x, z]);
         spawn.transform.position = new Vector3
         (
-            this.playerSpawnCoords.x,
+            playerSpawnCoords.x,
             height,
-            this.playerSpawnCoords.z
+            playerSpawnCoords.z
         );
     }
 

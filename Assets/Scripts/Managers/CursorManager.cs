@@ -31,33 +31,33 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetCursorType);
-        EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetCursorLockMode);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetCursorType);
+        EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetCursorLockMode);
         // Menus
-        EventManager.Instance.AddListener<GameMainMenuEvent>(this.SetCursorFromMainMenuEvent);
-        EventManager.Instance.AddListener<GamePauseMenuEvent>(this.SetCursorFromPauseMenuEvent);
-        EventManager.Instance.AddListener<GameSettingsMenuEvent>(this.SetCursorFromSettingsMenuEvent);
-        EventManager.Instance.AddListener<GamePlayEvent>(this.SetCursorFromPlayEvent);
-        EventManager.Instance.AddListener<GameResumeEvent>(this.SetCursorFromResumeEvent);
-        EventManager.Instance.AddListener<GameOverEvent>(this.SetCursorFromGameOverEvent);
-        EventManager.Instance.AddListener<GameSaveSettingsEvent>(this.SetCursorFromSaveSettingsEvent);
-        EventManager.Instance.AddListener<GameCancelSettingsEvent>(this.SetCursorFromCancelSettingsEvent);
+        EventManager.Instance.AddListener<GameMainMenuEvent>(SetCursorFromMainMenuEvent);
+        EventManager.Instance.AddListener<GamePauseMenuEvent>(SetCursorFromPauseMenuEvent);
+        EventManager.Instance.AddListener<GameSettingsMenuEvent>(SetCursorFromSettingsMenuEvent);
+        EventManager.Instance.AddListener<GamePlayEvent>(SetCursorFromPlayEvent);
+        EventManager.Instance.AddListener<GameResumeEvent>(SetCursorFromResumeEvent);
+        EventManager.Instance.AddListener<GameOverEvent>(SetCursorFromGameOverEvent);
+        EventManager.Instance.AddListener<GameSaveSettingsEvent>(SetCursorFromSaveSettingsEvent);
+        EventManager.Instance.AddListener<GameCancelSettingsEvent>(SetCursorFromCancelSettingsEvent);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetCursorType);
-        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetCursorLockMode);
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetCursorType);
+        EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(SetCursorLockMode);
 
         // Menus
-        EventManager.Instance.RemoveListener<GameMainMenuEvent>(this.SetCursorFromMainMenuEvent);
-        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.SetCursorFromPauseMenuEvent);
-        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(this.SetCursorFromSettingsMenuEvent);
-        EventManager.Instance.RemoveListener<GamePlayEvent>(this.SetCursorFromPlayEvent);
-        EventManager.Instance.RemoveListener<GameResumeEvent>(this.SetCursorFromResumeEvent);
-        EventManager.Instance.RemoveListener<GameOverEvent>(this.SetCursorFromGameOverEvent);
-        EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(this.SetCursorFromSaveSettingsEvent);
-        EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(this.SetCursorFromCancelSettingsEvent);
+        EventManager.Instance.RemoveListener<GameMainMenuEvent>(SetCursorFromMainMenuEvent);
+        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(SetCursorFromPauseMenuEvent);
+        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(SetCursorFromSettingsMenuEvent);
+        EventManager.Instance.RemoveListener<GamePlayEvent>(SetCursorFromPlayEvent);
+        EventManager.Instance.RemoveListener<GameResumeEvent>(SetCursorFromResumeEvent);
+        EventManager.Instance.RemoveListener<GameOverEvent>(SetCursorFromGameOverEvent);
+        EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(SetCursorFromSaveSettingsEvent);
+        EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(SetCursorFromCancelSettingsEvent);
     }
 
     #region UI Callbacks
@@ -65,37 +65,37 @@ public class CursorManager : MonoBehaviour, IEventHandler
     {
         CursorType type = EnumConverter.CursorTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
         Cursor.lockState = CursorLockMode.Locked;
-        this.SetCursorType(type);
+        SetCursorType(type);
     }
     private void SetCursorFromResumeEvent(GameResumeEvent e)
     {
         CursorType type = EnumConverter.CursorTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
         Cursor.lockState = CursorLockMode.Locked;
-        this.SetCursorType(type);
+        SetCursorType(type);
     }
     private void SetCursorFromMainMenuEvent(GameMainMenuEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     private void SetCursorFromPauseMenuEvent(GamePauseMenuEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     private void SetCursorFromGameOverEvent(GameOverEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     private void SetCursorFromSettingsMenuEvent(GameSettingsMenuEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     private void SetCursorFromSaveSettingsEvent(GameSaveSettingsEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     private void SetCursorFromCancelSettingsEvent(GameCancelSettingsEvent e)
     {
-        this.SetCursorType(CursorType.MENU);
+        SetCursorType(CursorType.MENU);
     }
     #endregion
 

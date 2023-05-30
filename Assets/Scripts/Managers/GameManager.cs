@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
-        this.SetState(m_State);
+        SubscribeEvents();
+        SetState(m_State);
     }
     private void OnDisable()
     {

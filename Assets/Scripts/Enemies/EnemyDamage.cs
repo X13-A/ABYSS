@@ -11,9 +11,9 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject corpse;
     private DamageTextEmitter textEmitter;
-    public float Health { get { return this.health; } }
-    public List<AttackType> DamagerTypes { get { return this.damagerTypes; } }
-    public List<float> DamagerTypesFactors { get { return this.damagerTypesFactors; } }
+    public float Health { get { return health; } }
+    public List<AttackType> DamagerTypes { get { return damagerTypes; } }
+    public List<float> DamagerTypesFactors { get { return damagerTypesFactors; } }
 
     private void Start()
     {

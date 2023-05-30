@@ -41,24 +41,24 @@ public class HudManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
-        EventManager.Instance.AddListener<GameMainMenuEvent>(this.CloseHud);
-        EventManager.Instance.AddListener<GameSettingsMenuEvent>(this.CloseHud);
-        EventManager.Instance.AddListener<GamePauseMenuEvent>(this.CloseHud);
-        EventManager.Instance.AddListener<GameResumeEvent>(this.CloseHud);
-        EventManager.Instance.AddListener<GameOverEvent>(this.CloseHud);
-        EventManager.Instance.AddListener<GamePlayEvent>(this.OpenHud);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerModeText);
+        EventManager.Instance.AddListener<GameMainMenuEvent>(CloseHud);
+        EventManager.Instance.AddListener<GameSettingsMenuEvent>(CloseHud);
+        EventManager.Instance.AddListener<GamePauseMenuEvent>(CloseHud);
+        EventManager.Instance.AddListener<GameResumeEvent>(CloseHud);
+        EventManager.Instance.AddListener<GameOverEvent>(CloseHud);
+        EventManager.Instance.AddListener<GamePlayEvent>(OpenHud);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
-        EventManager.Instance.RemoveListener<GameMainMenuEvent>(this.CloseHud);
-        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(this.CloseHud);
-        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.CloseHud);
-        EventManager.Instance.RemoveListener<GameResumeEvent>(this.CloseHud);
-        EventManager.Instance.RemoveListener<GameOverEvent>(this.CloseHud);
-        EventManager.Instance.RemoveListener<GamePlayEvent>(this.OpenHud);
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetPlayerModeText);
+        EventManager.Instance.RemoveListener<GameMainMenuEvent>(CloseHud);
+        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(CloseHud);
+        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(CloseHud);
+        EventManager.Instance.RemoveListener<GameResumeEvent>(CloseHud);
+        EventManager.Instance.RemoveListener<GameOverEvent>(CloseHud);
+        EventManager.Instance.RemoveListener<GamePlayEvent>(OpenHud);
     }
 
     #region Close HUD
@@ -91,6 +91,6 @@ public class HudManager : MonoBehaviour, IEventHandler
 
     private void SetPlayerModeText(PlayerSwitchModeEvent e)
     {
-        this.playerModeText.text = EnumConverter.StringFromPlayerMode(e.mode);
+        playerModeText.text = EnumConverter.StringFromPlayerMode(e.mode);
     }
 }

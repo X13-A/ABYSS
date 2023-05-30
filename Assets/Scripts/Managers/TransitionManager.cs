@@ -56,8 +56,8 @@ public class TransitionManager : MonoBehaviour
 
     private void CreateFadePanel()
     {
-        if (this.fadePanel != null) Destroy(this.fadePanel);
-        this.fadePanel = Instantiate(this.fadePanelPrefab, this.canvas.transform);
+        if (fadePanel != null) Destroy(fadePanel);
+        fadePanel = Instantiate(fadePanelPrefab, canvas.transform);
     }
 
     public IEnumerator FadeOut(float fadeDuration = 1f, Action actionDelegate = null)
@@ -83,7 +83,7 @@ public class TransitionManager : MonoBehaviour
         panelColor.a = 1f;
         panelImage.color = panelColor;
 
-        Destroy(this.fadePanel);
+        Destroy(fadePanel);
 
         // Call the action delegate
         actionDelegate?.Invoke();

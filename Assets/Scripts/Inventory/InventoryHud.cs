@@ -21,30 +21,30 @@ public class InventoryHud : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
-        EventManager.Instance.AddListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
-        EventManager.Instance.AddListener<ItemCollideWithPlayerEvent>(this.addPickableItem);
-        EventManager.Instance.AddListener<ItemEndCollideWithPlayerEvent>(this.removePickableItem);
+        EventManager.Instance.AddListener<ItemAddedEvent>(InventoryScript_ItemAdded);
+        EventManager.Instance.AddListener<ItemRemovedEvent>(InventoryScript_ItemRemoved);
+        EventManager.Instance.AddListener<ItemCollideWithPlayerEvent>(addPickableItem);
+        EventManager.Instance.AddListener<ItemEndCollideWithPlayerEvent>(removePickableItem);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<ItemAddedEvent>(this.InventoryScript_ItemAdded);
-        EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.InventoryScript_ItemRemoved);
-        EventManager.Instance.RemoveListener<ItemCollideWithPlayerEvent>(this.addPickableItem);
-        EventManager.Instance.RemoveListener<ItemEndCollideWithPlayerEvent>(this.removePickableItem);
+        EventManager.Instance.RemoveListener<ItemAddedEvent>(InventoryScript_ItemAdded);
+        EventManager.Instance.RemoveListener<ItemRemovedEvent>(InventoryScript_ItemRemoved);
+        EventManager.Instance.RemoveListener<ItemCollideWithPlayerEvent>(addPickableItem);
+        EventManager.Instance.RemoveListener<ItemEndCollideWithPlayerEvent>(removePickableItem);
     }
 
     private void addPickableItem(ItemCollideWithPlayerEvent e)
     {
-        this.collidingItems.Add(e.item);
+        collidingItems.Add(e.item);
         pickUpMessagePanel.SetActive(true);
     }
 
     private void removePickableItem(ItemEndCollideWithPlayerEvent e)
     {
-        this.collidingItems.Remove(e.item);
-        if (this.collidingItems.Count == 0)
+        collidingItems.Remove(e.item);
+        if (collidingItems.Count == 0)
         {
             pickUpMessagePanel.SetActive(false);
         }

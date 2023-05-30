@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     private int activeSlot;
 
-    public int ActiveSlot => this.activeSlot;
+    public int ActiveSlot => activeSlot;
 
     private Dictionary<string, IInventoryItem> mItems = new Dictionary<string, IInventoryItem>();
     private Dictionary<string, int> mItemsCount = new Dictionary<string, int>();
@@ -48,32 +48,32 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<SwitchSlot>(this.setActiveSlot);
+        EventManager.Instance.AddListener<SwitchSlot>(setActiveSlot);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<SwitchSlot>(this.setActiveSlot);
+        EventManager.Instance.RemoveListener<SwitchSlot>(setActiveSlot);
     }
 
     public void AddItem(IInventoryItem item)
     {
-        if (this.mItems.Count < SLOTS || this.mItems.ContainsKey(item.Name))
+        if (mItems.Count < SLOTS || mItems.ContainsKey(item.Name))
         {
             Collider collider = (item as MonoBehaviour).GetComponent<Collider>();
             if (collider.enabled)
             {
                 collider.enabled = false;
 
-                if (this.mItems.ContainsKey(item.Name))
+                if (mItems.ContainsKey(item.Name))
                 {
                     Debug.Log(mItemsCount[item.Name]);
                     mItemsCount[item.Name] += 1;
                 }
                 else
                 {
-                    this.mItems.Add(item.Name, item);
-                    this.mItemsCount.Add(item.Name, 1);
+                    mItems.Add(item.Name, item);
+                    mItemsCount.Add(item.Name, 1);
                 }
 
                 item.OnPickup();
@@ -83,7 +83,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
                     EventManager.Instance.Raise(new ItemAddedEvent
                     {
                         item = item,
-                        count = this.mItemsCount[item.Name]
+                        count = mItemsCount[item.Name]
                     });
                     EventManager.Instance.Raise(new SwitchSlot
                     {
@@ -96,13 +96,13 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     public void RemovedItem(IInventoryItem item)
     {
-        if (this.mItems.ContainsKey(item.Name))
+        if (mItems.ContainsKey(item.Name))
         {
             mItemsCount[item.Name] -= 1;
-            if (this.mItemsCount[item.Name] <= 0)
+            if (mItemsCount[item.Name] <= 0)
             {
-                this.mItemsCount.Remove(item.Name);
-                this.mItems.Remove(item.Name);
+                mItemsCount.Remove(item.Name);
+                mItems.Remove(item.Name);
             }
 
             item.OnDrop();
@@ -138,8 +138,8 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void setActiveSlot(SwitchSlot e)
     {
         PlayerMode newPlayerMode;
-        this.activeSlot = e.slot;
-        GameObject activeGameObject = inventoryPanel.transform.GetChild(this.activeSlot).GetComponent<gameObjectSlot>().gameObjectInSlot;
+        activeSlot = e.slot;
+        GameObject activeGameObject = inventoryPanel.transform.GetChild(activeSlot).GetComponent<gameObjectSlot>().gameObjectInSlot;
         if (activeGameObject != null)
         {
             newPlayerMode = activeGameObject.GetComponent<InventoryItemBase>().PlayerModeObject;

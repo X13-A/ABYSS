@@ -22,9 +22,9 @@ public class Damager : MonoBehaviour, IDamager
         // Enable
         StartCoroutine(CoroutineUtil.DelayAction(duration * 0.4f, () =>
         {
-            this.collides.Clear();
+            collides.Clear();
             this.damage = damage;
-            this.collider.enabled = true;
+            collider.enabled = true;
         }));
 
         // Never disable (arrows, projectiles)
@@ -37,8 +37,8 @@ public class Damager : MonoBehaviour, IDamager
         StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
         {
             this.damage = 0;
-            this.collider.enabled = false;
-            this.collides.Clear();
+            collider.enabled = false;
+            collides.Clear();
         }));
     }
 
@@ -47,15 +47,15 @@ public class Damager : MonoBehaviour, IDamager
         IDamageable damageable = other.GetComponent<IDamageable>();
 
         if (damageable == null) return;
-        if (this.collides.Contains(damageable)) return;
-        if (!damageable.DamagerTypes.Contains(this.type)) return;
-        this.CauseDamage(damageable);
+        if (collides.Contains(damageable)) return;
+        if (!damageable.DamagerTypes.Contains(type)) return;
+        CauseDamage(damageable);
     }
 
     // Actually causes damage
     private void CauseDamage(IDamageable damageable)
     {
-        damageable.Damage(this.damage, this.type);
-        this.collides.Add(damageable);
+        damageable.Damage(damage, type);
+        collides.Add(damageable);
     }
 }

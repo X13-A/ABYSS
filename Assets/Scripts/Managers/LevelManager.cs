@@ -84,13 +84,13 @@ public class LevelManager : MonoBehaviour, IEventHandler
         }
         while (operation.progress < 0.9f);
 
-        this.currentLevel = e.levelGenerated;
+        currentLevel = e.levelGenerated;
 
         // G�n�ration proc�durale
-        if (this.currentLevel != 0)
+        if (currentLevel != 0)
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);
-            GameObject map = await generator.GenerateMap(this.currentLevel - 1);
+            GameObject map = await generator.GenerateMap(currentLevel - 1);
             DontDestroyOnLoad(map);
 
             SceneManager.sceneLoaded += OnSceneLoaded;

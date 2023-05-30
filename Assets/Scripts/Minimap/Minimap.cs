@@ -44,7 +44,7 @@ public class Minimap : MonoBehaviour, IEventHandler
 
     private void StartExploration(PlayerSpawnedEvent e)
     {
-        this.exploring = true;
+        exploring = true;
     }
 
     private void Start()
@@ -164,7 +164,7 @@ public class Minimap : MonoBehaviour, IEventHandler
 
     private void Update()
     {
-        if (this.exploring == true)
+        if (exploring == true)
         {
             ExploreMinimap();
             UpdatePixels();

@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 1702783982349221434}
   - component: {fileID: 1232434927387995282}
   - component: {fileID: -1877102827664027412}
-  - component: {fileID: 5626487476939162900}
-  - component: {fileID: -5016202516261816673}
   m_Layer: 0
   m_Name: snow_block
   m_TagString: Untagged
@@ -147,32 +145,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5626487476939162900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6206710373022461655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Name: block snow
-  _Image: {fileID: 21300000, guid: 461ca117c2badff41a07aaa22ee05ea3, type: 3}
-  playerModeObject: 6
---- !u!114 &-5016202516261816673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6206710373022461655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741c5f387d9346d4d8b1a00569d1145f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

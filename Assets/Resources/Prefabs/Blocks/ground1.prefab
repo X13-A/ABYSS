@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5540658188921293076}
   - component: {fileID: -3893057091044518360}
   - component: {fileID: -5066469149163103697}
-  - component: {fileID: 8046875709632554228}
   m_Layer: 0
   m_Name: ground1
   m_TagString: Untagged
@@ -148,18 +147,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8046875709632554228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708442739469861458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Name: block ground
-  _Image: {fileID: 21300000, guid: 0759bc66dd7a42f47a7421c4226f9f51, type: 3}
-  playerModeObject: 6

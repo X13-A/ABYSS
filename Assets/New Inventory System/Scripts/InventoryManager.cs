@@ -38,10 +38,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void OnEnable()
     {
         //Load data when enabled
-        //if (PlayerData.Instance != null)
-        //{
-        //    this.items = PlayerData.Instance.LoadInventory();
-        //}
+        if (PlayerData.Instance != null)
+        {
+            this.items = PlayerData.Instance.LoadInventory();
+        }
 
         this.UpdateSlots();
         this.SwitchSlot(new SwitchSlotEvent { slot = activeSlot });
@@ -51,10 +51,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void OnDisable()
     {
         //Save data when disabled
-        //if (PlayerData.Instance != null)
-        //{
-        //    PlayerData.Instance.SaveInventory(this.items);
-        //}
+        if (PlayerData.Instance != null)
+        {
+            PlayerData.Instance.SaveInventory(this.items);
+        }
 
         UnsubscribeEvents();
     }

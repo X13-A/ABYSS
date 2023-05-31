@@ -12,17 +12,19 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip SwordAttack;
     [SerializeField] private AudioClip EnteringIntoPortal;
+    [SerializeField] private AudioClip LootItem;
 
     private void Awake()
     {
-        if (m_Instance == null)
-        {
-            m_Instance = this;
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        m_Instance = this;
+        gameObject.transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -40,13 +42,14 @@ public class SoundManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
+        EventManager.Instance.AddListener<ItemAddedEvent>(LaunchLoot);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
-
+        EventManager.Instance.RemoveListener<ItemAddedEvent>(LaunchLoot);
     }
 
     private void LaunchSwordAttackSound(PlayerAttackEvent e)
@@ -57,5 +60,10 @@ public class SoundManager : MonoBehaviour
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)
     {
         audioSource.PlayOneShot(EnteringIntoPortal);
+    }
+
+    private void LaunchLoot(ItemAddedEvent e)
+    {
+        audioSource.PlayOneShot(LootItem);
     }
 }

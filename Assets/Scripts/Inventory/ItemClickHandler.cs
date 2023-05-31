@@ -10,7 +10,7 @@ public class ItemClickHandler : MonoBehaviour
 
         IInventoryItem item = dragHandler.Item;
 
-        Debug.Log(item);
+        if (item == null) return;
 
         InventoryManager.Instance.UseItem(item);
 

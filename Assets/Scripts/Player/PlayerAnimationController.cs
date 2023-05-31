@@ -20,12 +20,12 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerAttackEvent>(HandleAttack);
+        EventManager.Instance.AddListener<AnimateAttackEvent>(HandleAttack);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerAttackEvent>(HandleAttack);
+        EventManager.Instance.RemoveListener<AnimateAttackEvent>(HandleAttack);
     }
 
     private void OnEnable()
@@ -38,26 +38,26 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         UnsubscribeEvents();
     }
 
-    private void HandleAttack(PlayerAttackEvent e)
+    private void HandleAttack(AnimateAttackEvent e)
     {
         if (e.type == AttackType.MELEE)
         {
             // Déclenche l'animation avec la bonne vitesse
             m_Animator.SetTrigger("Attack");
             float clipLength = meleeAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
         }
         else if (e.type == AttackType.MAGIC)
         {
             m_Animator.SetTrigger("Wand Attack");
             float clipLength = wandAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
         }
         else if (e.type == AttackType.PICKAXE)
         {
             m_Animator.SetTrigger("Pickaxe Attack");
             float clipLength = pickaxeAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.duration);
+            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
         }
     }
 

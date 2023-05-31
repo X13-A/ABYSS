@@ -13,7 +13,7 @@ public class PlayerCollider : MonoBehaviour, IPlayerCollider
         {
             foreach (IInventoryItem item in mItemsToPickup)
             {
-                InventoryManager.Instance.AddItem(item);
+                InventoryManager.Instance.AddItem((item as MonoBehaviour).gameObject);
                 item.OnPickup();
                 EventManager.Instance.Raise(new ItemEndCollideWithPlayerEvent { item = item });
             }

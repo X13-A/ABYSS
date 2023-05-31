@@ -9,6 +9,8 @@ public class Minimap : MonoBehaviour, IEventHandler
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject playerMarker;
     [SerializeField] private GameObject portalMarker;
+    [SerializeField] private GameObject display;
+    [SerializeField] private Transform mapCenter;
 
     private bool exploring = false;
 
@@ -21,6 +23,18 @@ public class Minimap : MonoBehaviour, IEventHandler
 
     private Texture2D imageTexture;
     private bool portalDiscovered = false;
+
+    public bool Visibility
+    {
+        get
+        {
+            return display.activeSelf;
+        }
+        set
+        {
+            display.SetActive(value);
+        }
+    }
 
     private void OnEnable()
     {
@@ -50,6 +64,7 @@ public class Minimap : MonoBehaviour, IEventHandler
     private void Start()
     {
         imageTexture = new Texture2D(LevelData.Instance.MapWidth, LevelData.Instance.MapHeight);
+        imageTexture.filterMode = FilterMode.Point;
         rawImage.texture = imageTexture;
         exploredMap = new bool[LevelData.Instance.MapWidth, LevelData.Instance.MapWidth];
         rectTransform = GetComponent<RectTransform>();

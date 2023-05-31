@@ -12,8 +12,25 @@ public class HudManager : MonoBehaviour, IEventHandler
     private static HudManager m_Instance;
     public static HudManager Instance => m_Instance;
     [SerializeField] private TextMeshProUGUI playerModeText;
-
+    [SerializeField] private GameObject map;
     private GameObject HUD;
+
+    public bool MapDisplayed
+    {
+        get
+        {
+            if (this.map == null) return false;
+            Minimap mapScript = this.map.GetComponent<Minimap>();
+            if (mapScript != null) return mapScript.Visibility;
+            else return false;
+        }
+        set
+        {
+            if (this.map == null) return;
+            Minimap mapScript = this.map.GetComponent<Minimap>();
+            if (mapScript != null) mapScript.Visibility = value;
+        }
+    }
 
     private void Awake()
     {
@@ -41,24 +58,31 @@ public class HudManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerModeText);
-        EventManager.Instance.AddListener<GameMainMenuEvent>(CloseHud);
-        EventManager.Instance.AddListener<GameSettingsMenuEvent>(CloseHud);
-        EventManager.Instance.AddListener<GamePauseMenuEvent>(CloseHud);
-        EventManager.Instance.AddListener<GameResumeEvent>(CloseHud);
-        EventManager.Instance.AddListener<GameOverEvent>(CloseHud);
-        EventManager.Instance.AddListener<GamePlayEvent>(OpenHud);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
+        EventManager.Instance.AddListener<GameMainMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameSettingsMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GamePauseMenuEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameResumeEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<GamePlayEvent>(this.OpenHud);
+        EventManager.Instance.AddListener<ToggleMapEvent>(this.ToggleMap);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetPlayerModeText);
-        EventManager.Instance.RemoveListener<GameMainMenuEvent>(CloseHud);
-        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(CloseHud);
-        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(CloseHud);
-        EventManager.Instance.RemoveListener<GameResumeEvent>(CloseHud);
-        EventManager.Instance.RemoveListener<GameOverEvent>(CloseHud);
-        EventManager.Instance.RemoveListener<GamePlayEvent>(OpenHud);
+        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerModeText);
+        EventManager.Instance.RemoveListener<GameMainMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameResumeEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<GamePlayEvent>(this.OpenHud);
+        EventManager.Instance.AddListener<ToggleMapEvent>(this.ToggleMap);
+    }
+
+    private void ToggleMap(ToggleMapEvent e)
+    {
+        this.MapDisplayed = e.value;
     }
 
     #region Close HUD

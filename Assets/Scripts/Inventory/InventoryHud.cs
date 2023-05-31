@@ -8,10 +8,20 @@ using UnityEngine.UI;
 public class InventoryHud : MonoBehaviour, IEventHandler
 {
     [SerializeField] private GameObject pickUpMessagePanel;
+    [SerializeField] private List<GameObject> slots;
+
     private HashSet<IInventoryItem> collidingItems = new HashSet<IInventoryItem>();
+
     private void OnEnable()
     {
+        LoadHud();
+
         SubscribeEvents();
+    }
+
+    private void Start()
+    {
+        LoadHud();
     }
 
     private void OnDisable()
@@ -50,63 +60,60 @@ public class InventoryHud : MonoBehaviour, IEventHandler
         }
     }
 
+    private void SetSlotContent(int slot, int count, IInventoryItem item)
+    {
+        Transform slotTransform = this.slots[slot].transform;
+        Transform imageTransform = slotTransform.GetChild(0).GetChild(0);
+        Transform countItem = imageTransform.GetChild(0);
+        TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
+
+        Image image = imageTransform.GetComponent<Image>();
+        ItemDragHandler itemDragHandler = imageTransform.GetComponent<ItemDragHandler>();
+
+        // Set count
+        textCountItem.text = count.ToString();
+
+        // Set drag item
+        itemDragHandler.Item = item;
+
+        GameObject itemGameObject = (item as MonoBehaviour).gameObject;
+
+        // Set gameObject in slot
+        slotTransform.GetComponent<gameObjectSlot>().gameObjectInSlot = itemGameObject;
+
+        // Set slot image
+        image.sprite = item.Image;
+
+        // Enable image and text
+        image.enabled = true;
+        textCountItem.enabled = true;
+    }
+
+    private void LoadHud()
+    {
+        foreach (KeyValuePair<string, GameObject> kvp in PlayerData.Instance.Items)
+        {
+            Debug.Log(kvp.Value);
+            IInventoryItem item = kvp.Value.GetComponent<IInventoryItem>();
+            int count = -1;
+            int slotIndex = -1;
+
+            string name = kvp.Key;
+            PlayerData.Instance.ItemsCount.TryGetValue(name, out count);
+            PlayerData.Instance.ItemsSlot.TryGetValue(name, out slotIndex);
+
+            if (count == -1 || slotIndex == -1 || item == null) return;
+            SetSlotContent(slotIndex, count, item);
+        }
+    }
+
     private void InventoryScript_ItemAdded(ItemAddedEvent e)
     {
-        pickUpMessagePanel.SetActive(false);
-        Transform inventoryPanel = transform.Find("InventoryPanel");
-        foreach (Transform slot in inventoryPanel)
-        {
-            Transform imageTransform = slot.GetChild(0).GetChild(0);
-            Transform countItem = imageTransform.GetChild(0);
-            Image image = imageTransform.GetComponent<Image>();
-            TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
-            if (image.enabled && image.sprite == e.item.Image)
-            {
-                textCountItem.text = e.count.ToString();
-                return;
-            }
-        }
-        foreach (Transform slot in inventoryPanel)
-        {
-            Transform imageTransform = slot.GetChild(0).GetChild(0);
-            Transform countItem = imageTransform.GetChild(0);
-            Image image = imageTransform.GetComponent<Image>();
-            TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
-            ItemDragHandler itemDragHandler = imageTransform.GetComponent<ItemDragHandler>();
-
-            if (!image.enabled)
-            {
-                image.enabled = true;
-                slot.GetComponent<gameObjectSlot>().gameObjectInSlot = (e.item as MonoBehaviour).gameObject;
-                textCountItem.enabled = true;
-                image.sprite = e.item.Image;
-                itemDragHandler.Item = e.item;
-                textCountItem.text = e.count.ToString();
-                break;
-            }
-        }
+        LoadHud();
     }
 
     private void InventoryScript_ItemRemoved(ItemRemovedEvent e)
     {
-        Transform inventoryPanel = transform.Find("InventoryPanel");
-        foreach (Transform slot in inventoryPanel)
-        {
-            Transform imageTransform = slot.GetChild(0).GetChild(0);
-            Transform countItem = imageTransform.GetChild(0);
-            Image image = imageTransform.GetComponent<Image>();
-            TextMeshProUGUI textCountItem = countItem.GetComponent<TextMeshProUGUI>();
-            ItemDragHandler itemDragHandler = imageTransform.GetComponent<ItemDragHandler>();
-
-            if (itemDragHandler.Item.Equals(e.item))
-            {
-                image.enabled = false;
-                image.sprite = null;
-                textCountItem.enabled = false;
-                //itemDragHandler.Item = null;
-
-                break;
-            }
-        }
+        LoadHud();
     }
 }

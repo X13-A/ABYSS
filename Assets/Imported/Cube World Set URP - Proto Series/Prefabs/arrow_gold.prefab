@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4116585318601388}
   - component: {fileID: 205393528251547874}
+  - component: {fileID: 942672397}
+  - component: {fileID: 942672396}
   m_Layer: 0
   m_Name: arrow_gold
   m_TagString: Untagged
@@ -24,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338544516898974}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62,6 +64,35 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23780295161944368}
   m_Enabled: 1
+--- !u!65 &942672397
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338544516898974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &942672396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338544516898974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Name: Golden Arrow
+  _Image: {fileID: 21300000, guid: 15f1d23a6c4789043949d45f83dea946, type: 3}
+  playerModeObject: 0
+  prefab: {fileID: 1338544516898974}
 --- !u!1 &1362279985523140
 GameObject:
   m_ObjectHideFlags: 0

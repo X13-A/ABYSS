@@ -10,10 +10,19 @@ public class PlayerSwitchModeEvent : SDD.Events.Event
     public PlayerMode mode;
 }
 
+public class PlayerBuildEvent : SDD.Events.Event
+{
+    public GameObject block;
+}
+
 public class PlayerAttackEvent : SDD.Events.Event
 {
     public float damage;
-    public float duration;
+    public float cooldown; // Time before player can attack again after using this attack
+    public float animationDuration; // Duration of the animation, affects damage start time
+    public float damageStartPercentage; // Percentage of "animationDuration" (0.0 -> 1.0), after that the damage will be inflicted
+    public float hitDuration; // Duration during which damage is dealt
+    public float projectileSpeed;
     public AttackType type;
 }
 
@@ -59,6 +68,7 @@ public class SceneReadyToChangeEvent : SDD.Events.Event
     public int levelGenerated;
     public string targetScene;
 }
+
 #endregion
 
 #region Settings Events
@@ -164,6 +174,11 @@ public class CursorUpdateEvent : SDD.Events.Event
     public Sprite sprite;
 }
 
+public class ToggleMapEvent : SDD.Events.Event
+{
+    public bool value;
+}
+
 public class TextEvent : SDD.Events.Event
 {
     public string text;
@@ -220,5 +235,61 @@ public class AnimateItemEvent : SDD.Events.Event
     public string itemId;
     public Dictionary<string, float> animations; // First string is the animation name, Second one is the delay before it triggers
 }
+public class AnimateAttackEvent : SDD.Events.Event
+{
+    public float animationDuration;
+    public AttackType type;
+}
+
+
+#endregion
+
+#region New inventory events
+
+public class ItemRemovedEvent2 : SDD.Events.Event
+{
+    public ItemId itemId;
+}
+
+public class ItemUsedEvent2 : SDD.Events.Event
+{
+    public ItemId itemId;
+}
+public class ItemPickedUpEvent2 : SDD.Events.Event
+{
+    public ItemId itemId;
+}
+
+public class ItemDroppedEvent2 : SDD.Events.Event
+{
+    public ItemId itemId;
+}
+
+public class UpdateCollidingItemsEvent : SDD.Events.Event
+{
+    public HashSet<DroppedItem> items;
+}
+
+public class SwitchSlotEvent : SDD.Events.Event
+{
+    public int slot;
+}
+public class PickupKeyPressedEvent : SDD.Events.Event
+{
+}
+
+public class DropKeyPressedEvent : SDD.Events.Event
+{
+}
+
+public class UseKeyPressedEvent : SDD.Events.Event
+{
+}
+
+public class PlayerHeldItemUpdateEvent : SDD.Events.Event
+{
+    public ItemId? itemId;
+}
+
 
 #endregion

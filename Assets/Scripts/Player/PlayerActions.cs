@@ -20,7 +20,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
 
     [SerializeField] private float pickaxeDamage;
     [SerializeField] private float pickaxeDuration;
-    [SerializeField] private GameObject selectedBlock;
 
 
     public AttackType ActiveAttackMode
@@ -39,11 +38,13 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<PlayerAttackEvent>(Attack);
+        EventManager.Instance.AddListener<PlayerBuildEvent>(Build);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerAttackEvent>(Attack);
+        EventManager.Instance.RemoveListener<PlayerBuildEvent>(Build);
     }
 
     private void OnEnable()
@@ -61,14 +62,14 @@ public class PlayerActions : MonoBehaviour, IEventHandler
 
     private void MeleeAttack(PlayerAttackEvent e)
     {
-        meleeDamager.Damage(meleeDamage, meleeDuration);
+        this.meleeDamager.Damage(e.damage, e.hitDuration);
         EventManager.Instance.Raise(new AnimateItemEvent
         {
             itemId = "PlayerSword",
             animations = new Dictionary<string, float>
             {
                 { "startTrail", 0f },
-                { "stopTrail", e.duration * meleeStartPercentage }
+                { "stopTrail", e.animationDuration * e.damageStartPercentage }
             }
         });
     }
@@ -81,19 +82,19 @@ public class PlayerActions : MonoBehaviour, IEventHandler
             animations = new Dictionary<string, float>
             {
                 { "startTrail", 0f },
-                { "stopTrail", e.duration * wandStartPercentage },
-                { "startWandCast", e.duration * wandStartPercentage }
+                { "stopTrail", e.animationDuration * e.damageStartPercentage},
+                { "startWandCast", e.animationDuration * e.damageStartPercentage }
             }
         });
 
-        StartCoroutine(CoroutineUtil.DelayAction(e.duration * wandStartPercentage, () =>
+        StartCoroutine(CoroutineUtil.DelayAction(e.animationDuration * e.damageStartPercentage, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
                 magicProjectilePosition.transform.rotation.eulerAngles.x,
                 magicProjectilePosition.transform.rotation.eulerAngles.y,
                 magicProjectilePosition.transform.rotation.eulerAngles.z)
             ).GetComponent<Projectile>();
-            projectile.Init(magicProjectileSpeed, magicProjectileDamage);
+            projectile.Init(e.projectileSpeed, e.damage);
         }));
     }
 
@@ -103,12 +104,22 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         if (hit.collider)
         {
             IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-            if (damageable != null) damageable.Damage(this.pickaxeDamage, AttackType.PICKAXE);
+            if (damageable != null) damageable.Damage(e.damage, AttackType.PICKAXE);
         }
     }
 
     private void Attack(PlayerAttackEvent e)
     {
+        if (this.AttackElaspedTime < this.currentAttackDuration) return;
+
+        this.currentAttackDuration = e.cooldown;
+        this.attackStartTime = Time.time;
+        EventManager.Instance.Raise(new AnimateAttackEvent
+        {
+            animationDuration = e.animationDuration,
+            type = e.type
+        });
+
         if (e.type == AttackType.MELEE)
         {
             MeleeAttack(e);
@@ -123,12 +134,12 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         }
     }
 
-    private void Build()
+    private void Build(PlayerBuildEvent e)
     {
         RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
         if (hit.collider)
         {
-            GameObject currentCube = Instantiate(selectedBlock);
+            GameObject currentCube = Instantiate(e.block);
             currentCube.SetActive(true);
             currentCube.transform.position = hit.collider.transform.position + hit.normal;
             currentCube.transform.localScale = Vector3.one;
@@ -148,49 +159,49 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         }
 
         // Build
-        if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD)
-        {
-            if (Input.GetButtonDown("Fire1") && PlayerManager.Instance.ActiveAimingMode == AimingMode.CURSOR)
-            {
-                Build();
-            }
-            return;
-        }
+        //if (PlayerManager.Instance.ActivePlayerMode == PlayerMode.BUILD)
+        //{
+        //    if (Input.GetButtonDown("Fire1") && PlayerManager.Instance.ActiveAimingMode == AimingMode.CURSOR)
+        //    {
+        //        Build();
+        //    }
+        //    return;
+        //}
 
         // Damage
-        if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration && PlayerManager.Instance.ActivePlayerMode != PlayerMode.UNARMED)
-        {
-            if (ActiveAttackMode == AttackType.MELEE)
-            {
-                currentAttackDuration = meleeDuration;
-                EventManager.Instance.Raise(new PlayerAttackEvent
-                {
-                    type = AttackType.MELEE,
-                    damage = meleeDamage,
-                    duration = meleeDuration,
-                });
-            }
-            else if (ActiveAttackMode == AttackType.MAGIC)
-            {
-                currentAttackDuration = wandDuration;
-                EventManager.Instance.Raise(new PlayerAttackEvent
-                {
-                    type = AttackType.MAGIC,
-                    damage = magicProjectileDamage,
-                    duration = wandDuration,
-                });
-            }
-            else if (ActiveAttackMode == AttackType.PICKAXE)
-            {
-                currentAttackDuration = pickaxeDuration;
-                EventManager.Instance.Raise(new PlayerAttackEvent
-                {
-                    type = AttackType.PICKAXE,
-                    damage = pickaxeDamage,
-                    duration = pickaxeDuration,
-                });
-            }
-            attackStartTime = Time.time;
-        }
+        //if (Input.GetButtonDown("Fire1") && AttackElaspedTime > currentAttackDuration && PlayerManager.Instance.ActivePlayerMode != PlayerMode.UNARMED)
+        //{
+        //    if (ActiveAttackMode == AttackType.MELEE)
+        //    {
+        //        currentAttackDuration = meleeDuration;
+        //        EventManager.Instance.Raise(new PlayerAttackEvent
+        //        {
+        //            type = AttackType.MELEE,
+        //            damage = meleeDamage,
+        //            duration = meleeDuration,
+        //        });
+        //    }
+        //    else if (ActiveAttackMode == AttackType.MAGIC)
+        //    {
+        //        currentAttackDuration = wandDuration;
+        //        EventManager.Instance.Raise(new PlayerAttackEvent
+        //        {
+        //            type = AttackType.MAGIC,
+        //            damage = magicProjectileDamage,
+        //            duration = wandDuration,
+        //        });
+        //    }
+        //    else if (ActiveAttackMode == AttackType.PICKAXE)
+        //    {
+        //        currentAttackDuration = pickaxeDuration;
+        //        EventManager.Instance.Raise(new PlayerAttackEvent
+        //        {
+        //            type = AttackType.PICKAXE,
+        //            damage = pickaxeDamage,
+        //            duration = pickaxeDuration,
+        //        });
+        //    }
+        //    attackStartTime = Time.time;
+        //}
     }
 }

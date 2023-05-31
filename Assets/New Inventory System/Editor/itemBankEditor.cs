@@ -38,11 +38,13 @@ public class ItemBankEditor : Editor
             EditorGUILayout.Space();
             entry.name = EditorGUILayout.TextField("Name", entry.name);
             EditorGUILayout.Space();
-            entry.icon = (Image) EditorGUILayout.ObjectField("Icon", entry.icon, typeof(Image), true);
+            entry.icon = (Sprite) EditorGUILayout.ObjectField("Icon", entry.icon, typeof(Sprite), true);
             EditorGUILayout.Space();
             entry.heldPrefab = (GameObject) EditorGUILayout.ObjectField("Held Prefab", entry.heldPrefab, typeof(GameObject), true);
             EditorGUILayout.Space();
             entry.droppedPrefab = (GameObject) EditorGUILayout.ObjectField("Dropped Prefab", entry.droppedPrefab, typeof(GameObject), true);
+            EditorGUILayout.Space();
+            entry.isConsumable = EditorGUILayout.Toggle("Is Consumable", entry.isConsumable);
             EditorGUILayout.Space();
             bank.ItemValues[i] = entry;
 

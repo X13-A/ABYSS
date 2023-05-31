@@ -15,7 +15,7 @@ public class CoroutineUtil : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // Allows coroutines to be started from a permanant object
+    // Allows coroutines to be started from a permanent object
     public Coroutine StartPermanentCoroutine(IEnumerator coroutine)
     {
         return m_Instance.StartCoroutine(coroutine);

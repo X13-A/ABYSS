@@ -1,8 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    // TEMPORARY TO ALLOW COMPILATION, WILL DELETE AFTER TRANSITION TO NEW INVENTORY
+    public Dictionary<string, GameObject> Items => null;
+    public Dictionary<string, int> ItemsCount => null;
+    public Dictionary<string, int> ItemsSlot => null;
+
+
     public static PlayerData m_Instance;
     public static PlayerData Instance => m_Instance;
 
@@ -13,13 +21,7 @@ public class PlayerData : MonoBehaviour
 
     public float Health { get { return health; } set { health = value; } }
 
-    private Dictionary<string, GameObject> mItems = new Dictionary<string, GameObject>();
-    private Dictionary<string, int> mItemsCount = new Dictionary<string, int>();
-    private Dictionary<string, int> mItemsSlot = new Dictionary<string, int>();
-    public Dictionary<string, GameObject> Items { get { return mItems; } set { mItems = value; } }
-    public Dictionary<string, int> ItemsCount { get { return mItemsCount; } set { mItemsCount = value; } }
-    public Dictionary<string, int> ItemsSlot { get { return mItemsSlot; } set { mItemsSlot = value; } }
-
+    private Dictionary<ItemId, InventoryItem> inventory = new Dictionary<ItemId, InventoryItem>();
 
     private void Awake()
     {
@@ -34,13 +36,20 @@ public class PlayerData : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SaveInventory(Dictionary<ItemId, InventoryItem> inventory)
+    {
+        // Use clone constructor to loose references
+        this.inventory = inventory.ToDictionary(entry => entry.Key, entry => new InventoryItem(entry.Value));
+    }
+
+    public Dictionary<ItemId, InventoryItem> LoadInventory()
+    {
+        // Use clone constructor to loose references
+        return this.inventory.ToDictionary(entry => entry.Key, entry => new InventoryItem(entry.Value));
+    }
+
     private void Update()
     {
-        //foreach (KeyValuePair<string, IInventoryItem> item in mItems)
-        //{
-        //    Debug.Log(item.Key);
-        //}
-        //Debug.Log("Next frame\n");
     }
 }
 

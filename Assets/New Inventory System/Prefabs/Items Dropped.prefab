@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 466178603322788368}
   m_Layer: 0
-  m_Name: NEW ITEMS DROPPED
+  m_Name: Items Dropped
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

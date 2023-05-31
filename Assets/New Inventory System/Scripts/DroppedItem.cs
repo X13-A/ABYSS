@@ -21,9 +21,9 @@ public class DroppedItem : MonoBehaviour
     public bool Pickup()
     {
         if (!pickable) return false;
-        if (!InventoryManager2.Instance.HasSpaceForItem(this.id)) return false;
+        if (!InventoryManager.Instance.HasSpaceForItem(this.id)) return false;
 
-        EventManager.Instance.Raise(new ItemPickedUpEvent2 { itemId = this.id });
+        EventManager.Instance.Raise(new ItemPickedUpEvent { itemId = this.id });
         Destroy(this.gameObject);
         return true;
     }

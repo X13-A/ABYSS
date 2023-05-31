@@ -42,14 +42,14 @@ public class SoundManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
-        EventManager.Instance.AddListener<ItemAddedEvent>(LaunchLoot);
+        EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
-        EventManager.Instance.RemoveListener<ItemAddedEvent>(LaunchLoot);
+        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
     }
 
     private void LaunchSwordAttackSound(PlayerAttackEvent e)
@@ -62,7 +62,7 @@ public class SoundManager : MonoBehaviour
         audioSource.PlayOneShot(EnteringIntoPortal);
     }
 
-    private void LaunchLoot(ItemAddedEvent e)
+    private void LaunchLoot(ItemPickedUpEvent e)
     {
         audioSource.PlayOneShot(LootItem);
     }

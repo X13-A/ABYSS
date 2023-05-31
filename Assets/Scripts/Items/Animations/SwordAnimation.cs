@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SwordAnimation : MonoBehaviour
 {
-    [SerializeField] private string itemId;
+    [SerializeField] private ItemId itemId;
     [SerializeField] private ParticleSystem swordTrail;
 
     private void OnEnable()

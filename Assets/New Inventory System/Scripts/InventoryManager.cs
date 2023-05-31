@@ -6,10 +6,10 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
 
-public class InventoryManager2 : MonoBehaviour, IEventHandler
+public class InventoryManager : MonoBehaviour, IEventHandler
 {
-    private static InventoryManager2 m_Instance;
-    public static InventoryManager2 Instance => m_Instance;
+    private static InventoryManager m_Instance;
+    public static InventoryManager Instance => m_Instance;
 
     [SerializeField] private List<Slot> slots;
     private Dictionary<ItemId, InventoryItem> items;
@@ -37,11 +37,11 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        // Load data when enabled
-        if (PlayerData.Instance != null)
-        {
-            this.items = PlayerData.Instance.LoadInventory();
-        }
+        //Load data when enabled
+        //if (PlayerData.Instance != null)
+        //{
+        //    this.items = PlayerData.Instance.LoadInventory();
+        //}
 
         this.UpdateSlots();
         this.SwitchSlot(new SwitchSlotEvent { slot = activeSlot });
@@ -50,19 +50,19 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
 
     private void OnDisable()
     {
-        // Save data when disabled
-        if (PlayerData.Instance != null)
-        {
-            PlayerData.Instance.SaveInventory(this.items);
-        }
+        //Save data when disabled
+        //if (PlayerData.Instance != null)
+        //{
+        //    PlayerData.Instance.SaveInventory(this.items);
+        //}
 
         UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<ItemPickedUpEvent2>(this.AddItem);
-        EventManager.Instance.AddListener<ItemRemovedEvent2>(this.RemoveItem);
+        EventManager.Instance.AddListener<ItemPickedUpEvent>(this.AddItem);
+        EventManager.Instance.AddListener<ItemRemovedEvent>(this.RemoveItem);
         EventManager.Instance.AddListener<SwitchSlotEvent>(this.SwitchSlot);
 
         EventManager.Instance.AddListener<UseKeyPressedEvent>(this.UseItem);
@@ -71,8 +71,8 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<ItemPickedUpEvent2>(this.AddItem);
-        EventManager.Instance.RemoveListener<ItemRemovedEvent2>(this.RemoveItem);
+        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.AddItem);
+        EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.RemoveItem);
         EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.SwitchSlot);
 
         EventManager.Instance.RemoveListener<UseKeyPressedEvent>(this.UseItem);
@@ -117,7 +117,7 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
         }
         return -1;
     }
-    private void AddItem(ItemPickedUpEvent2 e)
+    private void AddItem(ItemPickedUpEvent e)
     {
         // Adds one item if existing already
         if (this.items.ContainsKey(e.itemId))
@@ -137,7 +137,7 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
             this.UpdateSlots();
         }
     }
-    private void RemoveItem(ItemRemovedEvent2 e)
+    private void RemoveItem(ItemRemovedEvent e)
     {
         // Removes 1 item from inventory
         if (this.items.ContainsKey(e.itemId))
@@ -196,7 +196,7 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
         // Consumes item if necessary
         if (ItemBank.IsConsumable((ItemId) this.ActiveItem))
         {
-            EventManager.Instance.Raise(new ItemRemovedEvent2 { itemId = (ItemId) this.ActiveItem });
+            EventManager.Instance.Raise(new ItemRemovedEvent { itemId = (ItemId) this.ActiveItem });
             this.UpdateSlots();
         }
     }
@@ -208,9 +208,9 @@ public class InventoryManager2 : MonoBehaviour, IEventHandler
         if (item != null)
         {
             // This event is useless for now but could be used for sound effects
-            EventManager.Instance.Raise(new ItemDroppedEvent2 { itemId = item.Id });
+            EventManager.Instance.Raise(new ItemDroppedEvent { itemId = item.Id });
             // Calls event to start the suppression of the dropped item
-            EventManager.Instance.Raise(new ItemRemovedEvent2 { itemId = item.Id });
+            EventManager.Instance.Raise(new ItemRemovedEvent { itemId = item.Id });
         }
     }
 

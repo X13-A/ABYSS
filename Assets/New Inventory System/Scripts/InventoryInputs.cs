@@ -11,9 +11,9 @@ public class InventoryInputs : MonoBehaviour
     {
         float mouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
         if (mouseScrollWheel == 0) return;
-        if (mouseScrollWheel < 0) this.activeSlot = (this.activeSlot + 1) % InventoryManager2.Instance.SlotCount;
-        if (mouseScrollWheel > 0) this.activeSlot = (this.activeSlot - 1) % InventoryManager2.Instance.SlotCount;
-        if (this.activeSlot < 0) this.activeSlot += InventoryManager2.Instance.SlotCount;
+        if (mouseScrollWheel < 0) this.activeSlot = (this.activeSlot + 1) % InventoryManager.Instance.SlotCount;
+        if (mouseScrollWheel > 0) this.activeSlot = (this.activeSlot - 1) % InventoryManager.Instance.SlotCount;
+        if (this.activeSlot < 0) this.activeSlot += InventoryManager.Instance.SlotCount;
         EventManager.Instance.Raise(new SwitchSlotEvent { slot = this.activeSlot });
     }
 

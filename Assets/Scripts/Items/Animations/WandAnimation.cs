@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WandAnimation : MonoBehaviour, IEventHandler
 {
-    [SerializeField] private string itemId;
+    [SerializeField] private ItemId itemId;
     [SerializeField] private ParticleSystem wandCast;
     [SerializeField] private ParticleSystem wandTrail;
 

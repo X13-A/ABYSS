@@ -187,80 +187,39 @@ public class TextEvent : SDD.Events.Event
 
 #endregion
 
-#region Inventory
-
-public class ItemAddedEvent : SDD.Events.Event
-{
-    public IInventoryItem item;
-    public int count;
-}
-
-public class ItemRemovedEvent : SDD.Events.Event
-{
-    public IInventoryItem item;
-    public int count;
-}
-
-public class ItemUsedEvent : SDD.Events.Event
-{
-    public IInventoryItem item;
-}
-
-public class ItemCollideWithPlayerEvent : SDD.Events.Event
-{
-    public IInventoryItem item;
-}
-
-public class ItemEndCollideWithPlayerEvent : SDD.Events.Event
-{
-    public IInventoryItem item;
-}
-
-public class SwitchSlot : SDD.Events.Event
-{
-    public int slot;
-}
-
-public class UpdateObjectInhand : SDD.Events.Event
-{
-    public GameObject objectInSlot;
-}
-
-#endregion
-
 #region Animation
 
 public class AnimateItemEvent : SDD.Events.Event
 {
-    public string itemId;
+    public ItemId itemId;
     public Dictionary<string, float> animations; // First string is the animation name, Second one is the delay before it triggers
 }
+
 public class AnimateAttackEvent : SDD.Events.Event
 {
     public float animationDuration;
     public AttackType type;
 }
 
-
 #endregion
 
 #region New inventory events
 
-public class ItemRemovedEvent2 : SDD.Events.Event
+public class ItemRemovedEvent : SDD.Events.Event
 {
     public ItemId itemId;
 }
 
-public class ItemUsedEvent2 : SDD.Events.Event
+public class ItemUsedEvent : SDD.Events.Event
 {
     public ItemId itemId;
 }
-public class ItemPickedUpEvent2 : SDD.Events.Event
+public class ItemPickedUpEvent : SDD.Events.Event
 {
     public ItemId itemId;
 }
 
-public class ItemDroppedEvent2 : SDD.Events.Event
+public class ItemDroppedEvent : SDD.Events.Event
 {
     public ItemId itemId;
 }

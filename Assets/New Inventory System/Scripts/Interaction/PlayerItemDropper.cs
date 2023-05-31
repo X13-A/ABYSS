@@ -20,15 +20,15 @@ public class PlayerItemDropper : MonoBehaviour
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<ItemDroppedEvent2>(this.DropItem);
+        EventManager.Instance.AddListener<ItemDroppedEvent>(this.DropItem);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<ItemDroppedEvent2>(this.DropItem);
+        EventManager.Instance.RemoveListener<ItemDroppedEvent>(this.DropItem);
     }
 
-    private void DropItem(ItemDroppedEvent2 e)
+    private void DropItem(ItemDroppedEvent e)
     {
         GameObject droppedPrefab = ItemBank.GetDroppedPrefab(e.itemId);
         droppedPrefab.AddComponent<DroppedItem>().Init(e.itemId);

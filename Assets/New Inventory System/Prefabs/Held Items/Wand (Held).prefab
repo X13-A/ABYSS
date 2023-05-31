@@ -9833,8 +9833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7847020270311324069}
   - component: {fileID: 53833577302264021}
-  - component: {fileID: 3947275485445626419}
-  - component: {fileID: 8780689660579430531}
+  - component: {fileID: -3613721452511231265}
   m_Layer: 0
   m_Name: Wand (Held)
   m_TagString: Untagged
@@ -9874,22 +9873,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3947275485445626419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4128416112982806210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Name: Wand
-  _Image: {fileID: 21300000, guid: 9a2b6192d8559a243bb34ee3e071aee6, type: 3}
-  playerModeObject: 2
---- !u!114 &8780689660579430531
+--- !u!114 &-3613721452511231265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9901,7 +9885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d23ea50868bc6643a262fdc9d0debd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: PlayerWand
+  itemId: 2
   wandCast: {fileID: 2438982502677452058}
   wandTrail: {fileID: 6103312406099733076}
 --- !u!1 &5995783296178989349

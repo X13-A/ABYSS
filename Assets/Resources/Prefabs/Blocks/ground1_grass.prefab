@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 8270455262556367856}
   - component: {fileID: 8278964857570453928}
   - component: {fileID: 1230237325060146366}
-  - component: {fileID: 3709190085583754860}
   - component: {fileID: 7699105587562268999}
   - component: {fileID: 9208501385581823727}
-  - component: {fileID: 836499732949591145}
   m_Layer: 0
   m_Name: ground1_grass
   m_TagString: Untagged
@@ -105,25 +103,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &3709190085583754860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8266192892992117370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e657cdae3450b4481ea5e55872930a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
-  damagerTypes: 030000000400000000000000
-  damagerTypesFactors:
-  - 1
-  - 0.5
-  - 1
-  animationHit: {fileID: 1230237325060146366}
 --- !u!65 &7699105587562268999
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -149,18 +128,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &836499732949591145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8266192892992117370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Name: block grass dirt
-  _Image: {fileID: 21300000, guid: 8990ddf5cfb7c9a4e8ffa700bf3ca436, type: 3}
-  playerModeObject: 6

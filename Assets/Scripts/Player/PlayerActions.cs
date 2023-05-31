@@ -65,7 +65,7 @@ public class PlayerActions : MonoBehaviour, IEventHandler
         this.meleeDamager.Damage(e.damage, e.hitDuration);
         EventManager.Instance.Raise(new AnimateItemEvent
         {
-            itemId = "PlayerSword",
+            itemId = ItemId.Sword,
             animations = new Dictionary<string, float>
             {
                 { "startTrail", 0f },
@@ -78,7 +78,7 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.Raise(new AnimateItemEvent
         {
-            itemId = "PlayerWand",
+            itemId = ItemId.Wand,
             animations = new Dictionary<string, float>
             {
                 { "startTrail", 0f },

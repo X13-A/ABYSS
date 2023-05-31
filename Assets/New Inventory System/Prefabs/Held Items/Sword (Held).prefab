@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7847020270311324069}
   - component: {fileID: 53833577302264021}
-  - component: {fileID: 3947275485445626419}
-  - component: {fileID: 633206478299040204}
+  - component: {fileID: 8613308495218854603}
   m_Layer: 0
   m_Name: Sword (Held)
   m_TagString: Untagged
@@ -48,22 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3947275485445626419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4128416112982806210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298bff6a0f20b184384dc69ea7ceab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Name: Sword
-  _Image: {fileID: 21300000, guid: c581b480249875c4d966808a101e00e1, type: 3}
-  playerModeObject: 0
---- !u!114 &633206478299040204
+--- !u!114 &8613308495218854603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57849905e0ff3e54fbbedb1238e3cb78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: PlayerSword
+  itemId: 0
   swordTrail: {fileID: 6103312405916414729}
 --- !u!1001 &5602796995416895091
 PrefabInstance:

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7847020270311324069}
   - component: {fileID: 53833577302264021}
   - component: {fileID: 6417741326434901903}
-  - component: {fileID: 99172161975621939}
   m_Layer: 0
   m_Name: Sword (Dropped)
   m_TagString: Untagged
@@ -49,19 +48,6 @@ BoxCollider:
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6417741326434901903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4128416112982806210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc333a2e462a0cc469ebd7d2e380ba06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
---- !u!114 &99172161975621939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

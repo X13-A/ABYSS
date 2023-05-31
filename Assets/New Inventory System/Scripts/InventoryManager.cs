@@ -207,7 +207,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         InventoryItem item = this.items[(ItemId) this.ActiveItem];
         if (item != null)
         {
-            // This event is useless for now but could be used for sound effects
             EventManager.Instance.Raise(new ItemDroppedEvent { itemId = item.Id });
             // Calls event to start the suppression of the dropped item
             EventManager.Instance.Raise(new ItemRemovedEvent { itemId = item.Id });

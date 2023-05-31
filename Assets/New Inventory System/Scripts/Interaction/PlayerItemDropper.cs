@@ -31,7 +31,7 @@ public class PlayerItemDropper : MonoBehaviour
     private void DropItem(ItemDroppedEvent e)
     {
         GameObject droppedPrefab = ItemBank.GetDroppedPrefab(e.itemId);
-        droppedPrefab.AddComponent<DroppedItem>().Init(e.itemId);
-        Instantiate(droppedPrefab, dropPosition.transform.position, Quaternion.identity);
+        GameObject droppedGameObject = Instantiate(droppedPrefab, dropPosition.transform.position, Quaternion.identity);
+        droppedGameObject.AddComponent<DroppedItem>().Init(e.itemId);
     }
 }

@@ -64,6 +64,7 @@ public class HudManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GamePauseMenuEvent>(this.CloseHud);
         EventManager.Instance.AddListener<GameResumeEvent>(this.CloseHud);
         EventManager.Instance.AddListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.AddListener<LoadingProgressUpdateEvent>(this.CloseHud);
         EventManager.Instance.AddListener<GamePlayEvent>(this.OpenHud);
         EventManager.Instance.AddListener<ToggleMapEvent>(this.ToggleMap);
     }
@@ -76,6 +77,7 @@ public class HudManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GamePauseMenuEvent>(this.CloseHud);
         EventManager.Instance.RemoveListener<GameResumeEvent>(this.CloseHud);
         EventManager.Instance.RemoveListener<GameOverEvent>(this.CloseHud);
+        EventManager.Instance.RemoveListener<LoadingProgressUpdateEvent>(this.CloseHud);
         EventManager.Instance.RemoveListener<GamePlayEvent>(this.OpenHud);
         EventManager.Instance.AddListener<ToggleMapEvent>(this.ToggleMap);
     }
@@ -86,6 +88,10 @@ public class HudManager : MonoBehaviour, IEventHandler
     }
 
     #region Close HUD
+    private void CloseHud(LoadingProgressUpdateEvent e)
+    {
+        HUD.SetActive(false);
+    }
     private void CloseHud(GameMainMenuEvent e)
     {
         HUD.SetActive(false);

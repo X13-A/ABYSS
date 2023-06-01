@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
         EventManager.Instance.AddListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
-        EventManager.Instance.AddListener<GameOverEvent>(this.GameOver);
+        EventManager.Instance.AddListener<GameOverEvent>(GameOver);
     }
 
     public void UnsubscribeEvents() 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
         EventManager.Instance.RemoveListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
-        EventManager.Instance.RemoveListener<GameOverEvent>(this.GameOver);
+        EventManager.Instance.RemoveListener<GameOverEvent>(GameOver);
 
     }
 
@@ -157,8 +157,13 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     private void Quit()
     {
-        // Quit game
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
+
 
     private void Credits()
     {

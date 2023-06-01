@@ -24,12 +24,12 @@ public class EnemyAnimationController : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        SubscribeEvents();
+        this.SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        SubscribeEvents();
+        this.UnsubscribeEvents();
     }
 
     private void Update()
@@ -58,5 +58,6 @@ public class EnemyAnimationController : MonoBehaviour, IEventHandler
     private void HandleAttack(EnemyAttackEvent e)
     {
         animator.SetTrigger("attack");
+        EventManager.Instance.Raise(new DamagePlayerEvent { damage = e.damage });
     }
 }

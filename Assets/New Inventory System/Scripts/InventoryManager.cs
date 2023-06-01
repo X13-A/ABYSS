@@ -64,6 +64,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<ItemPickedUpEvent>(this.AddItem);
         EventManager.Instance.AddListener<ItemRemovedEvent>(this.RemoveItem);
         EventManager.Instance.AddListener<SwitchSlotEvent>(this.SwitchSlot);
+        EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
 
         EventManager.Instance.AddListener<UseKeyPressedEvent>(this.UseItem);
         EventManager.Instance.AddListener<DropKeyPressedEvent>(this.DropItem);
@@ -74,10 +75,19 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.AddItem);
         EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.RemoveItem);
         EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.SwitchSlot);
+        EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
 
         EventManager.Instance.RemoveListener<UseKeyPressedEvent>(this.UseItem);
         EventManager.Instance.RemoveListener<DropKeyPressedEvent>(this.DropItem);
     }
+
+
+    private void ClearInventory(GameOverEvent e)
+    {
+        this.items.Clear();
+        //this.UpdateSlots();
+    }
+
     public bool HasSpaceForItem(ItemId id)
     {
         // Returns true if the item specified can be picked up

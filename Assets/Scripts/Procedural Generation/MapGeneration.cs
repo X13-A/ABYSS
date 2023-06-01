@@ -91,6 +91,11 @@ public class MapGeneration : MonoBehaviour
                 // Read noise map
                 float currentHeight = noiseMap[x, z];
 
+                if (Vector2.Distance(new Vector2(MapWidth/2, MapWidth/2), new Vector2(x, z)) > MapWidth/2)
+                {
+                    continue;
+                }
+
                 // Pick block type
                 GameObject currentBlockPrefab = null;
                 BlockType currentBlockType = BlockType.AIR;
@@ -103,6 +108,8 @@ public class MapGeneration : MonoBehaviour
                         break;
                     }
                 }
+
+                if (currentBlockType == BlockType.AIR) continue;
 
                 // Fill underneath the block
                 int blockHeight = (int) (heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier);

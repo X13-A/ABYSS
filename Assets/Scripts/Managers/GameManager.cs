@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<QuitButtonClickedEvent>(QuitButtonClicked);
         EventManager.Instance.AddListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
+        EventManager.Instance.AddListener<GameOverEvent>(this.GameOver);
     }
 
     public void UnsubscribeEvents() 
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<QuitButtonClickedEvent>(QuitButtonClicked);
         EventManager.Instance.RemoveListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
+        EventManager.Instance.RemoveListener<GameOverEvent>(this.GameOver);
+
     }
 
     private void OnEnable()
@@ -81,7 +84,7 @@ public class GameManager : MonoBehaviour, IEventHandler
                 Play();
                 break;
             case GAMESTATE.GAME_OVER:
-                GameOver();
+                EventManager.Instance.Raise(new GameOverEvent { });
                 break;
         }
     }
@@ -127,7 +130,10 @@ public class GameManager : MonoBehaviour, IEventHandler
                 EventManager.Instance.Raise(new GamePauseMenuEvent());
                 break;
             case GAMESTATE.GAME_OVER:
-                EventManager.Instance.Raise(new GameOverEvent());
+                StartCoroutine(TransitionManager.Instance.FadeOut(1, () =>
+                {
+                    EventManager.Instance.Raise(new GameOverMenuEvent());
+                }));
                 break;
         }
     }
@@ -178,7 +184,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         SetState(GAMESTATE.SETTINGS_MENU);
     }
 
-    private void GameOver()
+    private void GameOver(GameOverEvent e)
     {
         SetState(GAMESTATE.GAME_OVER);
     }

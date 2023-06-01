@@ -40,7 +40,7 @@ public class MenuManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GameSettingsMenuEvent>(GameSettingsMenu);
         EventManager.Instance.AddListener<GamePlayEvent>(GamePlay);
         EventManager.Instance.AddListener<GameResumeEvent>(GameResume);
-        EventManager.Instance.AddListener<GameOverEvent>(GameOver);
+        EventManager.Instance.AddListener<GameOverMenuEvent>(GameOver);
         EventManager.Instance.AddListener<GameSaveSettingsEvent>(GameSaveSettings);
         EventManager.Instance.AddListener<GameCancelSettingsEvent>(GameCancelSettings);
     }
@@ -52,7 +52,7 @@ public class MenuManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GameSettingsMenuEvent>(GameSettingsMenu);
         EventManager.Instance.RemoveListener<GamePlayEvent>(GamePlay);
         EventManager.Instance.RemoveListener<GameResumeEvent>(GameResume);
-        EventManager.Instance.RemoveListener<GameOverEvent>(GameOver);
+        EventManager.Instance.RemoveListener<GameOverMenuEvent>(GameOver);
         EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(GameSaveSettings);
         EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(GameCancelSettings);
     }
@@ -156,7 +156,7 @@ public class MenuManager : MonoBehaviour, IEventHandler
         OpenPanel(null);
     }
 
-    private void GameOver(GameOverEvent e)
+    private void GameOver(GameOverMenuEvent e)
     {
         OpenPanel(m_GameOverPanel);
     }

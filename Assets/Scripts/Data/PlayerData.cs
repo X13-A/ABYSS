@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    // TEMPORARY TO ALLOW COMPILATION, WILL DELETE AFTER TRANSITION TO NEW INVENTORY
-    public Dictionary<string, GameObject> Items => null;
-    public Dictionary<string, int> ItemsCount => null;
-    public Dictionary<string, int> ItemsSlot => null;
-
-
     public static PlayerData m_Instance;
     public static PlayerData Instance => m_Instance;
 
@@ -46,10 +40,6 @@ public class PlayerData : MonoBehaviour
     {
         // Use clone constructor to loose references
         return this.inventory.ToDictionary(entry => entry.Key, entry => new InventoryItem(entry.Value));
-    }
-
-    private void Update()
-    {
     }
 }
 

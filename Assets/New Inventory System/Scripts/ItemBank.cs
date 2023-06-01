@@ -100,6 +100,8 @@ public class ItemBank : MonoBehaviour
 
     public static void UseItem(ItemId id)
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
+
         switch (id)
         {
             case ItemId.Map:

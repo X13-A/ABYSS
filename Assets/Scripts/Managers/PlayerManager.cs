@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
         EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(this.SetPlayerMode);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetPlayerAim);
-        EventManager.Instance.AddListener<EnemyAttackEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<DamagePlayerEvent>(this.SetHealth);
 
         // Reset aim mode on menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
         EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(this.SetPlayerMode);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
-        EventManager.Instance.RemoveListener<EnemyAttackEvent>(this.SetHealth);
+        EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetHealth);
 
         // Reset aim mode on menus
         EventManager.Instance.RemoveListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
@@ -118,8 +118,13 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         activeAimingMode = e.mode;
     }
 
-    private void SetHealth(EnemyAttackEvent e)
+    private void SetHealth(DamagePlayerEvent e)
     {
         health = Mathf.Max(health - e.damage, 0);
+        if (health <= 0)
+        {
+            health = 0;
+            EventManager.Instance.Raise(new GameOverEvent { });
+        }
     }
 }

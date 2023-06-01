@@ -34,6 +34,7 @@ public class FogDamage : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         if (damaging && Time.time - lastDamageTime >= 1f)
         {
             EventManager.Instance.Raise(new DamagePlayerEvent { damage = dps });

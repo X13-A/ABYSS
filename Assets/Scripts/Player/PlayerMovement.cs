@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         // all of the code inside this function will be executed each frame
         // the physics should be puted inside fixedUpdate
         if (GameManager.Instance.State != GAMESTATE.PLAY)
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         ApplyGravity();
         MovePlayer();
     }

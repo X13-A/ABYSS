@@ -50,6 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         UpdateCurrentVelocity();
         UpdateStatus();
         UpdateAnimator();
@@ -57,6 +58,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         if (distanceToPlayer <= detectionRadius)
         {
             if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)

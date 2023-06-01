@@ -125,6 +125,11 @@ public class GamePauseMenuEvent : SDD.Events.Event
 public class GameResumeEvent : SDD.Events.Event
 {
 }
+
+public class GameOverMenuEvent : SDD.Events.Event
+{
+}
+
 public class GameOverEvent : SDD.Events.Event
 {
 }

@@ -7,7 +7,8 @@ public enum ItemId
     Pickaxe,
     Wand,
     Map,
-    Potion
+    Heart,
+    Mushroom,
 };
 
 [Serializable]

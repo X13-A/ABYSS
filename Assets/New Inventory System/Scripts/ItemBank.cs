@@ -147,6 +147,18 @@ public class ItemBank : MonoBehaviour
                 });
                 break;
             }
+            case ItemId.Heart:
+            {
+                float health = PlayerManager.Instance.Health + 20;
+                EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+                break;
+            }
+            case ItemId.Mushroom:
+            {
+                float health = PlayerManager.Instance.Health - 20;
+                EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+                break;
+            }
         }
     }
 

@@ -32,7 +32,7 @@ public class PlayerItemHolder : MonoBehaviour
         DestroyItemsInHand();
         if (e.itemId == null) return;
         GameObject heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
-        Instantiate(heldPrefab, itemHolder.transform.position, Quaternion.identity, itemHolder.transform);
+        Instantiate(heldPrefab, itemHolder.transform);
     }
 
     private void DestroyItemsInHand()

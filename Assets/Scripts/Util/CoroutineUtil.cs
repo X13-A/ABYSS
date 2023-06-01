@@ -61,6 +61,26 @@ public class CoroutineUtil : MonoBehaviour
         }
     }
 
+    public static IEnumerator FadeUITextTo(TextMeshProUGUI text, float duration, float targetAlpha, Action onComplete = null)
+    {
+        float startTime = Time.time;
+        Color startColor = text.material.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        while (Time.time - startTime < duration)
+        {
+            if (text == null) yield break;
+            float t = (Time.time - startTime) / duration;
+            text.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+        if (text != null)
+        {
+            text.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+            if (onComplete != null) onComplete();
+        }
+    }
+
     public static IEnumerator ScaleTo(Transform transform, float duration, Vector3 targetScale, Action onComplete = null)
     {
         float startTime = Time.time;

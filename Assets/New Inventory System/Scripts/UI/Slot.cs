@@ -12,25 +12,23 @@ public class Slot : MonoBehaviour
 
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text;
-
-    [SerializeField] private Image borderImage;
-    [SerializeField] private Color baseBorderColor;
-    [SerializeField] private Color activeBorderColor;
+    [SerializeField] private Image selectedFrame;
 
     public void SetSelected(bool selected)
     {
         if (selected)
         {
-            borderImage.color = activeBorderColor;
+            selectedFrame.enabled = true;
         }
         else
         {
-            borderImage.color = baseBorderColor;
+            selectedFrame.enabled = false;
         }
     }
 
     public void UpdateInfo(InventoryItem item)
     {
+        Debug.Log("Info");
         if (item == null)
         {
             this.itemId = null;

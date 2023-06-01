@@ -15,6 +15,10 @@ public class RenderManager : MonoBehaviour, IEventHandler
     public int ScreenWidth => screenWidth;
     public int ScreenHeight => screenHeight;
 
+
+    [SerializeField] private int maxHeight;
+    public int MaxHeight => maxHeight;
+
     private void Awake()
     {
         if (!m_Instance)

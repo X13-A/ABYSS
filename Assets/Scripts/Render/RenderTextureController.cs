@@ -42,8 +42,15 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
         RenderTexture rt = cam.targetTexture;
         RenderTextureDescriptor descriptor = rt.descriptor;
 
-        descriptor.width = (int)(e.newWidth * e.resolutionScale);
-        descriptor.height = (int)(e.newHeight * e.resolutionScale);
+        float aspectRatio = (float) Screen.width / Screen.height;
+
+        descriptor.height = (int)(RenderManager.Instance.MaxHeight * e.resolutionScale);
+        descriptor.width = Mathf.RoundToInt(descriptor.height * aspectRatio);
+
+        //descriptor.width = (int)(e.newWidth * e.resolutionScale);
+        //descriptor.height = (int)(e.newHeight * e.resolutionScale);
+
+        // Calculate new scaled width if height goes to 1080
 
         RenderTextureUpdateEvent updateEvent = new RenderTextureUpdateEvent();
         updateEvent.updatedRt = new RenderTexture(descriptor);
@@ -55,5 +62,6 @@ public class RenderTextureController : MonoBehaviour, IEventHandler
     {
         cam.targetTexture.Release();
         cam.targetTexture = e.updatedRt;
+        Debug.Log($"{cam.targetTexture.width}, {cam.targetTexture.height}");
     }
 }

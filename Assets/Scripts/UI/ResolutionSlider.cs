@@ -2,6 +2,7 @@ using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,7 +47,12 @@ public class ResolutionSlider : MonoBehaviour, IEventHandler
 
     private void UpdateText(ResolutionScaleSliderChangeEvent e)
     {
-        text.text = (e.value * 100).ToString("F0") + "%";
+        float aspectRatio = (float) Screen.width / Screen.height;
+
+        int height = (int) (RenderManager.Instance.MaxHeight * e.value);
+        int width = Mathf.RoundToInt(height * aspectRatio);
+
+        text.text = $"({width}x{height})";
     }
 
     private void UpdateValue(WindowResizeEvent e)

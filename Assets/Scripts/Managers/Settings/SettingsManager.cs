@@ -36,7 +36,7 @@ public class SettingsManager : MonoBehaviour, IEventHandler
             Destroy(gameObject);
         }
 
-        savePath = Application.dataPath + "/settings.json";
+        savePath = Path.Combine(Application.persistentDataPath, "settings.json");
         m_SettingsStore = LoadSettingsFromFile(savePath);
         m_SettingsBeforeChanges = new SettingsStore(m_SettingsStore);
         m_SettingsAfterChanges = new SettingsStore(m_SettingsStore);
@@ -50,8 +50,17 @@ public class SettingsManager : MonoBehaviour, IEventHandler
 
     public SettingsStore LoadSettingsFromFile(string filePath)
     {
-        string jsonData = File.ReadAllText(filePath);
-        return JsonConvert.DeserializeObject<SettingsStore>(jsonData);
+        if (File.Exists(savePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<SettingsStore>(jsonData);
+        }
+        else
+        {
+            SettingsStore settings = new SettingsStore();
+            settings.ResolutionScale = 1.0f;
+            return settings;
+        }
     }
 
     public void SubscribeEvents()

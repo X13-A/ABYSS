@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class TextManager : MonoBehaviour, IEventHandler
 {
-
     private static TextManager m_Instance;
     public TextManager instance => m_Instance;
 

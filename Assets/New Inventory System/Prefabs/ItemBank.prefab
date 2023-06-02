@@ -50,44 +50,56 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: c581b480249875c4d966808a101e00e1, type: 3}
     heldPrefab: {fileID: 4128416112982806210, guid: 57c99029ce8a5e44b82f393d06d63726, type: 3}
     droppedPrefab: {fileID: 4128416112982806210, guid: ef52e6da44b66c44e8da006eeb0f41ce, type: 3}
+    rarity: 1
     isConsumable: 0
   - name: Pickaxe
     icon: {fileID: 21300000, guid: 3d633dd781293d94f9bd8708661714ab, type: 3}
     heldPrefab: {fileID: 891669830000128363, guid: 7eef17ef4ac13914ebecc4bedf5418ea, type: 3}
     droppedPrefab: {fileID: 891669830000128363, guid: 696b5ae3f5c80d74e933f8d23a44e630, type: 3}
+    rarity: 1
     isConsumable: 0
   - name: Wand
     icon: {fileID: 21300000, guid: 9a2b6192d8559a243bb34ee3e071aee6, type: 3}
     heldPrefab: {fileID: 4128416112982806210, guid: c96e247ec9b5c824ba2c8a193254934b, type: 3}
     droppedPrefab: {fileID: 4128416112982806210, guid: ab7a8f2d09f71ae41994e39802745310, type: 3}
+    rarity: 2
     isConsumable: 0
   - name: Map
     icon: {fileID: 21300000, guid: b31129e899453c5428bd136af3527a5c, type: 3}
     heldPrefab: {fileID: 7142737113172594199, guid: 814e83dcf8739e4449c1f0e641d227ff, type: 3}
     droppedPrefab: {fileID: 7142737113172594199, guid: 693c2f498dba3c44a9248add76173519, type: 3}
+    rarity: 2
     isConsumable: 0
   - name: Mushroom
     icon: {fileID: 21300000, guid: fd35c4ebc1e6da942aa4299a148442ce, type: 3}
     heldPrefab: {fileID: 3014930985819444752, guid: faac78f9370ca3f4cbd8fa32a3fd9f99, type: 3}
     droppedPrefab: {fileID: 3014930985819444752, guid: 8acb6027a2a7e97478d9c6b890f49a46, type: 3}
+    rarity: 0
     isConsumable: 1
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}
     droppedPrefab: {fileID: 0}
+    rarity: 0
     isConsumable: 0
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}
     droppedPrefab: {fileID: 0}
+    rarity: 0
     isConsumable: 0
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}
     droppedPrefab: {fileID: 0}
+    rarity: 0
     isConsumable: 0
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}
     droppedPrefab: {fileID: 0}
+    rarity: 0
     isConsumable: 0
+  Inspector_CommonParticles: {fileID: 2287809529368015636, guid: dac6333d55848f5479331331dbbccd63, type: 3}
+  Inspector_RareParticles: {fileID: 2287809529368015636, guid: fcc3e8188f6a1284ea83f908d8b50183, type: 3}
+  Inspector_LegendaryParticles: {fileID: 2287809529368015636, guid: 34d7fe4c1df688a4f9e4d6df6ad644ed, type: 3}

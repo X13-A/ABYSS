@@ -90,13 +90,18 @@ public class PlayerMovement : MonoBehaviour
         {
             currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, deceleration);
         }
-        if (isGrounded)
+        if (isGrounded) // apply ground drag
         {
             currentVelocity *= (1 - groundDrag);
         }
         currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
         if (isPressingJump && isGrounded)
         {
+            EventManager.Instance.Raise(new TextEvent
+            {
+                duration = 1f,
+                text = "raise event test"
+            });
             verticalVelocity = jumpSpeed;
         }
         Vector3 movement = inputVector * currentVelocity;

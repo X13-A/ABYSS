@@ -9,6 +9,11 @@ public class ItemBank : MonoBehaviour
     #region Custom Inspector
     [SerializeField] private List<ItemId> itemKeys = new List<ItemId>();
     [SerializeField] private List<ItemEntry> itemValues = new List<ItemEntry>();
+
+    [SerializeField] public GameObject Inspector_CommonParticles;
+    [SerializeField] public GameObject Inspector_RareParticles;
+    [SerializeField] public GameObject Inspector_LegendaryParticles;
+
     private bool loaded = false;
 
     public List<ItemId> ItemKeys => itemKeys;
@@ -39,6 +44,9 @@ public class ItemBank : MonoBehaviour
         {
             items[itemKeys[i]] = itemValues[i];
         }
+        commonParticles = Inspector_CommonParticles;
+        rareParticles = Inspector_RareParticles;
+        legendaryParticles = Inspector_LegendaryParticles;
     }
     #endregion
 
@@ -46,7 +54,11 @@ public class ItemBank : MonoBehaviour
     public static ItemBank Instance => m_Instance;
 
     private Dictionary<ItemId, ItemEntry> items = new Dictionary<ItemId, ItemEntry>();
-    
+
+    private static GameObject commonParticles;
+    private static GameObject rareParticles;
+    private static GameObject legendaryParticles;
+
     private void Awake()
     {
         if (!m_Instance)
@@ -96,6 +108,23 @@ public class ItemBank : MonoBehaviour
     public static bool IsConsumable(ItemId id)
     {
         return Instance.items[id].isConsumable;
+    }
+
+    public static ItemRarity GetRarity(ItemId id)
+    {
+        return Instance.items[id].rarity;
+    }
+
+    public static GameObject GetDroppedParticles(ItemId id)
+    {
+        ItemRarity rarity = GetRarity(id);
+        switch (rarity)
+        {
+            case ItemRarity.Common: return commonParticles;
+            case ItemRarity.Rare: return rareParticles;
+            case ItemRarity.Legendary: return legendaryParticles;
+            default: return commonParticles;
+        }
     }
 
     public static void UseItem(ItemId id)

@@ -11,6 +11,13 @@ public enum ItemId
     Mushroom,
 };
 
+public enum ItemRarity
+{
+    Common,
+    Rare,
+    Legendary,
+}
+
 [Serializable]
 public class ItemEntry
 {
@@ -18,5 +25,6 @@ public class ItemEntry
     public Sprite icon;
     public GameObject heldPrefab;
     public GameObject droppedPrefab;
+    public ItemRarity rarity;
     public bool isConsumable;
 }

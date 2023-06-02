@@ -9,6 +9,19 @@ public enum ItemId
     Map,
     Heart,
     Mushroom,
+    DirtBlock,
+    DarkDirtBlock,
+    lavaBlockVariant1,
+    lavaBlockVariant2,
+    RockBlock,
+    CanopyBlock,
+    CoalBlock,
+    GroundBlock,
+    GroundGrassBlock,
+    IceBlock,
+    SandBlock,
+    SandstoneBlock,
+    SnowBlock
 };
 
 [Serializable]

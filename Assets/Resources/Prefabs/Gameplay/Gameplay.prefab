@@ -8537,6 +8537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SwordAttack: {fileID: 8300000, guid: 2d775a01778555c48a64c4faf3f22fdf, type: 3}
   EnteringIntoPortal: {fileID: 8300000, guid: 414f776fc6873b347be6c7d5c22aa2d2, type: 3}
+  LootItem: {fileID: 8300000, guid: 47dd655c257f2544eb80ed213b6a67ea, type: 3}
 --- !u!82 &9051366784003123823
 AudioSource:
   m_ObjectHideFlags: 0

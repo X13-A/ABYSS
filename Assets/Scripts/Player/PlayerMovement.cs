@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             EventManager.Instance.Raise(new TextEvent
             {
                 delay = 0.05f,
-                text = "raise event test"
+                text = LoremIpsum.Generate(30)
             });
             verticalVelocity = jumpSpeed;
         }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerItemHolder : MonoBehaviour
 {
     [SerializeField] private GameObject itemHolder;
+    private GameObject heldPrefab;
 
     private void OnEnable()
     {
@@ -31,8 +32,8 @@ public class PlayerItemHolder : MonoBehaviour
     {
         DestroyItemsInHand();
         if (e.itemId == null) return;
-        GameObject heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
-        Instantiate(heldPrefab, itemHolder.transform);
+        this.heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
+        Instantiate(this.heldPrefab, itemHolder.transform);
     }
 
     private void DestroyItemsInHand()

@@ -192,7 +192,7 @@ public class ToggleMapEvent : SDD.Events.Event
 public class TextEvent : SDD.Events.Event
 {
     public string text;
-    public float duration;
+    public float delay;
 }
 
 #endregion
@@ -253,6 +253,10 @@ public class DropKeyPressedEvent : SDD.Events.Event
 
 public class UseKeyPressedEvent : SDD.Events.Event
 {
+}
+
+public class TextSkipKeyPressedEvent : SDD.Events.Event
+{ 
 }
 
 public class PlayerHeldItemUpdateEvent : SDD.Events.Event

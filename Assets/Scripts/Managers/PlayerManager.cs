@@ -28,10 +28,10 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(this.SetPlayerMode);
-        EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetPlayerAim);
-        EventManager.Instance.AddListener<DamagePlayerEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerMode);
+        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(SetPlayerMode);
+        EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
+        EventManager.Instance.AddListener<DamagePlayerEvent>(SetHealth);
 
         // Reset aim mode on menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);

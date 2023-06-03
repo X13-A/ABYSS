@@ -18,7 +18,7 @@ public class TextManager : MonoBehaviour, IEventHandler
     private float delay;
     private Queue messageQueue;
     private bool messageRunning;
-    private bool canDequeueMessage;
+    private bool skipRequested;
     private bool freeze;
 
     private void Awake()
@@ -31,11 +31,15 @@ public class TextManager : MonoBehaviour, IEventHandler
         {
             Destroy(gameObject);
         }
+        textGui = textBubble.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
         messageQueue = new Queue();
         messageRunning = false;
-        canDequeueMessage = true;
+        skipRequested = false;
         freeze = false;
-        textGui = textBubble.GetComponentInChildren<TextMeshProUGUI>();
         textBubble.SetActive(false);
     }
 
@@ -56,85 +60,96 @@ public class TextManager : MonoBehaviour, IEventHandler
             return;
         }
         ListenToSkipKeys();
-        if (canDequeueMessage && !messageRunning)
+        if (CanDequeueMessage())
         {
-            if (messageQueue.Count != 0)
-            {
-                PerformMessageDisplay();
-                canDequeueMessage = false;
-            }
-            else
-            {
-                textBubble.SetActive(false);
-            }
+            PerformMessageDisplay((MessageEvent) messageQueue.Dequeue());
         }
-    }
-
-    private void HandlePause(GamePauseMenuEvent e)
-    {
-        freeze = true;
-        textBubble.SetActive(false);
-    }
-
-    private void HandleResume(GamePlayEvent e)
-    {
-        freeze = false;
-        textBubble.SetActive(true);
+        // last message has been displayed -> wait for the player to press skip keys
+        if (messageQueue.Count == 0 && !messageRunning && skipRequested)
+        {
+            textBubble.SetActive(false);
+            skipRequested = false;
+        }
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<GamePauseMenuEvent>(HandlePause);
-        EventManager.Instance.AddListener<GamePlayEvent>(HandleResume);
-        EventManager.Instance.AddListener<TextSkipKeyPressedEvent>(HandleSkipKeyPressed);
-        EventManager.Instance.AddListener<TextEvent>(HandleTextEvent);
+        EventManager.Instance.AddListener<EscapeButtonClickedEvent>(HandlePause);
+        EventManager.Instance.AddListener<ResumeButtonClickedEvent>(HandleResume);
+        EventManager.Instance.AddListener<MessageEvent>(HandleTextEvent);
     }
-
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<GamePauseMenuEvent>(HandlePause);
-        EventManager.Instance.RemoveListener<GamePlayEvent>(HandleResume);
-        EventManager.Instance.RemoveListener<TextSkipKeyPressedEvent>(HandleSkipKeyPressed);
-        EventManager.Instance.RemoveListener<TextEvent>(HandleTextEvent);
+        EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(HandlePause);
+        EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(HandleResume);
+        EventManager.Instance.RemoveListener<MessageEvent>(HandleTextEvent);
+    }
+
+
+    private void HandlePause(EscapeButtonClickedEvent e)
+    {
+        textBubble.SetActive(false);
+        freeze = true;
+    }
+
+    private void HandleResume(ResumeButtonClickedEvent e)
+    {
+        textBubble.SetActive(true);
+        freeze = false;
+    }
+
+    /// <summary>
+    /// return true if we can dequeue a message, in one of these two cases : 
+    /// 1 : there was a message before, it is over and the user has requested text skip,
+    /// 2 : there was no message before
+    /// </summary>
+    /// <returns></returns>
+    private bool CanDequeueMessage()
+    {
+        if (messageQueue.Count == 0)
+        {
+            return false;
+        }
+        return (!messageRunning && skipRequested) || !textBubble.activeSelf;
     }
 
     private void ListenToSkipKeys()
     {
+        // if a message is currently running, we don't want a user to skip it
+        if (!textBubble.activeSelf || messageRunning)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
-            EventManager.Instance.Raise(new TextSkipKeyPressedEvent());
+            skipRequested = true;
         }
     }
 
-    private void PerformMessageDisplay()
+    private void PerformMessageDisplay(MessageEvent text)
     {
-        TextEvent text = (TextEvent) messageQueue.Dequeue();
+        skipRequested = false;
         currentText = "";
         fullText = text.text;
         delay = text.delay;
-        StartCoroutine(ShowTextRoutine());
+        ContextEnableTextBubble();
+        _ = StartCoroutine(ShowTextRoutine());
     }
 
-    /// <summary>
-    /// handle the SkipKeyPressed event,
-    /// that occur when the player press space or left click,
-    /// </summary>
-    /// <param name="e"></param>
-    private void HandleSkipKeyPressed(TextSkipKeyPressedEvent e)
+    private void ContextEnableTextBubble()
     {
-        canDequeueMessage = true;
+        if (!textBubble.activeSelf)
+        {
+            textBubble.SetActive(true);
+        }
     }
 
-    private void HandleTextEvent(TextEvent e)
-    {
-        messageQueue.Enqueue(e);
-    }
+    private void HandleTextEvent(MessageEvent e) => messageQueue.Enqueue(e);
 
     private IEnumerator ShowTextRoutine()
     {
         messageRunning = true;
-        textBubble.SetActive(true);
         for (int i = 0; i <= fullText.Length; i++)
         {
             currentText = fullText[..i];

@@ -29,7 +29,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(this.SetPlayerMode);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(this.SetPlayerAim);
         EventManager.Instance.AddListener<DamagePlayerEvent>(this.SetHealth);
 
@@ -46,7 +45,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(this.SetPlayerMode);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetHealth);
 
@@ -104,14 +102,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     private void SetPlayerMode(PlayerSwitchModeEvent e)
     {
         activePlayerMode = e.mode;
-    }
-
-    // TODO: SHOULD BE DELETED WITH EVERYTHING RELATED TO PLAYERMODE
-    private void SetPlayerMode(PlayerHeldItemUpdateEvent e)
-    {
-        PlayerMode? playerMode = ItemBank.PlayerModeFromItem(e.itemId);
-        if (playerMode == null) playerMode = PlayerMode.UNARMED;
-        EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = playerMode.Value });
     }
 
     private void SetPlayerAim(AimingModeUpdateEvent e)

@@ -141,8 +141,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         int freeSlot = FindFreeSlot();
         if (freeSlot != -1)
         {
-            // Trigger
-            if (freeSlot == this.ActiveSlot) ItemBank.OnHoldItem(e.itemId);
             this.items.Add(e.itemId, new InventoryItem(e.itemId, freeSlot, 1));
             this.UpdateSlots();
         }
@@ -157,12 +155,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
             // If item count is at 0, deletes completely the item
             if (this.items[e.itemId].Count <= 0)
             {
-                // Triggers the on stop holding event if the item is removed
-                if (this.ActiveItem != null && this.ActiveItem == e.itemId)
-                {
-                    ItemBank.OnStopHoldingItem(e.itemId);
-                }
-
                 this.items.Remove(e.itemId);
             }
             this.UpdateSlots();
@@ -171,12 +163,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     private void SwitchSlot(SwitchSlotEvent e)
     {
-        // Trigger action when stopping holding the item
-        if (this.activeSlot != e.slot && this.ActiveItem != null)
-        {
-            ItemBank.OnStopHoldingItem(this.ActiveItem.Value);
-        }
-
         // Select new slot and unselect old ones
         this.activeSlot = e.slot;
         for (int i = 0; i < this.slots.Count; i++)
@@ -185,12 +171,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
             {
                 // Select new slot
                 this.slots[i].SetSelected(true);
-
-                // Trigger action when starting holding the item
-                if (this.ActiveItem != null)
-                {
-                    ItemBank.OnHoldItem(this.ActiveItem.Value);
-                }
             }
             else this.slots[i].SetSelected(false);
         }
@@ -201,7 +181,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     {
         // Uses item
         if (this.ActiveItem == null) return;
-        ItemBank.UseItem((ItemId) this.ActiveItem);
+        EventManager.Instance.Raise(new UseItemEvent { });
 
         // Consumes item if necessary
         if (ItemBank.IsConsumable((ItemId) this.ActiveItem))

@@ -28,7 +28,6 @@ public class Slot : MonoBehaviour
 
     public void UpdateInfo(InventoryItem item)
     {
-        Debug.Log("Info");
         if (item == null)
         {
             this.itemId = null;

@@ -13,6 +13,11 @@ public class BlockDamage : MonoBehaviour, IDamageable
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }
     public List<float> DamagerTypesFactors { get { return damagerTypesFactors; } }
 
+    public void OnEnable()
+    {
+        animationHit = GetComponent<Animation>();
+    }
+
     public void Update()
     {
         if (health > 0 + Mathf.Epsilon) return;

@@ -47,6 +47,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        Vector3 forwardVector = transform.forward;
+        transform.position += new Vector3(forwardVector.x, 0, forwardVector.z) * speed * Time.deltaTime;
     }
 }

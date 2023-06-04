@@ -31,9 +31,14 @@ public class PlayerItemHolder : MonoBehaviour
     private void UpdateItemInHand(PlayerHeldItemUpdateEvent e)
     {
         DestroyItemsInHand();
-        if (e.itemId == null) return;
+        if (e.itemId == null)
+        {
+            EventManager.Instance.Raise(new HeldGameObjectEvent { heldGameObject = null });
+            return;
+        }
         this.heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
-        Instantiate(this.heldPrefab, itemHolder.transform);
+        GameObject heldItem = Instantiate(this.heldPrefab, itemHolder.transform);
+        EventManager.Instance.Raise(new HeldGameObjectEvent { heldGameObject = heldItem });
     }
 
     private void DestroyItemsInHand()

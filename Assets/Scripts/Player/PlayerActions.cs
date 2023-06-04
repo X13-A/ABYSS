@@ -21,16 +21,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
     [SerializeField] private float pickaxeDamage;
     [SerializeField] private float pickaxeDuration;
 
-
-    public AttackType ActiveAttackMode
-    {
-        get => EnumConverter.AttackTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
-        set
-        {
-            EventManager.Instance.Raise(new PlayerSwitchModeEvent { mode = EnumConverter.PlayerModeFromAttackType(value) });
-        }
-    }
-
     private float currentAttackDuration;
     private float attackStartTime;
     public float AttackElaspedTime => Time.time - attackStartTime;
@@ -114,12 +104,6 @@ public class PlayerActions : MonoBehaviour, IEventHandler
 
         this.currentAttackDuration = e.cooldown;
         this.attackStartTime = Time.time;
-        EventManager.Instance.Raise(new AnimateAttackEvent
-        {
-            animationDuration = e.animationDuration,
-            type = e.type
-        });
-
         if (e.type == AttackType.MELEE)
         {
             MeleeAttack(e);

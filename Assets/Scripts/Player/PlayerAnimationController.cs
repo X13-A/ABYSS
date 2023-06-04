@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using SDD.Events;
+using System.Xml;
+using System.ComponentModel;
+
+[System.Serializable]
+public class MyKeyValuePair
+{
+    public string name;
+    public AnimationClip animationClip;
+}
 
 public class PlayerAnimationController : MonoBehaviour, IEventHandler
 {
     private Animator m_Animator;
 
-    [SerializeField] private AnimationClip walk;
-    [SerializeField] private AnimationClip meleeAttack;
-    [SerializeField] private AnimationClip wandAttack;
-    [SerializeField] private AnimationClip pickaxeAttack;
 
-    private void Awake()
+    [SerializeField] private MyKeyValuePair[] pseudoAnimationsDictionary;
+
+    private Dictionary<string, AnimationClip> animations = new Dictionary<string, AnimationClip>();
+
+    private void Start()
     {
         m_Animator = GetComponent<Animator>();
+        foreach (var pair in pseudoAnimationsDictionary)
+        {
+            animations.Add(pair.name, pair.animationClip);
+        }
     }
 
     public void SubscribeEvents()
@@ -40,25 +53,11 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
 
     private void HandleAttack(AnimateAttackEvent e)
     {
-        if (e.type == AttackType.MELEE)
-        {
-            // Déclenche l'animation avec la bonne vitesse
-            m_Animator.SetTrigger("Attack");
-            float clipLength = meleeAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
-        }
-        else if (e.type == AttackType.MAGIC)
-        {
-            m_Animator.SetTrigger("Wand Attack");
-            float clipLength = wandAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
-        }
-        else if (e.type == AttackType.PICKAXE)
-        {
-            m_Animator.SetTrigger("Pickaxe Attack");
-            float clipLength = pickaxeAttack.length;
-            m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
-        }
+        m_Animator.SetTrigger(e.name);
+        AnimationClip animation = animations[e.name];
+        if (animation == null) return;
+        float clipLength = animation.length;
+        m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
     }
 
 

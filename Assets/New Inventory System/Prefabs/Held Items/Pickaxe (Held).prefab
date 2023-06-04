@@ -259,7 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 885637868107322591}
   - component: {fileID: 1045955961799172409}
-  - component: {fileID: 5431570231879829657}
+  - component: {fileID: -4013319519685865562}
   m_Layer: 0
   m_Name: Pickaxe (Held)
   m_TagString: Untagged
@@ -310,19 +310,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 867190552621475179}
   m_Enabled: 1
---- !u!65 &5431570231879829657
-BoxCollider:
+--- !u!114 &-4013319519685865562
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891669830000128363}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc14acb643ec054aa6a2defedcc163c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickaxeDamage: 5
+  pickaxeDuration: 0.4
 --- !u!1 &5084844812499339253
 GameObject:
   m_ObjectHideFlags: 0

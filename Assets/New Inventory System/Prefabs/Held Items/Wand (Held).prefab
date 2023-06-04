@@ -9869,6 +9869,7 @@ GameObject:
   - component: {fileID: 7847020270311324069}
   - component: {fileID: 53833577302264021}
   - component: {fileID: -3613721452511231265}
+  - component: {fileID: 2220002935582287926}
   m_Layer: 0
   m_Name: Wand (Held)
   m_TagString: Untagged
@@ -9920,6 +9921,24 @@ MonoBehaviour:
   itemId: 2
   wandCast: {fileID: 2438982502677452058}
   wandTrail: {fileID: 6103312406099733076}
+--- !u!114 &2220002935582287926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128416112982806210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c09e184bb63784f9c4dae49fe008e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicProjectilePrefab: {fileID: 8047378608784370723, guid: d01f8fa9df6fb2c448e1e826db2e6c2e, type: 3}
+  magicProjectilePosition: {fileID: 5995783296178989349}
+  magicProjectileSpeed: 40
+  magicProjectileDamage: 5
+  wandDuration: 1
+  wandStartPercentage: 0.5
 --- !u!1 &5995783296178989349
 GameObject:
   m_ObjectHideFlags: 0

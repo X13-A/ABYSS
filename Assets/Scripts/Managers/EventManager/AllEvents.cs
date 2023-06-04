@@ -207,8 +207,8 @@ public class AnimateItemEvent : SDD.Events.Event
 
 public class AnimateAttackEvent : SDD.Events.Event
 {
+    public string name;
     public float animationDuration;
-    public AttackType type;
 }
 
 #endregion
@@ -255,9 +255,18 @@ public class UseKeyPressedEvent : SDD.Events.Event
 {
 }
 
+public class UseItemEvent : SDD.Events.Event
+{
+}
+
 public class PlayerHeldItemUpdateEvent : SDD.Events.Event
 {
     public ItemId? itemId;
+}
+
+public class HeldGameObjectEvent : SDD.Events.Event
+{
+    public GameObject heldGameObject;
 }
 
 

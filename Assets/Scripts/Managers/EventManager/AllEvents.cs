@@ -189,10 +189,10 @@ public class ToggleMapEvent : SDD.Events.Event
     public bool value;
 }
 
-public class TextEvent : SDD.Events.Event
+public class MessageEvent : SDD.Events.Event
 {
     public string text;
-    public float duration;
+    public float delay;
 }
 
 #endregion

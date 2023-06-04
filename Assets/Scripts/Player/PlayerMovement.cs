@@ -97,11 +97,11 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
         if (isPressingJump && isGrounded)
         {
-            EventManager.Instance.Raise(new MessageEvent
+/*            EventManager.Instance.Raise(new MessageEvent
             {
                 delay = 0.05f,
                 text = LoremIpsum.Generate(30)
-            });
+            });*/
             verticalVelocity = jumpSpeed;
         }
         Vector3 movement = inputVector * currentVelocity;

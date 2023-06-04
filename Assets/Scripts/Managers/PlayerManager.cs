@@ -29,7 +29,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerMode);
-        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(SetPlayerMode);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
         EventManager.Instance.AddListener<DamagePlayerEvent>(SetHealth);
 
@@ -46,7 +45,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
-        EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(SetPlayerMode);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetHealth);
 

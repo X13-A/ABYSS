@@ -11,9 +11,11 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
+    [SerializeField] private GameObject playerProjectileStart;
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;
+    public GameObject PlayerProjectileStart => playerProjectileStart;
 
 
     private void OnEnable()

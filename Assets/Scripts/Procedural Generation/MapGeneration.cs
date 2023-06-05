@@ -36,6 +36,8 @@ public class MapGeneration : MonoBehaviour
 
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private Vector3 playerSpawnCoords;
+    [SerializeField] private GameObject chestPrefab;
+
 
     private BlockType[,,] blocksMap;
     private TerrainType[][] levelArray;
@@ -84,10 +86,22 @@ public class MapGeneration : MonoBehaviour
         GameObject map = new GameObject("Map");
         map.SetActive(false);
 
+        // Generate treasure chest
+        int chestDepth = 3;
+        float chestSpawnRadius = Mathf.Max(MapWidth / 2f - 2f, 0f);
+        Vector2 chestPoint = new Vector2(mapWidth / 2, mapWidth / 2) + (UnityEngine.Random.insideUnitCircle) * chestSpawnRadius;
+        int chestHeight = (int) (heightCurve.Evaluate(noiseMap[(int) chestPoint.x, (int) chestPoint.y]) * heightMultiplier) - chestDepth;
+        chestHeight = Math.Max(chestHeight, 0); // Prevent chest from spawning under the map
+        Vector3 chestPos = new Vector3((int) chestPoint.x, chestHeight, (int) chestPoint.y);
+        GameObject chest = Instantiate(chestPrefab);
+        chest.transform.position = chestPos;
+
+        chest.transform.SetParent(map.transform);
         for (int z = 0; z < mapHeight; z++)
         {
             for (int x = 0; x < mapWidth; x++)
             {
+                Debug.Log(new Vector2(x, z));
                 // Read noise map
                 float currentHeight = noiseMap[x, z];
 
@@ -116,6 +130,9 @@ public class MapGeneration : MonoBehaviour
                 topBlocksHeight[x, z] = blockHeight;
                 for (int y = 0; y < blockHeight; y++)
                 {
+                    // Avoid placing on chest
+                    if (new Vector3(x, y, z) == chestPos) continue;
+
                     GameObject cube = Instantiate(levelArray[level][2].cubePrefab);
                     cube.transform.position = new Vector3(x, y, z);
 
@@ -161,6 +178,7 @@ public class MapGeneration : MonoBehaviour
         LevelData.Instance.MapHeight = mapHeight;
         LevelData.Instance.MapWidth = mapWidth;
         LevelData.Instance.PortalPos = portalPos;
+        LevelData.Instance.TreasurePos = chestPos;
 
         map.SetActive(true);
         return map;

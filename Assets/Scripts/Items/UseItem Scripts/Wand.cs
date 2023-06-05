@@ -20,6 +20,18 @@ public class Wand : MonoBehaviour, IUseItem
 
     public void OnEnable()
     {
+        if (magicProjectilePosition == null)
+        {
+            if (PlayerManager.Instance.PlayerProjectileStart)
+            {
+                magicProjectilePosition = PlayerManager.Instance.PlayerProjectileStart;
+            }
+            else
+            {
+                magicProjectilePosition = this.gameObject;
+                Debug.LogWarning("Bad shoot position for held wand. Should setup PlayerProjectileStart in PlayerManager");
+            }
+        }
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
         wandAnimation = GetComponent<WandAnimation>();
@@ -34,7 +46,8 @@ public class Wand : MonoBehaviour, IUseItem
             name = "Wand Attack",
             animationDuration = wandDuration
         });
-        wandAnimation.Animate(wandDuration * currentAttackDuration);
+
+        wandAnimation.Animate(wandDuration * wandStartPercentage);
         StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(

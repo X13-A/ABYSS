@@ -239,6 +239,12 @@ public class UpdateCollidingItemsEvent : SDD.Events.Event
     public HashSet<DroppedItem> items;
 }
 
+public class UpdateCollidingChestsEvent : SDD.Events.Event
+{
+    public HashSet<Chest> chests;
+}
+
+
 public class SwitchSlotEvent : SDD.Events.Event
 {
     public int slot;

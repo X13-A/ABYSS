@@ -11,6 +11,9 @@ public class PlayerItemHolder : MonoBehaviour
     private void OnEnable()
     {
         this.SubscribeEvents();
+
+        // HACK, because this script is not up when the event is fired
+        this.UpdateItemInHand(new PlayerHeldItemUpdateEvent { itemId = InventoryManager.Instance.ActiveItem });
     }
 
     private void OnDisable()

@@ -21,6 +21,43 @@ public class CoroutineUtil : MonoBehaviour
         return m_Instance.StartCoroutine(coroutine);
     }
 
+    public static IEnumerator FadeTo(MeshRenderer meshRenderer, float duration, float targetAlpha, Action onComplete = null)
+    {
+        float startTime = Time.time;
+        Color startColor = meshRenderer.material.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        Material material = ConvertMaterialToTransparent(meshRenderer.material);
+        meshRenderer.material = material;
+
+        while (Time.time - startTime < duration)
+        {
+            if (meshRenderer == null) yield break; // Important, prevents crash if object is destroyed during coroutine
+            float t = (Time.time - startTime) / duration;
+            meshRenderer.material.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+        if (meshRenderer != null)
+        {
+            meshRenderer.material.color = targetColor;
+            if (onComplete != null) onComplete();
+        }
+    }
+
+    private static Material ConvertMaterialToTransparent(Material material)
+    {
+        Material clonedMaterial = new Material(material);
+        clonedMaterial.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.SrcAlpha);
+        clonedMaterial.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        clonedMaterial.SetInt("_ZWrite", 0);
+        clonedMaterial.DisableKeyword("_ALPHATEST_ON");
+        clonedMaterial.EnableKeyword("_ALPHABLEND_ON");
+        clonedMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        clonedMaterial.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent;
+        return clonedMaterial;
+    }
+
+
     public static IEnumerator FadeTo(SkinnedMeshRenderer skinnedMeshRenderer, float duration, float targetAlpha, Action onComplete = null)
     {
         float startTime = Time.time;

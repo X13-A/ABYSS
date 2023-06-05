@@ -27,7 +27,6 @@ public class PlayerItemCollider : MonoBehaviour, IEventHandler, IPlayerCollider
         EventManager.Instance.RemoveListener<PickupKeyPressedEvent>(this.Pickup);
     }
 
-
     private void Pickup(PickupKeyPressedEvent e)
     {
         if (itemsToPickup.Count == 0) return;

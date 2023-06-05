@@ -65,7 +65,7 @@ public class Minimap : MonoBehaviour, IEventHandler
 
     private void Start()
     {
-        imageTexture = new Texture2D(LevelData.Instance.MapWidth, LevelData.Instance.MapHeight);
+        imageTexture = new Texture2D(LevelData.Instance.MapWidth, LevelData.Instance.MapWidth);
         imageTexture.filterMode = FilterMode.Point;
         rawImage.texture = imageTexture;
         exploredMap = new bool[LevelData.Instance.MapWidth, LevelData.Instance.MapWidth];
@@ -80,17 +80,17 @@ public class Minimap : MonoBehaviour, IEventHandler
             portalMarkerRect.anchoredPosition = new Vector3
             (
                 (LevelData.Instance.PortalPos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
-                (LevelData.Instance.PortalPos.z / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+                (LevelData.Instance.PortalPos.z / LevelData.Instance.MapWidth) * rectTransform.rect.height,
                 0
             );
         }
         if (treasureMarker != null)
         {
-            treasureMarkerRect = portalMarker.GetComponent<RectTransform>();
+            treasureMarkerRect = treasureMarker.GetComponent<RectTransform>();
             treasureMarkerRect.anchoredPosition = new Vector3
             (
                 (LevelData.Instance.TreasurePos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
-                (LevelData.Instance.TreasurePos.z / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+                (LevelData.Instance.TreasurePos.z / LevelData.Instance.MapWidth) * rectTransform.rect.height,
                 0
             );
         }
@@ -110,13 +110,13 @@ public class Minimap : MonoBehaviour, IEventHandler
         playerMarkerRect.anchoredPosition = new Vector3
         (
             (newPlayerPos.x / LevelData.Instance.MapWidth) * rectTransform.rect.width,
-            (newPlayerPos.y / LevelData.Instance.MapHeight) * rectTransform.rect.height,
+            (newPlayerPos.y / LevelData.Instance.MapWidth) * rectTransform.rect.height,
             0
         );
 
         for (int x = 0; x < LevelData.Instance.MapWidth; x++)
         {
-            for (int y = 0; y < LevelData.Instance.MapHeight; y++)
+            for (int y = 0; y < LevelData.Instance.MapWidth; y++)
             {
                 Vector2 pixelPos = new Vector2(x, y);
                 float dist = Vector2.Distance(playerPos, pixelPos);
@@ -196,5 +196,7 @@ public class Minimap : MonoBehaviour, IEventHandler
             ExploreMinimap();
             UpdatePixels();
         }
+        Debug.Log("PlayerPos: " + playerPos);
+        Debug.Log("TreasurePos: " + LevelData.Instance.TreasurePos);
     }
 }

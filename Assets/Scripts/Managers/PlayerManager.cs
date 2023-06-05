@@ -39,7 +39,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GameOverEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<DamagePlayerEvent>(UpdatePlayerHealth);
     }
 
     public void UnsubscribeEvents()
@@ -55,10 +54,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GameOverEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<DamagePlayerEvent>(UpdatePlayerHealth);
     }
-
-    private void UpdatePlayerHealth(DamagePlayerEvent e) => health -= e.damage;
 
     #region UI events callbacks
     private void SetAimingModeFromUIEvent(GameMainMenuEvent e)
@@ -111,8 +107,11 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetHealth(DamagePlayerEvent e)
     {
+        Debug.Log("Old hp: " + this.health);
+
         health = Mathf.Max(health - e.damage, 0);
-        EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+        Debug.Log("New hp: " + this.health);
+        EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
         if (health <= 0)
         {
             health = 0;

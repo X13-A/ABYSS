@@ -48,7 +48,6 @@ public class ItemHolder : MonoBehaviour
     private void StopHoldingItem()
     {
         if (heldItem == null) return;
-        Debug.Log(heldItem.name);
         IHoldingItem holdingItemInterface = this.heldItem.GetComponent<IHoldingItem>();
         if (holdingItemInterface != null) holdingItemInterface.OnStopHolding();
     }

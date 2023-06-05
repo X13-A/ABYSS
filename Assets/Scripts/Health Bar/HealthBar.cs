@@ -22,12 +22,12 @@ public class HealthBar : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<HealthPlayerEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<UpdatePlayerHealthEvent>(this.SetHealth);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<HealthPlayerEvent>(this.SetHealth);
+        EventManager.Instance.RemoveListener<UpdatePlayerHealthEvent>(this.SetHealth);
     }
 
     public void Start()
@@ -37,9 +37,9 @@ public class HealthBar : MonoBehaviour, IEventHandler
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void SetHealth(HealthPlayerEvent e)
+    public void SetHealth(UpdatePlayerHealthEvent e)
     {
-        slider.value = e.health;
+        slider.value = e.newHealth;
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

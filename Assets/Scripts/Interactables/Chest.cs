@@ -78,7 +78,6 @@ public class Chest : MonoBehaviour
         Rigidbody rigidbody = droppedGameObject.GetComponent<Rigidbody>();
         if (rigidbody != null )
         {
-            Debug.Log(RandomizeDirection());
             rigidbody.useGravity = true;
             rigidbody.AddForce(RandomizeDirection() * throwForce, ForceMode.Impulse);
             rigidbody.AddTorque(RandomizeTorque() * torqueForce, ForceMode.Impulse);

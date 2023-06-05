@@ -10,7 +10,6 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    [SerializeField] private AudioClip SwordAttack;
     [SerializeField] private AudioClip EnteringIntoPortal;
     [SerializeField] private AudioClip LootItem;
 
@@ -40,21 +39,14 @@ public class SoundManager : MonoBehaviour
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerAttackEvent>(LaunchSwordAttackSound);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
-    }
-
-    private void LaunchSwordAttackSound(PlayerAttackEvent e)
-    {
-        audioSource.PlayOneShot(SwordAttack);
     }
 
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)

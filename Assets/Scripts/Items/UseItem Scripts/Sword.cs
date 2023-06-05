@@ -10,6 +10,8 @@ public class Sword : MonoBehaviour, IUseItem
     [SerializeField] private float SwordDamage;
 
     private float instantDamage;
+    private SwordAnimation swordAnimation;
+    private AudioSource audioSource;
 
     private MeshCollider collider;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
@@ -26,6 +28,8 @@ public class Sword : MonoBehaviour, IUseItem
         attackType = AttackType.MELEE;
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
+        swordAnimation = GetComponent<SwordAnimation>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Damage()
@@ -71,19 +75,12 @@ public class Sword : MonoBehaviour, IUseItem
 
         Damage();
 
+        audioSource.PlayOneShot(audioSource.clip);
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Attack",
             animationDuration = meleeDuration
-        }) ;
-        EventManager.Instance.Raise(new AnimateItemEvent
-        {
-            itemId = ItemId.Sword,
-            animations = new Dictionary<string, float>
-            {
-                { "startTrail", 0f },
-                { "stopTrail", meleeDuration * currentAttackDuration }
-            }
         });
+        swordAnimation.Animate(meleeDuration * currentAttackDuration);
     }
 }

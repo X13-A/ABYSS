@@ -7,7 +7,6 @@ public enum ItemId
     Pickaxe,
     Wand,
     Map,
-    Heart,
     Mushroom,
     DirtBlock,
     DarkDirtBlock,
@@ -21,7 +20,9 @@ public enum ItemId
     IceBlock,
     SandBlock,
     SandstoneBlock,
-    SnowBlock
+    SnowBlock,
+    BottleHealth,
+    AttackBoost,
 };
 
 public enum ItemRarity

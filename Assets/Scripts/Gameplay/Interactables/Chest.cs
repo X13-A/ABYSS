@@ -83,8 +83,10 @@ public class Chest : MonoBehaviour
             rigidbody.AddTorque(RandomizeTorque() * torqueForce, ForceMode.Impulse);
         }
 
-        //StartCoroutine(AnimateThrowItem(droppedGameObject, throwDirection));
-        droppedGameObject.AddComponent<DroppedItem>().Init(item);
+        if (droppedGameObject.GetComponent<DroppedItem>() == null)
+        {
+            droppedGameObject.AddComponent<DroppedItem>().Init(item);
+        }
 
         droppedGameObject.transform.localScale = Vector3.zero;
         StartCoroutine(CoroutineUtil.ScaleTo(droppedGameObject.transform, 0.5f, new Vector3(1, 1, 1)));

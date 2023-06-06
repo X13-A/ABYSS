@@ -7815,7 +7815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ce2de9a4f4c5b4daa437741237256d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemKeys: 00000000010000000200000003000000060000001300000004000000
+  itemKeys: 000000000100000002000000030000000600000013000000
   itemValues:
   - name: Sword
     icon: {fileID: 21300000, guid: 1e6975c979ecad244bbcc46c5e373fa4, type: 3}
@@ -7853,12 +7853,6 @@ MonoBehaviour:
     droppedPrefab: {fileID: 8212018675922740652, guid: fd3627528079a974c80ec66a33de0b77, type: 3}
     rarity: 0
     isConsumable: 1
-  - name: Alex
-    icon: {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
-    heldPrefab: {fileID: 0}
-    droppedPrefab: {fileID: 0}
-    rarity: 0
-    isConsumable: 0
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}

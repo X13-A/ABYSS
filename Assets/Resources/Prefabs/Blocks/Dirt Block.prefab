@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6618742200536578339}
   - component: {fileID: 5360385136985496981}
   - component: {fileID: 3891163170959231982}
+  - component: {fileID: -7562821276392163068}
+  - component: {fileID: 3949661691898534212}
   m_Layer: 0
   m_Name: Dirt Block
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5099353259446242383}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -147,3 +149,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7562821276392163068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099353259446242383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detail: {fileID: 3944365734973468589, guid: 7615fb2c8cdd1844faf47284b9e7a8c6, type: 3}
+  probability: 0.005
+  maximumDetails: 1
+  spawnSides: 04000000
+  pivotIsCenter: 0
+  drawRayCasts: 0
+  heightNeeded: 1
+--- !u!114 &3949661691898534212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099353259446242383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detail: {fileID: 4875806483322429294, guid: 46fa7b8f46f5cc84f81c3787248e7571, type: 3}
+  probability: 0.005
+  maximumDetails: 1
+  spawnSides: 04000000
+  pivotIsCenter: 0
+  drawRayCasts: 0
+  heightNeeded: 1

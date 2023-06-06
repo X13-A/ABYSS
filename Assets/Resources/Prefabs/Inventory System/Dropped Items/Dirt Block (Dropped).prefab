@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5085747113819424599}
   - component: {fileID: 3315305720592084066}
   - component: {fileID: 6618742200536578339}
-  - component: {fileID: -7020985213899330253}
   m_Layer: 0
   m_Name: Dirt Block (Dropped)
   m_TagString: Untagged
@@ -116,16 +115,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1436119, y: 1.1542883, z: 1.1756761}
   m_Center: {x: 0.0022821724, y: 0.006750971, z: -0.0013410151}
---- !u!114 &-7020985213899330253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5099353259446242383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc333a2e462a0cc469ebd7d2e380ba06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 6

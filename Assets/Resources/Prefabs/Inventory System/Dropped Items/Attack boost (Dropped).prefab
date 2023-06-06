@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 8213240834958877682}
   - component: {fileID: 6195145791359709837}
   - component: {fileID: 1615490146431100661}
-  - component: {fileID: 389995205217997992}
   m_Layer: 0
   m_Name: Attack boost (Dropped)
   m_TagString: Untagged
@@ -111,19 +110,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &389995205217997992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8212018675922740652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc333a2e462a0cc469ebd7d2e380ba06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 19
 --- !u!1 &8212018676689956374
 GameObject:
   m_ObjectHideFlags: 0

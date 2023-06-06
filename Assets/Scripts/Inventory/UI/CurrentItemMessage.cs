@@ -65,6 +65,7 @@ public class CurrentItemMessage : MonoBehaviour
     {
         if (this.collidingItems > 0) return;
         ItemId? item = InventoryManager.Instance.ActiveItem;
+        EventManager.Instance.Raise(new SelectedItemEvent { itemId = item });
         this.DisplayItemName(item);
     }
 

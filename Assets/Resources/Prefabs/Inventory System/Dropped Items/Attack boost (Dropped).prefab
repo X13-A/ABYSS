@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 8213240834958877682}
   - component: {fileID: 6195145791359709837}
   - component: {fileID: 1615490146431100661}
-  - component: {fileID: -3250013244926517088}
+  - component: {fileID: 8583034986044004424}
   m_Layer: 0
   m_Name: Attack boost (Dropped)
   m_TagString: Untagged
@@ -111,7 +111,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3250013244926517088
+--- !u!114 &8583034986044004424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

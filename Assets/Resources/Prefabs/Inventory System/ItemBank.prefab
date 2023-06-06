@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ce2de9a4f4c5b4daa437741237256d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemKeys: 00000000010000000200000003000000050000001300000012000000
+  itemKeys: 00000000010000000200000003000000130000001200000004000000
   itemValues:
   - name: Sword
     icon: {fileID: 21300000, guid: c581b480249875c4d966808a101e00e1, type: 3}
@@ -70,12 +70,6 @@ MonoBehaviour:
     droppedPrefab: {fileID: 7142737113172594199, guid: 693c2f498dba3c44a9248add76173519, type: 3}
     rarity: 2
     isConsumable: 0
-  - name: Mushroom
-    icon: {fileID: 21300000, guid: fd35c4ebc1e6da942aa4299a148442ce, type: 3}
-    heldPrefab: {fileID: 2437588115170568173, guid: b423db45a313fac488c8dcaaf15a6adc, type: 3}
-    droppedPrefab: {fileID: 8678194787129688091, guid: e9c5c7d2989716b48a9a5381cb8ea9ed, type: 3}
-    rarity: 0
-    isConsumable: 1
   - name: Attack Boost
     icon: {fileID: 21300024, guid: ddf8838d0a06d8d4c9dec9e3bed69260, type: 3}
     heldPrefab: {fileID: 8603081045798026319, guid: 498ea55c27f3d6742b4e53226b0ac0ec, type: 3}
@@ -86,6 +80,12 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: ddf8838d0a06d8d4c9dec9e3bed69260, type: 3}
     heldPrefab: {fileID: 5761538092629539415, guid: b8c374478e9a46f468a8a6247eb19e8a, type: 3}
     droppedPrefab: {fileID: 5341605147957243109, guid: 24c275d9142568a4e867381b1ba452f0, type: 3}
+    rarity: 0
+    isConsumable: 1
+  - name: Mushroom
+    icon: {fileID: 21300000, guid: fd35c4ebc1e6da942aa4299a148442ce, type: 3}
+    heldPrefab: {fileID: 2437588115170568173, guid: b423db45a313fac488c8dcaaf15a6adc, type: 3}
+    droppedPrefab: {fileID: 8678194787129688091, guid: e9c5c7d2989716b48a9a5381cb8ea9ed, type: 3}
     rarity: 0
     isConsumable: 1
   - name: 

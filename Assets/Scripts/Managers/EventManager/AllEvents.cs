@@ -59,6 +59,12 @@ public class UpdatePlayerHealthEvent : SDD.Events.Event
     public float newHealth;
 }
 
+public class StartAttackBoostPlayerEvent : SDD.Events.Event
+{ }
+
+public class EndAttackBoostPlayerEvent : SDD.Events.Event
+{ }
+
 #endregion
 
 #region Enemy
@@ -285,5 +291,9 @@ public class HeldGameObjectEvent : SDD.Events.Event
     public GameObject heldGameObject;
 }
 
+public class SelectedItemEvent : SDD.Events.Event
+{
+    public ItemId? itemId;
+}
 
 #endregion

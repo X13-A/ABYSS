@@ -72,8 +72,8 @@ MonoBehaviour:
     isConsumable: 0
   - name: Mushroom
     icon: {fileID: 21300000, guid: fd35c4ebc1e6da942aa4299a148442ce, type: 3}
-    heldPrefab: {fileID: 3014930985819444752, guid: faac78f9370ca3f4cbd8fa32a3fd9f99, type: 3}
-    droppedPrefab: {fileID: 3014930985819444752, guid: 8acb6027a2a7e97478d9c6b890f49a46, type: 3}
+    heldPrefab: {fileID: 2437588115170568173, guid: b423db45a313fac488c8dcaaf15a6adc, type: 3}
+    droppedPrefab: {fileID: 8678194787129688091, guid: e9c5c7d2989716b48a9a5381cb8ea9ed, type: 3}
     rarity: 0
     isConsumable: 1
   - name: Attack Boost
@@ -87,7 +87,7 @@ MonoBehaviour:
     heldPrefab: {fileID: 5761538092629539415, guid: b8c374478e9a46f468a8a6247eb19e8a, type: 3}
     droppedPrefab: {fileID: 5341605147957243109, guid: 24c275d9142568a4e867381b1ba452f0, type: 3}
     rarity: 0
-    isConsumable: 0
+    isConsumable: 1
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}

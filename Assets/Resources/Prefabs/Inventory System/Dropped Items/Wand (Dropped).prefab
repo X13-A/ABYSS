@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 7847020270311324069}
   - component: {fileID: 53833577302264021}
   - component: {fileID: 1455888617}
+  - component: {fileID: 1337121482416817183}
   m_Layer: 0
   m_Name: Wand (Dropped)
   m_TagString: Untagged
@@ -110,6 +111,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1337121482416817183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128416112982806210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc333a2e462a0cc469ebd7d2e380ba06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 2
 --- !u!1 &5995783296178989349
 GameObject:
   m_ObjectHideFlags: 0

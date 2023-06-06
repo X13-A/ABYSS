@@ -24,6 +24,16 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        HandleCollision(other);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        HandleCollision(other.collider);
+    }
+
+    private void HandleCollision(Collider other)
+    {
         if (destroyOnCollision && other.GetComponent<StopProjectiles>() != null)
         {
             Die();
@@ -47,7 +57,6 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        Vector3 forwardVector = transform.forward;
-        transform.position += new Vector3(forwardVector.x, 0, forwardVector.z) * speed * Time.deltaTime;
+        transform.position += new Vector3(transform.forward.x, 0, transform.forward.z) * speed * Time.deltaTime;
     }
 }

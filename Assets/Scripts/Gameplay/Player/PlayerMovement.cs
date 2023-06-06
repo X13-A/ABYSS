@@ -135,26 +135,6 @@ public class PlayerMovement : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         isGrounded = Physics.CheckCapsule(top, bottom, radius, layerMask);
 
-        // Color of the capsule in the scene view.
-        Color color = isGrounded ? Color.green : Color.red;
-
-        // Draw the top and bottom caps of the capsule.
-        for (int i = 0; i < 360; i++)
-        {
-            float angle = i * Mathf.PI / 180f;
-            Vector3 offset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-            Debug.DrawLine(top + offset, top + Quaternion.Euler(90, 0, 0) * offset, color);
-            Debug.DrawLine(bottom + offset, bottom + Quaternion.Euler(90, 0, 0) * offset, color);
-        }
-
-        // Draw the lines connecting the caps.
-        Debug.DrawLine(top + Vector3.left * radius, bottom + Vector3.left * radius, color);
-        Debug.DrawLine(top + Vector3.right * radius, bottom + Vector3.right * radius, color);
-        Debug.DrawLine(top + Vector3.forward * radius, bottom + Vector3.forward * radius, color);
-        Debug.DrawLine(top + Vector3.back * radius, bottom + Vector3.back * radius, color);
-        Debug.Log("TEST");
-
-
         // Debugging purpose
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance))

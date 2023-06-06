@@ -196,7 +196,5 @@ public class Minimap : MonoBehaviour, IEventHandler
             ExploreMinimap();
             UpdatePixels();
         }
-        Debug.Log("PlayerPos: " + playerPos);
-        Debug.Log("TreasurePos: " + LevelData.Instance.TreasurePos);
     }
 }

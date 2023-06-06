@@ -101,7 +101,6 @@ public class MapGeneration : MonoBehaviour
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                Debug.Log(new Vector2(x, z));
                 // Read noise map
                 float currentHeight = noiseMap[x, z];
 
@@ -131,8 +130,10 @@ public class MapGeneration : MonoBehaviour
                 for (int y = 0; y < blockHeight; y++)
                 {
                     // Avoid placing on chest
-                    if (new Vector3(x, y, z) == chestPos) continue;
-
+                    if (new Vector3(x, y, z) == chestPos)
+                    {
+                        continue;
+                    }
                     GameObject cube = Instantiate(levelArray[level][2].cubePrefab);
                     cube.transform.position = new Vector3(x, y, z);
 

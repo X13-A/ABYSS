@@ -24,6 +24,7 @@ public class WandAnimation : MonoBehaviour
     {
         StartCoroutine(CoroutineUtil.DelayAction(0f, () =>
         {
+            this.wandCast.Stop(true);
             this.wandTrail.Stop(true);
             this.wandTrail.Play(true);
         }));

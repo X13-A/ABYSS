@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class Mushroom : MonoBehaviour, IUseItem
 {
-
-    public float damage;
+     [SerializeField] private float damage;
 
     public void Use()
     {
-        float health = PlayerManager.Instance.Health - damage;
-        EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+        EventManager.Instance.Raise(new DamagePlayerEvent { damage = damage });
     }
 }

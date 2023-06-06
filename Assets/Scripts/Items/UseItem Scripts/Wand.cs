@@ -21,6 +21,18 @@ public class Wand : MonoBehaviour, IUseItem
 
     public void OnEnable()
     {
+        if (magicProjectilePosition == null)
+        {
+            if (PlayerManager.Instance.PlayerProjectileStart)
+            {
+                magicProjectilePosition = PlayerManager.Instance.PlayerProjectileStart;
+            }
+            else
+            {
+                magicProjectilePosition = this.gameObject;
+                Debug.LogWarning("Bad shoot position for held wand. Should setup PlayerProjectileStart in PlayerManager");
+            }
+        }
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
         wandAnimation = GetComponent<WandAnimation>();
@@ -29,12 +41,12 @@ public class Wand : MonoBehaviour, IUseItem
     public void Use()
     {
         if (AttackElaspedTime < currentAttackDuration) return;
-        currentAttackDuration = wandDuration;
+        currentAttackDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Wand Attack",
-            animationDuration = wandDuration
+            animationDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
         wandAnimation.Animate(wandDuration * currentAttackDuration);
         wandAudioSource.Play();

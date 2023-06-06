@@ -21,6 +21,9 @@ public class LevelData : MonoBehaviour
     private Vector3 portalPos { get; set; }
     public Vector3 PortalPos { get; set; }
 
+    private Vector3 treasurePos { get; set; }
+    public Vector3 TreasurePos { get; set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

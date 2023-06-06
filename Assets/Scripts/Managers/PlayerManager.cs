@@ -11,9 +11,14 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
+    [SerializeField] private GameObject playerProjectileStart;
+    [SerializeField] private float playerAttackSpeedMultiplier;
+
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;
+    public float PlayerAttackSpeedMultiplier => Mathf.Max(playerAttackSpeedMultiplier, 0.01f);
+    public GameObject PlayerProjectileStart => playerProjectileStart;
 
 
     private void OnEnable()
@@ -39,7 +44,6 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GameOverEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
-        EventManager.Instance.AddListener<DamagePlayerEvent>(UpdatePlayerHealth);
     }
 
     public void UnsubscribeEvents()
@@ -55,10 +59,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<GameOverEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.RemoveListener<GameSaveSettingsEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.RemoveListener<GameCancelSettingsEvent>(SetAimingModeFromUIEvent);
-        EventManager.Instance.RemoveListener<DamagePlayerEvent>(UpdatePlayerHealth);
     }
-
-    private void UpdatePlayerHealth(DamagePlayerEvent e) => health -= e.damage;
 
     #region UI events callbacks
     private void SetAimingModeFromUIEvent(GameMainMenuEvent e)
@@ -112,7 +113,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     private void SetHealth(DamagePlayerEvent e)
     {
         health = Mathf.Max(health - e.damage, 0);
-        EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+        EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
         if (health <= 0)
         {
             health = 0;

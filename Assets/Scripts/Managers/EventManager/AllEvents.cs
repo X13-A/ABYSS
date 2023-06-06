@@ -54,6 +54,11 @@ public class HealthPlayerEvent : SDD.Events.Event
     public float health;
 }
 
+public class UpdatePlayerHealthEvent : SDD.Events.Event
+{
+    public float newHealth;
+}
+
 #endregion
 
 #region Enemy
@@ -243,6 +248,12 @@ public class UpdateCollidingItemsEvent : SDD.Events.Event
 {
     public HashSet<DroppedItem> items;
 }
+
+public class UpdateCollidingChestsEvent : SDD.Events.Event
+{
+    public HashSet<Chest> chests;
+}
+
 
 public class SwitchSlotEvent : SDD.Events.Event
 {

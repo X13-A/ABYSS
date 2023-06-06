@@ -26,6 +26,11 @@ public class PlayerAttackEvent : SDD.Events.Event
     public AttackType type;
 }
 
+public class PlayerMoveEvent : SDD.Events.Event
+{
+    public bool isMoving;
+}
+
 public class PlayerSpawnedEvent : SDD.Events.Event
 {
 }

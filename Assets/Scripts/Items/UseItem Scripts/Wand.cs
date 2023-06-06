@@ -11,7 +11,8 @@ public class Wand : MonoBehaviour, IUseItem
     [SerializeField] private float magicProjectileDamage;
     [SerializeField] private float wandDuration;
     [SerializeField] private float wandStartPercentage;
-    [SerializeField] private WandAnimation wandAnimation;
+    private WandAnimation wandAnimation;
+    private AudioSource wandAudioSource;
 
     private float currentAttackDuration;
     private float attackStartTime;
@@ -23,6 +24,7 @@ public class Wand : MonoBehaviour, IUseItem
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
         wandAnimation = GetComponent<WandAnimation>();
+        wandAudioSource = GetComponent<AudioSource>();
     }
     public void Use()
     {
@@ -35,6 +37,7 @@ public class Wand : MonoBehaviour, IUseItem
             animationDuration = wandDuration
         });
         wandAnimation.Animate(wandDuration * currentAttackDuration);
+        wandAudioSource.Play();
         StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(

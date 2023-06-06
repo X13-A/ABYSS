@@ -86,12 +86,14 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         {
             m_Animator.SetBool("IsWalking", true);
             m_Animator.SetBool("IsIdling", false);
+            EventManager.Instance.Raise(new PlayerMoveEvent { isMoving = true });
         }
 
         if (!isIdling && !hasMovement)
         {
             m_Animator.SetBool("IsIdling", true);
             m_Animator.SetBool("IsWalking", false);
+            EventManager.Instance.Raise(new PlayerMoveEvent { isMoving = false });
         }
     }
 }

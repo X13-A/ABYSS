@@ -1767,7 +1767,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003219964445299846}
-  m_LocalRotation: {x: 0.41010678, y: -0.11150574, z: 0.05059776, w: 0.9037803}
+  m_LocalRotation: {x: 0.41010684, y: -0.11150576, z: 0.05059778, w: 0.9037803}
   m_LocalPosition: {x: -5.023449, y: 1.3738401, z: 28.381811}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7385,9 +7385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e62d9ac4ea26354d807717b8c147303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwordAttack: {fileID: 8300000, guid: 2d775a01778555c48a64c4faf3f22fdf, type: 3}
   EnteringIntoPortal: {fileID: 8300000, guid: 414f776fc6873b347be6c7d5c22aa2d2, type: 3}
   LootItem: {fileID: 8300000, guid: 47dd655c257f2544eb80ed213b6a67ea, type: 3}
+  FootSteps: {fileID: 8300000, guid: ecdb6cf2b4ceecb48ab47dfce195134f, type: 3}
 --- !u!82 &9051366784003123823
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7398,11 +7398,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2d775a01778555c48a64c4faf3f22fdf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ecdb6cf2b4ceecb48ab47dfce195134f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -10492,7 +10492,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5466583200066505306}
-  m_LocalRotation: {x: 0.8599903, y: -0.12009932, z: -0.023870949, w: 0.49540198}
+  m_LocalRotation: {x: 0.85999024, y: -0.12009933, z: -0.023870945, w: 0.495402}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11238,7 +11238,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7093844647516794909}
-  m_LocalRotation: {x: 0.8599903, y: -0.12009932, z: -0.023870945, w: 0.49540198}
+  m_LocalRotation: {x: 0.85999024, y: -0.120099306, z: -0.023870945, w: 0.495402}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

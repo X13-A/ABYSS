@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip EnteringIntoPortal;
     [SerializeField] private AudioClip LootItem;
+    [SerializeField] private AudioClip FootSteps;
 
     private void Awake()
     {
@@ -41,12 +42,14 @@ public class SoundManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
+        EventManager.Instance.AddListener<PlayerMoveEvent>(ManageFootSteps);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
+        EventManager.Instance.RemoveListener<PlayerMoveEvent>(ManageFootSteps);
     }
 
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)
@@ -57,5 +60,11 @@ public class SoundManager : MonoBehaviour
     private void LaunchLoot(ItemPickedUpEvent e)
     {
         audioSource.PlayOneShot(LootItem);
+    }
+
+    private void ManageFootSteps(PlayerMoveEvent e)
+    {
+        if (e.isMoving) audioSource.Play();
+        if (!e.isMoving) audioSource.Stop();
     }
 }

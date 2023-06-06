@@ -25,15 +25,15 @@ public class BoostAttackIndicator : MonoBehaviour
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<StartAttackBoostPlayerEvent>(FlashBoostIndicator);
-        EventManager.Instance.AddListener<SwitchSlotEvent>(this.DisplaySelectedName);
-        EventManager.Instance.AddListener<EndAttackBoostPlayerEvent>(this.NotDisplaySelectedName);
+        EventManager.Instance.AddListener<SwitchSlotEvent>(DisplaySelectedName);
+        EventManager.Instance.AddListener<EndAttackBoostPlayerEvent>(NotDisplaySelectedName);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<StartAttackBoostPlayerEvent>(FlashBoostIndicator);
-        EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.DisplaySelectedName);
-        EventManager.Instance.RemoveListener<EndAttackBoostPlayerEvent>(this.NotDisplaySelectedName);
+        EventManager.Instance.RemoveListener<SwitchSlotEvent>(DisplaySelectedName);
+        EventManager.Instance.RemoveListener<EndAttackBoostPlayerEvent>(NotDisplaySelectedName);
     }
 
     private void FlashBoostIndicator(StartAttackBoostPlayerEvent e)
@@ -84,8 +84,11 @@ public class BoostAttackIndicator : MonoBehaviour
     private IEnumerator FlashBoostIndicator()
     {
         display = true;
-
         lightening.SetActive(true);
+
+        float initalSpeed = PlayerManager.Instance.PlayerAttackSpeedMultiplier;
+
+        EventManager.Instance.Raise(new AttackSpeeedMultiplierPlayerHealthEvent { speed = 3f });
 
         float elapsedTime = -1f;
         float flashDuration = 4f;
@@ -105,6 +108,8 @@ public class BoostAttackIndicator : MonoBehaviour
 
         lightening.SetActive(false);
         display = false;
+
+        EventManager.Instance.Raise(new AttackSpeeedMultiplierPlayerHealthEvent { speed = initalSpeed });
 
         EventManager.Instance.Raise(new EndAttackBoostPlayerEvent { });
     }

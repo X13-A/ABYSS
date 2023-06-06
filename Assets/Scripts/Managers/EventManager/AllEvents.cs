@@ -49,6 +49,11 @@ public class DamagePlayerEvent : SDD.Events.Event
     public float damage;
 }
 
+public class CarePlayerEvent : SDD.Events.Event
+{
+    public float care;
+}
+
 public class HealthPlayerEvent : SDD.Events.Event
 {
     public float health;
@@ -64,6 +69,11 @@ public class StartAttackBoostPlayerEvent : SDD.Events.Event
 
 public class EndAttackBoostPlayerEvent : SDD.Events.Event
 { }
+
+public class AttackSpeeedMultiplierPlayerHealthEvent : SDD.Events.Event
+{
+    public float speed;
+}
 
 #endregion
 

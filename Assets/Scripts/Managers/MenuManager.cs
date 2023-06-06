@@ -165,40 +165,48 @@ public class MenuManager : MonoBehaviour, IEventHandler
     public void PlayButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new PlayButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void QuitButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new QuitButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void CreditsButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new CreditsButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void SettingsButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new SettingsButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void MainMenuButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void ResumeButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new ResumeButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void SaveSettingsButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new SaveSettingsButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 
     public void CancelSettingsButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new CancelSettingsButtonClickedEvent());
+        EventManager.Instance.Raise(new ButtonClickedEvent());
     }
 }

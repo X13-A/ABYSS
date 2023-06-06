@@ -15,6 +15,7 @@ public class Chest : MonoBehaviour
     [SerializeField] private float lidRotateForce = 1;
     [SerializeField] private Vector3 lidRotation = new Vector3(-1, 0, 0);
     [SerializeField] private Vector3 lidPop = new Vector3(0, 1, 0);
+    [SerializeField] private AudioSource audioSource;
 
     private bool opened = false;
     public bool Opened => opened;
@@ -31,6 +32,7 @@ public class Chest : MonoBehaviour
     public void Open()
     {
         if (opened) return;
+        audioSource.Play();
         opened = true;
         OpenLid();
         throwItems();

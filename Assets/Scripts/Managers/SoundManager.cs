@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip EnteringIntoPortal;
     [SerializeField] private AudioClip LootItem;
     [SerializeField] private AudioClip FootSteps;
+    [SerializeField] private AudioClip HitDamage;
+    [SerializeField] private AudioClip ButtonClicked;
 
     private void Awake()
     {
@@ -43,6 +45,8 @@ public class SoundManager : MonoBehaviour
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
         EventManager.Instance.AddListener<PlayerMoveEvent>(ManageFootSteps);
+        EventManager.Instance.AddListener<DamagePlayerEvent>(LaunchDamageHit);
+        EventManager.Instance.AddListener<ButtonClickedEvent>(LaunchButtonClicked);
     }
 
     public void UnsubscribeEvents()
@@ -50,6 +54,7 @@ public class SoundManager : MonoBehaviour
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
         EventManager.Instance.RemoveListener<PlayerMoveEvent>(ManageFootSteps);
+        EventManager.Instance.RemoveListener<DamagePlayerEvent>(LaunchDamageHit);
     }
 
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)
@@ -66,5 +71,15 @@ public class SoundManager : MonoBehaviour
     {
         if (e.isMoving) audioSource.Play();
         if (!e.isMoving) audioSource.Stop();
+    }
+
+    private void LaunchDamageHit(DamagePlayerEvent e)
+    {
+        audioSource.PlayOneShot(HitDamage);
+    }
+
+    private void LaunchButtonClicked(ButtonClickedEvent e)
+    {
+        audioSource.PlayOneShot(ButtonClicked);
     }
 }

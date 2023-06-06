@@ -9939,7 +9939,7 @@ MonoBehaviour:
   magicProjectileDamage: 5
   wandDuration: 1
   wandStartPercentage: 0.5
-  wandAnimation: {fileID: 0}
+  wandClip: {fileID: 8300000, guid: 72d7d9c59681cc942aff9de78f735b72, type: 3}
 --- !u!82 &-6330957590679727582
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9952,7 +9952,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 72d7d9c59681cc942aff9de78f735b72, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

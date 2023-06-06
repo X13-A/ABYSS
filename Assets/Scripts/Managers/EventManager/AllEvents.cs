@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
+using UnityEditor.Rendering;
 
 
 #region Player events
@@ -66,7 +67,6 @@ public class UpdatePlayerHealthEvent : SDD.Events.Event
 public class EnemyAttackEvent : SDD.Events.Event
 {
     public float damage;
-    // peut être rajouté un paramètre de son, @Alexou
 }
 
 #endregion
@@ -151,6 +151,10 @@ public class GameOverEvent : SDD.Events.Event
 #endregion
 
 #region MenuManager Events
+
+public class ButtonClickedEvent : SDD.Events.Event
+{
+}
 public class EscapeButtonClickedEvent : SDD.Events.Event
 {
 }

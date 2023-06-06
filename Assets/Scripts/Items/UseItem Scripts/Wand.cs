@@ -11,8 +11,10 @@ public class Wand : MonoBehaviour, IUseItem
     [SerializeField] private float magicProjectileDamage;
     [SerializeField] private float wandDuration;
     [SerializeField] private float wandStartPercentage;
+    [SerializeField] private AudioClip wandClip;
     private WandAnimation wandAnimation;
     private AudioSource wandAudioSource;
+
 
     private float currentAttackDuration;
     private float attackStartTime;
@@ -49,7 +51,7 @@ public class Wand : MonoBehaviour, IUseItem
             animationDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
         wandAnimation.Animate(wandDuration * currentAttackDuration);
-        wandAudioSource.Play();
+        wandAudioSource.PlayOneShot(wandClip);
         StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(

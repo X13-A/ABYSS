@@ -12,10 +12,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackDamage;
     [SerializeField] private float attackVariantDamage;
     [SerializeField] private int attackVariantFrequency;
+    [SerializeField] private AudioClip attackSound;
     // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
     public float detectionRadius;
 
+    private AudioSource audioSource;
     private Animator animator;
     private Rigidbody rb;
     private CharacterController playerCharacterController;
@@ -38,6 +40,7 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerCharacterController = playerReference.GetComponent<CharacterController>();
         enemyCollider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -181,5 +184,10 @@ public class EnemyAI : MonoBehaviour
         {
             damage = attackVariant == 0 ? attackDamage : attackVariantDamage
         });
+    }
+
+    public void LaunchAttackSound()
+    {
+       audioSource.PlayOneShot(attackSound);
     }
 }

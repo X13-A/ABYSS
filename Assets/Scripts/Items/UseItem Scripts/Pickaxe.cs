@@ -10,6 +10,7 @@ public class Pickaxe : MonoBehaviour, IUseItem
 
     private float currentAttackDuration;
     private float attackStartTime;
+    private AudioSource audioSource;
 
     public float AttackElaspedTime => Time.time - attackStartTime;
 
@@ -17,6 +18,7 @@ public class Pickaxe : MonoBehaviour, IUseItem
     {
         attackStartTime = Time.time - 1000;
         currentAttackDuration = 0;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Use()
@@ -30,6 +32,7 @@ public class Pickaxe : MonoBehaviour, IUseItem
             name = "Pickaxe Attack",
             animationDuration = pickaxeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
+        audioSource.Play();
         RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
         if (hit.collider)
         {

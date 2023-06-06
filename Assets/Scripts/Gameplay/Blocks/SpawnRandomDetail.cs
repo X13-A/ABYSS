@@ -11,9 +11,11 @@ public class SpawnRandomDetail : MonoBehaviour
     [SerializeField] private int maximumDetails;
 
     [SerializeField] private List<Side> spawnSides;
+    [SerializeField] private bool pivotIsCenter = false; // Use if the pivot of the detail object is at the center instead of bottom
 
     private float detailCenterOffset;
     private float maximumDetailDistance;
+
 
     private void Start()
     {
@@ -23,11 +25,18 @@ public class SpawnRandomDetail : MonoBehaviour
         if (probability <= 0) return;
 
         // Calculate detail size for offset
+        detailCenterOffset = 0;
         MeshRenderer meshRenderer = detail.GetComponentInChildren<MeshRenderer>(); // Get the mesh from the MeshFilter component
         Bounds bounds = meshRenderer.bounds; // Retrieve the bounding box
         Vector3 detailSize = bounds.size; // Size of the bounding box
-        detailCenterOffset = detailSize.y / 2;
-        maximumDetailDistance = Mathf.Max(0, (1 - detailCenterOffset) / 2);
+        maximumDetailDistance = Mathf.Max(0, (1 - detailSize.y / 2) / 2);
+
+        detailCenterOffset = 0;
+        if (pivotIsCenter)
+        {
+            detailCenterOffset = detailSize.y / 2;
+        }
+
         Debug.Log(maximumDetailDistance);
 
         for (int i = 0; i < maximumDetails; i++)

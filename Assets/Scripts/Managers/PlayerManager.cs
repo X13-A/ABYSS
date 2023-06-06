@@ -32,9 +32,8 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetPlayerMode);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
-        EventManager.Instance.AddListener<DamagePlayerEvent>(SetDamage);
-        EventManager.Instance.AddListener<HealthPlayerEvent>(SetHealth);
-        
+        EventManager.Instance.AddListener<DamagePlayerEvent>(SetHealth);
+
         // Reset aim mode on menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
         EventManager.Instance.AddListener<GamePauseMenuEvent>(SetAimingModeFromUIEvent);
@@ -48,8 +47,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(this.SetPlayerMode);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(this.SetPlayerAim);
-        EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetDamage);
-        EventManager.Instance.RemoveListener<HealthPlayerEvent>(this.SetHealth);
+        EventManager.Instance.RemoveListener<DamagePlayerEvent>(this.SetHealth);
 
         // Reset aim mode on menus
         EventManager.Instance.RemoveListener<GameMainMenuEvent>(SetAimingModeFromUIEvent);
@@ -109,7 +107,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         activeAimingMode = e.mode;
     }
 
-    private void SetDamage(DamagePlayerEvent e)
+    private void SetHealth(DamagePlayerEvent e)
     {
         health = Mathf.Max(health - e.damage, 0);
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
@@ -118,11 +116,5 @@ public class PlayerManager : MonoBehaviour, IEventHandler
             health = 0;
             EventManager.Instance.Raise(new GameOverEvent { });
         }
-    }
-
-    private void SetHealth(HealthPlayerEvent e)
-    {
-        health = Mathf.Min(health + e.health, 100);
-        EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
     }
 }

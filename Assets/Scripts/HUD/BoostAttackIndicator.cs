@@ -88,7 +88,7 @@ public class BoostAttackIndicator : MonoBehaviour
 
         float initalSpeed = PlayerManager.Instance.PlayerAttackSpeedMultiplier;
 
-        EventManager.Instance.Raise(new AttackSpeeedMultiplierPlayerHealthEvent { speed = 3f });
+        EventManager.Instance.Raise(new AttackSpeedMultiplierEvent { speed = 3f });
 
         float elapsedTime = -1f;
         float flashDuration = 4f;
@@ -109,7 +109,7 @@ public class BoostAttackIndicator : MonoBehaviour
         lightening.SetActive(false);
         display = false;
 
-        EventManager.Instance.Raise(new AttackSpeeedMultiplierPlayerHealthEvent { speed = initalSpeed });
+        EventManager.Instance.Raise(new AttackSpeedMultiplierEvent { speed = initalSpeed });
 
         EventManager.Instance.Raise(new EndAttackBoostPlayerEvent { });
     }

@@ -70,7 +70,7 @@ public class StartAttackBoostPlayerEvent : SDD.Events.Event
 public class EndAttackBoostPlayerEvent : SDD.Events.Event
 { }
 
-public class AttackSpeeedMultiplierPlayerHealthEvent : SDD.Events.Event
+public class AttackSpeedMultiplierEvent : SDD.Events.Event
 {
     public float speed;
 }

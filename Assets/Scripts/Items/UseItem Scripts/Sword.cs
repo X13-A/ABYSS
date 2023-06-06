@@ -6,14 +6,14 @@ using UnityEngine;
 public class Sword : MonoBehaviour, IUseItem
 {
     [SerializeField] private float meleeDuration;
-    [SerializeField] private float meleeStartPercentage;
+    [SerializeField] private float meleeStartPercentage = 0.4f;
     [SerializeField] private float SwordDamage;
 
     private float instantDamage;
     private SwordAnimation swordAnimation;
     private AudioSource audioSource;
 
-    private MeshCollider collider;
+    private new MeshCollider collider;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
     private AttackType attackType;
 
@@ -35,7 +35,7 @@ public class Sword : MonoBehaviour, IUseItem
     public void Damage()
     {
         // Enable
-        StartCoroutine(CoroutineUtil.DelayAction(meleeDuration * 0.4f, () =>
+        StartCoroutine(CoroutineUtil.DelayAction(meleeDuration * meleeStartPercentage / PlayerManager.Instance.PlayerAttackSpeedMultiplier, () =>
         {
             collides.Clear();
             instantDamage = SwordDamage;
@@ -49,7 +49,7 @@ public class Sword : MonoBehaviour, IUseItem
         }
 
         // Disable
-        StartCoroutine(CoroutineUtil.DelayAction(meleeDuration, () =>
+        StartCoroutine(CoroutineUtil.DelayAction(meleeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier, () =>
         {
             this.instantDamage = 0;
             collider.enabled = false;
@@ -70,7 +70,7 @@ public class Sword : MonoBehaviour, IUseItem
     public void Use()
     {
         if (AttackElaspedTime < currentAttackDuration) return;
-        currentAttackDuration = meleeDuration;
+        currentAttackDuration = meleeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
 
         Damage();
@@ -79,8 +79,8 @@ public class Sword : MonoBehaviour, IUseItem
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Attack",
-            animationDuration = meleeDuration
+            animationDuration = meleeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
-        swordAnimation.Animate(meleeDuration * currentAttackDuration);
+        swordAnimation.Animate(meleeDuration * currentAttackDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier);
     }
 }

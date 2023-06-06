@@ -15,7 +15,8 @@ public class DroppedItem : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(CoroutineUtil.DelayAction(2f, () => { pickable = true; }));
+        // Maybe put some delay before allowing pickup
+        StartCoroutine(CoroutineUtil.DelayAction(0f, () => { pickable = true; }));
     }
 
     public bool Pickup()

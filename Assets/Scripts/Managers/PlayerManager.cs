@@ -12,9 +12,12 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
     [SerializeField] private GameObject playerProjectileStart;
+    [SerializeField] private float playerAttackSpeedMultiplier;
+
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;
+    public float PlayerAttackSpeedMultiplier => Mathf.Max(playerAttackSpeedMultiplier, 0.01f);
     public GameObject PlayerProjectileStart => playerProjectileStart;
 
 

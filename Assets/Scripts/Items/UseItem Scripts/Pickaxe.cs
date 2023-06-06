@@ -22,13 +22,13 @@ public class Pickaxe : MonoBehaviour, IUseItem
     public void Use()
     {
         if (AttackElaspedTime < currentAttackDuration) return;
-        currentAttackDuration = pickaxeDuration;
+        currentAttackDuration = pickaxeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
 
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Pickaxe Attack",
-            animationDuration = pickaxeDuration
+            animationDuration = pickaxeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
         RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
         if (hit.collider)

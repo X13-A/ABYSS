@@ -39,16 +39,16 @@ public class Wand : MonoBehaviour, IUseItem
     public void Use()
     {
         if (AttackElaspedTime < currentAttackDuration) return;
-        currentAttackDuration = wandDuration;
+        currentAttackDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Wand Attack",
-            animationDuration = wandDuration
+            animationDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
 
-        wandAnimation.Animate(wandDuration * wandStartPercentage);
-        StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage, () =>
+        wandAnimation.Animate(wandDuration * wandStartPercentage / PlayerManager.Instance.PlayerAttackSpeedMultiplier);
+        StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage / PlayerManager.Instance.PlayerAttackSpeedMultiplier, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
                 magicProjectilePosition.transform.rotation.eulerAngles.x,

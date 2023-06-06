@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: -3583921710926683697}
   - component: {fileID: 7953557872883108008}
   - component: {fileID: -6182397252328478452}
-  m_Layer: 0
+  - component: {fileID: 1686595625980267826}
+  - component: {fileID: 6879185990797225536}
+  m_Layer: 3
   m_Name: block_dirt1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5959023317481381927}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -115,8 +117,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1436119, y: 1.1542883, z: 1.1756761}
-  m_Center: {x: 0.0022821724, y: 0.006750971, z: -0.0013410151}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7953557872883108008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,3 +149,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1686595625980267826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5959023317481381927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detail: {fileID: 1404320471278758, guid: a19d19351ba8c0145977eb9957830b69, type: 3}
+  probability: 0.004
+  maximumDetails: 1
+  spawnSides: 04000000
+  pivotIsCenter: 0
+  drawRayCasts: 0
+  heightNeeded: 1
+--- !u!114 &6879185990797225536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5959023317481381927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detail: {fileID: 1756093153186916, guid: 383d86f14ec9faf45bea5990711300f5, type: 3}
+  probability: 0.004
+  maximumDetails: 1
+  spawnSides: 04000000
+  pivotIsCenter: 0
+  drawRayCasts: 0
+  heightNeeded: 1

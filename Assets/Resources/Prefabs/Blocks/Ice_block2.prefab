@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5742916604929822327}
   - component: {fileID: 6872932537790518066}
   - component: {fileID: -3220988898008227462}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ice_block2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,8 +98,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0864273, y: 1.0769444, z: 1.0864365}
-  m_Center: {x: -0.0008428693, y: -0.0045165718, z: -0.00022923946}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!111 &5742916604929822327
 Animation:
   m_ObjectHideFlags: 0

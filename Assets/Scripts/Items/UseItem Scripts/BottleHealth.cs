@@ -9,6 +9,6 @@ public class BottleHealth : MonoBehaviour, IUseItem
 
     public void Use()
     {
-        EventManager.Instance.Raise(new HealthPlayerEvent { health = health });
+        EventManager.Instance.Raise(new CarePlayerEvent { care = health });
     }
 }

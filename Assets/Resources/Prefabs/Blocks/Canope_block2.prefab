@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 767529961445535448}
   - component: {fileID: 4994211641846278222}
   - component: {fileID: -2761359280162591408}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canope_block2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

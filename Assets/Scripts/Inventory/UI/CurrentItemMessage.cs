@@ -12,6 +12,7 @@ public class CurrentItemMessage : MonoBehaviour
     private Coroutine fadeCoroutine;
 
     private int collidingItems;
+    private int collidingChests;
 
     private void OnEnable()
     {
@@ -28,6 +29,7 @@ public class CurrentItemMessage : MonoBehaviour
         EventManager.Instance.AddListener<SwitchSlotEvent>(this.DisplaySelectedName);
         EventManager.Instance.AddListener<ItemPickedUpEvent>(this.DisplayPickedUpName);
         EventManager.Instance.AddListener<UpdateCollidingItemsEvent>(this.HandleCollidingItemsUpdate);
+        EventManager.Instance.AddListener<UpdateCollidingChestsEvent>(this.HandleCollidingChestsUpdate);
     }
 
     public void UnsubscribeEvents()
@@ -35,12 +37,18 @@ public class CurrentItemMessage : MonoBehaviour
         EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.DisplaySelectedName);
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.DisplayPickedUpName);
         EventManager.Instance.RemoveListener<UpdateCollidingItemsEvent>(this.HandleCollidingItemsUpdate);
+        EventManager.Instance.RemoveListener<UpdateCollidingChestsEvent>(this.HandleCollidingChestsUpdate);
     }
 
-    private void HandleCollidingItemsUpdate(UpdateCollidingItemsEvent e)
+    private void HandleCollidingChestsUpdate(UpdateCollidingChestsEvent e)
     {
-        this.collidingItems = e.items.Count;
-        if (this.collidingItems > 0)
+        this.collidingChests = e.chests.Count;
+        this.HandleCollidingObjectsUpdate();
+    }
+
+    private void HandleCollidingObjectsUpdate()
+    {
+        if (this.collidingItems > 0 || this.collidingChests > 0)
         {
             if (this.fadeCoroutine != null)
             {
@@ -50,6 +58,12 @@ public class CurrentItemMessage : MonoBehaviour
             this.text.text = "";
             this.text.enabled = false;
         }
+    }
+
+    private void HandleCollidingItemsUpdate(UpdateCollidingItemsEvent e)
+    {
+        this.collidingItems = e.items.Count;
+        HandleCollidingObjectsUpdate();
     }
 
     private void DisplayPickedUpName(ItemPickedUpEvent e)
@@ -65,6 +79,7 @@ public class CurrentItemMessage : MonoBehaviour
     {
         if (this.collidingItems > 0) return;
         ItemId? item = InventoryManager.Instance.ActiveItem;
+        EventManager.Instance.Raise(new SelectedItemEvent { itemId = item });
         this.DisplayItemName(item);
     }
 

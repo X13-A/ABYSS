@@ -36,6 +36,10 @@ public class PlayerItemDropper : MonoBehaviour
         particlesInstance.transform.localPosition = Vector3.zero;
         particlesInstance.transform.rotation = Quaternion.identity;
 
-        droppedGameObject.AddComponent<DroppedItem>().Init(e.itemId);
+        // Just for safety, the script should be in the prefab
+        if (droppedGameObject.GetComponent<DroppedItem>() == null)
+        {
+            droppedGameObject.AddComponent<DroppedItem>().Init(e.itemId);
+        }
     }
 }

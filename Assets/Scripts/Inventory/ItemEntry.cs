@@ -23,6 +23,7 @@ public enum ItemId
     SnowBlock,
     BottleHealth,
     AttackBoost,
+    ShieldBoost,
 };
 
 public enum ItemRarity

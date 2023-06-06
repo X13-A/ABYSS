@@ -3,6 +3,7 @@ using SDD.Events;
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float groundDrag;
+    [SerializeField] private float gravityMultiplier;
 
     private CharacterController characterController;
     private bool isPressingJump;
@@ -29,15 +31,15 @@ public class PlayerMovement : MonoBehaviour
     private float currentVelocity = 0f;
     private float groundCheckDistance;
     private float targetVelocity;
-
+    private Collider playerCollider;
     private void Awake()
     {
+        playerCollider = GetComponent<Collider>();
         characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         // all of the code inside this function will be executed each frame
         // the physics should be puted inside fixedUpdate
         if (GameManager.Instance.State != GAMESTATE.PLAY)
@@ -76,10 +78,9 @@ public class PlayerMovement : MonoBehaviour
         targetVelocity = inputVector.magnitude * maxVelocity;
     }
 
-    /*
-		Move the player each fixedTimeDelta
-		this function is meant to be called in fixedUpdate
-    */
+
+    // Move the player each fixedTimeDelta
+	//this function is meant to be called in fixedUpdate
     private void MovePlayer()
     {
         if (Mathf.Abs(currentVelocity) < Mathf.Abs(targetVelocity))
@@ -97,11 +98,11 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity = Mathf.Clamp(currentVelocity, -maxVelocity, maxVelocity);
         if (isPressingJump && isGrounded)
         {
-/*            EventManager.Instance.Raise(new MessageEvent
-            {
-                delay = 0.05f,
-                text = LoremIpsum.Generate(30)
-            });*/
+            //EventManager.Instance.Raise(new MessageEvent
+            //{
+            //     delay = 0.05f,
+            //     text = LoremIpsum.Generate(30)
+            //});
             verticalVelocity = jumpSpeed;
         }
         Vector3 movement = inputVector * currentVelocity;
@@ -109,23 +110,41 @@ public class PlayerMovement : MonoBehaviour
         // we need to convert his local position and rotation to a global one
         movement.y = verticalVelocity;
         movement = transform.TransformDirection(movement);
-        characterController.Move(movement);
+        characterController.Move(movement * Time.fixedDeltaTime);
     }
 
-    /*
-	    Apply the gravity to the player verticalVelocity 
-	    meant to be called inside fixedUpdate
-    */
+    
+	// Apply the gravity to the player verticalVelocity 
+	// meant to be called inside fixedUpdate
     private void ApplyGravity()
     {
         // no need to call TimeDelta because the function is called inside fixedUpdate
-        verticalVelocity += (Physics.gravity.y / 1000f);
+        //float gravity = Physics.gravity.y;
+        //if (!isGrounded)
+        //{
+        //    gravity *= gravityMultiplier;
+        //}
+        //verticalVelocity += gravity * Time.fixedDeltaTime;
+        verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime * gravityMultiplier;
     }
 
     private void PerformGroundCheck()
     {
-        groundCheckDistance = 0.2f;
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
+
+        groundCheckDistance = 0.05f;
+
+        Vector3 top = characterController.bounds.center + Vector3.up * (characterController.height / 2 - characterController.radius);
+        Vector3 bottom = characterController.bounds.center + Vector3.down * (characterController.height / 2 - characterController.radius) - new Vector3(0, groundCheckDistance, 0);
+        float radius = characterController.radius;
+
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");
+        isGrounded = Physics.CheckCapsule(top, bottom, radius, layerMask);
+
+        // Clamp Y force when grounded
+        if (isGrounded && verticalVelocity < 0)
+        {
+            verticalVelocity = 0;
+        }
 
         // Debugging purpose
         RaycastHit hit;

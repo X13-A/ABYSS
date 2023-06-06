@@ -43,12 +43,16 @@ public class Wand : MonoBehaviour, IUseItem
     public void Use()
     {
         if (AttackElaspedTime < currentAttackDuration) return;
+
+        // Set durations
         currentAttackDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
+
+        // Animate player
         EventManager.Instance.Raise(new AnimateAttackEvent
         {
             name = "Wand Attack",
-            animationDuration = wandDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
+            animationDuration = currentAttackDuration
         });
         wandAnimation.Animate(wandDuration * currentAttackDuration);
         wandAudioSource.PlayOneShot(wandClip);

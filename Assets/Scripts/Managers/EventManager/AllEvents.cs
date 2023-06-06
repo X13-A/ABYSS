@@ -50,6 +50,11 @@ public class DamagePlayerEvent : SDD.Events.Event
     public float damage;
 }
 
+public class CarePlayerEvent : SDD.Events.Event
+{
+    public float care;
+}
+
 public class HealthPlayerEvent : SDD.Events.Event
 {
     public float health;
@@ -58,6 +63,17 @@ public class HealthPlayerEvent : SDD.Events.Event
 public class UpdatePlayerHealthEvent : SDD.Events.Event
 {
     public float newHealth;
+}
+
+public class StartAttackBoostPlayerEvent : SDD.Events.Event
+{ }
+
+public class EndAttackBoostPlayerEvent : SDD.Events.Event
+{ }
+
+public class AttackSpeedMultiplierEvent : SDD.Events.Event
+{
+    public float speed;
 }
 
 #endregion
@@ -289,5 +305,9 @@ public class HeldGameObjectEvent : SDD.Events.Event
     public GameObject heldGameObject;
 }
 
+public class SelectedItemEvent : SDD.Events.Event
+{
+    public ItemId? itemId;
+}
 
 #endregion

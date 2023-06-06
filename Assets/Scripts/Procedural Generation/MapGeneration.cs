@@ -165,7 +165,7 @@ public class MapGeneration : MonoBehaviour
         GameObject playerSpawnObject = Instantiate(new GameObject("PlayerSpawn"));
         playerSpawnObject.AddComponent<PlayerSpawn>();
         playerSpawnObject.transform.SetParent(map.transform);
-        setPlayerSpawnHeight(playerSpawnObject, noiseMap);
+        setPlayerSpawnPos(playerSpawnObject, noiseMap);
 
         // Generate portal
         Vector3 portalPos = new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portalPrefab.transform.localScale.y / 2, 50);
@@ -185,18 +185,13 @@ public class MapGeneration : MonoBehaviour
         return map;
     }
 
-    private void setPlayerSpawnHeight(GameObject spawn, float[,] noiseMap)
+    private void setPlayerSpawnPos(GameObject spawn, float[,] noiseMap)
     {
         int x = Mathf.RoundToInt(playerSpawnCoords.x);
         int z = Mathf.RoundToInt(playerSpawnCoords.z);
-
-        float height = Mathf.Ceil(noiseMap[x, z]);
-        spawn.transform.position = new Vector3
-        (
-            playerSpawnCoords.x,
-            height,
-            playerSpawnCoords.z
-        );
+        int y = (int) Mathf.Ceil(noiseMap[x, z]) + 5;
+        Debug.Log(new Vector3(x, y, z));
+        spawn.transform.position = new Vector3(x, y, z);
     }
 
     private void GenerateNoiseMap()

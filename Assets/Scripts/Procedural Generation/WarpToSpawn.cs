@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class WarpToSpawn : MonoBehaviour
 {
@@ -21,7 +22,18 @@ public class WarpToSpawn : MonoBehaviour
         if (!spawned && spawn != null && characterController != null)
         {
             characterController.enabled = false;
-            transform.position = spawn.transform.position;
+
+            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            RaycastHit hit;
+            if (Physics.Raycast(spawn.transform.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
+            {
+                transform.position = hit.point;
+            }
+            else
+            {
+                transform.position = spawn.transform.position;
+            }
+
             characterController.enabled = true;
             spawned = true;
             gameObject.SetActive(true);

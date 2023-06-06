@@ -3314,7 +3314,6 @@ GameObject:
   - component: {fileID: 5085724582314919098}
   - component: {fileID: 1003219964964764819}
   - component: {fileID: 1003219964964764818}
-  - component: {fileID: 3648839241044713155}
   - component: {fileID: 2830724171743585856}
   - component: {fileID: 7596305970424449422}
   - component: {fileID: 7596305970424449421}
@@ -3394,19 +3393,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLookCamera: {fileID: 3466829182775936250}
---- !u!65 &3648839241044713155
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003219964964764841}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2830724171743585856
 MonoBehaviour:
   m_ObjectHideFlags: 0

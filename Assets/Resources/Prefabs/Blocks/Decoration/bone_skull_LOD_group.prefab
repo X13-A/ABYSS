@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3198876849652144248}
   - component: {fileID: 7613344498387872136}
   - component: {fileID: 8901173605341805040}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bone_skull_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2442651715128851979}
   - component: {fileID: 4891930434490924651}
   - component: {fileID: 1348745395836572085}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bone_skull_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5251628746599466452}
   - component: {fileID: 1061608352788001445}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bone_skull_LOD_group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 6607209616634404901}
   - component: {fileID: 9162119526246730535}
   - component: {fileID: 1637717285130210980}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bone_skull_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 5802614603135138757}
   - component: {fileID: 4833251538398137266}
   - component: {fileID: 4769716047404911345}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bone_skull_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1735500826390505456}
   - component: {fileID: 6468889149521815288}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

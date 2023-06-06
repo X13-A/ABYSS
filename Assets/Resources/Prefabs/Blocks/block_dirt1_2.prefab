@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6182397252328478452}
   - component: {fileID: 1686595625980267826}
   - component: {fileID: 6879185990797225536}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: block_dirt1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +166,7 @@ MonoBehaviour:
   maximumDetails: 1
   spawnSides: 04000000
   pivotIsCenter: 0
+  drawRayCasts: 0
   heightNeeded: 1
 --- !u!114 &6879185990797225536
 MonoBehaviour:
@@ -184,4 +185,5 @@ MonoBehaviour:
   maximumDetails: 1
   spawnSides: 04000000
   pivotIsCenter: 0
+  drawRayCasts: 0
   heightNeeded: 1

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6054202915534302585}
   - component: {fileID: -2428987234976106341}
   - component: {fileID: -6646847166759271617}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: coal_block_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

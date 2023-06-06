@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5742916604929822327}
   - component: {fileID: 6872932537790518066}
   - component: {fileID: -3220988898008227462}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ice_block2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -128,7 +128,6 @@ public class SpawnRandomDetail : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(origin, raycastDirection, out hit, heightNeeded))
             {
-                Debug.Log("hit");
                 return true;
             }
         }

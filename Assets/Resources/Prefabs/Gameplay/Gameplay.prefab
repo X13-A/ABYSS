@@ -9113,6 +9113,7 @@ MonoBehaviour:
   activeAimingMode: 0
   health: 100
   playerProjectileStart: {fileID: 1145752963}
+  playerAttackSpeedMultiplier: 1
 --- !u!1 &3530465440532191984
 GameObject:
   m_ObjectHideFlags: 0

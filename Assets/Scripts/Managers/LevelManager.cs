@@ -92,6 +92,8 @@ public class LevelManager : MonoBehaviour, IEventHandler
         {
             var scene = SceneManager.GetSceneByName(e.targetScene);
             GameObject map = await generator.GenerateMap(currentLevel - 1);
+            map.AddComponent<DisableOnLoad>();
+
             DontDestroyOnLoad(map);
 
             SceneManager.sceneLoaded += OnSceneLoaded;

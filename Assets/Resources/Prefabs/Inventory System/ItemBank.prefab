@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3730185255813836368
 Transform:
   m_ObjectHideFlags: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ce2de9a4f4c5b4daa437741237256d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemKeys: 0000000001000000020000000300000005000000
+  itemKeys: 00000000010000000200000003000000050000001300000012000000
   itemValues:
   - name: Sword
     icon: {fileID: 21300000, guid: c581b480249875c4d966808a101e00e1, type: 3}
@@ -76,6 +76,18 @@ MonoBehaviour:
     droppedPrefab: {fileID: 3014930985819444752, guid: 8acb6027a2a7e97478d9c6b890f49a46, type: 3}
     rarity: 0
     isConsumable: 1
+  - name: Attack Boost
+    icon: {fileID: 21300024, guid: ddf8838d0a06d8d4c9dec9e3bed69260, type: 3}
+    heldPrefab: {fileID: 8603081045798026319, guid: 498ea55c27f3d6742b4e53226b0ac0ec, type: 3}
+    droppedPrefab: {fileID: 8212018675922740652, guid: fd3627528079a974c80ec66a33de0b77, type: 3}
+    rarity: 0
+    isConsumable: 1
+  - name: Bottle Health
+    icon: {fileID: 21300000, guid: ddf8838d0a06d8d4c9dec9e3bed69260, type: 3}
+    heldPrefab: {fileID: 5761538092629539415, guid: b8c374478e9a46f468a8a6247eb19e8a, type: 3}
+    droppedPrefab: {fileID: 5341605147957243109, guid: 24c275d9142568a4e867381b1ba452f0, type: 3}
+    rarity: 0
+    isConsumable: 0
   - name: 
     icon: {fileID: 0}
     heldPrefab: {fileID: 0}

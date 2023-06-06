@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Mushroom : MonoBehaviour, IUseItem
 {
-
-    public float damage;
+     [SerializeField] private float damage;
 
     public void Use()
     {

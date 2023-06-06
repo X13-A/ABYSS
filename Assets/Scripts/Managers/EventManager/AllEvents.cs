@@ -44,6 +44,11 @@ public class DamagePlayerEvent : SDD.Events.Event
     public float damage;
 }
 
+public class HealthPlayerEvent : SDD.Events.Event
+{
+    public float health;
+}
+
 public class UpdatePlayerHealthEvent : SDD.Events.Event
 {
     public float newHealth;

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3730185255813836368
 Transform:
   m_ObjectHideFlags: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ce2de9a4f4c5b4daa437741237256d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemKeys: 00000000010000000200000003000000130000001200000004000000
+  itemKeys: 0000000001000000020000000300000013000000120000000400000014000000
   itemValues:
   - name: Sword
     icon: {fileID: 21300000, guid: 1e6975c979ecad244bbcc46c5e373fa4, type: 3}
@@ -86,6 +86,12 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: fd35c4ebc1e6da942aa4299a148442ce, type: 3}
     heldPrefab: {fileID: 2437588115170568173, guid: b423db45a313fac488c8dcaaf15a6adc, type: 3}
     droppedPrefab: {fileID: 8678194787129688091, guid: e9c5c7d2989716b48a9a5381cb8ea9ed, type: 3}
+    rarity: 0
+    isConsumable: 1
+  - name: Shield Boost
+    icon: {fileID: 21300008, guid: ddf8838d0a06d8d4c9dec9e3bed69260, type: 3}
+    heldPrefab: {fileID: 1000013317980782, guid: 2cf6690298568294cb6b655c0a3aeb87, type: 3}
+    droppedPrefab: {fileID: 3993256827618066562, guid: b86adf768a051ce409f19b7c31dccc8a, type: 3}
     rarity: 0
     isConsumable: 1
   - name: 

@@ -6,14 +6,14 @@ public class Damager : MonoBehaviour, IDamager
 {
     [SerializeField] private float damage;
     [SerializeField] private AttackType type;
-    private new Collider collider;
-    public Collider Collider => collider;
+    private Collider damagerCollider;
+    public Collider Collider => damagerCollider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
     private void Awake()
     {
-        collider = GetComponent<Collider>();
+        damagerCollider = GetComponent<Collider>();
     }
 
     // Enables damage
@@ -24,7 +24,7 @@ public class Damager : MonoBehaviour, IDamager
         {
             collides.Clear();
             this.damage = damage;
-            collider.enabled = true;
+            damagerCollider.enabled = true;
         }));
 
         // Never disable (arrows, projectiles)
@@ -37,7 +37,7 @@ public class Damager : MonoBehaviour, IDamager
         StartCoroutine(CoroutineUtil.DelayAction(duration * endPercent, () =>
         {
             this.damage = 0;
-            collider.enabled = false;
+            damagerCollider.enabled = false;
             collides.Clear();
         }));
     }

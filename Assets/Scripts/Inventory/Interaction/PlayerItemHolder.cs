@@ -13,7 +13,7 @@ public class PlayerItemHolder : MonoBehaviour
         this.SubscribeEvents();
 
         // HACK, because this script is not up when the event is fired
-        this.UpdateItemInHand(new PlayerHeldItemUpdateEvent { itemId = InventoryManager.Instance.ActiveItem });
+        this.UpdateItemInHand(new PlayerHeldItemUpdateEvent { itemId = InventoryManager.Instance ? InventoryManager.Instance.ActiveItem : null });
     }
 
     private void OnDisable()

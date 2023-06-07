@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
-using UnityEditor.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IEventHandler
 {

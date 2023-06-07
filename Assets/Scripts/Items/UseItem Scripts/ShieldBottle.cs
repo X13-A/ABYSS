@@ -9,7 +9,7 @@ public class ShieldBottle : MonoBehaviour, IUseItem
 
     public void Use()
     {
-        Debug.Log("SHIELLLDS");
+        EventManager.Instance.Raise(new SetShieldPlayerEvent { shield = shield });
         EventManager.Instance.Raise(new PlayerDrinkEvent { });
     }
 }

@@ -38,7 +38,7 @@ public class BoostAttackIndicator : MonoBehaviour
 
     private void FlashBoostIndicator(StartAttackBoostPlayerEvent e)
     {
-        StartCoroutine(FlashBoostIndicator());
+        StartCoroutine(FlashBoostCoroutine());
     }
 
     private void DisplaySelectedName(SwitchSlotEvent e)
@@ -81,7 +81,7 @@ public class BoostAttackIndicator : MonoBehaviour
         wand.SetActive(false);
     }
 
-    private IEnumerator FlashBoostIndicator()
+    private IEnumerator FlashBoostCoroutine()
     {
         display = true;
         lightening.SetActive(true);

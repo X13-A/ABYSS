@@ -22,12 +22,12 @@ public class HealthBar : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<UpdatePlayerHealthEvent>(this.SetHealth);
+        EventManager.Instance.AddListener<UpdatePlayerHealthEvent>(SetHealth);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<UpdatePlayerHealthEvent>(this.SetHealth);
+        EventManager.Instance.RemoveListener<UpdatePlayerHealthEvent>(SetHealth);
     }
 
     public void Start()

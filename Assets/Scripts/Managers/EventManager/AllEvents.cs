@@ -63,11 +63,6 @@ public class CarePlayerEvent : SDD.Events.Event
     public float care;
 }
 
-public class HealthPlayerEvent : SDD.Events.Event
-{
-    public float health;
-}
-
 public class UpdatePlayerHealthEvent : SDD.Events.Event
 {
     public float newHealth;
@@ -78,6 +73,21 @@ public class StartAttackBoostPlayerEvent : SDD.Events.Event
 
 public class EndAttackBoostPlayerEvent : SDD.Events.Event
 { }
+
+public class DamageShieldPlayerEvent : SDD.Events.Event
+{
+    public float shieldDamage;
+}
+
+public class SetShieldPlayerEvent : SDD.Events.Event
+{
+    public float shield;
+}
+
+public class UpdateShieldPlayerHealthEvent : SDD.Events.Event
+{
+    public float newShieldHealth;
+}
 
 public class AttackSpeedMultiplierEvent : SDD.Events.Event
 {

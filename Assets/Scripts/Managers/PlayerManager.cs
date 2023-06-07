@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
+using UnityEditor.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IEventHandler
 {
@@ -12,6 +13,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
+    [SerializeField] private float shield;
     [SerializeField] private GameObject playerProjectileStart;
     [SerializeField] private float playerAttackSpeedMultiplier;
 
@@ -19,6 +21,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;
+    public float Shield => shield;
     public float PlayerAttackSpeedMultiplier
     {
         get => Mathf.Max(playerAttackSpeedMultiplier, 0.01f);
@@ -43,6 +46,8 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
         EventManager.Instance.AddListener<DamagePlayerEvent>(SetHealthDamage);
         EventManager.Instance.AddListener<CarePlayerEvent>(SetHealthCare);
+        EventManager.Instance.AddListener<DamageShieldPlayerEvent>(SetShieldhDamage);
+        EventManager.Instance.AddListener<SetShieldPlayerEvent>(SetShieldCare);
         EventManager.Instance.AddListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
         // Reset aim mode on menus
@@ -60,6 +65,8 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(SetPlayerAim);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(SetHealthDamage);
         EventManager.Instance.RemoveListener<CarePlayerEvent>(SetHealthCare);
+        EventManager.Instance.RemoveListener<DamageShieldPlayerEvent>(SetShieldhDamage);
+        EventManager.Instance.RemoveListener<SetShieldPlayerEvent>(SetShieldCare);
         EventManager.Instance.RemoveListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
         // Reset aim mode on menus
@@ -122,6 +129,12 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetHealthDamage(DamagePlayerEvent e)
     {
+        if (PlayerManager.Instance.Shield > 0)
+        {
+            EventManager.Instance.Raise(new DamageShieldPlayerEvent { shieldDamage = e.damage });
+            return;
+        }
+
         health = Mathf.Max(health - e.damage, 0);
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
         if (health <= 0)
@@ -135,6 +148,19 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     {
         health = Mathf.Min(health + e.care, 100);
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
+    }
+
+    private void SetShieldhDamage(DamageShieldPlayerEvent e)
+    {
+        float damage = e.shieldDamage * 0.75f;
+        shield = Mathf.Max(shield - damage, 0);
+        EventManager.Instance.Raise(new UpdateShieldPlayerHealthEvent { newShieldHealth = shield });
+    }
+
+    private void SetShieldCare(SetShieldPlayerEvent e)
+    {
+        shield = Mathf.Min(shield + e.shield, 100);
+        EventManager.Instance.Raise(new UpdateShieldPlayerHealthEvent { newShieldHealth = shield });
     }
 
     private void SetAttackSpeedMultiplier(AttackSpeedMultiplierEvent e)

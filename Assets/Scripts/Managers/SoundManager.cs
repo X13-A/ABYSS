@@ -12,7 +12,6 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip EnteringIntoPortal;
     [SerializeField] private AudioClip LootItem;
-    [SerializeField] private AudioClip FootSteps;
     [SerializeField] private AudioClip HitDamage;
     [SerializeField] private AudioClip ButtonClicked;
 
@@ -44,7 +43,6 @@ public class SoundManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
-        EventManager.Instance.AddListener<PlayerMoveEvent>(ManageFootSteps);
         EventManager.Instance.AddListener<DamagePlayerEvent>(LaunchDamageHit);
         EventManager.Instance.AddListener<ButtonClickedEvent>(LaunchButtonClicked);
     }
@@ -53,8 +51,8 @@ public class SoundManager : MonoBehaviour
     {
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(LaunchEnteringIntoPortalSound);
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
-        EventManager.Instance.RemoveListener<PlayerMoveEvent>(ManageFootSteps);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(LaunchDamageHit);
+        EventManager.Instance.RemoveListener<ButtonClickedEvent>(LaunchButtonClicked);
     }
 
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)
@@ -65,12 +63,6 @@ public class SoundManager : MonoBehaviour
     private void LaunchLoot(ItemPickedUpEvent e)
     {
         audioSource.PlayOneShot(LootItem);
-    }
-
-    private void ManageFootSteps(PlayerMoveEvent e)
-    {
-        if (e.isMoving) audioSource.Play();
-        if (!e.isMoving) audioSource.Stop();
     }
 
     private void LaunchDamageHit(DamagePlayerEvent e)

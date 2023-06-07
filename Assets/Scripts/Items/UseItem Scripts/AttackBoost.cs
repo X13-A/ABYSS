@@ -10,5 +10,6 @@ public class AttackBoost : MonoBehaviour, IUseItem
     public void Use()
     {
         EventManager.Instance.Raise(new StartAttackBoostPlayerEvent { });
+        EventManager.Instance.Raise(new PlayerDrinkEvent { });
     }
 }

@@ -10,5 +10,6 @@ public class Mushroom : MonoBehaviour, IUseItem
     public void Use()
     {
         EventManager.Instance.Raise(new DamagePlayerEvent { damage = damage });
+        EventManager.Instance.Raise(new PlayerEatEvent { });
     }
 }

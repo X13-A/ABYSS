@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detail: {fileID: 1404320471278758, guid: a19d19351ba8c0145977eb9957830b69, type: 3}
+  detail: {fileID: 1404320471278758, guid: 7a115c321d16ae644aafbfd662674b19, type: 3}
   probability: 0.004
   maximumDetails: 1
   spawnSides: 04000000
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39449f9db63c04848abfed6b49ab71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detail: {fileID: 1756093153186916, guid: 383d86f14ec9faf45bea5990711300f5, type: 3}
+  detail: {fileID: 1756093153186916, guid: 2ed84c6a466fb064198b96630d28d4c0, type: 3}
   probability: 0.004
   maximumDetails: 1
   spawnSides: 04000000

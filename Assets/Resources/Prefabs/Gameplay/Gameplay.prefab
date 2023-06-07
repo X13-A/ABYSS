@@ -4900,6 +4900,7 @@ Transform:
   - {fileID: 6240298251001685422}
   - {fileID: 5026695680824661916}
   - {fileID: 6546252339576372941}
+  - {fileID: 1520858915552625751}
   m_Father: {fileID: 1003219964421049865}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8493,6 +8494,7 @@ MonoBehaviour:
   stepSound:
   - {fileID: 8300000, guid: 21ee16998e5a1994ba7531eac7aa4d04, type: 3}
   - {fileID: 8300000, guid: c7ba47daedfe4754b83f083ea3dbadcd, type: 3}
+  pickaxeSound: {fileID: 0}
 --- !u!82 &5779424100598564920
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8817,6 +8819,60 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &2558772164280976211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1520858915552625751}
+  - component: {fileID: 6878905417585048}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1520858915552625751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558772164280976211}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1003219965297979237}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6878905417585048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558772164280976211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf750d4bf75eb6c46acef70802ea71ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpawnHeight: 20
+  maxEnnemies: 20
+  ennemies:
+  - {fileID: 8230839584318637536, guid: e65b52ed975c04e7c8382b6a9cce8359, type: 3}
+  - {fileID: 6370514893178482396, guid: b96124b9b38104547b936a916c97a438, type: 3}
+  - {fileID: 7785006177799005504, guid: 1b183fcddefb5bc40a5932217a0ec2ce, type: 3}
+  - {fileID: 7582854027066610167, guid: ed08b18cd190693498aa6ed77d112d74, type: 3}
+  mainCamera: {fileID: 1003219964445299844}
+  spawnEnabled: 1
+  spawnDelay: 1
 --- !u!1 &2573996325087450234
 GameObject:
   m_ObjectHideFlags: 0
@@ -9584,6 +9640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235807facdbfd1944940631ee583b83f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerReference: {fileID: 1003219964964764840}
   activePlayerMode: 5
   activeAimingMode: 0
   health: 100

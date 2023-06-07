@@ -104,6 +104,7 @@ public class MapGeneration : MonoBehaviour
                 // Read noise map
                 float currentHeight = noiseMap[x, z];
 
+                // Ignore edges to create a circle
                 if (Vector2.Distance(new Vector2(MapWidth/2, MapWidth/2), new Vector2(x, z)) > MapWidth/2)
                 {
                     continue;

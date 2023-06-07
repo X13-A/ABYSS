@@ -12,16 +12,14 @@ public class LevelData : MonoBehaviour
     private int[,] topBlocksHeight;
     public int[,] TopBlocksHeight { get { return topBlocksHeight; } set { topBlocksHeight = value; } }
 
-    private int mapWidth;
+    public float MapRadius { get; set; }
+
     public int MapWidth { get; set; }
 
-    private int mapHeight;
     public int MapHeight { get; set; }
 
-    private Vector3 portalPos { get; set; }
     public Vector3 PortalPos { get; set; }
 
-    private Vector3 treasurePos { get; set; }
     public Vector3 TreasurePos { get; set; }
 
     private void Awake()

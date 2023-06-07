@@ -6,7 +6,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float runningVelocity;
     [SerializeField] private float walkingVelocity;
     [SerializeField] private float runningWhenModifier;
-    [SerializeField] private Transform playerReference;
     [SerializeField] private float attackDuration;
     [SerializeField] private float attackVariantDuration;
     [SerializeField] private float attackDamage;
@@ -38,7 +37,7 @@ public class EnemyAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        playerCharacterController = playerReference.GetComponent<CharacterController>();
+        playerCharacterController = PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>();
         enemyCollider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -85,12 +84,12 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateStatus()
     {
-        if (playerReference == null)
+        if (PlayerManager.Instance.PlayerReference == null)
         {
             return;
         }
 
-        distanceToPlayer = Vector3.Distance(transform.position, playerReference.position);
+        distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.Instance.PlayerReference.position);
         UpdateRunningAndWalkingStatus();
     }
 
@@ -138,7 +137,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
 
         Vector3 enemyWidth = GetEnemyHalfWidth();
-        Vector3 directionToPlayer = ((playerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
+        Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
         rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }

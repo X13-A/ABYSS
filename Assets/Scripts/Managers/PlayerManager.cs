@@ -8,12 +8,14 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     private static PlayerManager m_Instance;
     public static PlayerManager Instance => m_Instance;
 
+    [SerializeField] private Transform playerReference;
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
     [SerializeField] private GameObject playerProjectileStart;
     [SerializeField] private float playerAttackSpeedMultiplier;
 
+    public Transform PlayerReference => playerReference;
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;

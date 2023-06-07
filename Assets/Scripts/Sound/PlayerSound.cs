@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StepSound : MonoBehaviour
+public class PlayerSound : MonoBehaviour
 {
     [SerializeField] private AudioClip[] stepSound;
     [SerializeField] private AudioClip pickaxeSound;

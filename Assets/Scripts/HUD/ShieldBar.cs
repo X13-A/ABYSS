@@ -32,13 +32,16 @@ public class ShieldBar : MonoBehaviour
     }
     public void Start()
     {
-        slider.maxValue = PlayerManager.Instance.Shield;
+        slider.maxValue = PlayerManager.Instance.MaxShield;
         slider.value = PlayerManager.Instance.Shield;
+
+        if (PlayerManager.Instance.Shield == 0) shieldBar.SetActive(false);
+        else shieldBar.SetActive(true);
     }
 
     private void SetShield(UpdateShieldPlayerHealthEvent e)
     {
-        if (e.newShieldHealth <= 0) shieldBar.SetActive(false);
+        if (e.newShieldHealth == 0) shieldBar.SetActive(false);
         else shieldBar.SetActive(true);
         slider.value = e.newShieldHealth;
     }

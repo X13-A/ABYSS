@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private PlayerMode activePlayerMode;
     [SerializeField] private AimingMode activeAimingMode;
     [SerializeField] private float health;
+    [SerializeField] private float maxShield;
     [SerializeField] private float shield;
     [SerializeField] private GameObject playerProjectileStart;
     [SerializeField] private float playerAttackSpeedMultiplier;
@@ -21,6 +22,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public PlayerMode ActivePlayerMode => activePlayerMode;
     public AimingMode ActiveAimingMode => activeAimingMode;
     public float Health => health;
+    public float MaxShield => maxShield;
     public float Shield => shield;
     public float PlayerAttackSpeedMultiplier
     {

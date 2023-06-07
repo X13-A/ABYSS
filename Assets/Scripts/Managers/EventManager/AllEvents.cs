@@ -36,6 +36,10 @@ public class PlayerSpawnedEvent : SDD.Events.Event
 {
 }
 
+public class PlayerDrinkEvent : SDD.Events.Event
+{
+}
+
 public class AimingModeUpdateEvent : SDD.Events.Event
 {
     public AimingMode mode;

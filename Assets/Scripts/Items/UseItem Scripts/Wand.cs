@@ -54,9 +54,13 @@ public class Wand : MonoBehaviour, IUseItem
             name = "Wand Attack",
             animationDuration = currentAttackDuration
         });
-        wandAnimation.Animate(wandDuration * currentAttackDuration);
-        wandAudioSource.PlayOneShot(wandClip);
-        StartCoroutine(CoroutineUtil.DelayAction(wandDuration * wandStartPercentage, () =>
+
+        // Animate particles
+        wandAnimation.Animate(currentAttackDuration * wandStartPercentage);
+        wandAudioSource.Play();
+
+        // Shoot projectile
+        StartCoroutine(CoroutineUtil.DelayAction(currentAttackDuration * wandStartPercentage, () =>
         {
             Projectile projectile = Instantiate(magicProjectilePrefab, magicProjectilePosition.transform.position, Quaternion.Euler(
                 magicProjectilePosition.transform.rotation.eulerAngles.x,

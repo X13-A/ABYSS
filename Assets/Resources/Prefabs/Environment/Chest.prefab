@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 6060466372350961455}
   - component: {fileID: 6060466372350961454}
   - component: {fileID: 3215522342639893948}
+  - component: {fileID: 6060466372350961448}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -189,19 +190,6 @@ MonoBehaviour:
   lidRotation: {x: -1, y: 0, z: 0}
   lidPop: {x: 0, y: 1, z: -0.25}
   audioSource: {fileID: 3215522342639893948}
---- !u!65 &6060466372350961448
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6073799528635424721}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6060466372350961454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -226,7 +214,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 00d8f3f00addef14abb8ca860e4c7e42, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -311,6 +299,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &6060466372350961448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6073799528635424721}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7134249579713845639
 GameObject:
   m_ObjectHideFlags: 0

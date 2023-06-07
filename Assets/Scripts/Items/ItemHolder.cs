@@ -40,6 +40,7 @@ public class ItemHolder : MonoBehaviour
 
     private void UseItem(UseItemEvent e)
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         if (heldItem == null) return;
         IUseItem useItemInterface = heldItem.GetComponent<IUseItem>();
         if (useItemInterface != null) useItemInterface.Use();

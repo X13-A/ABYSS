@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3893057091044518360}
   - component: {fileID: -5066469149163103697}
   m_Layer: 3
-  m_Name: ground1
+  m_Name: ground1_block_damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

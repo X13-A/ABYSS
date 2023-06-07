@@ -30,23 +30,32 @@ public class TransitionManager : MonoBehaviour
 
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
-        if (panelImage == null) yield break;
         Color panelColor = Color.black;
-        panelColor.a = 1f;
-        panelImage.color = panelColor;
+
+        if (panelImage != null)
+        {
+            panelColor.a = 1f;
+            panelImage.color = panelColor;
+        }
 
         // Fade the panel to black
         float fadeTime = 0f;
         while (fadeTime < fadeDuration)
         {
-            panelColor.a = Mathf.Lerp(1f, 0f, fadeTime / fadeDuration);
-            panelImage.color = panelColor;
+            if (panelImage != null)
+            {
+                panelColor.a = Mathf.Lerp(1f, 0f, fadeTime / fadeDuration);
+                panelImage.color = panelColor;
+            }
             fadeTime += Time.deltaTime;
             yield return null;
         }
 
-        panelColor.a = 0f;
-        panelImage.color = panelColor;
+        if (panelImage != null)
+        {
+            panelColor.a = 0f;
+            panelImage.color = panelColor;
+        }
 
         // Call the action delegate
         actionDelegate?.Invoke();
@@ -67,23 +76,32 @@ public class TransitionManager : MonoBehaviour
 
         // Set the panel color to transparent
         Image panelImage = fadePanel.GetComponent<Image>();
-        if (panelImage == null) yield break;
-        Color panelColor = panelImage.color;
-        panelColor.a = 0f;
-        panelImage.color = panelColor;
+        Color panelColor = Color.clear;
+        if (panelImage != null)
+        {
+            panelColor = panelImage.color;
+            panelColor.a = 0f;
+            panelImage.color = panelColor;
+        }
 
         // Fade the panel to black
         float fadeTime = 0f;
         while (fadeTime < fadeDuration)
         {
-            panelColor.a = Mathf.Lerp(0f, 1f, fadeTime / fadeDuration);
-            panelImage.color = panelColor;
+            if (panelImage != null)
+            {
+                panelColor.a = Mathf.Lerp(0f, 1f, fadeTime / fadeDuration);
+                panelImage.color = panelColor;
+            }
             fadeTime += Time.deltaTime;
             yield return null;
         }
 
-        panelColor.a = 1f;
-        panelImage.color = panelColor;
+        if (panelImage != null)
+        {
+            panelColor.a = 1f;
+            panelImage.color = panelColor;
+        }
 
         Destroy(fadePanel);
 

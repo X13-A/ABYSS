@@ -7,6 +7,7 @@ public class Damager : MonoBehaviour, IDamager
     [SerializeField] private float damage;
     [SerializeField] private AttackType type;
     private new Collider collider;
+    public Collider Collider => collider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
@@ -16,11 +17,10 @@ public class Damager : MonoBehaviour, IDamager
     }
 
     // Enables damage
-    public void Damage(float damage, float duration)
+    public void EnableDamage(float damage, float duration, float startPercent = 0, float endPercent = 1)
     {
-        type = AttackType.MELEE;
         // Enable
-        StartCoroutine(CoroutineUtil.DelayAction(duration * 0.4f, () =>
+        StartCoroutine(CoroutineUtil.DelayAction(duration * startPercent, () =>
         {
             collides.Clear();
             this.damage = damage;
@@ -34,7 +34,7 @@ public class Damager : MonoBehaviour, IDamager
         }
 
         // Disable
-        StartCoroutine(CoroutineUtil.DelayAction(duration, () =>
+        StartCoroutine(CoroutineUtil.DelayAction(duration * endPercent, () =>
         {
             this.damage = 0;
             collider.enabled = false;

@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         this.damage = damage;
         if (!AOE)
         {
-            damager.GetComponent<Damager>().Damage(damage, 0);
+            damager.GetComponent<Damager>().EnableDamage(damage, 0);
         }
         Invoke(nameof(Die), lifespan);
     }
@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
             {
                 // Activate damage on explosion object
                 damager.transform.SetParent(effectInstance.transform);
-                damager.GetComponent<Damager>().Damage(damage, 0);
+                damager.GetComponent<Damager>().EnableDamage(damage, 0);
             }
         }
         Destroy(gameObject);

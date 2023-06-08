@@ -22,7 +22,6 @@ public class WandAnimation : MonoBehaviour
 
     public void Animate(float delay)
     {
-        Debug.Log(delay);
         StartCoroutine(CoroutineUtil.DelayAction(0f, () =>
         {
             this.wandCast.Stop(true);

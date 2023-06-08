@@ -99,14 +99,14 @@ public class EnemyAI : MonoBehaviour
         isWalking = false;
         isReadyToBattle = false;
 
-        if (distanceToPlayer <= attackDistanceOffset)
+        if (distanceToPlayer >= detectionRadius)
         {
-            isReadyToBattle = true;
             return;
         }
 
-        if (distanceToPlayer >= detectionRadius)
+        if (distanceToPlayer <= attackDistanceOffset)
         {
+            isReadyToBattle = true;
             return;
         }
 

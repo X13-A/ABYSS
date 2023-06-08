@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
-using UnityEditor.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IEventHandler
 {
@@ -17,6 +16,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private float shield;
     [SerializeField] private GameObject playerProjectileStart;
     [SerializeField] private float playerAttackSpeedMultiplier;
+
 
     public Transform PlayerReference => playerReference;
     public PlayerMode ActivePlayerMode => activePlayerMode;
@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetPlayerAim);
         EventManager.Instance.AddListener<DamagePlayerEvent>(SetHealthDamage);
         EventManager.Instance.AddListener<CarePlayerEvent>(SetHealthCare);
-        EventManager.Instance.AddListener<DamageShieldPlayerEvent>(SetShieldhDamage);
+        EventManager.Instance.AddListener<DamageShieldPlayerEvent>(SetShieldDamage);
         EventManager.Instance.AddListener<SetShieldPlayerEvent>(SetShieldCare);
         EventManager.Instance.AddListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(SetPlayerAim);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(SetHealthDamage);
         EventManager.Instance.RemoveListener<CarePlayerEvent>(SetHealthCare);
-        EventManager.Instance.RemoveListener<DamageShieldPlayerEvent>(SetShieldhDamage);
+        EventManager.Instance.RemoveListener<DamageShieldPlayerEvent>(SetShieldDamage);
         EventManager.Instance.RemoveListener<SetShieldPlayerEvent>(SetShieldCare);
         EventManager.Instance.RemoveListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
@@ -131,11 +131,29 @@ public class PlayerManager : MonoBehaviour, IEventHandler
 
     private void SetHealthDamage(DamagePlayerEvent e)
     {
+        if (health <= 0) return;
         if (PlayerManager.Instance.Shield > 0)
         {
+            // Calculates damage after shield is broken
+            float damageToHealth = e.damage - PlayerManager.Instance.Shield;
             EventManager.Instance.Raise(new DamageShieldPlayerEvent { shieldDamage = e.damage });
+
+            // If there is, inflict it
+            if (damageToHealth > 0)
+            {
+                health = Mathf.Max(health - damageToHealth, 0);
+                EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health - damageToHealth });
+            }
+
+            // Check if dead
+            if (health <= 0)
+            {
+                health = 0;
+                EventManager.Instance.Raise(new GameOverEvent { });
+            }
             return;
         }
+
 
         health = Mathf.Max(health - e.damage, 0);
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
@@ -152,7 +170,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
     }
 
-    private void SetShieldhDamage(DamageShieldPlayerEvent e)
+    private void SetShieldDamage(DamageShieldPlayerEvent e)
     {
         float damage = e.shieldDamage * 0.75f;
         shield = Mathf.Max(shield - damage, 0);

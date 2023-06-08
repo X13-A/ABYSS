@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockDamage : MonoBehaviour, IDamageable
+ public class BlockDamage : MonoBehaviour, IDamageable
 {
     [SerializeField] private float health;
     [SerializeField] private List<AttackType> damagerTypes;
@@ -26,8 +26,6 @@ public class BlockDamage : MonoBehaviour, IDamageable
 
     public void Damage(float damage, AttackType type)
     {
-        // Scale damage according to factors
-        //Debug.Log(damagerTypes.IndexOf(type));
         if (health < 0 + Mathf.Epsilon) return;
         float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
 

@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e657cdae3450b4481ea5e55872930a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   health: 10
   damagerTypes: 
   damagerTypesFactors: []
-  animationHit: {fileID: 7179658789665474450}
 --- !u!111 &4364031463798282477
 Animation:
   m_ObjectHideFlags: 0
@@ -229,10 +229,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e657cdae3450b4481ea5e55872930a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   health: 10
   damagerTypes: 
   damagerTypesFactors: []
-  animationHit: {fileID: 7179658789665474450}
 --- !u!111 &1381582500691953131
 Animation:
   m_ObjectHideFlags: 0
@@ -273,7 +273,6 @@ GameObject:
   - component: {fileID: 4489404336695620}
   - component: {fileID: 205522232285345420}
   - component: {fileID: -200374007647568757}
-  - component: {fileID: 3779417858958136695}
   - component: {fileID: -579539915471642674}
   - component: {fileID: -1127779174030742585}
   m_Layer: 0
@@ -290,7 +289,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979290889500462}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
@@ -342,19 +341,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &3779417858958136695
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979290889500462}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-579539915471642674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 645235465412858718}
   - component: {fileID: 8429926783430708242}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,10 +484,5 @@ Transform:
 --- !u!23 &23962041711291012 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8278964857570453928, guid: 5e09bc6c382a03941b1e88121d4ede6f, type: 3}
-  m_PrefabInstance: {fileID: 8264646228888159020}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &7179658789665474450 stripped
-Animation:
-  m_CorrespondingSourceObject: {fileID: 1230237325060146366, guid: 5e09bc6c382a03941b1e88121d4ede6f, type: 3}
   m_PrefabInstance: {fileID: 8264646228888159020}
   m_PrefabAsset: {fileID: 0}

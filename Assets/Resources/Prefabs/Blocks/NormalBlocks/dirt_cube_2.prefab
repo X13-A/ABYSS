@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33293805258887958}
   - component: {fileID: 23943434258912988}
   - component: {fileID: 8209869639746673010}
+  - component: {fileID: 1774148893646450734}
   m_Layer: 0
   m_Name: block_dirt1_2_LOD1
   m_TagString: Untagged
@@ -100,6 +101,19 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!65 &1774148893646450734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267112529025518}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1380870292490712
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +188,7 @@ GameObject:
   - component: {fileID: 33021583190684364}
   - component: {fileID: 23525311740747300}
   - component: {fileID: 5884737375508695526}
+  - component: {fileID: 1982451237984543510}
   m_Layer: 0
   m_Name: block_dirt1_2_LOD2
   m_TagString: Untagged
@@ -262,6 +277,19 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!65 &1982451237984543510
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567481648891976}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5960420764394940669
 PrefabInstance:
   m_ObjectHideFlags: 0

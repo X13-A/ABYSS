@@ -129,8 +129,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0864273, y: 1.093592, z: 1.0864365}
-  m_Center: {x: -0.0008428693, y: 0.0038073063, z: -0.00022923946}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1911632988027204
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,8 +260,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0864273, y: 1.093592, z: 1.0864365}
-  m_Center: {x: -0.0008428693, y: 0.0038073063, z: -0.00022923946}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1979290889500462
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +272,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4489404336695620}
   - component: {fileID: 205522232285345420}
-  - component: {fileID: -200374007647568757}
   m_Layer: 0
   m_Name: ground_cube_grass
   m_TagString: Untagged
@@ -325,19 +324,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23166277243298884}
   m_Enabled: 1
---- !u!65 &-200374007647568757
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979290889500462}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8264646228888159020
 PrefabInstance:
   m_ObjectHideFlags: 0

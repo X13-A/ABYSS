@@ -343,3 +343,13 @@ public class SelectedItemEvent : SDD.Events.Event
 }
 
 #endregion
+
+#region Boss Level Events
+
+public class PlayerDetectorEvent : SDD.Events.Event
+{ }
+
+public class StartBossScreamerEvent : SDD.Events.Event
+{ }
+
+#endregion

@@ -24,12 +24,12 @@ public class EnemyAnimationController : MonoBehaviour, IEventHandler
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     private void Update()

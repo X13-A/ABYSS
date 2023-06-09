@@ -291,6 +291,15 @@ public class UpdateCollidingChestsEvent : SDD.Events.Event
     public HashSet<Chest> chests;
 }
 
+public class ShowSignInteractionMessage : SDD.Events.Event
+{
+
+}
+
+public class HideSignInteractionMessage : SDD.Events.Event
+{
+
+}
 
 public class SwitchSlotEvent : SDD.Events.Event
 {

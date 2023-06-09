@@ -31,7 +31,7 @@ public class Wand : MonoBehaviour, IUseItem
             }
             else
             {
-                magicProjectilePosition = this.gameObject;
+                magicProjectilePosition = gameObject;
                 Debug.LogWarning("Bad shoot position for held wand. Should setup PlayerProjectileStart in PlayerManager");
             }
         }

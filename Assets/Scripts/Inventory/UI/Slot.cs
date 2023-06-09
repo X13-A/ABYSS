@@ -30,19 +30,19 @@ public class Slot : MonoBehaviour
     {
         if (item == null)
         {
-            this.itemId = null;
-            this.image.sprite = null;
-            this.image.enabled = false;
-            this.text.text = string.Empty;
-            this.text.enabled = false;
+            itemId = null;
+            image.sprite = null;
+            image.enabled = false;
+            text.text = string.Empty;
+            text.enabled = false;
         }
         else
         {
-            this.itemId = item.Id;
-            this.image.sprite = ItemBank.GetIcon(item.Id);
-            this.image.enabled = true;
-            this.text.text = item.Count.ToString();
-            this.text.enabled = true;
+            itemId = item.Id;
+            image.sprite = ItemBank.GetIcon(item.Id);
+            image.enabled = true;
+            text.text = item.Count.ToString();
+            text.enabled = true;
         }
     }
 }

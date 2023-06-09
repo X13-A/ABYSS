@@ -16,16 +16,16 @@ public class DroppedItem : MonoBehaviour
     private void Start()
     {
         // Maybe put some delay before allowing pickup
-        StartCoroutine(CoroutineUtil.DelayAction(0f, () => { pickable = true; }));
+        StartCoroutine(CoroutineUtil.DelayAction(0f, () => pickable = true));
     }
 
     public bool Pickup()
     {
         if (!pickable) return false;
-        if (!InventoryManager.Instance.HasSpaceForItem(this.id)) return false;
+        if (!InventoryManager.Instance.HasSpaceForItem(id)) return false;
 
-        EventManager.Instance.Raise(new ItemPickedUpEvent { itemId = this.id });
-        Destroy(this.gameObject);
+        EventManager.Instance.Raise(new ItemPickedUpEvent { itemId = id });
+        Destroy(gameObject);
         return true;
     }
 }

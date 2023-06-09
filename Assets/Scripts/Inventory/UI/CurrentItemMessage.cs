@@ -16,53 +16,53 @@ public class CurrentItemMessage : MonoBehaviour
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<SwitchSlotEvent>(this.DisplaySelectedName);
-        EventManager.Instance.AddListener<ItemPickedUpEvent>(this.DisplayPickedUpName);
-        EventManager.Instance.AddListener<UpdateCollidingItemsEvent>(this.HandleCollidingItemsUpdate);
-        EventManager.Instance.AddListener<UpdateCollidingChestsEvent>(this.HandleCollidingChestsUpdate);
+        EventManager.Instance.AddListener<SwitchSlotEvent>(DisplaySelectedName);
+        EventManager.Instance.AddListener<ItemPickedUpEvent>(DisplayPickedUpName);
+        EventManager.Instance.AddListener<UpdateCollidingItemsEvent>(HandleCollidingItemsUpdate);
+        EventManager.Instance.AddListener<UpdateCollidingChestsEvent>(HandleCollidingChestsUpdate);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.DisplaySelectedName);
-        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.DisplayPickedUpName);
-        EventManager.Instance.RemoveListener<UpdateCollidingItemsEvent>(this.HandleCollidingItemsUpdate);
-        EventManager.Instance.RemoveListener<UpdateCollidingChestsEvent>(this.HandleCollidingChestsUpdate);
+        EventManager.Instance.RemoveListener<SwitchSlotEvent>(DisplaySelectedName);
+        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(DisplayPickedUpName);
+        EventManager.Instance.RemoveListener<UpdateCollidingItemsEvent>(HandleCollidingItemsUpdate);
+        EventManager.Instance.RemoveListener<UpdateCollidingChestsEvent>(HandleCollidingChestsUpdate);
     }
 
     private void HandleCollidingChestsUpdate(UpdateCollidingChestsEvent e)
     {
-        this.collidingChests = e.chests.Count;
-        this.HandleCollidingObjectsUpdate();
+        collidingChests = e.chests.Count;
+        HandleCollidingObjectsUpdate();
     }
 
     private void HandleCollidingObjectsUpdate()
     {
-        if (this.collidingItems > 0 || this.collidingChests > 0)
+        if (collidingItems > 0 || collidingChests > 0)
         {
-            if (this.fadeCoroutine != null)
+            if (fadeCoroutine != null)
             {
-                StopCoroutine(this.fadeCoroutine);
-                this.fadeCoroutine = null;
+                StopCoroutine(fadeCoroutine);
+                fadeCoroutine = null;
             }
-            this.text.text = "";
-            this.text.enabled = false;
+            text.text = "";
+            text.enabled = false;
         }
     }
 
     private void HandleCollidingItemsUpdate(UpdateCollidingItemsEvent e)
     {
-        this.collidingItems = e.items.Count;
+        collidingItems = e.items.Count;
         HandleCollidingObjectsUpdate();
     }
 
@@ -70,46 +70,46 @@ public class CurrentItemMessage : MonoBehaviour
     {
         if (InventoryManager.Instance.ActiveItem == e.itemId)
         {
-            this.DisplayItemName(e.itemId);
+            DisplayItemName(e.itemId);
         }
     }
 
 
     private void DisplaySelectedName(SwitchSlotEvent e)
     {
-        if (this.collidingItems > 0) return;
+        if (collidingItems > 0) return;
         ItemId? item = InventoryManager.Instance.ActiveItem;
         EventManager.Instance.Raise(new SelectedItemEvent { itemId = item });
-        this.DisplayItemName(item);
+        DisplayItemName(item);
     }
 
     private void DisplayItemName(ItemId? item)
     {
-        Color startColor = this.text.material.color;
+        Color startColor = text.material.color;
         startColor.a = 1f;
-        this.text.material.color = startColor;
+        text.material.color = startColor;
 
-        if (this.fadeCoroutine != null)
+        if (fadeCoroutine != null)
         {
-            StopCoroutine(this.fadeCoroutine);;
-            this.fadeCoroutine = null;
+            StopCoroutine(fadeCoroutine);;
+            fadeCoroutine = null;
         }
 
         if (item == null)
         {
-            this.text.text = "";
-            this.text.enabled = false;
+            text.text = "";
+            text.enabled = false;
             return;
         }
 
         string name = ItemBank.GetName(item.Value);
-        this.text.text = $"{name}";
-        this.text.enabled = true;
+        text.text = $"{name}";
+        text.enabled = true;
 
-        this.fadeCoroutine = StartCoroutine(CoroutineUtil.FadeUITextTo(this.text, 1f, 0f, () =>
+        fadeCoroutine = StartCoroutine(CoroutineUtil.FadeUITextTo(text, 1f, 0f, () =>
         {
-            this.text.text = "";
-            this.text.enabled = false;
+            text.text = "";
+            text.enabled = false;
         }));
     }
 }

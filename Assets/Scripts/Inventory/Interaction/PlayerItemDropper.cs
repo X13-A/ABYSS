@@ -7,22 +7,22 @@ public class PlayerItemDropper : MonoBehaviour
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<ItemDroppedEvent>(this.DropItem);
+        EventManager.Instance.AddListener<ItemDroppedEvent>(DropItem);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<ItemDroppedEvent>(this.DropItem);
+        EventManager.Instance.RemoveListener<ItemDroppedEvent>(DropItem);
     }
 
     private void DropItem(ItemDroppedEvent e)

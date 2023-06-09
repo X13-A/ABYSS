@@ -9,22 +9,22 @@ public class PlayerChestOpener : MonoBehaviour, IEventHandler, IPlayerCollider
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PickupKeyPressedEvent>(this.OpenChests);
+        EventManager.Instance.AddListener<PickupKeyPressedEvent>(OpenChests);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PickupKeyPressedEvent>(this.OpenChests);
+        EventManager.Instance.RemoveListener<PickupKeyPressedEvent>(OpenChests);
     }
 
     private void OpenChests(PickupKeyPressedEvent e)

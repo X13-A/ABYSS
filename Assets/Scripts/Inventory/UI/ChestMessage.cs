@@ -12,34 +12,34 @@ public class ChestMessage : MonoBehaviour
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<UpdateCollidingChestsEvent>(this.ToggleDisplay);
+        EventManager.Instance.AddListener<UpdateCollidingChestsEvent>(ToggleDisplay);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<UpdateCollidingChestsEvent>(this.ToggleDisplay);
+        EventManager.Instance.RemoveListener<UpdateCollidingChestsEvent>(ToggleDisplay);
     }
 
     private void ToggleDisplay(UpdateCollidingChestsEvent e)
     {
         if (e.chests.Count == 0)
         {
-            this.messagePanel.SetActive(false);
+            messagePanel.SetActive(false);
         }
         else
         {
-            this.messagePanel.SetActive(true);
-            this.text.text = $"Press {this.openKey} to open chest";
+            messagePanel.SetActive(true);
+            text.text = $"Press {openKey} to open chest";
         }
     }
 }

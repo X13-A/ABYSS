@@ -4,28 +4,24 @@ using UnityEngine;
 
  public class BlockDamage : MonoBehaviour, IDamageable
 {
+    [SerializeField] private ItemId id;
     [SerializeField] private float health;
     [SerializeField] private List<AttackType> damagerTypes;
     [SerializeField] private List<float> damagerTypesFactors;
-    [SerializeField] private Animation animationHit;
+    private Animation animationHit;
 
-    public float Health { get { return health; } set { health = value; } }
-    public List<AttackType> DamagerTypes { get { return damagerTypes; } }
-    public List<float> DamagerTypesFactors { get { return damagerTypesFactors; } }
+    public float Health => health;
+    public List<AttackType> DamagerTypes => damagerTypes;
+    public List<float> DamagerTypesFactors => damagerTypesFactors;
 
     public void OnEnable()
     {
         animationHit = GetComponent<Animation>();
     }
 
-    public void Update()
-    {
-        if (health > 0 + Mathf.Epsilon) return;
-        transform.Rotate(Vector3.up * Time.deltaTime * 100);
-    }
-
     public void Damage(float damage, AttackType type)
     {
+        // Scale damage according to factors
         if (health < 0 + Mathf.Epsilon) return;
         float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
 
@@ -36,11 +32,7 @@ using UnityEngine;
 
     public void Die()
     {
-        animationHit.Play("ChangeScalingDestruction");
-        BoxCollider collider = gameObject.GetComponent<BoxCollider>();
-        if (collider != null)
-        {
-            collider.isTrigger = true;
-        }
+        Instantiate(ItemBank.GetDroppedPrefab(id), transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

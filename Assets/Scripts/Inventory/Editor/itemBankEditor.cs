@@ -63,6 +63,8 @@ public class ItemBankEditor : Editor
                 EditorGUILayout.Space();
                 entry.droppedPrefab = (GameObject) EditorGUILayout.ObjectField("Dropped Prefab", entry.droppedPrefab, typeof(GameObject), true);
                 EditorGUILayout.Space();
+                entry.positionedBlock = (GameObject) EditorGUILayout.ObjectField("Positioned Block Prefab", entry.positionedBlock, typeof(GameObject), true);
+                EditorGUILayout.Space();
                 entry.isConsumable = EditorGUILayout.Toggle("Is Consumable", entry.isConsumable);
                 EditorGUILayout.Space();
                 entry.rarity = (ItemRarity) EditorGUILayout.EnumPopup("Rarity", entry.rarity);

@@ -105,6 +105,11 @@ public class ItemBank : MonoBehaviour
         return prefab;
     }
 
+    public static GameObject GetPositionedBlock(ItemId id)
+    {
+        return Instance.items[id].positionedBlock;
+    }
+
     public static bool IsConsumable(ItemId id)
     {
         return Instance.items[id].isConsumable;

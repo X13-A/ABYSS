@@ -150,9 +150,6 @@ public class MapGeneration : MonoBehaviour
                 // Place the top block
                 GameObject currentCube = Instantiate(currentBlockPrefab);
                 currentCube.transform.position = blockPos;
-                currentCube.AddComponent<Rigidbody>();
-                currentCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                currentCube.GetComponent<Rigidbody>().isKinematic = true;
                 currentCube.transform.SetParent(map.transform);
             }
 

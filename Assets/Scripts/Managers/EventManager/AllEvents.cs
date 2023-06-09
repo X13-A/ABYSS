@@ -310,6 +310,12 @@ public class UseKeyPressedEvent : SDD.Events.Event
 
 public class UseItemEvent : SDD.Events.Event
 {
+    public ItemId itemId;
+}
+
+public class ConsumeItemEvent : SDD.Events.Event
+{
+    public ItemId itemId;
 }
 
 public class PlayerHeldItemUpdateEvent : SDD.Events.Event

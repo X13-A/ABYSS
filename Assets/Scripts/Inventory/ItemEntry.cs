@@ -40,6 +40,7 @@ public class ItemEntry
     public Sprite icon;
     public GameObject heldPrefab;
     public GameObject droppedPrefab;
+    public GameObject positionedBlock;
     public ItemRarity rarity;
     public bool isConsumable;
 }

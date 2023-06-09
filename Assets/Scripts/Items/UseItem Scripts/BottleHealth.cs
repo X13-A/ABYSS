@@ -7,9 +7,10 @@ public class BottleHealth : MonoBehaviour, IUseItem
 {
     [SerializeField] private float health;
 
-    public void Use()
+    public bool Use()
     {
         EventManager.Instance.Raise(new CarePlayerEvent { care = health });
         EventManager.Instance.Raise(new PlayerDrinkEvent { });
+        return true;
     }
 }

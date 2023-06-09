@@ -1,18 +1,20 @@
+using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
-public class block : MonoBehaviour
+public class Block : MonoBehaviour, IUseItem
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private ItemId id;
+    public bool Use()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
+        if (hit.collider)
+        {
+            Instantiate(ItemBank.GetPositionedBlock(id), hit.collider.transform.position + hit.normal, Quaternion.identity);
+            return true;
+        }
+        return false;
     }
 }

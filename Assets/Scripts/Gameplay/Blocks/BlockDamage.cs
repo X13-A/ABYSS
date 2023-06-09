@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockDamage : MonoBehaviour, IDamageable
+ public class BlockDamage : MonoBehaviour, IDamageable
 {
     [SerializeField] private ItemId id;
     [SerializeField] private float health;

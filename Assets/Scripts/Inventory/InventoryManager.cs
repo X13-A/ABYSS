@@ -67,6 +67,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
 
         EventManager.Instance.AddListener<UseKeyPressedEvent>(this.UseItem);
+        EventManager.Instance.AddListener<ConsumeItemEvent>(this.ConsumeItem);
         EventManager.Instance.AddListener<DropKeyPressedEvent>(this.DropItem);
     }
 
@@ -75,9 +76,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.AddItem);
         EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.RemoveItem);
         EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.SwitchSlot);
-        EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
+        EventManager.Instance.RemoveListener<GameOverEvent>(this.ClearInventory);
 
         EventManager.Instance.RemoveListener<UseKeyPressedEvent>(this.UseItem);
+        EventManager.Instance.RemoveListener<ConsumeItemEvent>(this.ConsumeItem);
         EventManager.Instance.RemoveListener<DropKeyPressedEvent>(this.DropItem);
     }
 
@@ -181,14 +183,13 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     {
         // Uses item
         if (this.ActiveItem == null) return;
-        EventManager.Instance.Raise(new UseItemEvent { });
+        EventManager.Instance.Raise(new UseItemEvent { itemId = this.ActiveItem.Value });
+    }
 
-        // Consumes item if necessary
-        if (ItemBank.IsConsumable((ItemId) this.ActiveItem))
-        {
-            EventManager.Instance.Raise(new ItemRemovedEvent { itemId = (ItemId) this.ActiveItem });
-            this.UpdateSlots();
-        }
+    private void ConsumeItem(ConsumeItemEvent e)
+    {
+        EventManager.Instance.Raise(new ItemRemovedEvent { itemId = e.itemId });
+        this.UpdateSlots();
     }
 
     private void DropItem(DropKeyPressedEvent e)

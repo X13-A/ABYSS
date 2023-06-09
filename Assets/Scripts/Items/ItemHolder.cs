@@ -42,8 +42,19 @@ public class ItemHolder : MonoBehaviour
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         if (heldItem == null) return;
+        
         IUseItem useItemInterface = heldItem.GetComponent<IUseItem>();
-        if (useItemInterface != null) useItemInterface.Use();
+        if (useItemInterface != null)
+        {
+            if (useItemInterface.Use())
+            {
+                if (ItemBank.IsConsumable(e.itemId))
+                {
+                    EventManager.Instance.Raise(new ConsumeItemEvent { itemId = e.itemId });
+                }
+            }
+        }
+        return;
     }
 
     private void StopHoldingItem()

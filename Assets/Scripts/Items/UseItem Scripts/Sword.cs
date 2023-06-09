@@ -33,9 +33,9 @@ public class Sword : MonoBehaviour, IUseItem
         damager.EnableDamage(damage, currentAttackDuration, damageStartPercentage, damageEndPercentage);
     }
         
-    public void Use()
+    public bool Use()
     {
-        if (AttackElaspedTime < currentAttackDuration) return;
+        if (AttackElaspedTime < currentAttackDuration) return false;
 
         currentAttackDuration = baseAttackDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
@@ -49,5 +49,6 @@ public class Sword : MonoBehaviour, IUseItem
             animationDuration = currentAttackDuration
         });
         swordAnimation.Animate(baseAttackDuration * currentAttackDuration);
+        return true;
     }
 }

@@ -19,9 +19,9 @@ public class Pickaxe : MonoBehaviour, IUseItem
         currentAttackDuration = 0;
     }
 
-    public void Use()
+    public bool Use()
     {
-        if (AttackElaspedTime < currentAttackDuration) return;
+        if (AttackElaspedTime < currentAttackDuration) return false;
         currentAttackDuration = pickaxeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier;
         attackStartTime = Time.time;
 
@@ -34,7 +34,12 @@ public class Pickaxe : MonoBehaviour, IUseItem
         if (hit.collider)
         {
             IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-            if (damageable != null) damageable.Damage(pickaxeDamage, AttackType.PICKAXE);
+            if (damageable != null)
+            {
+                damageable.Damage(pickaxeDamage, AttackType.PICKAXE);
+                return true;
+            }
         }
+        return false;
     }
 }

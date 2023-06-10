@@ -43,8 +43,10 @@ public class BossScreamer : MonoBehaviour
 
         Vector3 initPos = transform.position;
         transform.position = playerTransform.position + new Vector3(0f, 0f, 3.2f);
-
         light.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        transform.position = initPos;
+
 
         EventManager.Instance.Raise(new EndBossScreamerEvent { });
 

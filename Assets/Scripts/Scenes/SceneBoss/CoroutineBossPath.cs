@@ -32,11 +32,6 @@ public class CoroutineBossPath : MonoBehaviour
         EventManager.Instance.RemoveListener<StartCoroutineBossPathEvent>(StartCoroutineBossPath);
     }
 
-    private void StartCoroutineBossPath(StartCoroutineBossPathEvent e)
-    {
-        StartCoroutine(BossPath());
-    }
-
     void Start()
     {
         if (path != null)
@@ -49,21 +44,21 @@ public class CoroutineBossPath : MonoBehaviour
             {
                 coordinates[i - 1] = childrenTransforms[i].localPosition;
             }
-
-            foreach (Vector3 coordinate in coordinates)
-            {
-                Debug.Log("Coordonnée : " + coordinate);
-            }
         }
+    }
+
+    private void StartCoroutineBossPath(StartCoroutineBossPathEvent e)
+    {
+        StartCoroutine(BossPath());
     }
 
     private IEnumerator BossPath()
     {
         foreach (Vector3 pos in  coordinates)
         {
-            boss.transform.localPosition = pos;
+            boss.transform.position = pos;
+            EventManager.Instance.Raise(new IsArrivedToPointEvent { });
             yield return new WaitForSeconds(2);
         }
-        yield return null;
     }
 }

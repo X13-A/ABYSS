@@ -363,4 +363,7 @@ public class IsArrivedToPointEvent : SDD.Events.Event
     int pointNumber;
 }
 
+public class ModeArenaColorEvent : SDD.Events.Event
+{ }
+
 #endregion

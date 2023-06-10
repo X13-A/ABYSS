@@ -1,12 +1,14 @@
 using SDD.Events;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossScreamer : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject light;
+    [SerializeField] private Material floorMaterial;
 
     private void OnEnable()
     {
@@ -40,9 +42,12 @@ public class BossScreamer : MonoBehaviour
         float flashDuration = 2f;
 
         Vector3 initPos = transform.position;
-        transform.position = playerTransform.position + new Vector3(0f, 0f, 2.9f);
+        transform.position = playerTransform.position + new Vector3(0f, 0f, 3.2f);
 
         light.SetActive(true);
+
+        EventManager.Instance.Raise(new EndBossScreamerEvent { });
+
         yield return null;
 
         //while (elapsedTime < flashDuration)

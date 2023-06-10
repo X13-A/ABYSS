@@ -15,11 +15,11 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private Dictionary<ItemId, InventoryItem> items;
 
     private int activeSlot;
-    public int ActiveSlot => this.activeSlot;
+    public int ActiveSlot => activeSlot;
 
-    public ItemId? ActiveItem => this.slots[activeSlot].ItemId;
+    public ItemId? ActiveItem => slots[activeSlot].ItemId;
 
-    public int SlotCount => this.slots.Count;
+    public int SlotCount => slots.Count;
 
     private void Awake()
     {
@@ -40,11 +40,11 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         //Load data when enabled
         if (PlayerData.Instance != null)
         {
-            this.items = PlayerData.Instance.LoadInventory();
+            items = PlayerData.Instance.LoadInventory();
         }
 
-        this.UpdateSlots();
-        this.SwitchSlot(new SwitchSlotEvent { slot = activeSlot });
+        UpdateSlots();
+        SwitchSlot(new SwitchSlotEvent { slot = activeSlot });
         SubscribeEvents();
     }
 
@@ -53,7 +53,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         //Save data when disabled
         if (PlayerData.Instance != null)
         {
-            PlayerData.Instance.SaveInventory(this.items);
+            PlayerData.Instance.SaveInventory(items);
         }
 
         UnsubscribeEvents();
@@ -61,44 +61,46 @@ public class InventoryManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<ItemPickedUpEvent>(this.AddItem);
-        EventManager.Instance.AddListener<ItemRemovedEvent>(this.RemoveItem);
-        EventManager.Instance.AddListener<SwitchSlotEvent>(this.SwitchSlot);
-        EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
+        EventManager.Instance.AddListener<ItemPickedUpEvent>(AddItem);
+        EventManager.Instance.AddListener<ItemRemovedEvent>(RemoveItem);
+        EventManager.Instance.AddListener<SwitchSlotEvent>(SwitchSlot);
+        EventManager.Instance.AddListener<GameOverEvent>(ClearInventory);
 
-        EventManager.Instance.AddListener<UseKeyPressedEvent>(this.UseItem);
-        EventManager.Instance.AddListener<DropKeyPressedEvent>(this.DropItem);
+        EventManager.Instance.AddListener<UseKeyPressedEvent>(UseItem);
+        EventManager.Instance.AddListener<ConsumeItemEvent>(ConsumeItem);
+        EventManager.Instance.AddListener<DropKeyPressedEvent>(DropItem);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(this.AddItem);
-        EventManager.Instance.RemoveListener<ItemRemovedEvent>(this.RemoveItem);
-        EventManager.Instance.RemoveListener<SwitchSlotEvent>(this.SwitchSlot);
-        EventManager.Instance.AddListener<GameOverEvent>(this.ClearInventory);
+        EventManager.Instance.RemoveListener<ItemPickedUpEvent>(AddItem);
+        EventManager.Instance.RemoveListener<ItemRemovedEvent>(RemoveItem);
+        EventManager.Instance.RemoveListener<SwitchSlotEvent>(SwitchSlot);
+        EventManager.Instance.RemoveListener<GameOverEvent>(ClearInventory);
 
-        EventManager.Instance.RemoveListener<UseKeyPressedEvent>(this.UseItem);
-        EventManager.Instance.RemoveListener<DropKeyPressedEvent>(this.DropItem);
+        EventManager.Instance.RemoveListener<UseKeyPressedEvent>(UseItem);
+        EventManager.Instance.RemoveListener<ConsumeItemEvent>(ConsumeItem);
+        EventManager.Instance.RemoveListener<DropKeyPressedEvent>(DropItem);
     }
 
 
     private void ClearInventory(GameOverEvent e)
     {
-        this.items.Clear();
+        items.Clear();
         //this.UpdateSlots();
     }
 
     public bool HasSpaceForItem(ItemId id)
     {
         // Returns true if the item specified can be picked up
-        if (this.items.ContainsKey(id)) return true;
+        if (items.ContainsKey(id)) return true;
         return (FindFreeSlot() != -1);
     }
 
     public InventoryItem ItemInSlot(int slot)
     {
         // Returns the item in the specified slot, if existing
-        foreach (KeyValuePair<ItemId, InventoryItem> kvp in this.items)
+        foreach (KeyValuePair<ItemId, InventoryItem> kvp in items)
         {
             InventoryItem item = kvp.Value;
             if (item.Slot == slot) return item;
@@ -109,9 +111,9 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private int FindFreeSlot()
     {
         // Finds the first free slot in the inventory
-        bool[] slotsFree = new bool[this.slots.Count];
+        bool[] slotsFree = new bool[slots.Count];
 
-        foreach (KeyValuePair<ItemId, InventoryItem> kvp in this.items)
+        foreach (KeyValuePair<ItemId, InventoryItem> kvp in items)
         {
             InventoryItem item = kvp.Value;
             slotsFree[item.Slot] = true;
@@ -130,10 +132,10 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void AddItem(ItemPickedUpEvent e)
     {
         // Adds one item if existing already
-        if (this.items.ContainsKey(e.itemId))
+        if (items.ContainsKey(e.itemId))
         {
-            this.items[e.itemId].Add(1);
-            this.UpdateSlots();
+            items[e.itemId].Add(1);
+            UpdateSlots();
             return;
         }
 
@@ -141,60 +143,59 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         int freeSlot = FindFreeSlot();
         if (freeSlot != -1)
         {
-            this.items.Add(e.itemId, new InventoryItem(e.itemId, freeSlot, 1));
-            this.UpdateSlots();
+            items.Add(e.itemId, new InventoryItem(e.itemId, freeSlot, 1));
+            UpdateSlots();
         }
     }
     private void RemoveItem(ItemRemovedEvent e)
     {
         // Removes 1 item from inventory
-        if (this.items.ContainsKey(e.itemId))
+        if (items.ContainsKey(e.itemId))
         {
-            this.items[e.itemId].Remove(1);
+            items[e.itemId].Remove(1);
 
             // If item count is at 0, deletes completely the item
-            if (this.items[e.itemId].Count <= 0)
+            if (items[e.itemId].Count <= 0)
             {
-                this.items.Remove(e.itemId);
+                items.Remove(e.itemId);
             }
-            this.UpdateSlots();
+            UpdateSlots();
         }
     }
 
     private void SwitchSlot(SwitchSlotEvent e)
     {
         // Select new slot and unselect old ones
-        this.activeSlot = e.slot;
-        for (int i = 0; i < this.slots.Count; i++)
+        activeSlot = e.slot;
+        for (int i = 0; i < slots.Count; i++)
         {
-            if (this.activeSlot == i)
+            if (activeSlot == i)
             {
                 // Select new slot
-                this.slots[i].SetSelected(true);
+                slots[i].SetSelected(true);
             }
-            else this.slots[i].SetSelected(false);
+            else slots[i].SetSelected(false);
         }
-        EventManager.Instance.Raise(new PlayerHeldItemUpdateEvent { itemId = this.slots[this.activeSlot].ItemId });
+        EventManager.Instance.Raise(new PlayerHeldItemUpdateEvent { itemId = slots[activeSlot].ItemId });
     }
 
     private void UseItem(UseKeyPressedEvent e)
     {
         // Uses item
-        if (this.ActiveItem == null) return;
-        EventManager.Instance.Raise(new UseItemEvent { });
+        if (ActiveItem == null) return;
+        EventManager.Instance.Raise(new UseItemEvent { itemId = ActiveItem.Value });
+    }
 
-        // Consumes item if necessary
-        if (ItemBank.IsConsumable((ItemId) this.ActiveItem))
-        {
-            EventManager.Instance.Raise(new ItemRemovedEvent { itemId = (ItemId) this.ActiveItem });
-            this.UpdateSlots();
-        }
+    private void ConsumeItem(ConsumeItemEvent e)
+    {
+        EventManager.Instance.Raise(new ItemRemovedEvent { itemId = e.itemId });
+        UpdateSlots();
     }
 
     private void DropItem(DropKeyPressedEvent e)
     {
-        if (this.ActiveItem == null) return;
-        InventoryItem item = this.items[(ItemId) this.ActiveItem];
+        if (ActiveItem == null) return;
+        InventoryItem item = items[(ItemId) ActiveItem];
         if (item != null)
         {
             EventManager.Instance.Raise(new ItemDroppedEvent { itemId = item.Id });
@@ -206,24 +207,24 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void UpdateSlots()
     {
         // Updates the information in each slot according to the "items" Dict
-        for (int i = 0; i < this.slots.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             bool foundItem = false;
-            foreach (KeyValuePair<ItemId, InventoryItem> kvp in this.items)
+            foreach (KeyValuePair<ItemId, InventoryItem> kvp in items)
             {
                 ItemId itemId = kvp.Key;
                 InventoryItem inventoryItem = kvp.Value;
                 if (inventoryItem.Slot == i)
                 {
-                    this.slots[i].UpdateInfo(inventoryItem);
+                    slots[i].UpdateInfo(inventoryItem);
                     foundItem = true;
                 }
             }
             // Displays no information if slot does not hold anything
             if (foundItem) continue;
-            this.slots[i].UpdateInfo(null);
+            slots[i].UpdateInfo(null);
         }
 
-        EventManager.Instance.Raise(new PlayerHeldItemUpdateEvent { itemId = this.slots[this.activeSlot].ItemId });
+        EventManager.Instance.Raise(new PlayerHeldItemUpdateEvent { itemId = slots[activeSlot].ItemId });
     }
 }

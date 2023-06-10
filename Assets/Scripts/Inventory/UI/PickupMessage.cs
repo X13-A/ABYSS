@@ -12,34 +12,34 @@ public class PickupMessage : MonoBehaviour
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<UpdateCollidingItemsEvent>(this.ToggleDisplay);
+        EventManager.Instance.AddListener<UpdateCollidingItemsEvent>(ToggleDisplay);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<UpdateCollidingItemsEvent>(this.ToggleDisplay);
+        EventManager.Instance.RemoveListener<UpdateCollidingItemsEvent>(ToggleDisplay);
     }
 
     private void ToggleDisplay(UpdateCollidingItemsEvent e)
     {
         if (e.items.Count == 0)
         {
-            this.messagePanel.SetActive(false);
+            messagePanel.SetActive(false);
         }
         else
         {
-            this.messagePanel.SetActive(true);
-            this.text.text = $"Press {pickupKey} to pickup ({e.items.Count})";
+            messagePanel.SetActive(true);
+            text.text = $"Press {pickupKey} to pickup ({e.items.Count})";
         }
     }
 }

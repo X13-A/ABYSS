@@ -21,12 +21,12 @@ public class SwordAnimation : MonoBehaviour
     {
         StartCoroutine(CoroutineUtil.DelayAction(0f, () =>
         {
-            this.swordTrail.Stop(true);
-            this.swordTrail.Play(true);
+            swordTrail.Stop(true);
+            swordTrail.Play(true);
         }));
         StartCoroutine(CoroutineUtil.DelayAction(delay, () =>
         {
-            this.swordTrail.Stop(true);
+            swordTrail.Stop(true);
         }));
     }
 }

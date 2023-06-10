@@ -291,6 +291,15 @@ public class UpdateCollidingChestsEvent : SDD.Events.Event
     public HashSet<Chest> chests;
 }
 
+public class ShowSignInteractionMessage : SDD.Events.Event
+{
+
+}
+
+public class HideSignInteractionMessage : SDD.Events.Event
+{
+
+}
 
 public class SwitchSlotEvent : SDD.Events.Event
 {
@@ -310,6 +319,12 @@ public class UseKeyPressedEvent : SDD.Events.Event
 
 public class UseItemEvent : SDD.Events.Event
 {
+    public ItemId itemId;
+}
+
+public class ConsumeItemEvent : SDD.Events.Event
+{
+    public ItemId itemId;
 }
 
 public class PlayerHeldItemUpdateEvent : SDD.Events.Event
@@ -326,5 +341,15 @@ public class SelectedItemEvent : SDD.Events.Event
 {
     public ItemId? itemId;
 }
+
+#endregion
+
+#region Boss Level Events
+
+public class PlayerDetectorEvent : SDD.Events.Event
+{ }
+
+public class StartBossScreamerEvent : SDD.Events.Event
+{ }
 
 #endregion

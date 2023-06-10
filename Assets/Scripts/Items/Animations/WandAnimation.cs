@@ -24,18 +24,18 @@ public class WandAnimation : MonoBehaviour
     {
         StartCoroutine(CoroutineUtil.DelayAction(0f, () =>
         {
-            this.wandCast.Stop(true);
-            this.wandTrail.Stop(true);
-            this.wandTrail.Play(true);
+            wandCast.Stop(true);
+            wandTrail.Stop(true);
+            wandTrail.Play(true);
         }));
         StartCoroutine(CoroutineUtil.DelayAction(delay, () =>
         {
-            this.wandTrail.Stop(true);
+            wandTrail.Stop(true);
         }));
         StartCoroutine(CoroutineUtil.DelayAction(delay, () =>
         {
-            this.wandCast.Stop(true);
-            this.wandCast.Play(true);
+            wandCast.Stop(true);
+            wandCast.Play(true);
         }));
     }
 }

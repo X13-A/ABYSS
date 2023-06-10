@@ -39,7 +39,7 @@ public class PlayerData : MonoBehaviour
     public Dictionary<ItemId, InventoryItem> LoadInventory()
     {
         // Use clone constructor to loose references
-        return this.inventory.ToDictionary(entry => entry.Key, entry => new InventoryItem(entry.Value));
+        return inventory.ToDictionary(entry => entry.Key, entry => new InventoryItem(entry.Value));
     }
 }
 

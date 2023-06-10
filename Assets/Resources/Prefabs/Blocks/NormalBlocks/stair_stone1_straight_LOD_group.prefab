@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7745879219989783411}
   - component: {fileID: 3544383000830709468}
   - component: {fileID: 4459565290413534372}
+  - component: {fileID: 7565669539636627920}
   m_Layer: 0
   m_Name: stair_stone1_straight_LOD0
   m_TagString: Untagged
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7565669539636627920
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538281632012291135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1883309074980362622, guid: abef5fc41c519425da0feda23c611f9b, type: 3}
 --- !u!1 &4449596469423592890
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +108,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3930504228424060672}
   - component: {fileID: 8129537652420360305}
-  - component: {fileID: 4505612164444961468}
   m_Layer: 0
   m_Name: stair_stone1_straight_LOD_group
   m_TagString: Untagged
@@ -146,20 +160,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6385537620335249263}
   m_Enabled: 1
---- !u!64 &4505612164444961468
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4449596469423592890}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &5621626859471320488
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 3921052879445144838}
   - component: {fileID: 6947448663516773095}
   - component: {fileID: 6385537620335249263}
+  - component: {fileID: 5498417693363455089}
   m_Layer: 0
   m_Name: stair_stone1_straight_LOD2
   m_TagString: Untagged
@@ -243,6 +244,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5498417693363455089
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5621626859471320488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -9177072537541430239, guid: abef5fc41c519425da0feda23c611f9b, type: 3}
 --- !u!1 &8419539225404232071
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +269,7 @@ GameObject:
   - component: {fileID: 8827767077581804486}
   - component: {fileID: 8884037976692408574}
   - component: {fileID: 7859999025865722956}
+  - component: {fileID: 8998416398050200259}
   m_Layer: 0
   m_Name: stair_stone1_straight_LOD1
   m_TagString: Untagged
@@ -326,3 +342,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8998416398050200259
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419539225404232071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4374898155889110726, guid: abef5fc41c519425da0feda23c611f9b, type: 3}

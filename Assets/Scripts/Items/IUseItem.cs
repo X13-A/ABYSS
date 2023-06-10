@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IUseItem
 {
-    void Use();
+    bool Use();
 }

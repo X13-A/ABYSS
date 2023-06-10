@@ -86,7 +86,6 @@ public class TextManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<MessageEvent>(HandleTextEvent);
     }
 
-
     private void HandlePause(EscapeButtonClickedEvent e)
     {
         textBubble.SetActive(false);

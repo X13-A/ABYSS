@@ -27,9 +27,9 @@ public class InventoryItem
     /// <param name="item">The item to clone</param>
     public InventoryItem(InventoryItem item)
     {
-        this.id = item.id;
-        this.count = item.count;
-        this.slot = item.slot;
+        id = item.id;
+        count = item.count;
+        slot = item.slot;
     }
 
     public void Add(int n)

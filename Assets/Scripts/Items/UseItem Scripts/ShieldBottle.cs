@@ -7,9 +7,10 @@ public class ShieldBottle : MonoBehaviour, IUseItem
 {
     [SerializeField] private float shield;
 
-    public void Use()
+    public bool Use()
     {
         EventManager.Instance.Raise(new SetShieldPlayerEvent { shield = shield });
         EventManager.Instance.Raise(new PlayerDrinkEvent { });
+        return true;
     }
 }

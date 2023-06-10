@@ -10,25 +10,25 @@ public class PlayerItemHolder : MonoBehaviour
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
 
         // HACK, because this script is not up when the event is fired
-        this.UpdateItemInHand(new PlayerHeldItemUpdateEvent { itemId = InventoryManager.Instance ? InventoryManager.Instance.ActiveItem : null });
+        UpdateItemInHand(new PlayerHeldItemUpdateEvent { itemId = InventoryManager.Instance ? InventoryManager.Instance.ActiveItem : null });
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(this.UpdateItemInHand);
+        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(UpdateItemInHand);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(this.UpdateItemInHand);
+        EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(UpdateItemInHand);
     }
 
     private void UpdateItemInHand(PlayerHeldItemUpdateEvent e)
@@ -39,17 +39,17 @@ public class PlayerItemHolder : MonoBehaviour
             EventManager.Instance.Raise(new HeldGameObjectEvent { heldGameObject = null });
             return;
         }
-        this.heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
-        GameObject heldItem = Instantiate(this.heldPrefab, itemHolder.transform);
+        heldPrefab = ItemBank.GetHeldPrefab((ItemId) e.itemId);
+        GameObject heldItem = Instantiate(heldPrefab, itemHolder.transform);
         EventManager.Instance.Raise(new HeldGameObjectEvent { heldGameObject = heldItem });
     }
 
     private void DestroyItemsInHand()
     {
-        int count = this.itemHolder.transform.childCount;
+        int count = itemHolder.transform.childCount;
         for (int i = count - 1; i >= 0; i--)
         {
-            GameObject item = this.itemHolder.transform.GetChild(i).gameObject;
+            GameObject item = itemHolder.transform.GetChild(i).gameObject;
             Destroy(item);
         }
     }

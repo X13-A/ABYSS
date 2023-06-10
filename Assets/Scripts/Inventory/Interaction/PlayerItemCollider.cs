@@ -9,22 +9,22 @@ public class PlayerItemCollider : MonoBehaviour, IEventHandler, IPlayerCollider
 
     private void OnEnable()
     {
-        this.SubscribeEvents();
+        SubscribeEvents();
     }
 
     private void OnDisable()
     {
-        this.UnsubscribeEvents();
+        UnsubscribeEvents();
     }
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PickupKeyPressedEvent>(this.Pickup);
+        EventManager.Instance.AddListener<PickupKeyPressedEvent>(Pickup);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PickupKeyPressedEvent>(this.Pickup);
+        EventManager.Instance.RemoveListener<PickupKeyPressedEvent>(Pickup);
     }
 
     private void Pickup(PickupKeyPressedEvent e)

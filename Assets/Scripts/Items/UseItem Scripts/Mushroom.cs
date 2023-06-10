@@ -7,9 +7,10 @@ public class Mushroom : MonoBehaviour, IUseItem
 {
      [SerializeField] private float damage;
 
-    public void Use()
+    public bool Use()
     {
         EventManager.Instance.Raise(new DamagePlayerEvent { damage = damage });
         EventManager.Instance.Raise(new PlayerEatEvent { });
+        return true;
     }
 }

@@ -34,7 +34,7 @@ public class ItemHolder : MonoBehaviour
     {
         StopHoldingItem();
         if (e.heldGameObject == null) return;
-        this.heldItem = e.heldGameObject;
+        heldItem = e.heldGameObject;
         HoldingItem();
     }
 
@@ -42,20 +42,31 @@ public class ItemHolder : MonoBehaviour
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         if (heldItem == null) return;
+        
         IUseItem useItemInterface = heldItem.GetComponent<IUseItem>();
-        if (useItemInterface != null) useItemInterface.Use();
+        if (useItemInterface != null)
+        {
+            if (useItemInterface.Use())
+            {
+                if (ItemBank.IsConsumable(e.itemId))
+                {
+                    EventManager.Instance.Raise(new ConsumeItemEvent { itemId = e.itemId });
+                }
+            }
+        }
+        return;
     }
 
     private void StopHoldingItem()
     {
         if (heldItem == null) return;
-        IHoldingItem holdingItemInterface = this.heldItem.GetComponent<IHoldingItem>();
+        IHoldingItem holdingItemInterface = heldItem.GetComponent<IHoldingItem>();
         if (holdingItemInterface != null) holdingItemInterface.OnStopHolding();
     }
 
     private void HoldingItem()
     {
-        IHoldingItem holdingItemInterface = this.heldItem.GetComponent<IHoldingItem>();
+        IHoldingItem holdingItemInterface = heldItem.GetComponent<IHoldingItem>();
         if (holdingItemInterface != null) holdingItemInterface.OnHolding();
     }
 }

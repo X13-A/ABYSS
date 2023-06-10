@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4032188393916042}
   - component: {fileID: 33596218043263430}
   - component: {fileID: 23320922622340782}
+  - component: {fileID: 4052953083594151233}
   m_Layer: 0
   m_Name: door_frame_metal_rounded_double_LOD0
   m_TagString: Untagged
@@ -166,6 +167,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4052953083594151233
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468292019503120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 71166b62ac6becb4f8e32144777c9cef, type: 3}
 --- !u!1 &1588265579977974
 GameObject:
   m_ObjectHideFlags: 0

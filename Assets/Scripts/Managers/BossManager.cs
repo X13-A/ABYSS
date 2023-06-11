@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    [SerializeField] private Material floorMaterial;
+    [SerializeField] private Light light;
     [SerializeField] private Color[] colors;
 
     private void OnEnable()
@@ -32,12 +32,13 @@ public class BossManager : MonoBehaviour
 
     private void Start()
     {
-        floorMaterial.SetColor("_Color", colors[0]);
+        light.enabled = true;
+        light.color = colors[0];
     }
 
     private void StartCoroutineBossPath(EndBossScreamerEvent e)
     {
-        floorMaterial.SetColor("_Color", colors[3]);
+        light.color = colors[1];
         EventManager.Instance.Raise(new StartCoroutineBossPathEvent { });
     }
 }

@@ -54,10 +54,25 @@ public class CoroutineBossPath : MonoBehaviour
 
     private IEnumerator BossPath()
     {
-        foreach (Vector3 pos in  coordinates)
+        foreach (Vector3 pos in coordinates)
         {
+            float elapsedTime = 0f;
+            Vector3 startingPosition = boss.transform.position;
+            float duration = movementSpeed;
+
+            while (elapsedTime < duration)
+            {
+                float t = elapsedTime / duration;
+                boss.transform.position = Vector3.Lerp(startingPosition, pos, t);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
             boss.transform.position = pos;
+
             EventManager.Instance.Raise(new IsArrivedToPointEvent { });
+
             yield return new WaitForSeconds(2);
         }
     }

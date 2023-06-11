@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SceneBoss : MonoBehaviour
 {
-    [SerializeField] GameObject door;
+    [SerializeField] GameObject wall;
     [SerializeField] private GameObject[] toDisactivate;
 
 
@@ -31,7 +31,7 @@ public class SceneBoss : MonoBehaviour
 
     private void WallEnable(PlayerDetectorEvent e)
     {
-        door.SetActive(true);
+        wall.SetActive(true);
         foreach (GameObject obj in toDisactivate)
         {
             obj.SetActive(false);

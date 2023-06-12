@@ -4,21 +4,20 @@ using SDD.Events;
 public class BossAnimationController : MonoBehaviour, IEventHandler
 {
     private Animator m_Animator;
-    private float spawnTime;
-    public float TimeSinceSpawn => Time.time - spawnTime;
 
     private void Start()
     {
-        spawnTime = Time.time;
         m_Animator = GetComponent<Animator>();
     }
 
     public void SubscribeEvents()
     {
+        EventManager.Instance.AddListener<EndBossScreamerEvent>(StartAnimating);
     }
 
     public void UnsubscribeEvents()
     {
+        EventManager.Instance.RemoveListener<EndBossScreamerEvent>(StartAnimating);
     }
 
     private void OnEnable()
@@ -31,24 +30,14 @@ public class BossAnimationController : MonoBehaviour, IEventHandler
         UnsubscribeEvents();
     }
 
+    private void StartAnimating(EndBossScreamerEvent e)
+    {
+        m_Animator.SetBool("isAwake", true);
+    }
+
     private void Update()
     {
-        bool isIdling = m_Animator.GetBool("IsIdling");
-        bool isAwake = m_Animator.GetBool("IsAwake");
-
-        if (GameManager.Instance.State != GAMESTATE.PLAY)
-        {
-            if (!isIdling)
-            {
-                m_Animator.SetBool("IsAwake", false);
-                m_Animator.SetBool("IsIdling", true);
-            }
-            return;
-        }
-
-        if (TimeSinceSpawn > 5)
-        {
-            m_Animator.SetBool("IsAwake", true);
-        }
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
+        bool isAwake = m_Animator.GetBool("isAwake");
     }
 }

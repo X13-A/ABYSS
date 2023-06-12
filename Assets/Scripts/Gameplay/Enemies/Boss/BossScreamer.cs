@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class BossScreamer : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private GameObject light;
+    [SerializeField] private new GameObject light;
     [SerializeField] private Material floorMaterial;
 
     private void OnEnable()
@@ -38,12 +37,12 @@ public class BossScreamer : MonoBehaviour
 
     private IEnumerator ScreamerCoroutine()
     {
-        float elapsedTime = 0f;
-        float flashDuration = 2f;
+        //float elapsedTime = 0f;
+        //float flashDuration = 2f;
 
         Vector3 initPos = transform.position;
-        transform.position = playerTransform.position + new Vector3(0f, 0f, 3.2f);
-
+        transform.position = PlayerManager.Instance.PlayerReference.transform.position + new Vector3(0f, 0f, 3.2f);
+        light.transform.position = new Vector3(transform.position.x, light.transform.position.y, transform.position.z);
         light.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         light.SetActive(false);

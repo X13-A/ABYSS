@@ -18,7 +18,10 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     private void Start()
     {
         textEmitter = GetComponent<DamageTextEmitter>();
-        hitParticles.Stop();
+        if (hitParticles != null)
+        {
+            hitParticles.Stop();
+        }
     }
 
     public void Damage(float damage, AttackType type)
@@ -29,8 +32,11 @@ public class EnemyDamage : MonoBehaviour, IDamageable
         float scaledDamage = damage * damageFactor;
 
         health = Mathf.Max(0, health - scaledDamage);
-        hitParticles.Stop();
-        hitParticles.Play();
+        if (hitParticles != null)
+        {
+            hitParticles.Stop();
+            hitParticles.Play();
+        }
         if (health <= 0 + Mathf.Epsilon) Die();
         textEmitter.AddDamage(scaledDamage);
     }

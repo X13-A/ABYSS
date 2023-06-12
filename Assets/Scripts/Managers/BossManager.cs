@@ -7,8 +7,26 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    [SerializeField] private Light light;
+    private static BossManager m_Instance;
+    public static BossManager Instance => m_Instance;
+
+    [SerializeField] private new Light light;
     [SerializeField] private Color[] colors;
+    [SerializeField] private float timeBeforeWakingUp;
+
+    public float TimeBeforeWakingUp => timeBeforeWakingUp;
+
+    private void Awake()
+    {
+        if (!m_Instance)
+        {
+            m_Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void OnEnable()
     {
@@ -22,12 +40,12 @@ public class BossManager : MonoBehaviour
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<EndBossScreamerEvent>(StartCoroutineBossPath);
+        //EventManager.Instance.AddListener<EndBossScreamerEvent>(StartCoroutineBossPath);
     }
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<EndBossScreamerEvent>(StartCoroutineBossPath);
+        //EventManager.Instance.RemoveListener<EndBossScreamerEvent>(StartCoroutineBossPath);
     }
 
     private void Start()

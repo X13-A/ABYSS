@@ -38,28 +38,6 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update()
-    {
-        // all of the code inside this function will be executed each frame
-        // the physics should be puted inside fixedUpdate
-        if (GameManager.Instance.State != GAMESTATE.PLAY)
-        {
-            xInput = 0;
-            yInput = 0;
-            isPressingJump = false;
-            return;
-        }
-        PerformGroundCheck();
-        HandleInput();
-        UpdateTargetVelocity();
-    }
-
-    private void FixedUpdate()
-    {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-        ApplyGravity();
-        MovePlayer();
-    }
 
     private void HandleInput()
     {
@@ -156,5 +134,27 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.DrawRay(transform.position, Vector3.down * 1000, Color.green);
         }
+    }
+    private void Update()
+    {
+        // all of the code inside this function will be executed each frame
+        // the physics should be puted inside fixedUpdate
+        if (GameManager.Instance.State != GAMESTATE.PLAY || GameManager.Instance.ScreamerActive)
+        {
+            xInput = 0;
+            yInput = 0;
+            isPressingJump = false;
+            return;
+        }
+        PerformGroundCheck();
+        HandleInput();
+        UpdateTargetVelocity();
+    }
+
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.State != GAMESTATE.PLAY || GameManager.Instance.ScreamerActive) return;
+        ApplyGravity();
+        MovePlayer();
     }
 }

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour, IEventHandler
     private GAMESTATE m_SourceMenu;
     public GAMESTATE SourceMenu => m_SourceMenu;
 
+    public bool ScreamerActive => State == GAMESTATE.SCREAMER;
+
 
     public void SubscribeEvents()
     {
@@ -28,6 +30,9 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.AddListener<GameOverEvent>(GameOver);
+
+        EventManager.Instance.AddListener<StartBossScreamerEvent>(StartScreamer);
+        EventManager.Instance.AddListener<EndBossScreamerEvent>(EndScreamer);
     }
 
     public void UnsubscribeEvents() 
@@ -43,6 +48,8 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.RemoveListener<GameOverEvent>(GameOver);
 
+        EventManager.Instance.RemoveListener<StartBossScreamerEvent>(StartScreamer);
+        EventManager.Instance.RemoveListener<EndBossScreamerEvent>(EndScreamer);
     }
 
     private void OnEnable()
@@ -189,13 +196,25 @@ public class GameManager : MonoBehaviour, IEventHandler
         SetState(GAMESTATE.SETTINGS_MENU);
     }
 
+
+    #endregion
+
+    #region MenuManager event callbacks
+
+    private void StartScreamer(StartBossScreamerEvent e)
+    {
+        SetState(GAMESTATE.SCREAMER);
+    }
+
+    private void EndScreamer(EndBossScreamerEvent e)
+    {
+        SetState(GAMESTATE.PLAY);
+    }
+
     private void GameOver(GameOverEvent e)
     {
         SetState(GAMESTATE.GAME_OVER);
     }
-    #endregion
-
-    #region MenuManager event callbacks
 
     private void PrepareSceneChange(SceneAboutToChangeEvent e)
     {

@@ -353,14 +353,15 @@ public class StartBossScreamerEvent : SDD.Events.Event
 { }
 
 public class EndBossScreamerEvent : SDD.Events.Event
-{ }
+{
+}
 
 public class StartCoroutineBossPathEvent : SDD.Events.Event
 { }
 
 public class IsArrivedToPointEvent : SDD.Events.Event
 {
-    int pointNumber;
+    public int pointNumber;
 }
 
 public class ModeArenaColorEvent : SDD.Events.Event

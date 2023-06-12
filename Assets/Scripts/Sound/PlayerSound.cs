@@ -15,11 +15,14 @@ public class PlayerSound : MonoBehaviour
 
     public void LaunchStepSound(int index)
     {
+        if (index >= stepSound.Length) return;
+        if (stepSound[index] == null) return;
         audioSource.PlayOneShot(stepSound[index]);
     }
 
     public void LaunchPickaxeSound()
     {
+        if (pickaxeSound == null) return;
         audioSource.PlayOneShot(pickaxeSound);
     }
 }

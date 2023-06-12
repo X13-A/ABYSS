@@ -1,20 +1,20 @@
 using SDD.Events;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class BossAI : MonoBehaviour, IEventHandler
 {
-    [SerializeField] private float runningVelocity;
     [SerializeField] private float walkingVelocity;
-    [SerializeField] private float runningWhenModifier;
     [SerializeField] private float attackDuration;
-    [SerializeField] private float attackVariantDuration;
     [SerializeField] private float attackDamage;
-    [SerializeField] private float attackVariantDamage;
-    [SerializeField] private int attackVariantFrequency;
+
+    // Charge attack params
+
+    // Magic attack params
+
     [SerializeField] private AudioClip attackSound;
     // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
-    public float detectionRadius;
 
     private AudioSource audioSource;
     private Animator animator;
@@ -23,17 +23,47 @@ public class EnemyAI : MonoBehaviour
     private Collider enemyCollider;
 
     private float distanceToPlayer;
+
     private bool isWalking;
-    private bool isRunning;
+    private bool isAwake = false;
+
     private float attackStartTime;
-    private int attackVariant;
-    private int attackCounter;
     private bool isReadyToBattle;
 
     public float Velocity { get; private set; }
     public float AttackElaspedTime => Time.time - attackStartTime;
 
-    private void Awake()
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<EndBossScreamerEvent>(StartAI);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<EndBossScreamerEvent>(StartAI);
+    }
+
+    private void OnEnable()
+    {
+        attackStartTime = Time.time - 1000;
+        distanceToPlayer = Mathf.Infinity;
+        SubscribeEvents();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
+
+    private void StartAI(EndBossScreamerEvent e)
+    {
+        StartCoroutine(CoroutineUtil.DelayAction(BossManager.Instance.TimeBeforeWakingUp, () =>
+        {
+            isAwake = true;
+        }));
+    }
+
+    private void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -42,17 +72,10 @@ public class EnemyAI : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void OnEnable()
-    {
-        attackStartTime = Time.time - 1000;
-        attackVariant = 0;
-        attackCounter = 0;
-        distanceToPlayer = Mathf.Infinity;
-    }
-
     private void Update()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
+        if (!isAwake) return;
         UpdateCurrentVelocity();
         UpdateStatus();
         UpdateAnimator();
@@ -61,33 +84,21 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-        if (distanceToPlayer <= detectionRadius)
+        if (!isAwake) return;
+        if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)
         {
-            if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)
-            {
-                RaiseAttackEvent();
-                attackStartTime = Time.time;
-            }
-            else
-            {
-                MoveAndRotateTowardPlayer();
-            }
+            RaiseAttackEvent();
+            attackStartTime = Time.time;
         }
-    }
-
-    private bool IsSensing()
-    {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        string layer = "FindPlayerAndWalk";
-        return (stateInfo.IsName(layer + "." + "SenseSomethingStart") || stateInfo.IsName(layer + "." + "SenseSomethingMain")) && stateInfo.normalizedTime < 1;
+        else
+        {
+            MoveAndRotateTowardPlayer();
+        }
     }
 
     private void UpdateStatus()
     {
-        if (PlayerManager.Instance.PlayerReference == null)
-        {
-            return;
-        }
+        if (PlayerManager.Instance.PlayerReference == null) return;
 
         distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.Instance.PlayerReference.position);
         UpdateRunningAndWalkingStatus();
@@ -95,14 +106,8 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateRunningAndWalkingStatus()
     {
-        isRunning = false;
-        isWalking = false;
         isReadyToBattle = false;
-
-        if (distanceToPlayer >= detectionRadius)
-        {
-            return;
-        }
+        isWalking = false;
 
         if (distanceToPlayer <= attackDistanceOffset)
         {
@@ -110,30 +115,18 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (distanceToPlayer > detectionRadius / runningWhenModifier)
-        {
-            isWalking = true;
-        }
-        else
-        {
-            isRunning = true;
-        }
+        // Always chase player
+        isWalking = true;
     }
 
     private void UpdateAnimator()
     {
         animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
         animator.SetBool("isReadyToBattle", isReadyToBattle);
-        animator.SetInteger("attackVariant", attackVariant);
     }
 
     private void MoveAndRotateTowardPlayer()
     {
-        if (IsSensing()) // do not move if the enemy is sensing something
-        {
-            return;
-        }
         Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
 
         Vector3 enemyWidth = GetEnemyHalfWidth();
@@ -162,13 +155,9 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateCurrentVelocity()
     {
-        if (isWalking && !isRunning)
+        if (isWalking)
         {
             Velocity = walkingVelocity;
-        }
-        else if (isRunning && !isWalking)
-        {
-            Velocity = runningVelocity;
         }
         else
         {
@@ -178,11 +167,9 @@ public class EnemyAI : MonoBehaviour
 
     private void RaiseAttackEvent()
     {
-        attackCounter++;
-        attackVariant = attackCounter % attackVariantFrequency == 0 ? 1 : 0;
         EventManager.Instance.Raise(new EnemyAttackEvent
         {
-            damage = attackVariant == 0 ? attackDamage : attackVariantDamage
+            damage = attackDamage
         });
     }
 

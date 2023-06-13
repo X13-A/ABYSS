@@ -75,23 +75,6 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (bossDamage.Health <= bossMaxHealth * 0.70)
-        {
-            EventManager.Instance.Raise(new ModeBossEvent { });
-            bossParticle[0].SetActive(false);
-            bossParticle[1].SetActive(true);
-        }
-
-        if (bossDamage.Health <= bossMaxHealth * 0.30)
-        {
-            EventManager.Instance.Raise(new ModeBossEvent { });
-            bossParticle[1].SetActive(false);
-            bossParticle[2].SetActive(true);
-        }
-    }
-
     private void PushesPlayer(EnemyAttackEvent e)
     {
         Debug.Log("sibngfrmqie");
@@ -103,6 +86,21 @@ public class BossManager : MonoBehaviour
 
     private void Update()
     {
+        // TODO: Trigger event only once !!!!
+        if (BossHealth <= bossMaxHealth * 0.70)
+        {
+            EventManager.Instance.Raise(new ModeBossEvent { });
+            bossParticle[0].SetActive(false);
+            bossParticle[1].SetActive(true);
+        }
+
+        if (BossHealth <= bossMaxHealth * 0.30)
+        {
+            EventManager.Instance.Raise(new ModeBossEvent { });
+            bossParticle[1].SetActive(false);
+            bossParticle[2].SetActive(true);
+        }
+
         // HACK: Should use events instead of constant checking
         if (!defeated && BossHealth <= 0)
         {

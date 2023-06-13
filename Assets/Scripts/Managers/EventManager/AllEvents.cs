@@ -374,4 +374,7 @@ public class BossDefeatedEvent : SDD.Events.Event
 {
 }
 
+public class ModeBossEvent : SDD.Events.Event
+{ }
+
 #endregion

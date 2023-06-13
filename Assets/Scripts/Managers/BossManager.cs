@@ -13,6 +13,9 @@ public class BossManager : MonoBehaviour
     [SerializeField] private new Light light;
     [SerializeField] private float timeBeforeWakingUp;
     [SerializeField] private ParticleSystem[] bossParticle;
+    [SerializeField] private EnemyDamage bossDamage;
+
+    public float BossHealth => bossDamage.Health;
 
     public float TimeBeforeWakingUp => timeBeforeWakingUp;
 

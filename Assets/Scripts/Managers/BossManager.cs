@@ -11,8 +11,8 @@ public class BossManager : MonoBehaviour
     public static BossManager Instance => m_Instance;
 
     [SerializeField] private new Light light;
-    [SerializeField] private Color[] colors;
     [SerializeField] private float timeBeforeWakingUp;
+    [SerializeField] private ParticleSystem[] bossParticle;
 
     public float TimeBeforeWakingUp => timeBeforeWakingUp;
 
@@ -51,12 +51,19 @@ public class BossManager : MonoBehaviour
     private void Start()
     {
         light.enabled = true;
-        light.color = colors[0];
     }
 
     private void StartCoroutineBossPath(EndBossScreamerEvent e)
     {
-        light.color = colors[1];
         EventManager.Instance.Raise(new StartCoroutineBossPathEvent { });
+    }
+
+    private void updateParticule(float health)
+    {
+        //if(health < 70)
+        //{
+            
+
+        //}
     }
 }

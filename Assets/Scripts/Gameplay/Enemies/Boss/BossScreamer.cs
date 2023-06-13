@@ -7,7 +7,6 @@ using UnityEngine;
 public class BossScreamer : MonoBehaviour
 {
     [SerializeField] private new GameObject light;
-    [SerializeField] private Material floorMaterial;
 
     private void OnEnable()
     {

@@ -30,7 +30,6 @@ public class EnemyDamage : MonoBehaviour, IDamageable
         int typeIndex = damagerTypes.IndexOf(type);
         float damageFactor = damagerTypesFactors[typeIndex];
         float scaledDamage = damage * damageFactor;
-
         health = Mathf.Max(0, health - scaledDamage);
         if (hitParticles != null)
         {

@@ -10,6 +10,7 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     [SerializeField] private List<float> damagerTypesFactors;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject corpse;
+    [SerializeField] private float fadeOutTime = 0.1f;
     private DamageTextEmitter textEmitter;
     public float Health { get { return health; } }
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }
@@ -37,13 +38,18 @@ public class EnemyDamage : MonoBehaviour, IDamageable
             hitParticles.Play();
         }
         if (health <= 0 + Mathf.Epsilon) Die();
-        textEmitter.AddDamage(scaledDamage);
+        if (textEmitter != null) textEmitter.AddDamage(scaledDamage);
     }
 
     public void Die()
     {
-        Instantiate(corpse, transform.position, transform.rotation);
+        if (corpse != null) Instantiate(corpse, transform.position, transform.rotation);
         GetComponent<Collider>().enabled = false;
-        StartCoroutine(CoroutineUtil.FadeTo(GetComponentInChildren<SkinnedMeshRenderer>(), 0.1f, 0, () => { Destroy(gameObject); }));
+        GetComponent<Rigidbody>().isKinematic = true;
+        SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer mesh in meshes)
+        {
+            StartCoroutine(CoroutineUtil.FadeTo(mesh, fadeOutTime, 0, () => { Destroy(gameObject); }));
+        }
     }
 }

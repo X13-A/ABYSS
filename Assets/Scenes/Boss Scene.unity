@@ -4697,6 +4697,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60fb5f2dcc26d6c4791f65910e561bcf, type: 3}
+--- !u!1 &141951854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 141951855}
+  m_Layer: 8
+  m_Name: Damage Text Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &141951855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141951854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.429, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1966875199}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &142435050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42368,6 +42399,7 @@ MonoBehaviour:
   - 1
   hitParticles: {fileID: 863740885}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
+  fadeOutTime: 0
 --- !u!114 &863740888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56643,11 +56675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2071804104484050648, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.09780824
+      value: -0.097808205
       objectReference: {fileID: 0}
     - target: {fileID: 2071804104484050648, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.03558044
+      value: -0.035580434
       objectReference: {fileID: 0}
     - target: {fileID: 2750155588025718863, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalPosition.x
@@ -56671,11 +56703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2750155588025718863, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.09560266
+      value: -0.095602654
       objectReference: {fileID: 0}
     - target: {fileID: 2750155588025718863, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.04114065
+      value: -0.041140646
       objectReference: {fileID: 0}
     - target: {fileID: 3234332305228137649, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_IsActive
@@ -56707,7 +56739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4261292166017032394, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.09780824
+      value: -0.097808234
       objectReference: {fileID: 0}
     - target: {fileID: 4261292166017032394, guid: 0d869e48e0235c245a4e29aa56112534, type: 3}
       propertyPath: m_LocalRotation.z
@@ -65611,6 +65643,14 @@ PrefabInstance:
       propertyPath: light
       value: 
       objectReference: {fileID: 77321106}
+    - target: {fileID: 1966875199, guid: 072fc2da9b40ac94c8014494acbbc276, type: 3}
+      propertyPath: corpse
+      value: 
+      objectReference: {fileID: 6376888296568424339, guid: 22c3993f7fdea4e438901d8f0240b32e, type: 3}
+    - target: {fileID: 1966875199, guid: 072fc2da9b40ac94c8014494acbbc276, type: 3}
+      propertyPath: fadeOutTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1966875203, guid: 072fc2da9b40ac94c8014494acbbc276, type: 3}
       propertyPath: attackDistanceOffset
       value: 2
@@ -75410,6 +75450,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5679166567144038920, guid: 072fc2da9b40ac94c8014494acbbc276, type: 3}
   m_PrefabInstance: {fileID: 1560232859}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1966875208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966875190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0675e7a32614de4438d23bb0df260ca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitPos: {fileID: 141951854}
+  textPrefab: {fileID: 5769504527880590928, guid: e312092da2cce9541a402caadb21d5ce, type: 3}
+  resetDelay: 2
+  fadeDelay: 0.5
 --- !u!1001 &1967202504
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -148,8 +148,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
             // Check if dead
             if (health <= 0)
             {
-                health = 0;
-                EventManager.Instance.Raise(new GameOverEvent { });
+                Die();
             }
             return;
         }
@@ -159,9 +158,18 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new UpdatePlayerHealthEvent { newHealth = health });
         if (health <= 0)
         {
-            health = 0;
-            EventManager.Instance.Raise(new GameOverEvent { });
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        health = 0;
+        EventManager.Instance.Raise(new PlayerDeadEvent { });
+        StartCoroutine(CoroutineUtil.DelayAction(1f, () =>
+        {
+            EventManager.Instance.Raise(new GameOverEvent { });
+        }));
     }
 
     private void SetHealthCare(CarePlayerEvent e)

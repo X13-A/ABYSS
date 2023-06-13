@@ -15,9 +15,6 @@ public class GameManager : MonoBehaviour, IEventHandler
     private GAMESTATE m_SourceMenu;
     public GAMESTATE SourceMenu => m_SourceMenu;
 
-    public bool ScreamerActive => State == GAMESTATE.SCREAMER;
-
-
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
@@ -33,6 +30,9 @@ public class GameManager : MonoBehaviour, IEventHandler
 
         EventManager.Instance.AddListener<StartBossScreamerEvent>(StartScreamer);
         EventManager.Instance.AddListener<EndBossScreamerEvent>(EndScreamer);
+        EventManager.Instance.AddListener<BossDefeatedEvent>(Die);
+        EventManager.Instance.AddListener<PlayerDeadEvent>(Die);
+
     }
 
     public void UnsubscribeEvents() 
@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour, IEventHandler
 
         EventManager.Instance.RemoveListener<StartBossScreamerEvent>(StartScreamer);
         EventManager.Instance.RemoveListener<EndBossScreamerEvent>(EndScreamer);
+        EventManager.Instance.RemoveListener<BossDefeatedEvent>(Die);
+        EventManager.Instance.RemoveListener<PlayerDeadEvent>(Die);
     }
 
     private void OnEnable()
@@ -280,4 +282,14 @@ public class GameManager : MonoBehaviour, IEventHandler
         Credits();
     }
     #endregion
+
+    private void Die(BossDefeatedEvent e)
+    {
+        SetState(GAMESTATE.DEAD);
+    }
+
+    private void Die(PlayerDeadEvent e)
+    {
+        SetState(GAMESTATE.DEAD);
+    }
 }

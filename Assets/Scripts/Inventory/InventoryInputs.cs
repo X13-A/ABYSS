@@ -43,6 +43,7 @@ public class InventoryInputs : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         HandleSlotChange();
         HandleItemUse();
         HandleItemDrop();

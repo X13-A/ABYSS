@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // all of the code inside this function will be executed each frame
         // the physics should be puted inside fixedUpdate
-        if (GameManager.Instance.State != GAMESTATE.PLAY || GameManager.Instance.ScreamerActive)
+        if (GameManager.Instance.State != GAMESTATE.PLAY)
         {
             xInput = 0;
             yInput = 0;
@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.Instance.State != GAMESTATE.PLAY || GameManager.Instance.ScreamerActive) return;
+        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         ApplyGravity();
         MovePlayer();
     }

@@ -93,6 +93,10 @@ public class AttackSpeedMultiplierEvent : SDD.Events.Event
     public float speed;
 }
 
+public class PlayerDeadEvent : SDD.Events.Event
+{
+}
+
 #endregion
 
 #region Enemy
@@ -109,12 +113,14 @@ public class SceneAboutToChangeEvent : SDD.Events.Event
 {
     public int levelGenerated;
     public string targetScene;
+    public bool displayLoading = true;
 }
 
 public class SceneReadyToChangeEvent : SDD.Events.Event
 {
     public int levelGenerated;
     public string targetScene;
+    public bool displayLoading = true;
 }
 
 #endregion
@@ -364,9 +370,8 @@ public class IsArrivedToPointEvent : SDD.Events.Event
     public int pointNumber;
 }
 
-public class UpdateBossHealthEvent : SDD.Events.Event
+public class BossDefeatedEvent : SDD.Events.Event
 {
-    public float newHealth;
 }
 
 #endregion

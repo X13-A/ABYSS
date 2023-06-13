@@ -22,7 +22,13 @@ public class SurpriseBoxDamage : MonoBehaviour, IDamageable
     public void Damage(float damage, AttackType type)
     {
         if (health < 0 + Mathf.Epsilon) return;
-        float scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
+
+        int factorIndex = damagerTypes.IndexOf(type);
+        float scaledDamage = damage;
+        if (factorIndex != -1 && factorIndex < damagerTypesFactors.Count)
+        {
+            scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
+        }
 
         health = Mathf.Max(0, health - scaledDamage);
         animationHit.Play("BoxCrash");

@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
     public static LevelManager Instance => m_Instance;
 
     [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject loadingScreenProgressPanel;
     [SerializeField] private Image progressBar;
     [SerializeField] private int currentLevel;
     private MapGeneration generator;
@@ -68,7 +69,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
         // Préparation au changement de scene
         StartCoroutine(TransitionManager.Instance.FadeOut(1f, () =>
         {
-            EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, levelGenerated = e.levelGenerated });
+            EventManager.Instance.Raise(new SceneReadyToChangeEvent { targetScene = e.targetScene, levelGenerated = e.levelGenerated, displayLoading = e.displayLoading });
         }));
     }
 
@@ -79,6 +80,7 @@ public class LevelManager : MonoBehaviour, IEventHandler
         operation.allowSceneActivation = false;
         progressBar.fillAmount = 0;
         loadingScreen.SetActive(true);
+        loadingScreenProgressPanel.SetActive(e.displayLoading);
         do
         {
             EventManager.Instance.Raise(new LoadingProgressUpdateEvent { progress = operation.progress, message = "Loading scene" });

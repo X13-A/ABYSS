@@ -7,7 +7,7 @@ public enum PlayerMode { MELEE, RANGE, MAGIC, PICKAXE, AXE, UNARMED, BUILD };
 public enum AttackType { MELEE, RANGE, MAGIC, PICKAXE, AXE };
 public enum AimingMode { CAMERA, CURSOR };
 public enum BlockType { AIR, DIRT, DIRT_2, SAND, SANDSTONE, LAVA, LAVA_2, ROCK, SNOW, ICE, GRASS  };
-public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING, SCREAMER };
+public enum GAMESTATE { PLAY, GAME_OVER, MAIN_MENU, PAUSE_MENU, SETTINGS_MENU, LOADING, SCREAMER, DEAD };
 
 public class EnumConverter
 {

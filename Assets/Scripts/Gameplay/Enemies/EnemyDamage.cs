@@ -28,9 +28,13 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     public void Damage(float damage, AttackType type)
     {
         // Scale damage according to factors
-        int typeIndex = damagerTypes.IndexOf(type);
-        float damageFactor = damagerTypesFactors[typeIndex];
-        float scaledDamage = damage * damageFactor;
+        int factorIndex = damagerTypes.IndexOf(type);
+        float scaledDamage = damage;
+        if (factorIndex != -1 && factorIndex < damagerTypesFactors.Count)
+        {
+            scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
+        }
+
         health = Mathf.Max(0, health - scaledDamage);
         if (hitParticles != null)
         {

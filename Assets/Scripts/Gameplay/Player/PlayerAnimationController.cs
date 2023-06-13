@@ -34,11 +34,15 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<AnimateAttackEvent>(HandleAttack);
+        EventManager.Instance.AddListener<BossDefeatedEvent>(Die);
+        EventManager.Instance.AddListener<PlayerDeadEvent>(Die);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<AnimateAttackEvent>(HandleAttack);
+        EventManager.Instance.RemoveListener<BossDefeatedEvent>(Die);
+        EventManager.Instance.RemoveListener<PlayerDeadEvent>(Die);
     }
 
     private void OnEnable()
@@ -58,6 +62,17 @@ public class PlayerAnimationController : MonoBehaviour, IEventHandler
         if (animation == null) return;
         float clipLength = animation.length;
         m_Animator.SetFloat("AttackSpeed", clipLength / e.animationDuration);
+    }
+
+    private void Die(BossDefeatedEvent e)
+    {
+        m_Animator.speed = 0.2f;
+        m_Animator.SetTrigger("IsDefeated");
+    }
+
+    private void Die(PlayerDeadEvent e)
+    {
+        m_Animator.SetTrigger("IsDefeated");
     }
 
 

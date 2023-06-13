@@ -16,8 +16,8 @@ public class BossManager : MonoBehaviour
     [SerializeField] private EnemyDamage bossDamage;
 
     public float BossHealth => bossDamage.Health;
-
     public float TimeBeforeWakingUp => timeBeforeWakingUp;
+    private bool defeated = false;
 
     private void Awake()
     {
@@ -68,5 +68,26 @@ public class BossManager : MonoBehaviour
             
 
         //}
+    }
+
+    private void Update()
+    {
+        // HACK: Should use events instead of constant checking
+        if (!defeated && BossHealth <= 0)
+        {
+            defeated = true;
+            EventManager.Instance.Raise(new BossDefeatedEvent {});
+
+            // Roll credits
+            StartCoroutine(CoroutineUtil.DelayAction(5f, () =>
+            {
+                EventManager.Instance.Raise(new SceneAboutToChangeEvent
+                {
+                    levelGenerated = 0,
+                    displayLoading = false,
+                    targetScene = "Credits"
+                });
+            }));
+        }
     }
 }

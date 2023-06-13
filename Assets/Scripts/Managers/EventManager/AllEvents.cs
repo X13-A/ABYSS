@@ -364,9 +364,7 @@ public class IsArrivedToPointEvent : SDD.Events.Event
     public int pointNumber;
 }
 
-public class UpdateBossHealthEvent : SDD.Events.Event
-{
-    public float newHealth;
-}
+public class ModeBossEvent : SDD.Events.Event
+{ }
 
 #endregion

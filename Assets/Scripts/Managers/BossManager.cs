@@ -2,24 +2,34 @@ using SDD.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
+using static UnityEditor.PlayerSettings;
 
 public class BossManager : MonoBehaviour
 {
     [SerializeField] private new Light light;
     [SerializeField] private float timeBeforeWakingUp;
-    [SerializeField] private GameObject[] bossParticle;
+    [SerializeField] private GameObject[] bossParticles;
     [SerializeField] private EnemyDamage bossDamage;
     [SerializeField] private float movementSpeed;
     [SerializeField] private GameObject boss;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject path;
+    [SerializeField] private Vector3 impactDirection;
+    [SerializeField] private float impactSpeed;
 
     public float BossHealth => bossDamage.Health;
     private float bossMaxHealth;
     private Vector3[] coordinates;
     private static BossManager m_Instance;
+    private bool particlesActivated70 = false;
+    private bool particlesActivated30 = false;
+    private float mass = 3.0F;
+    Vector3 impact = Vector3.zero;
+    private CharacterController character;
 
     public static BossManager Instance => m_Instance;
     public float TimeBeforeWakingUp => timeBeforeWakingUp;
@@ -61,10 +71,11 @@ public class BossManager : MonoBehaviour
 
     private void Start()
     {
+        character = PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>();
         bossMaxHealth = bossDamage.Health;
-        bossParticle[0].SetActive(true);
-        bossParticle[1].SetActive(false);
-        bossParticle[2].SetActive(false);
+        bossParticles[0].SetActive(true);
+        bossParticles[1].SetActive(false);
+        bossParticles[2].SetActive(false);
         Transform[] childrenTransforms = path.GetComponentsInChildren<Transform>();
         int numChildren = childrenTransforms.Length - 1;
         coordinates = new Vector3[numChildren];
@@ -75,30 +86,23 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void PushesPlayer(EnemyAttackEvent e)
-    {
-        Debug.Log("sibngfrmqie");
-        //Vector3 force = new Vector3(5f, 5f, 5f);
-        //Rigidbody playerRigidbody = player.GetComponent<Rigidbody>();
-        //playerRigidbody.AddForce(force, ForceMode.Impulse);
-
-    }
-
     private void Update()
     {
-        // TODO: Trigger event only once !!!!
-        if (BossHealth <= bossMaxHealth * 0.70)
+        if (BossHealth <= bossMaxHealth * 0.70 && !particlesActivated70)
         {
+            particlesActivated70 = true;
+            particlesActivated30 = false;
+            bossParticles[0].SetActive(false);
+            bossParticles[1].SetActive(true);
             EventManager.Instance.Raise(new ModeBossEvent { });
-            bossParticle[0].SetActive(false);
-            bossParticle[1].SetActive(true);
         }
 
-        if (BossHealth <= bossMaxHealth * 0.30)
+        if (BossHealth <= bossMaxHealth * 0.30 && !particlesActivated30)
         {
+            particlesActivated30 = true;
+            bossParticles[1].SetActive(false);
+            bossParticles[2].SetActive(true);
             EventManager.Instance.Raise(new ModeBossEvent { });
-            bossParticle[1].SetActive(false);
-            bossParticle[2].SetActive(true);
         }
 
         // HACK: Should use events instead of constant checking
@@ -118,16 +122,56 @@ public class BossManager : MonoBehaviour
                 });
             }));
         }
+
+        // apply the impact force:
+        if (impact.magnitude > 0.2F) character.Move(impact * Time.deltaTime);
+        // consumes the impact energy each cycle:
+        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
     }
-    
+
+    private void PushesPlayer(EnemyAttackEvent e)
+    {
+        AddImpact(impactDirection, impactSpeed);
+    }
+
+    public void AddImpact(Vector3 dir, float force)
+    {
+        dir.Normalize();
+        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        impact += dir.normalized * force / mass;
+    }
+
     private void StartCoroutineBossPath(ModeBossEvent e)
     {
+        Debug.Log("tesssssssst");
         StartCoroutine(BossPath());
     }
 
     private IEnumerator BossPath()
     {
-        yield return null;
+        System.Random random = new System.Random();
+
+        int numPositions = random.Next(3, coordinates.Length);
+
+        List<Vector3> selectedPositions = new List<Vector3>();
+
+        while (selectedPositions.Count < numPositions)
+        {
+            int randomIndex = random.Next(0, coordinates.Length);
+            Vector3 selectedPosition = coordinates[randomIndex];
+
+            if (!selectedPositions.Contains(selectedPosition))
+            {
+                selectedPositions.Add(selectedPosition);
+            }
+        }
+
+        // Parcours des positions sélectionnées
+        foreach (Vector3 position in selectedPositions)
+        {
+            boss.transform.position = position;
+            yield return new WaitForSeconds(1f);
+        }
     }
 
 }

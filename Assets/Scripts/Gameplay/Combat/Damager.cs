@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Damager : MonoBehaviour, IDamager
 {
-    [SerializeField] private float damage;
+
+    private float damage;
     [SerializeField] private AttackType type;
+    [SerializeField] private List<DamageableType> damageableTypes = new List<DamageableType> { DamageableType.Enemy, DamageableType.Decor };
+
     private Collider damagerCollider;
     public Collider Collider => damagerCollider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
+
 
     private void Awake()
     {
@@ -42,6 +46,22 @@ public class Damager : MonoBehaviour, IDamager
         }));
     }
 
+
+    // Use these to manually enable and disable the damager instead of enabling it for a duration
+    public void EnableDamage(float damage)
+    {
+        collides.Clear();
+        this.damage = damage;
+        damagerCollider.enabled = true;
+    }
+
+    public void StopDamage()
+    {
+        this.damage = 0;
+        damagerCollider.enabled = false;
+        collides.Clear();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         IDamageable damageable = other.GetComponent<IDamageable>();
@@ -49,6 +69,7 @@ public class Damager : MonoBehaviour, IDamager
         if (damageable == null) return;
         if (collides.Contains(damageable)) return;
         if (!damageable.DamagerTypes.Contains(type)) return;
+        if (!damageableTypes.Contains(damageable.DamageableType)) return;
         CauseDamage(damageable);
     }
 

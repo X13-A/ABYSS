@@ -11,6 +11,9 @@ public class EnemyDamage : MonoBehaviour, IDamageable
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject corpse;
     [SerializeField] private float fadeOutTime = 0.1f;
+
+    public DamageableType DamageableType => DamageableType.Enemy;
+
     private DamageTextEmitter textEmitter;
     public float Health { get { return health; } }
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }

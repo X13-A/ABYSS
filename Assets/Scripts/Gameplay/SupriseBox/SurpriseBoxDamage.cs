@@ -9,6 +9,7 @@ public class SurpriseBoxDamage : MonoBehaviour, IDamageable
     [SerializeField] private List<float> damagerTypesFactors;
     [SerializeField] private Animation animationHit;
     [SerializeField] GameObject[] spawnObjects;
+    public DamageableType DamageableType => DamageableType.Decor;
 
     public float Health { get { return health; } set { health = value; } }
     public List<AttackType> DamagerTypes { get { return damagerTypes; } }

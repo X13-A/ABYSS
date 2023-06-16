@@ -3,11 +3,11 @@ using SDD.Events;
 
 public class BossAnimationController : MonoBehaviour, IEventHandler
 {
-    private Animator m_Animator;
+    [SerializeField] private Animator m_Animator;
+    [SerializeField] private BossSword m_Sword;
 
     private void Start()
     {
-        m_Animator = GetComponent<Animator>();
     }
 
     public void SubscribeEvents()
@@ -35,9 +35,13 @@ public class BossAnimationController : MonoBehaviour, IEventHandler
         m_Animator.SetBool("isAwake", true);
     }
 
-    private void Update()
+    public void StartMeleeDamage()
     {
-        if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-        bool isAwake = m_Animator.GetBool("isAwake");
+        m_Sword.StartDamage();
+    }
+
+    public void EndMeleeDamage()
+    {
+        m_Sword.EndDamage();
     }
 }

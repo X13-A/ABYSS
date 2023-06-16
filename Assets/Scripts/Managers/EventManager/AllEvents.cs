@@ -99,15 +99,6 @@ public class PlayerDeadEvent : SDD.Events.Event
 
 #endregion
 
-#region Enemy
-
-public class EnemyAttackEvent : SDD.Events.Event
-{
-    public float damage;
-}
-
-#endregion
-
 #region Scene events
 public class SceneAboutToChangeEvent : SDD.Events.Event
 {

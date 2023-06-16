@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 1361801252919253646}
   - component: {fileID: -1526415520870471315}
   - component: {fileID: 2208179425434524666}
+  - component: {fileID: 1282223924448379284}
   m_Layer: 0
   m_Name: SlimeEnemy
   m_TagString: Untagged
@@ -107,6 +108,7 @@ Transform:
   - {fileID: 6368624365024141172}
   - {fileID: 6368342028156129134}
   - {fileID: 3848002722457071762}
+  - {fileID: 2364004482097766055}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,7 +177,6 @@ MonoBehaviour:
   runningVelocity: 0.03
   walkingVelocity: 0.02
   runningWhenModifier: 1.8
-  playerReference: {fileID: 0}
   attackDuration: 1
   attackVariantDuration: 2
   attackDamage: 3
@@ -203,6 +204,7 @@ MonoBehaviour:
   - 1
   hitParticles: {fileID: -3729245544315515770}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
+  fadeOutTime: 0.1
 --- !u!114 &1378855908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,6 +5178,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1282223924448379284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6370514893178482396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ca1583e4a90eb45820046025917538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6370725469876677340
 GameObject:
   m_ObjectHideFlags: 0
@@ -5556,3 +5570,64 @@ Transform:
   m_Father: {fileID: 6368624365024141172}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7985787983630093974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2364004482097766055}
+  - component: {fileID: 5643544916503535048}
+  - component: {fileID: 5259605485609273782}
+  m_Layer: 0
+  m_Name: Damager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2364004482097766055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985787983630093974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.487, z: 1.074}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6368098437184326498}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5643544916503535048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985787983630093974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5259605485609273782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985787983630093974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5396e31c9b25d0249bad245cd130e8a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  type: 0
+  damageableTypes: 0100000002000000

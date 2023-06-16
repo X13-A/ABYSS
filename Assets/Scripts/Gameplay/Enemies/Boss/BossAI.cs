@@ -132,7 +132,8 @@ public class BossAI : MonoBehaviour, IEventHandler
         Vector3 enemyWidth = GetEnemyHalfWidth();
         Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
         directionToPlayer.y = 0; // remove any influence from the y axis
-        rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
+        Quaternion quaternionToPlayer = Quaternion.LookRotation(directionToPlayer);
+        rb.MoveRotation(quaternionToPlayer);
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }
 
@@ -167,10 +168,7 @@ public class BossAI : MonoBehaviour, IEventHandler
 
     private void RaiseAttackEvent()
     {
-        EventManager.Instance.Raise(new EnemyAttackEvent
-        {
-            damage = attackDamage
-        });
+
     }
 
     public void LaunchAttackSound()

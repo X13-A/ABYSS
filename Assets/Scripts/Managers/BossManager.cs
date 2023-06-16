@@ -20,6 +20,8 @@ public class BossManager : MonoBehaviour
     [SerializeField] private GameObject path;
     [SerializeField] private Vector3 impactDirection;
     [SerializeField] private float impactSpeed;
+    [SerializeField] private GameObject bossReference;
+    public GameObject BossReference => bossReference;
 
     public float BossHealth => bossDamage.Health;
     private float bossMaxHealth;
@@ -60,13 +62,13 @@ public class BossManager : MonoBehaviour
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<ModeBossEvent>(StartCoroutineBossPath);
-        EventManager.Instance.AddListener<EnemyAttackEvent>(PushesPlayer);
+        //EventManager.Instance.AddListener<EnemyAttackEvent>(PushesPlayer);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<ModeBossEvent>(StartCoroutineBossPath);
-        EventManager.Instance.RemoveListener<EnemyAttackEvent>(PushesPlayer);
+        //EventManager.Instance.RemoveListener<EnemyAttackEvent>(PushesPlayer);
     }
 
     private void Start()
@@ -129,10 +131,10 @@ public class BossManager : MonoBehaviour
         impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
     }
 
-    private void PushesPlayer(EnemyAttackEvent e)
-    {
-        AddImpact(impactDirection, impactSpeed);
-    }
+    //private void PushesPlayer(EnemyAttackEvent e)
+    //{
+    //    AddImpact(impactDirection, impactSpeed);
+    //}
 
     public void AddImpact(Vector3 dir, float force)
     {

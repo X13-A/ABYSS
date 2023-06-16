@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackVariantDamage;
     [SerializeField] private int attackVariantFrequency;
     [SerializeField] private AudioClip attackSound;
+
     // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
     public float detectionRadius;
@@ -19,7 +20,6 @@ public class EnemyAI : MonoBehaviour
     private AudioSource audioSource;
     private Animator animator;
     private Rigidbody rb;
-    private CharacterController playerCharacterController;
     private Collider enemyCollider;
 
     private float distanceToPlayer;
@@ -29,6 +29,8 @@ public class EnemyAI : MonoBehaviour
     private int attackVariant;
     private int attackCounter;
     private bool isReadyToBattle;
+    private EnemyAnimationController animationController;
+    private EnemyAttack enemyAttack;
 
     public float Velocity { get; private set; }
     public float AttackElaspedTime => Time.time - attackStartTime;
@@ -37,9 +39,10 @@ public class EnemyAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        playerCharacterController = PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>();
         enemyCollider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
+        animationController = GetComponent<EnemyAnimationController>();
+        enemyAttack = GetComponent<EnemyAttack>();
     }
 
     private void OnEnable()
@@ -65,7 +68,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)
             {
-                RaiseAttackEvent();
+                TriggerAttack();
                 attackStartTime = Time.time;
             }
             else
@@ -134,7 +137,7 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
-        Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
+        Vector3 playerWidth = new Vector3(PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>().radius, 0, 0);
 
         Vector3 enemyWidth = GetEnemyHalfWidth();
         Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
@@ -176,18 +179,26 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void RaiseAttackEvent()
+
+    // Triggers the attack animation
+    private void TriggerAttack()
     {
         attackCounter++;
         attackVariant = attackCounter % attackVariantFrequency == 0 ? 1 : 0;
-        EventManager.Instance.Raise(new EnemyAttackEvent
-        {
-            damage = attackVariant == 0 ? attackDamage : attackVariantDamage
-        });
+        animationController.TriggerAttack();
+        audioSource.PlayOneShot(attackSound);
     }
 
-    public void LaunchAttackSound()
+
+    // Is triggered when the attack animation starts (using animation events)
+    private void StartAttack(int variant)
     {
-       audioSource.PlayOneShot(attackSound);
+        enemyAttack.StartDamage(variant);
+    }
+
+    // Is triggered when the attack animation ends
+    private void StopAttack()
+    {
+        enemyAttack.EndDamage();
     }
 }

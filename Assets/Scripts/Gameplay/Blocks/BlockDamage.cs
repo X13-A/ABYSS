@@ -9,6 +9,7 @@ using UnityEngine;
     [SerializeField] private List<AttackType> damagerTypes;
     [SerializeField] private List<float> damagerTypesFactors;
     private Animation animationHit;
+    public DamageableType DamageableType => DamageableType.Block;
 
     public float Health => health;
     public List<AttackType> DamagerTypes => damagerTypes;

@@ -3,33 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnimationController : MonoBehaviour, IEventHandler
+public class EnemyAnimationController : MonoBehaviour
 {
     private Animator animator;
-
-    public void SubscribeEvents()
-    {
-        EventManager.Instance.AddListener<EnemyAttackEvent>(HandleAttack);
-    }
-
-    public void UnsubscribeEvents()
-    {
-        EventManager.Instance.RemoveListener<EnemyAttackEvent>(HandleAttack);
-    }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-    }
-
-    private void OnEnable()
-    {
-        SubscribeEvents();
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeEvents();
     }
 
     private void Update()
@@ -55,9 +35,8 @@ public class EnemyAnimationController : MonoBehaviour, IEventHandler
         }
     }
 
-    private void HandleAttack(EnemyAttackEvent e)
+    public void TriggerAttack()
     {
         animator.SetTrigger("attack");
-        EventManager.Instance.Raise(new DamagePlayerEvent { damage = e.damage });
     }
 }

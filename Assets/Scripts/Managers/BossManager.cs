@@ -21,6 +21,7 @@ public class BossManager : MonoBehaviour
     [SerializeField] private Vector3 impactDirection;
     [SerializeField] private float impactSpeed;
     [SerializeField] private GameObject bossReference;
+    [SerializeField] ParticleSystem bossWarpParticles;
     public GameObject BossReference => bossReference;
 
     public float BossHealth => bossDamage.Health;
@@ -62,13 +63,11 @@ public class BossManager : MonoBehaviour
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<ModeBossEvent>(StartCoroutineBossPath);
-        //EventManager.Instance.AddListener<EnemyAttackEvent>(PushesPlayer);
     }
 
     public void UnsubscribeEvents()
     {
         EventManager.Instance.RemoveListener<ModeBossEvent>(StartCoroutineBossPath);
-        //EventManager.Instance.RemoveListener<EnemyAttackEvent>(PushesPlayer);
     }
 
     private void Start()
@@ -172,6 +171,9 @@ public class BossManager : MonoBehaviour
         foreach (Vector3 position in selectedPositions)
         {
             boss.transform.position = position;
+            bossWarpParticles.transform.position = position;
+            bossWarpParticles.Stop();
+            bossWarpParticles.Play();
             yield return new WaitForSeconds(1f);
         }
     }

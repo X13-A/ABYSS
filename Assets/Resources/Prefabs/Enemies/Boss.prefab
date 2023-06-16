@@ -11142,7 +11142,6 @@ GameObject:
   - component: {fileID: 4268592731246366187}
   - component: {fileID: 4268592731246366229}
   - component: {fileID: 4268592731246366228}
-  - component: {fileID: 4268592731246366231}
   - component: {fileID: 4268592731246366230}
   - component: {fileID: 4268592731246366225}
   - component: {fileID: 4268592731246366224}
@@ -11206,23 +11205,6 @@ MonoBehaviour:
   hitParticles: {fileID: 4268592731546908816}
   corpse: {fileID: 6376888296568424339, guid: 22c3993f7fdea4e438901d8f0240b32e, type: 3}
   fadeOutTime: 0.25
---- !u!114 &4268592731246366231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4268592731246366184}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ebdc81e8154acc4291bc30042b04f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingVelocity: 0.05
-  attackDuration: 1
-  attackDamage: 20
-  attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
-  attackDistanceOffset: 2
 --- !u!54 &4268592731246366230
 Rigidbody:
   m_ObjectHideFlags: 0

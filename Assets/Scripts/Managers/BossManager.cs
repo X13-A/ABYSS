@@ -10,29 +10,36 @@ using static UnityEditor.PlayerSettings;
 
 public class BossManager : MonoBehaviour
 {
-    [SerializeField] private new Light light;
     [SerializeField] private float timeBeforeWakingUp;
+
     [SerializeField] private GameObject[] bossParticles;
     [SerializeField] private EnemyDamage bossDamage;
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private GameObject boss;
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject path;
-    [SerializeField] private Vector3 impactDirection;
-    [SerializeField] private float impactSpeed;
     [SerializeField] private GameObject bossReference;
-    [SerializeField] ParticleSystem bossWarpParticles;
+    [SerializeField] private BossAnimationController bossAnimationController;
     public GameObject BossReference => bossReference;
 
+    [SerializeField] private ParticleSystem bossWarpParticles;
+    [SerializeField] private GameObject WarpPath;
+
+    [SerializeField] private Vector3 impactDirection;
+    [SerializeField] private float impactSpeed;
+    [SerializeField] private float magicAttackCooldown = 1f;
+
+    public float MagicAttackCooldown => magicAttackCooldown;
     public float BossHealth => bossDamage.Health;
     private float bossMaxHealth;
     private Vector3[] coordinates;
     private static BossManager m_Instance;
     private bool particlesActivated70 = false;
     private bool particlesActivated30 = false;
-    private float mass = 3.0F;
-    Vector3 impact = Vector3.zero;
-    private CharacterController character;
+    private float bossSpeedScale = 0.5f;
+    public float BossSpeedScale => bossSpeedScale;
+
+    private float lastMagicAttackTime;
+    public float LastMagicAttackTime => lastMagicAttackTime;
+
+    //private float mass = 3.0F;
+    //Vector3 impact = Vector3.zero;
 
     public static BossManager Instance => m_Instance;
     public float TimeBeforeWakingUp => timeBeforeWakingUp;
@@ -72,15 +79,15 @@ public class BossManager : MonoBehaviour
 
     private void Start()
     {
-        character = PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>();
+        ResetLastMagicAttackTime();
+
         bossMaxHealth = bossDamage.Health;
         bossParticles[0].SetActive(true);
         bossParticles[1].SetActive(false);
         bossParticles[2].SetActive(false);
-        Transform[] childrenTransforms = path.GetComponentsInChildren<Transform>();
+        Transform[] childrenTransforms = WarpPath.GetComponentsInChildren<Transform>();
         int numChildren = childrenTransforms.Length - 1;
         coordinates = new Vector3[numChildren];
-
         for (int i = 1; i < childrenTransforms.Length; i++)
         {
             coordinates[i - 1] = childrenTransforms[i].localPosition;
@@ -95,6 +102,7 @@ public class BossManager : MonoBehaviour
             particlesActivated30 = false;
             bossParticles[0].SetActive(false);
             bossParticles[1].SetActive(true);
+            bossSpeedScale = 0.75f;
             EventManager.Instance.Raise(new ModeBossEvent { });
         }
 
@@ -104,6 +112,7 @@ public class BossManager : MonoBehaviour
             bossParticles[1].SetActive(false);
             bossParticles[2].SetActive(true);
             EventManager.Instance.Raise(new ModeBossEvent { });
+            bossSpeedScale = 1f;
         }
 
         // HACK: Should use events instead of constant checking
@@ -124,23 +133,34 @@ public class BossManager : MonoBehaviour
             }));
         }
 
-        // apply the impact force:
-        if (impact.magnitude > 0.2F) character.Move(impact * Time.deltaTime);
-        // consumes the impact energy each cycle:
-        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+
     }
 
-    //private void PushesPlayer(EnemyAttackEvent e)
+    public void ResetLastMagicAttackTime()
+    {
+        lastMagicAttackTime = Time.time;
+    }
+
+    // TODO: Manage knockback in player collider directly for wide use
+
+    //private void ApplyKnockbackForce()
+    //{
+    //    // apply the impact force:
+    //    if (impact.magnitude > 0.2F) PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>().Move(impact * Time.deltaTime);
+    //    // consumes the impact energy each cycle:
+    //    impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+    //}
+    //public void AddImpact(Vector3 dir, float force)
+    //{
+    //    dir.Normalize();
+    //    if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+    //    impact += dir.normalized * force / mass;
+    //}
+
+    //private void PushPlayer()
     //{
     //    AddImpact(impactDirection, impactSpeed);
     //}
-
-    public void AddImpact(Vector3 dir, float force)
-    {
-        dir.Normalize();
-        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
-        impact += dir.normalized * force / mass;
-    }
 
     private void StartCoroutineBossPath(ModeBossEvent e)
     {
@@ -152,29 +172,39 @@ public class BossManager : MonoBehaviour
     {
         System.Random random = new System.Random();
 
-        int numPositions = random.Next(3, coordinates.Length);
 
         List<Vector3> selectedPositions = new List<Vector3>();
-
-        while (selectedPositions.Count < numPositions)
+        while (selectedPositions.Count < coordinates.Length)
         {
             int randomIndex = random.Next(0, coordinates.Length);
             Vector3 selectedPosition = coordinates[randomIndex];
-
             if (!selectedPositions.Contains(selectedPosition))
             {
                 selectedPositions.Add(selectedPosition);
             }
         }
 
-        // Parcours des positions sélectionnées
+        // Parcour des positions sélectionnées
         foreach (Vector3 position in selectedPositions)
         {
-            boss.transform.position = position;
+            // Warp boss
+            bossReference.transform.position = position;
+
+            // Instant fire magic projectile
+            lastMagicAttackTime = Time.time - magicAttackCooldown / bossSpeedScale;
             bossWarpParticles.transform.position = position;
             bossWarpParticles.Stop();
             bossWarpParticles.Play();
-            yield return new WaitForSeconds(1f);
+            bossAnimationController.StartMagicAttackAnimation();
+
+            // Make boss face player
+            Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position) - (BossReference.transform.position)).normalized;
+            directionToPlayer.y = 0;
+            Quaternion quaternionToPlayer = Quaternion.LookRotation(directionToPlayer);
+            BossReference.GetComponent<Rigidbody>().MoveRotation(quaternionToPlayer);
+
+            // Wait until next warp
+            yield return new WaitForSeconds(1.25f / bossSpeedScale);
         }
     }
 

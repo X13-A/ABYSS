@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &77524269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77524270}
+  m_Layer: 7
+  m_Name: Projectile Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &77524270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77524269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.06, z: 2.053}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4268592731246366187}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &129498649135920341
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 4297669537805280041}
   m_Sword: {fileID: 4268592731246366227}
+  m_Wand: {fileID: 0}
 --- !u!1 &1395473223065312754
 GameObject:
   m_ObjectHideFlags: 0
@@ -11146,6 +11178,7 @@ GameObject:
   - component: {fileID: 4268592731246366225}
   - component: {fileID: 4268592731246366224}
   - component: {fileID: 4268592731246366227}
+  - component: {fileID: 750665223}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
@@ -11169,6 +11202,7 @@ Transform:
   - {fileID: 4268592731985168345}
   - {fileID: 4268592732097294536}
   - {fileID: 8497559802579603846}
+  - {fileID: 77524270}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -11265,6 +11299,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   damager: {fileID: 6888612114257105458}
+  audioSource: {fileID: 4930976193517656323}
+--- !u!114 &750665223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268592731246366184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ebb0099b40bca4083cc1d67b2a3f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  projectileSpeed: 5
+  projectilePrefab: {fileID: 8047378608784370723, guid: eedfd48bc7b27c940b202939d36137a8, type: 3}
+  projectileSpawn: {fileID: 77524270}
   audioSource: {fileID: 4930976193517656323}
 --- !u!1 &4268592731546908821
 GameObject:

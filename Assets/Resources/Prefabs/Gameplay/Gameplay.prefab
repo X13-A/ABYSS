@@ -7342,7 +7342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &573124496576248940
 Transform:
   m_ObjectHideFlags: 0
@@ -7370,20 +7370,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d585825836cf4104095ad3e213a4c0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 0}
   timeBeforeWakingUp: 6
   bossParticles:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   bossDamage: {fileID: 0}
-  movementSpeed: 0
-  boss: {fileID: 0}
-  player: {fileID: 1003219964964764841}
-  path: {fileID: 0}
+  bossReference: {fileID: 0}
+  bossAnimationController: {fileID: 0}
+  bossWarpParticles: {fileID: 0}
+  WarpPath: {fileID: 0}
   impactDirection: {x: 80, y: 50, z: 80}
   impactSpeed: 75
-  bossReference: {fileID: 0}
+  magicAttackCooldown: 1
 --- !u!114 &4766933062446087017
 MonoBehaviour:
   m_ObjectHideFlags: 0

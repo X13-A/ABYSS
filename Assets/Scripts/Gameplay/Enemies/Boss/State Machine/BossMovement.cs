@@ -6,7 +6,8 @@ public class BossMovement : StateMachineBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float meleeAttackRange = 2f;
+    [SerializeField] private float magicAttackRange = 8f;
 
     private Transform playerTransform;
     private Rigidbody bossRigidbody;
@@ -22,11 +23,8 @@ public class BossMovement : StateMachineBehaviour
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
 
         this.MoveAndRotateTowardPlayer();
-
-        if (Vector3.Distance(playerTransform.position, bossRigidbody.transform.position) <= attackRange)
-        {
-            animator.SetTrigger("MeleeAttack");
-        }
+        this.TriggerAttack(animator);
+  
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -43,7 +41,20 @@ public class BossMovement : StateMachineBehaviour
         directionToPlayer.y = 0; // remove any influence from the y axis
         Quaternion quaternionToPlayer = Quaternion.LookRotation(directionToPlayer);
         bossRigidbody.MoveRotation(Quaternion.Slerp(bossRigidbody.rotation, quaternionToPlayer, rotateSpeed * Time.deltaTime));
-        bossRigidbody.MovePosition(bossRigidbody.transform.position + directionToPlayer * moveSpeed * Time.deltaTime);
+        bossRigidbody.MovePosition(bossRigidbody.transform.position + directionToPlayer * moveSpeed * Time.deltaTime * BossManager.Instance.BossSpeedScale);
+    }
+
+    private void TriggerAttack(Animator animator)
+    {
+        if ((Time.time - BossManager.Instance.LastMagicAttackTime > BossManager.Instance.MagicAttackCooldown / BossManager.Instance.BossSpeedScale) && (Vector3.Distance(playerTransform.position, bossRigidbody.transform.position) >= magicAttackRange))
+        {
+            animator.SetTrigger("MagicAttack");
+            BossManager.Instance.ResetLastMagicAttackTime();
+        }
+        else if (Vector3.Distance(playerTransform.position, bossRigidbody.transform.position) <= meleeAttackRange)
+        {
+            animator.SetTrigger("MeleeAttack");
+        }
     }
 
     private Vector3 GetBossHalfWidth()

@@ -8,13 +8,10 @@ public class SkyboxColorChange : MonoBehaviour
     [SerializeField] private Light targetLight;
     [SerializeField] private float targetIntensity;
 
-    [SerializeField] private MeshRenderer fakeSky;
-
     private void Start()
     {
         StartCoroutine(ChangeLightIntensity());
         StartCoroutine(ChangeFogDensity());
-        StartCoroutine(CoroutineUtil.FadeTo(fakeSky, duration, targetFogDensity));
     }
     private IEnumerator ChangeLightIntensity()
     {

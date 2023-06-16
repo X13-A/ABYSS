@@ -1,5 +1,6 @@
 using SDD.Events;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackVariantDamage;
     [SerializeField] private int attackVariantFrequency;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private float jumpForce;
+
     // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
     public float detectionRadius;
@@ -29,6 +32,8 @@ public class EnemyAI : MonoBehaviour
     private int attackVariant;
     private int attackCounter;
     private bool isReadyToBattle;
+    private bool canAttack;
+    private bool isJumping;
 
     public float Velocity { get; private set; }
     public float AttackElaspedTime => Time.time - attackStartTime;
@@ -54,11 +59,6 @@ public class EnemyAI : MonoBehaviour
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         UpdateCurrentVelocity();
-        if (IsBlocked())
-        {
-            Debug.Log("test");
-            return;
-        }
         UpdateStatus();
         UpdateAnimator();
     }
@@ -66,12 +66,40 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-        if (distanceToPlayer <= detectionRadius)
+        if (distanceToPlayer > detectionRadius) return;
+        if (IsFacingWall())
         {
-            if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration)
+            isJumping = false;
+            isWalking = false;
+            isRunning = false;
+            canAttack = false;
+        }
+        else
+        {
+            if (IsFacingBlock())
             {
-                RaiseAttackEvent();
-                attackStartTime = Time.time;
+                canAttack = false;
+                isJumping = true;
+            }
+            else
+            {
+                canAttack = true;
+                isJumping = false;
+            }
+        }
+
+
+        if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration && canAttack)
+        {
+            RaiseAttackEvent();
+            attackStartTime = Time.time;
+        }
+
+        else
+        {
+            if (isJumping)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
             else
             {
@@ -109,7 +137,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (distanceToPlayer <= attackDistanceOffset)
+        if (distanceToPlayer <= attackDistanceOffset && canAttack)
         {
             isReadyToBattle = true;
             return;
@@ -128,9 +156,22 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// whill perform check for wall in front of the gameObject
     /// </summary>
-    private bool IsBlocked()
+    private bool IsFacingBlock()
     {
-        bool hit = Physics.Raycast(transform.position, Vector3.forward, GetEnemyHalfWidth().x + 0.1f);
+        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), GetEnemyHalfWidth().x + 1f);
+        return hit;
+    }
+
+    private bool IsFacingWall()
+    {
+        // perform the raycast one block taller,
+        // if the raycast hit something, we are facing a wall with two block or more
+        bool hit = Physics.Raycast
+        (
+            transform.position + new Vector3(0, 1, 0),
+            transform.TransformDirection(Vector3.forward),
+            GetEnemyHalfWidth().x + 1f
+        );
         return hit;
     }
 
@@ -149,7 +190,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         Vector3 playerWidth = new Vector3(playerCharacterController.radius, 0, 0);
-
         Vector3 enemyWidth = GetEnemyHalfWidth();
         Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
         directionToPlayer.y = 0; // remove any influence from the y axis

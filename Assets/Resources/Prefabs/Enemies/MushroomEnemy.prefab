@@ -723,6 +723,7 @@ MonoBehaviour:
   - 1
   hitParticles: {fileID: -1075803533550534995}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
+  fadeOutTime: 0.1
 --- !u!114 &6930203705514255340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,13 +739,13 @@ MonoBehaviour:
   runningVelocity: 0.06
   walkingVelocity: 0.01
   runningWhenModifier: 1.5
-  playerReference: {fileID: 0}
   attackDuration: 1
   attackVariantDuration: 2
   attackDamage: 5
   attackVariantDamage: 8
   attackVariantFrequency: 2
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
+  jumpForce: 0.25
   attackDistanceOffset: 1.5
   detectionRadius: 9
 --- !u!114 &6930203705514255341

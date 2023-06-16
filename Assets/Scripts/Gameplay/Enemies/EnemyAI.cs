@@ -69,6 +69,8 @@ public class EnemyAI : MonoBehaviour
         if (distanceToPlayer > detectionRadius) return;
         if (IsFacingWall())
         {
+            /// TODO ne pas gérer ça ici mais plutot set une valeur boolean
+            // is facing wall pour gérer ce cas et ne plus faire bouger l'enemy
             isJumping = false;
             isWalking = false;
             isRunning = false;

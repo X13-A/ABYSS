@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3159550889488598755}
   - component: {fileID: 2959323791001952997}
+  - component: {fileID: 8975394015488852956}
   m_Layer: 0
   m_Name: wood_cube_1 (38)
   m_TagString: Untagged
@@ -159,6 +160,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3142151768911643553}
   m_Enabled: 1
+--- !u!114 &8975394015488852956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3156377790962174999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3156401948326803551
 GameObject:
   m_ObjectHideFlags: 0

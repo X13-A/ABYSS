@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3331341301766589094}
   - component: {fileID: 4631883041843669179}
   - component: {fileID: -2520863062165227663}
+  - component: {fileID: 4398012842355189126}
   m_Layer: 3
   m_Name: Ice (Positioned)
   m_TagString: Untagged
@@ -150,3 +151,15 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &4398012842355189126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326326222139795307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

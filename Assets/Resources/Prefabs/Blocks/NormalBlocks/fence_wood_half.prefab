@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4499637309230422}
   - component: {fileID: 205390122002206666}
+  - component: {fileID: -7670357811210786028}
   m_Layer: 0
   m_Name: fence_wood_half
   m_TagString: Untagged
@@ -62,6 +63,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23358384415770208}
   m_Enabled: 1
+--- !u!114 &-7670357811210786028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194728377440580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1212352748786164
 GameObject:
   m_ObjectHideFlags: 0

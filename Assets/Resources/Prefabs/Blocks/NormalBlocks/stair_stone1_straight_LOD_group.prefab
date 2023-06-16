@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3930504228424060672}
   - component: {fileID: 8129537652420360305}
+  - component: {fileID: -5129061563284863341}
   m_Layer: 0
   m_Name: stair_stone1_straight_LOD_group
   m_TagString: Untagged
@@ -160,6 +161,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6385537620335249263}
   m_Enabled: 1
+--- !u!114 &-5129061563284863341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449596469423592890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5621626859471320488
 GameObject:
   m_ObjectHideFlags: 0

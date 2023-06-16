@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -8694939309062570694}
   - component: {fileID: -4055598553601372606}
   - component: {fileID: 8909750734710893391}
+  - component: {fileID: -1427784435757664276}
   m_Layer: 3
   m_Name: Ground (Positioned)
   m_TagString: Untagged
@@ -150,3 +151,15 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &-1427784435757664276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708442739469861458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

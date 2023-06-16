@@ -15,6 +15,7 @@ public class LookAtCamera : MonoBehaviour
     private void LateUpdate()
     {
         if (!look) return;
+        if (cam == null) return;
         transform.LookAt(cam.transform);
         transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
     }

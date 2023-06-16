@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4065223895735050}
   - component: {fileID: 205495915376562104}
+  - component: {fileID: 4548339898452820059}
   m_Layer: 0
   m_Name: stone_cube_2
   m_TagString: Untagged
@@ -145,6 +146,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23342898002557264}
   m_Enabled: 1
+--- !u!114 &4548339898452820059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400228509039700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1748874147592904
 GameObject:
   m_ObjectHideFlags: 0

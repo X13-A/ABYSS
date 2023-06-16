@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9212182480074668228}
   - component: {fileID: -9060394813215591010}
   - component: {fileID: 2917741199447632110}
+  - component: {fileID: 9157651408997168853}
   m_Layer: 3
   m_Name: Sandstone (Positioned)
   m_TagString: Untagged
@@ -150,3 +151,15 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &9157651408997168853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349922687517913730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -191,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4698051236441365311}
   - component: {fileID: 4898191112647511105}
+  - component: {fileID: -386784875810729174}
   m_Layer: 0
   m_Name: door_wood
   m_TagString: Untagged
@@ -243,6 +244,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4715325943592189791}
   m_Enabled: 1
+--- !u!114 &-386784875810729174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694571729296981771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4694710658474096711
 GameObject:
   m_ObjectHideFlags: 0

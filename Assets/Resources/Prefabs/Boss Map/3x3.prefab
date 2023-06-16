@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5596521031118768657}
   - component: {fileID: 282739487026151207}
   - component: {fileID: 6605481052292656547}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LavaParticleCorridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4821,7 +4821,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6359913432544053261}
-  m_Layer: 0
+  - component: {fileID: 1825144043}
+  m_Layer: 3
   m_Name: 3x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4853,6 +4854,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1825144043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359913432544053262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6359913432528673012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4860,9 +4873,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_Name
       value: lava_cubes_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_RootOrder
@@ -4952,9 +4981,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_Name
       value: lava_cubes_4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_RootOrder
@@ -5044,9 +5089,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_Name
       value: lava_cubes_2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_RootOrder
@@ -5136,9 +5197,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_Name
       value: lava_cubes_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_RootOrder
@@ -5282,9 +5359,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_Name
       value: lava_cubes_2 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 94097b6cfa5fe9e4b8b31145a46ca962, type: 3}
       propertyPath: m_RootOrder
@@ -5374,9 +5467,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_Name
       value: lava_cubes_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_RootOrder
@@ -5466,9 +5575,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_Name
       value: lava_cubes_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_RootOrder
@@ -5558,9 +5683,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_Name
       value: lava_cubes_3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 9c15b3b9c2aa0634d9b287ec58883409, type: 3}
       propertyPath: m_RootOrder
@@ -5650,9 +5791,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6359913432544053261}
     m_Modifications:
+    - target: {fileID: 100000, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_Name
       value: lava_cubes_4 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 3b0c9a6c8a9e4914989647fc26a6a188, type: 3}
       propertyPath: m_RootOrder

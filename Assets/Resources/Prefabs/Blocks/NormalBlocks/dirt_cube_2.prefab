@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4630171780701522}
   - component: {fileID: 205174739348729274}
+  - component: {fileID: 7260066068062866940}
   m_Layer: 0
   m_Name: dirt_cube_2
   m_TagString: Untagged
@@ -176,6 +177,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23525311740747300}
   m_Enabled: 1
+--- !u!114 &7260066068062866940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380870292490712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567481648891976
 GameObject:
   m_ObjectHideFlags: 0

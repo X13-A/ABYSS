@@ -30,7 +30,7 @@ public class Pickaxe : MonoBehaviour, IUseItem
             name = "Pickaxe Attack",
             animationDuration = pickaxeDuration / PlayerManager.Instance.PlayerAttackSpeedMultiplier
         });
-        RaycastHit hit = AimUtil.Instance.Aim(~(1 << LayerMask.NameToLayer("Aim")));
+        RaycastHit hit = AimUtil.Instance.Aim(1 << LayerMask.NameToLayer("Ground"));
         if (hit.collider)
         {
             IDamageable damageable = hit.collider.GetComponent<IDamageable>();

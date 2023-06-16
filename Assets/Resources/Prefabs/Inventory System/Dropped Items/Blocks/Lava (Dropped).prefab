@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5883567167722298133}
   - component: {fileID: 6592445529636683046}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 6028654493173516439}
   - component: {fileID: 996578891340574610}
   - component: {fileID: -3265095591885282281}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Lava (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

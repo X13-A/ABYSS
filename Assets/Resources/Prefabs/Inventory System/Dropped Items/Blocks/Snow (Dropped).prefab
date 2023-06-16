@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4951349529130661210}
   - component: {fileID: 858407125128224641}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: -1706302222132302646}
   - component: {fileID: 6250592541223384741}
   - component: {fileID: -2054096068410004340}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Snow (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

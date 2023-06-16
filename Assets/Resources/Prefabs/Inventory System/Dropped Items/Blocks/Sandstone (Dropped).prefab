@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5900122242517269397}
   - component: {fileID: 3332614323989580791}
   - component: {fileID: 9212182480074668228}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Sandstone (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2366120123635641835}
   - component: {fileID: 5435048876713381958}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

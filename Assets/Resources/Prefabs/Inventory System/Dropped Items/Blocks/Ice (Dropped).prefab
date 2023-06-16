@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9196834536948385005}
   - component: {fileID: 7987756603603120491}
   - component: {fileID: 3331341301766589094}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Ice (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6191518527458148842}
   - component: {fileID: 1494157575269271275}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

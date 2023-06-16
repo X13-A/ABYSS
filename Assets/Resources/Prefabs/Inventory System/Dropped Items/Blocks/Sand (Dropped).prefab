@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -9054903571092351768}
   - component: {fileID: -5031973859733309596}
   - component: {fileID: -2278843740031405362}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Sand (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2005704215556491408}
   - component: {fileID: 1985568287712628246}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

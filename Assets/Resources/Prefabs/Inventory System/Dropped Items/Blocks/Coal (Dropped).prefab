@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7969090317713658427}
   - component: {fileID: -6283421837028694950}
   - component: {fileID: -249709135869682773}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Coal (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 4031343446847458653}
+  - {fileID: 3054637631126543395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,7 +129,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &6752621023732768020
+--- !u!1 &2302106756410450823
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,22 +137,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4031343446847458653}
-  - component: {fileID: 7504081861338005276}
-  m_Layer: 3
+  - component: {fileID: 3054637631126543395}
+  - component: {fileID: 4819178490727360909}
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4031343446847458653
+--- !u!4 &3054637631126543395
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6752621023732768020}
+  m_GameObject: {fileID: 2302106756410450823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -161,13 +161,13 @@ Transform:
   m_Father: {fileID: 1747144048869644870}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7504081861338005276
+--- !u!65 &4819178490727360909
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6752621023732768020}
+  m_GameObject: {fileID: 2302106756410450823}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

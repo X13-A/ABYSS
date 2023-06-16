@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3845626675961515293}
   - component: {fileID: -3612938053982223885}
   - component: {fileID: 6364676397853615758}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rock (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2850873222457515140}
   - component: {fileID: 4233234297867017805}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

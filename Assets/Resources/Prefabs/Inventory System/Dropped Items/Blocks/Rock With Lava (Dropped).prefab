@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1334714007175456857}
   - component: {fileID: 1482915350034001648}
   - component: {fileID: 4787885705821454389}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rock With Lava (Dropped)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5882205587740792160}
   - component: {fileID: 5495619988923327599}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

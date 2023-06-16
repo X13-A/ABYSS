@@ -54,6 +54,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
         UpdateCurrentVelocity();
+        if (IsBlocked())
+        {
+            Debug.Log("test");
+            return;
+        }
         UpdateStatus();
         UpdateAnimator();
     }
@@ -118,6 +123,15 @@ public class EnemyAI : MonoBehaviour
         {
             isRunning = true;
         }
+    }
+
+    /// <summary>
+    /// whill perform check for wall in front of the gameObject
+    /// </summary>
+    private bool IsBlocked()
+    {
+        bool hit = Physics.Raycast(transform.position, Vector3.forward, GetEnemyHalfWidth().x + 0.1f);
+        return hit;
     }
 
     private void UpdateAnimator()
@@ -188,6 +202,6 @@ public class EnemyAI : MonoBehaviour
 
     public void LaunchAttackSound()
     {
-       audioSource.PlayOneShot(attackSound);
+        audioSource.PlayOneShot(attackSound);
     }
 }

@@ -529,7 +529,8 @@ GameObject:
   - component: {fileID: 1849990124574078945}
   - component: {fileID: 8131397681222055396}
   - component: {fileID: 3774980672544398004}
-  m_Layer: 0
+  - component: {fileID: 8675523274290022153}
+  m_Layer: 7
   m_Name: CactusEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,6 +552,7 @@ Transform:
   - {fileID: 4453630482199084271}
   - {fileID: 6798658231322062876}
   - {fileID: 8653992020275221716}
+  - {fileID: 26676261718826665}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5621,6 +5623,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8675523274290022153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230839584318637536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ca1583e4a90eb45820046025917538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damager: {fileID: 5075820329467812868}
+  audioSource: {fileID: 3774980672544398004}
+  damage: 10
+  variant_damage: 20
 --- !u!1 &8574793416115753516
 GameObject:
   m_ObjectHideFlags: 0
@@ -5787,6 +5805,66 @@ Transform:
   m_Father: {fileID: 4950379068234525724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9031429142777135873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 26676261718826665}
+  - component: {fileID: 1642617157367335133}
+  - component: {fileID: 5075820329467812868}
+  m_Layer: 0
+  m_Name: Damager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &26676261718826665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031429142777135873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0.93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8751057380809711450}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1642617157367335133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031429142777135873}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5075820329467812868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031429142777135873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5396e31c9b25d0249bad245cd130e8a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damageableTypes: 00000000
 --- !u!1 &9091788493898997033
 GameObject:
   m_ObjectHideFlags: 0

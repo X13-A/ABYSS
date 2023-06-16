@@ -619,13 +619,13 @@ MonoBehaviour:
   runningVelocity: 0.04
   walkingVelocity: 0.01
   runningWhenModifier: 1.5
-  playerReference: {fileID: 0}
   attackDuration: 1
   attackVariantDuration: 2
   attackDamage: 5
   attackVariantDamage: 10
   attackVariantFrequency: 3
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
+  jumpForce: 0.25
   attackDistanceOffset: 2
   detectionRadius: 8
 --- !u!114 &8865440481292938101
@@ -659,6 +659,7 @@ MonoBehaviour:
   - 1
   hitParticles: {fileID: 3876205970306850029}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
+  fadeOutTime: 0.1
 --- !u!199 &5814168035294884115
 ParticleSystemRenderer:
   serializedVersion: 6

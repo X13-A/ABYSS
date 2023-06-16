@@ -183,6 +183,7 @@ MonoBehaviour:
   attackVariantDamage: 5
   attackVariantFrequency: 2
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
+  jumpForce: 0.25
   attackDistanceOffset: 1.5
   detectionRadius: 12
 --- !u!114 &1378855907

@@ -119,6 +119,10 @@ public class ItemBank : MonoBehaviour
     {
         return Instance.items[id].rarity;
     }
+    public static CursorType GetCursorType(ItemId id)
+    {
+        return Instance.items[id].heldCursorType;
+    }
 
     public static GameObject GetDroppedParticles(ItemId id)
     {

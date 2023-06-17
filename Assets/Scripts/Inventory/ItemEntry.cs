@@ -42,5 +42,6 @@ public class ItemEntry
     public GameObject droppedPrefab;
     public GameObject positionedBlock;
     public ItemRarity rarity;
+    public CursorType heldCursorType;
     public bool isConsumable;
 }

@@ -18,6 +18,8 @@ public class CursorManager : MonoBehaviour, IEventHandler
     [SerializeField] private Sprite buildCursor;
     [SerializeField] private CursorType activeCursorType;
 
+    private CursorType playModeCursorType;
+
     public CursorType ActiveCursorType => activeCursorType;
     private void OnEnable()
     {
@@ -31,7 +33,7 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     public void SubscribeEvents()
     {
-        EventManager.Instance.AddListener<PlayerSwitchModeEvent>(SetCursorType);
+        EventManager.Instance.AddListener<PlayerHeldItemUpdateEvent>(SetCursorType);
         EventManager.Instance.AddListener<AimingModeUpdateEvent>(SetCursorLockMode);
         // Menus
         EventManager.Instance.AddListener<GameMainMenuEvent>(SetCursorFromMainMenuEvent);
@@ -46,7 +48,7 @@ public class CursorManager : MonoBehaviour, IEventHandler
 
     public void UnsubscribeEvents()
     {
-        EventManager.Instance.RemoveListener<PlayerSwitchModeEvent>(SetCursorType);
+        EventManager.Instance.RemoveListener<PlayerHeldItemUpdateEvent>(SetCursorType);
         EventManager.Instance.RemoveListener<AimingModeUpdateEvent>(SetCursorLockMode);
 
         // Menus
@@ -63,15 +65,13 @@ public class CursorManager : MonoBehaviour, IEventHandler
     #region UI Callbacks
     private void SetCursorFromPlayEvent(GamePlayEvent e)
     {
-        CursorType type = EnumConverter.CursorTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
         Cursor.lockState = CursorLockMode.Locked;
-        SetCursorType(type);
+        SetCursorType(playModeCursorType);
     }
     private void SetCursorFromResumeEvent(GameResumeEvent e)
     {
-        CursorType type = EnumConverter.CursorTypeFromPlayerMode(PlayerManager.Instance.ActivePlayerMode);
         Cursor.lockState = CursorLockMode.Locked;
-        SetCursorType(type);
+        SetCursorType(playModeCursorType);
     }
     private void SetCursorFromMainMenuEvent(GameMainMenuEvent e)
     {
@@ -126,15 +126,13 @@ public class CursorManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = GetSprite(type) });
     }
 
-    private void SetCursorType(PlayerSwitchModeEvent e)
+    private void SetCursorType(PlayerHeldItemUpdateEvent e)
     {
-        CursorType type = EnumConverter.CursorTypeFromPlayerMode(e.mode);
-        if (type == CursorType.MENU)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        activeCursorType = type;
-        EventManager.Instance.Raise(new CursorUpdateEvent { type = type, sprite = GetSprite(type) });
+        CursorType type = CursorType.UNARMED;
+        if (e.itemId != null) type = ItemBank.GetCursorType(e.itemId.Value);
+        playModeCursorType = type;
+
+        SetCursorType(type);
     }
 
     private void SetCursorLockMode(AimingModeUpdateEvent e)

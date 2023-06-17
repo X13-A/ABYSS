@@ -69,6 +69,9 @@ public class ItemBankEditor : Editor
                 EditorGUILayout.Space();
                 entry.rarity = (ItemRarity) EditorGUILayout.EnumPopup("Rarity", entry.rarity);
                 EditorGUILayout.Space();
+                entry.heldCursorType = (CursorType) EditorGUILayout.EnumPopup("Held Cursor Type", entry.heldCursorType);
+                EditorGUILayout.Space();
+
                 bank.ItemValues[i] = entry;
 
                 if (GUILayout.Button("Remove Item"))

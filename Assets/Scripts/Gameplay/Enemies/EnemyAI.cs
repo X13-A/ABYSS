@@ -146,7 +146,6 @@ public class EnemyAI : MonoBehaviour
         {
             status.SetStatus(EnemyStatus.Running);
         }
-        Debug.Log(status.ToString());
     }
 
     /// <summary>
@@ -248,13 +247,13 @@ public class EnemyAI : MonoBehaviour
         attackCounter++;
         attackVariant = attackCounter % attackVariantFrequency == 0 ? 1 : 0;
         animationController.TriggerAttack();
-        audioSource.PlayOneShot(attackSound);
     }
 
     // Is triggered when the attack animation starts (using animation events)
     private void StartAttack(int variant)
     {
         enemyAttack.StartDamage(variant);
+        audioSource.PlayOneShot(attackSound);
     }
 
     // Is triggered when the attack animation ends

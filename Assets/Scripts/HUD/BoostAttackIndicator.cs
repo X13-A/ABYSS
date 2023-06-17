@@ -11,6 +11,7 @@ public class BoostAttackIndicator : MonoBehaviour
     [SerializeField] private GameObject wand;
 
     private bool display = false;
+    private bool isCoroutineRunning = false;
 
     private void OnEnable()
     {
@@ -38,7 +39,10 @@ public class BoostAttackIndicator : MonoBehaviour
 
     private void FlashBoostIndicator(StartAttackBoostPlayerEvent e)
     {
-        StartCoroutine(FlashBoostCoroutine());
+        if (!isCoroutineRunning)
+        {
+            StartCoroutine(FlashBoostCoroutine());
+        }
     }
 
     private void DisplaySelectedName(SwitchSlotEvent e)
@@ -83,6 +87,11 @@ public class BoostAttackIndicator : MonoBehaviour
 
     private IEnumerator FlashBoostCoroutine()
     {
+        if (isCoroutineRunning)
+        {
+            yield break;
+        }
+        
         display = true;
         lightening.SetActive(true);
 
@@ -93,6 +102,7 @@ public class BoostAttackIndicator : MonoBehaviour
         float elapsedTime = -1f;
         float flashDuration = 4f;
 
+        isCoroutineRunning = true;
         lightening.SetActive(true);
 
         yield return new WaitForSeconds(flashDuration);
@@ -108,6 +118,7 @@ public class BoostAttackIndicator : MonoBehaviour
 
         lightening.SetActive(false);
         display = false;
+        isCoroutineRunning = false;
 
         EventManager.Instance.Raise(new AttackSpeedMultiplierEvent { speed = initalSpeed });
 

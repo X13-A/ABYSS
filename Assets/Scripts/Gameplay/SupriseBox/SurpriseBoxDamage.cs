@@ -9,6 +9,7 @@ public class SurpriseBoxDamage : MonoBehaviour, IDamageable
     [SerializeField] private List<float> damagerTypesFactors;
     [SerializeField] private Animation animationHit;
     [SerializeField] GameObject[] spawnObjects;
+    [SerializeField] private int maxDroppedObjects = 5;
     public DamageableType DamageableType => DamageableType.Decor;
 
     public float Health { get { return health; } set { health = value; } }
@@ -22,6 +23,7 @@ public class SurpriseBoxDamage : MonoBehaviour, IDamageable
 
     public void Damage(float damage, AttackType type)
     {
+        Debug.Log("DAMAGE");
         if (health < 0 + Mathf.Epsilon) return;
 
         int factorIndex = damagerTypes.IndexOf(type);
@@ -38,26 +40,36 @@ public class SurpriseBoxDamage : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        // Remove colliders
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            Destroy(colliders[i]);
+        }
         StartCoroutine(DestroyAfterAnimation());
     }
 
     private IEnumerator DestroyAfterAnimation()
     {
-        int randomIndex = Random.Range(0, spawnObjects.Length);
-
-        GameObject spawnedObject = Instantiate(spawnObjects[randomIndex], transform.position, transform.rotation);
-
-        Rigidbody spawnedRigidbody = spawnedObject.GetComponent<Rigidbody>();
-        if (spawnedRigidbody != null)
+        if (spawnObjects.Length != 0)
         {
-            Vector3 forceDirection = Vector3.up;
-            float forceMagnitude = 6.0f;
+            int droppedObjects = Random.Range(1, maxDroppedObjects);
+            for (int i = 0; i < droppedObjects; i++)
+            {
+                int randomIndex = Random.Range(0, spawnObjects.Length);
+                GameObject spawnedObject = Instantiate(spawnObjects[randomIndex], transform.position, transform.rotation);
 
-            spawnedRigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+                Rigidbody spawnedRigidbody = spawnedObject.GetComponent<Rigidbody>();
+                if (spawnedRigidbody != null)
+                {
+                    Vector3 forceDirection = Vector3.up;
+                    float forceMagnitude = 6.0f;
+
+                    spawnedRigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+                }
+            }
         }
-
         yield return new WaitForSeconds(animationHit.clip.length);
         Destroy(gameObject);
     }
-
 }

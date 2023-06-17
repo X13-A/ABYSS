@@ -70,6 +70,7 @@ public class Damager : MonoBehaviour, IDamager
         if (collides.Contains(damageable)) return;
         if (!damageable.DamagerTypes.Contains(type)) return;
         if (!damageableTypes.Contains(damageable.DamageableType)) return;
+
         CauseDamage(damageable);
     }
 

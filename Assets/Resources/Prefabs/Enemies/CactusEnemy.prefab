@@ -5822,7 +5822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &26676261718826665
 Transform:
   m_ObjectHideFlags: 0
@@ -5865,6 +5865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   damageableTypes: 00000000
+  damagerCollider: {fileID: 1642617157367335133}
 --- !u!1 &9091788493898997033
 GameObject:
   m_ObjectHideFlags: 0

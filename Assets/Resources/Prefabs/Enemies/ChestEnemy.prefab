@@ -6031,3 +6031,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   damageableTypes: 02000000
+  damagerCollider: {fileID: 5413208406689790426}

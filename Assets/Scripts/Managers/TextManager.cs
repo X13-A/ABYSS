@@ -8,10 +8,10 @@ public class TextManager : MonoBehaviour, IEventHandler
 {
 
     private static TextManager m_Instance;
-    public TextManager instance => m_Instance;
+    public static TextManager Instance => m_Instance;
 
     [SerializeField] private GameObject textBubble;
-
+    public bool MessageActive => textBubble.activeSelf;
     private TextMeshProUGUI textGui;
     private string fullText;
     private string currentText;
@@ -20,6 +20,8 @@ public class TextManager : MonoBehaviour, IEventHandler
     private bool messageRunning;
     private bool skipRequested;
     private bool freeze;
+    private float lastClosedTime;
+    public float LastClosedTime => lastClosedTime;
 
     private void Awake()
     {
@@ -41,6 +43,7 @@ public class TextManager : MonoBehaviour, IEventHandler
         skipRequested = false;
         freeze = false;
         textBubble.SetActive(false);
+        lastClosedTime = Time.time;
     }
 
     private void OnEnable()
@@ -67,6 +70,7 @@ public class TextManager : MonoBehaviour, IEventHandler
         // last message has been displayed -> wait for the player to press skip keys
         if (messageQueue.Count == 0 && !messageRunning && skipRequested)
         {
+            lastClosedTime = Time.time; 
             textBubble.SetActive(false);
             skipRequested = false;
         }

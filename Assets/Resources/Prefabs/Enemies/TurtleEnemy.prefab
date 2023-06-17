@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   damageableTypes: 00000000
+  damagerCollider: {fileID: 5564998401442169759}
 --- !u!1 &7581841512848313859
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,14 +11,40 @@ public class PlayerDamage : MonoBehaviour, IDamageable
 
     [SerializeField] private List<AttackType> damagerTypes;
     [SerializeField] private List<float> damagerTypesFactors;
+    [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject animatedModel;
+    private void Start()
+    {
+        if (hitParticles != null)
+        {
+            hitParticles.Stop();
+        }
+    }
 
     public List<AttackType> DamagerTypes => damagerTypes;
     public List<float> DamagerTypesFactors => damagerTypesFactors;
 
     public void Damage(float damage, AttackType type)
     {
-        // TODO: Scale attackType and redirect all damage to this script
-        EventManager.Instance.Raise(new DamagePlayerEvent { damage = damage });
+        // Inflict damage
+        int factorIndex = damagerTypes.IndexOf(type);
+        float scaledDamage = damage;
+        if (factorIndex != -1 && factorIndex < damagerTypesFactors.Count)
+        {
+            scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
+        }
+        EventManager.Instance.Raise(new DamagePlayerEvent { damage = scaledDamage });
+
+        // Hit particles
+        if (hitParticles != null)
+        {
+            hitParticles.Stop();
+            hitParticles.Play();
+        }
+        StartCoroutine(CoroutineUtil.ScaleTo(animatedModel.transform, 0.1f, new Vector3(1.1f, 1.1f, 1.1f), () =>
+        {
+            StartCoroutine(CoroutineUtil.ScaleTo(animatedModel.transform, 0.1f, new Vector3(1f, 1f, 1f)));
+        }));
     }
 
     public void Die()

@@ -585,14 +585,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runningVelocity: 0.03
   walkingVelocity: 0.02
-  runningWhenModifier: 1.8
+  runningOffsetFactor: 1.5
   attackDuration: 1
   attackVariantDuration: 2
   attackDamage: 3
   attackVariantDamage: 5
   attackVariantFrequency: 2
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
-  jumpForce: 0
+  jumpForce: 0.3
   attackDistanceOffset: 1.5
   detectionRadius: 12
 --- !u!114 &8119746744540587386

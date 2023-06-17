@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     // Move the player each fixedTimeDelta
-	//this function is meant to be called in fixedUpdate
+    //this function is meant to be called in fixedUpdate
     private void MovePlayer()
     {
         if (Mathf.Abs(currentVelocity) < Mathf.Abs(targetVelocity))
@@ -91,9 +91,9 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(movement * Time.fixedDeltaTime);
     }
 
-    
-	// Apply the gravity to the player verticalVelocity 
-	// meant to be called inside fixedUpdate
+
+    // Apply the gravity to the player verticalVelocity 
+    // meant to be called inside fixedUpdate
     private void ApplyGravity()
     {
         // no need to call TimeDelta because the function is called inside fixedUpdate
@@ -124,16 +124,6 @@ public class PlayerMovement : MonoBehaviour
             verticalVelocity = 0;
         }
 
-        // Debugging purpose
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance))
-        {
-            Debug.DrawRay(transform.position, Vector3.down * hit.distance, Color.red);
-        }
-        else
-        {
-            Debug.DrawRay(transform.position, Vector3.down * 1000, Color.green);
-        }
     }
     private void Update()
     {

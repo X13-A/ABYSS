@@ -602,10 +602,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.30197906
-  m_Height: 1.33
+  m_Radius: 0.3319826
+  m_Height: 1.3300002
   m_Direction: 1
-  m_Center: {x: 0, y: 0.57113945, z: 0.08402252}
+  m_Center: {x: -0.030003548, y: 0.59231126, z: 0.07725716}
 --- !u!114 &8865440481292938056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,15 +619,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runningVelocity: 0.04
-  walkingVelocity: 0.01
-  runningWhenModifier: 1.5
+  walkingVelocity: 0.02
+  runningOffsetFactor: 1.5
   attackDuration: 1
   attackVariantDuration: 2
   attackDamage: 5
   attackVariantDamage: 10
   attackVariantFrequency: 3
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
-  jumpForce: 0.25
+  jumpForce: 0.3
   attackDistanceOffset: 2
   detectionRadius: 8
 --- !u!114 &8865440481292938101

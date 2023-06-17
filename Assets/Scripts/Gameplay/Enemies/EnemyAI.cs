@@ -1,4 +1,5 @@
 using SDD.Events;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -6,7 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float runningVelocity;
     [SerializeField] private float walkingVelocity;
-    [SerializeField] private float runningWhenModifier;
+    [SerializeField] private float runningOffsetFactor;
     [SerializeField] private float attackDuration;
     [SerializeField] private float attackVariantDuration;
     [SerializeField] private float attackDamage;
@@ -14,9 +15,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int attackVariantFrequency;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private float jumpForce;
-
-    // the distance the enemy will keep with the player when attacking
     [SerializeField] private float attackDistanceOffset;
+
     public float detectionRadius;
 
     private AudioSource audioSource;
@@ -25,14 +25,11 @@ public class EnemyAI : MonoBehaviour
     private Collider enemyCollider;
 
     private float distanceToPlayer;
-    private bool isWalking;
-    private bool isRunning;
     private float attackStartTime;
     private int attackVariant;
     private int attackCounter;
-    private bool isReadyToBattle;
-    private bool canAttack;
-    private bool isJumping;
+    private StatusManager status;
+
     private EnemyAnimationController animationController;
     private EnemyAttack enemyAttack;
 
@@ -47,6 +44,7 @@ public class EnemyAI : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animationController = GetComponent<EnemyAnimationController>();
         enemyAttack = GetComponent<EnemyAttack>();
+        status = new StatusManager();
     }
 
     private void OnEnable()
@@ -55,6 +53,7 @@ public class EnemyAI : MonoBehaviour
         attackVariant = 0;
         attackCounter = 0;
         distanceToPlayer = Mathf.Infinity;
+        status.ClearStatus();
     }
 
     private void Update()
@@ -68,40 +67,21 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.Instance.State != GAMESTATE.PLAY) return;
-        if (distanceToPlayer > detectionRadius) return;
-        if (IsFacingWall())
-        {
-            /// TODO ne pas gérer ça ici mais plutot set une valeur boolean
-            // is facing wall pour gérer ce cas et ne plus faire bouger l'enemy
-            isJumping = false;
-            isWalking = false;
-            isRunning = false;
-            canAttack = false;
-        }
-        else
-        {
-            if (IsFacingBlock())
-            {
-                canAttack = false;
-                isJumping = true;
-            }
-            else
-            {
-                canAttack = true;
-                isJumping = false;
-            }
-        }
+
+        bool canAttack = status.HasStatus(EnemyStatus.CanAttack);
+        bool jumping = status.HasStatus(EnemyStatus.Jumping);
 
 
-        if (distanceToPlayer < attackDistanceOffset && AttackElaspedTime > attackDuration && canAttack)
+        // attack
+        if (AttackElaspedTime > attackDuration && canAttack)
         {
             TriggerAttack();
             attackStartTime = Time.time;
         }
-
+        // move toward player or jump
         else
         {
-            if (isJumping)
+            if (jumping)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
@@ -119,6 +99,10 @@ public class EnemyAI : MonoBehaviour
         return (stateInfo.IsName(layer + "." + "SenseSomethingStart") || stateInfo.IsName(layer + "." + "SenseSomethingMain")) && stateInfo.normalizedTime < 1;
     }
 
+    /// <summary>
+    /// will check for all parameters that lead to a change of status
+    /// each status is cleared and reset in this function
+    /// </summary>
     private void UpdateStatus()
     {
         if (PlayerManager.Instance.PlayerReference == null)
@@ -127,34 +111,42 @@ public class EnemyAI : MonoBehaviour
         }
 
         distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.Instance.PlayerReference.position);
-        UpdateRunningAndWalkingStatus();
-    }
 
-    private void UpdateRunningAndWalkingStatus()
-    {
-        isRunning = false;
-        isWalking = false;
-        isReadyToBattle = false;
+        status.ClearStatus();
+
 
         if (distanceToPlayer >= detectionRadius)
         {
             return;
         }
 
-        if (distanceToPlayer <= attackDistanceOffset && canAttack)
+
+        if (IsFacingBlock())
         {
-            isReadyToBattle = true;
+            if (IsFacingWall())
+            {
+                return;
+            }
+            status.SetStatus(EnemyStatus.Jumping);
             return;
         }
 
-        if (distanceToPlayer > detectionRadius / runningWhenModifier)
+        if (distanceToPlayer <= attackDistanceOffset)
         {
-            isWalking = true;
+            status.SetStatus(EnemyStatus.ReadyToBattle);
+            status.SetStatus(EnemyStatus.CanAttack);
+            return;
+        }
+
+        if (distanceToPlayer > detectionRadius / runningOffsetFactor)
+        {
+            status.SetStatus(EnemyStatus.Walking);
         }
         else
         {
-            isRunning = true;
+            status.SetStatus(EnemyStatus.Running);
         }
+        Debug.Log(status.ToString());
     }
 
     /// <summary>
@@ -162,28 +154,40 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private bool IsFacingBlock()
     {
-        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), GetEnemyHalfWidth().x + 1f);
-        return hit;
+        return RaycastThrow(Vector3.zero, GetEnemyHalfWidth() + 0.2f);
     }
 
     private bool IsFacingWall()
     {
         // perform the raycast one block taller,
         // if the raycast hit something, we are facing a wall with two block or more
-        bool hit = Physics.Raycast
-        (
-            transform.position + new Vector3(0, 1, 0),
-            transform.TransformDirection(Vector3.forward),
-            GetEnemyHalfWidth().x + 1f
-        );
-        return hit;
+        return RaycastThrow(new Vector3(0, 1, 0), GetEnemyHalfWidth() + 0.2f);
+    }
+
+    private bool RaycastThrow(Vector3 offset, float distance)
+    {
+
+        Vector3 pos = transform.position + offset;
+        RaycastHit hit;
+        bool result;
+        result = Physics.Raycast(pos, transform.forward, out hit, distance, 1 << LayerMask.NameToLayer("Ground"));
+        // to debug the raycast in the scene
+        if (result)
+        {
+            Debug.DrawRay(pos, transform.forward * hit.distance, Color.red);
+        }
+        else
+        {
+            Debug.DrawRay(pos, transform.forward * 10, Color.green);
+        }
+        return result;
     }
 
     private void UpdateAnimator()
     {
-        animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
-        animator.SetBool("isReadyToBattle", isReadyToBattle);
+        animator.SetBool("isWalking", status.HasStatus(EnemyStatus.Walking));
+        animator.SetBool("isRunning", status.HasStatus(EnemyStatus.Running));
+        animator.SetBool("isReadyToBattle", status.HasStatus(EnemyStatus.ReadyToBattle));
         animator.SetInteger("attackVariant", attackVariant);
     }
 
@@ -195,37 +199,40 @@ public class EnemyAI : MonoBehaviour
         }
         Vector3 playerWidth = new Vector3(PlayerManager.Instance.PlayerReference.GetComponent<CharacterController>().radius, 0, 0);
 
-        Vector3 enemyWidth = GetEnemyHalfWidth();
-        Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + enemyWidth)).normalized;
+        float enemyWidth = GetEnemyHalfWidth();
+        Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + new Vector3(enemyWidth, 0, 0))).normalized;
         directionToPlayer.y = 0; // remove any influence from the y axis
         rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }
 
-    private Vector3 GetEnemyHalfWidth()
+    private float GetEnemyHalfWidth()
     {
-        if (enemyCollider != null)
+        if (enemyCollider == null)
         {
-            if (enemyCollider is CapsuleCollider capsule)
-            {
-                return new Vector3(capsule.radius, 0, 0);
-            }
-            if (enemyCollider is BoxCollider box)
-            {
-                return new Vector3(box.size.x / 2, 0, 0);
-            }
+            return 0f;
         }
-        Debug.Log("You need to implement this method with the new collider");
-        return new Vector3(0, 0, 0);
+        if (enemyCollider is CapsuleCollider capsule)
+        {
+            return capsule.radius;
+        }
+        if (enemyCollider is BoxCollider box)
+        {
+            return box.size.x / 2;
+        }
+        return 0f;
     }
 
     private void UpdateCurrentVelocity()
     {
-        if (isWalking && !isRunning)
+        bool walking = status.HasStatus(EnemyStatus.Walking);
+        bool running = status.HasStatus(EnemyStatus.Running);
+
+        if (walking && !running)
         {
             Velocity = walkingVelocity;
         }
-        else if (isRunning && !isWalking)
+        else if (running && !walking)
         {
             Velocity = runningVelocity;
         }
@@ -235,7 +242,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-
     // Triggers the attack animation
     private void TriggerAttack()
     {
@@ -244,7 +250,6 @@ public class EnemyAI : MonoBehaviour
         animationController.TriggerAttack();
         audioSource.PlayOneShot(attackSound);
     }
-
 
     // Is triggered when the attack animation starts (using animation events)
     private void StartAttack(int variant)

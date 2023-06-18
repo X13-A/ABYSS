@@ -557,6 +557,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
   jumpForce: 0.3
   attackDistanceOffset: 2
+  type: 1
   detectionRadius: 10
 --- !u!136 &1044208274
 CapsuleCollider:

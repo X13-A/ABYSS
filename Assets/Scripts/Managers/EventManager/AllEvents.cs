@@ -250,9 +250,7 @@ public class MessageEvent : SDD.Events.Event
 }
 
 public class SaveScoreEvent : SDD.Events.Event
-{
-    
-}
+{}
 
 public class TextBubbleActiveEvent : SDD.Events.Event
 { }
@@ -349,6 +347,10 @@ public class PlayerHeldItemUpdateEvent : SDD.Events.Event
 public class SelectedItemEvent : SDD.Events.Event
 {
     public ItemId? itemId;
+}
+
+public class ClearInventoryEvent : SDD.Events.Event
+{
 }
 
 #endregion

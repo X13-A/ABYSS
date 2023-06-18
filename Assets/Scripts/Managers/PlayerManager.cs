@@ -173,6 +173,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new PlayerDeadEvent { });
         StartCoroutine(CoroutineUtil.DelayAction(1f, () =>
         {
+            EventManager.Instance.Raise(new ClearInventoryEvent { });
             EventManager.Instance.Raise(new GameOverEvent { });
         }));
     }

@@ -64,7 +64,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<ItemPickedUpEvent>(AddItem);
         EventManager.Instance.AddListener<ItemRemovedEvent>(RemoveItem);
         EventManager.Instance.AddListener<SwitchSlotEvent>(SwitchSlot);
-        EventManager.Instance.AddListener<GameOverEvent>(ClearInventory);
+        EventManager.Instance.AddListener<ClearInventoryEvent>(ClearInventory);
 
         EventManager.Instance.AddListener<UseKeyPressedEvent>(UseItem);
         EventManager.Instance.AddListener<ConsumeItemEvent>(ConsumeItem);
@@ -76,7 +76,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(AddItem);
         EventManager.Instance.RemoveListener<ItemRemovedEvent>(RemoveItem);
         EventManager.Instance.RemoveListener<SwitchSlotEvent>(SwitchSlot);
-        EventManager.Instance.RemoveListener<GameOverEvent>(ClearInventory);
+        EventManager.Instance.RemoveListener<ClearInventoryEvent>(ClearInventory);
 
         EventManager.Instance.RemoveListener<UseKeyPressedEvent>(UseItem);
         EventManager.Instance.RemoveListener<ConsumeItemEvent>(ConsumeItem);
@@ -84,10 +84,9 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     }
 
 
-    private void ClearInventory(GameOverEvent e)
+    private void ClearInventory(ClearInventoryEvent e)
     {
         items.Clear();
-        //this.UpdateSlots();
     }
 
     public bool HasSpaceForItem(ItemId id)
@@ -150,7 +149,6 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void RemoveItem(ItemRemovedEvent e)
     {
         // Removes 1 item from inventory
-        Debug.Log("REMOVE ITEM");
         if (items.ContainsKey(e.itemId))
         {
             items[e.itemId].Remove(1);

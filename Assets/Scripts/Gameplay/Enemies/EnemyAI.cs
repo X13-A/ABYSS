@@ -37,6 +37,14 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        RuntimeAnimatorController baseController = animator.runtimeAnimatorController;
+
+        AnimatorOverrideController overrideController = new AnimatorOverrideController();
+        overrideController.runtimeAnimatorController = baseController;
+
+        animator.runtimeAnimatorController = overrideController;
+
+
         rb = GetComponent<Rigidbody>();
         enemyCollider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();

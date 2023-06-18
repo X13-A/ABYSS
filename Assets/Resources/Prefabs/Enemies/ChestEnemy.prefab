@@ -548,11 +548,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5e1e039529fb841817c5d349dfac36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningVelocity: 0.07
-  walkingVelocity: 0.03
-  runningOffsetFactor: 0
+  runningVelocity: 0.04
+  walkingVelocity: 0.02
+  runningOffsetFactor: 1.5
   attackDuration: 1
-  attackVariantDuration: 2
+  attackVariantDuration: 3
   attackVariantFrequency: 5
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
   jumpForce: 0.3

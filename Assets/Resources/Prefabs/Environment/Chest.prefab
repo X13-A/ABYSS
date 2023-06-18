@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d29e2dd99ae48a41b343cf7d53b3375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: 00000000010000000300000002000000
+  content: 020000001200000014000000
   throwForce: 5
   torqueForce: 5
   throwAngle: 75

@@ -71,6 +71,8 @@ public class TextManager : MonoBehaviour, IEventHandler
         // last message has been displayed -> wait for the player to press skip keys
         if (messageQueue.Count == 0 && !messageRunning && skipRequested)
         {
+            // Hack: should create proper event but that should work
+            EventManager.Instance.Raise(new PlayButtonClickedEvent { });
             textBubble.SetActive(false);
             skipRequested = false;
         }
@@ -100,7 +102,11 @@ public class TextManager : MonoBehaviour, IEventHandler
 
     private void HandleResume(ResumeButtonClickedEvent e)
     {
-        textBubble.SetActive(messageQueue.Count > 0 && messageRunning);
+        if (messageQueue.Count > 0 && messageRunning)
+        {
+            textBubble.SetActive(true);
+            EventManager.Instance.Raise(new TextBubbleActiveEvent { });
+        }
         freeze = false;
     }
 
@@ -147,6 +153,7 @@ public class TextManager : MonoBehaviour, IEventHandler
 
     private void PerformMessageDisplay(MessageEvent text)
     {
+        EventManager.Instance.Raise(new TextBubbleActiveEvent { });
         skipRequested = false;
         currentText = "";
         fullText = text.text;

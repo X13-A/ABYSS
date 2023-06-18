@@ -239,6 +239,8 @@ public class MessageEvent : SDD.Events.Event
     public float delay;
 }
 
+public class TextBubbleActiveEvent : SDD.Events.Event
+{ }
 #endregion
 
 #region Animation

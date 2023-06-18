@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.AddListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.AddListener<GameOverEvent>(GameOver);
+        EventManager.Instance.AddListener<TextBubbleActiveEvent>(ToggleCutscene);
 
         EventManager.Instance.AddListener<StartBossScreamerEvent>(StartScreamer);
         EventManager.Instance.AddListener<EndBossScreamerEvent>(EndScreamer);
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         EventManager.Instance.RemoveListener<SceneAboutToChangeEvent>(PrepareSceneChange);
         EventManager.Instance.RemoveListener<GameOverEvent>(GameOver);
+        EventManager.Instance.RemoveListener<TextBubbleActiveEvent>(ToggleCutscene);
 
         EventManager.Instance.RemoveListener<StartBossScreamerEvent>(StartScreamer);
         EventManager.Instance.RemoveListener<EndBossScreamerEvent>(EndScreamer);
@@ -303,5 +305,10 @@ public class GameManager : MonoBehaviour, IEventHandler
     private void Die(PlayerDeadEvent e)
     {
         SetState(GAMESTATE.DEAD);
+    }
+
+    private void ToggleCutscene(TextBubbleActiveEvent e)
+    {
+        SetState(GAMESTATE.CUTSCENE);
     }
 }

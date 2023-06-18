@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a786807d616d545b28a3d3207d791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
   damagerTypes: 0000000002000000
   damagerTypesFactors:
   - 1
@@ -881,6 +881,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
   jumpForce: 0.3
   attackDistanceOffset: 2
+  type: 0
   detectionRadius: 10
 --- !u!114 &7583272907918091915
 MonoBehaviour:

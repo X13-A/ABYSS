@@ -88,6 +88,16 @@ public class UpdateShieldPlayerHealthEvent : SDD.Events.Event
     public float newShieldHealth;
 }
 
+public class SetScoreEvent : SDD.Events.Event
+{
+    public int addedScore;
+}
+
+public class UpdateScoreEvent : SDD.Events.Event
+{
+    public float updatedScore;
+}
+
 public class AttackSpeedMultiplierEvent : SDD.Events.Event
 {
     public float speed;
@@ -237,6 +247,11 @@ public class MessageEvent : SDD.Events.Event
 {
     public string text;
     public float delay;
+}
+
+public class SaveScoreEvent : SDD.Events.Event
+{
+    
 }
 
 public class TextBubbleActiveEvent : SDD.Events.Event

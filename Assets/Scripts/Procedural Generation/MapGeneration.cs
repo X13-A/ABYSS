@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using SDD.Events;
 using System;
 using System.Threading.Tasks;
@@ -37,7 +38,10 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private Vector3 playerSpawnCoords;
     [SerializeField] private GameObject chestPrefab;
+    [SerializeField] private GameObject surpriseBox;
+    [SerializeField] private GameObject snow;
 
+    [SerializeField] private AnimationCurve probabilitySpawnPortal;
 
     private BlockType[,,] blocksMap;
     private TerrainType[][] levelArray;
@@ -96,6 +100,17 @@ public class MapGeneration : MonoBehaviour
         GameObject chest = Instantiate(chestPrefab);
         chest.transform.position = chestPos;
 
+        for (int i = 0; i < 3; i++)
+        {
+            float BoxSpawnRadius = Mathf.Max(MapWidth / 2f - 2f, 0f);
+            Vector2 BoxPosition = new Vector2(mapWidth / 2, mapWidth / 2) + (UnityEngine.Random.insideUnitCircle) * BoxSpawnRadius;
+            int boxHeight = (int) (heightCurve.Evaluate(noiseMap[(int) BoxPosition.x, (int) BoxPosition.y]) * heightMultiplier) + 1;
+            boxHeight = Math.Max(boxHeight, 0);
+            Vector3 boxPosition3D = new Vector3((int) BoxPosition.x, boxHeight, (int) BoxPosition.y);
+            GameObject currentSurprixeBox = Instantiate(surpriseBox, map.transform);
+            currentSurprixeBox.transform.position = boxPosition3D;
+        }
+
         chest.transform.SetParent(map.transform);
         for (int z = 0; z < mapHeight; z++)
         {
@@ -128,7 +143,7 @@ public class MapGeneration : MonoBehaviour
                 // Fill underneath the block
                 int blockHeight = (int) (heightCurve.Evaluate(noiseMap[x, z]) * heightMultiplier);
                 topBlocksHeight[x, z] = blockHeight;
-                for (int y = 0; y < blockHeight; y++)
+                for (int y = -1; y < blockHeight; y++)
                 {
                     // Avoid placing on chest
                     if (new Vector3(x, y, z) == chestPos)
@@ -166,17 +181,26 @@ public class MapGeneration : MonoBehaviour
         setPlayerSpawnPos(playerSpawnObject, noiseMap);
 
         // Generate portal
-        Vector3 portalPos = new Vector3(50, (int) (heightCurve.Evaluate(noiseMap[50, 50]) * heightMultiplier) + portalPrefab.transform.localScale.y / 2, 50);
-        GameObject portal = Instantiate(portalPrefab, portalPos, Quaternion.identity);
-        portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
-        portal.transform.SetParent(map.transform);
+        int j = 0;
+        while (j < 100)
+        {
+            Vector3 portalPos = SpawnPortal();
+            GameObject portal = Instantiate(portalPrefab, portalPos, Quaternion.identity);
+            portal.GetComponent<ScenePortal>().LevelGenerated = LevelManager.Instance.CurrentLevel + 1;
+            portal.transform.SetParent(map.transform);
+            LevelData.Instance.PortalPos = portalPos;
+            if (!Physics.CheckBox(portalPos, new Vector3(7, 7, 1))) break;
+            j++;
+        }
+
+        // Add snow for the third level
+        if (level == 2) Instantiate(snow, map.transform);
 
         // Save data across scenes
         LevelData.Instance.BlocksMap = blocksMap;
         LevelData.Instance.TopBlocksHeight = topBlocksHeight;
         LevelData.Instance.MapHeight = mapHeight;
         LevelData.Instance.MapWidth = mapWidth;
-        LevelData.Instance.PortalPos = portalPos;
         LevelData.Instance.TreasurePos = chestPos;
 
         map.SetActive(true);
@@ -190,6 +214,21 @@ public class MapGeneration : MonoBehaviour
         int y = (int) Mathf.Ceil(noiseMap[x, z]) + 5;
         Debug.Log(new Vector3(x, y, z));
         spawn.transform.position = new Vector3(x, y, z);
+    }
+    private Vector3 SpawnPortal()
+    {
+        float spawnRadius = Mathf.Max(MapWidth / 2f - 2f, 0f); ;
+        Vector2 randomPosition = UnityEngine.Random.insideUnitCircle.normalized * spawnRadius;
+        float normalizedDistance = randomPosition.magnitude / spawnRadius;
+        float spawnProbability = probabilitySpawnPortal.Evaluate(normalizedDistance);
+        float distanceFromCenter = normalizedDistance * spawnRadius;
+        float inverseSpawnProbability = 1f - spawnProbability;
+        float interpolatedDistance = Mathf.Lerp(0f, distanceFromCenter, inverseSpawnProbability);
+        Vector2 spawnPosition = randomPosition.normalized * interpolatedDistance;
+        spawnPosition.x += spawnRadius;
+        spawnPosition.y += spawnRadius;
+        Vector3 spawnPortal = new Vector3(spawnPosition.x, (int) (heightCurve.Evaluate(noiseMap[(int) spawnPosition.x, (int) spawnPosition.y]) * heightMultiplier) + 4, spawnPosition.y);
+        return spawnPortal;
     }
 
     private void GenerateNoiseMap()

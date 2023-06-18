@@ -120,6 +120,7 @@ public class BossManager : MonoBehaviour
         {
             defeated = true;
             EventManager.Instance.Raise(new BossDefeatedEvent {});
+            EventManager.Instance.Raise(new SetScoreEvent { addedScore = 1000 });
 
             // Roll credits
             StartCoroutine(CoroutineUtil.DelayAction(5f, () =>

@@ -18,7 +18,6 @@ public class SignHandler : MonoBehaviour
 
     private void Update()
     {
-        if (TextManager.Instance.LastClosedTime != 0 && Time.time - TextManager.Instance.LastClosedTime < 0.25f) return; // Hack to prevent opening the same at the same time as closing it
         if (playerNearSign)
         {
             Vector3 panelForward = transform.forward;
@@ -56,6 +55,7 @@ public class SignHandler : MonoBehaviour
 
     private void ListenToInteractionKey()
     {
+        if (TextManager.Instance.TimeSinceLastInteraction < 0.25f) return; // Hack to prevent opening the same at the same time as closing it
         if (Input.GetKeyDown(KeyCode.E))
         {
             EventManager.Instance.Raise(new HideSignInteractionMessage());

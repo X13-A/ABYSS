@@ -19,10 +19,11 @@ public class TextManager : MonoBehaviour, IEventHandler
     private Queue messageQueue;
     private bool messageRunning;
     private bool skipRequested;
+    private bool fastForwadRequested;
     private bool freeze;
-    private float lastClosedTime;
-    public float LastClosedTime => lastClosedTime;
 
+    private float lastInteractionTime;
+    public float TimeSinceLastInteraction => Time.time - lastInteractionTime;
     private void Awake()
     {
         if (!m_Instance)
@@ -43,7 +44,7 @@ public class TextManager : MonoBehaviour, IEventHandler
         skipRequested = false;
         freeze = false;
         textBubble.SetActive(false);
-        lastClosedTime = Time.time;
+        lastInteractionTime = Time.time - 1000;
     }
 
     private void OnEnable()
@@ -70,7 +71,6 @@ public class TextManager : MonoBehaviour, IEventHandler
         // last message has been displayed -> wait for the player to press skip keys
         if (messageQueue.Count == 0 && !messageRunning && skipRequested)
         {
-            lastClosedTime = Time.time; 
             textBubble.SetActive(false);
             skipRequested = false;
         }
@@ -127,14 +127,21 @@ public class TextManager : MonoBehaviour, IEventHandler
 
     private void ListenToSkipKeys()
     {
-        // if a message is currently running, we don't want a user to skip it
-        if (!textBubble.activeSelf || messageRunning)
+        if (!textBubble.activeSelf) return;
+        if (TimeSinceLastInteraction < 0.25f) return;
+
+        // if a message is currently running, fast forward it, otherwise skip it
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)) && (messageRunning))
         {
+            lastInteractionTime = Time.time;
+            fastForwadRequested = true;
             return;
         }
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
+            lastInteractionTime = Time.time;
             skipRequested = true;
+            return;
         }
     }
 
@@ -163,9 +170,22 @@ public class TextManager : MonoBehaviour, IEventHandler
         messageRunning = true;
         for (int i = 0; i <= fullText.Length; i++)
         {
-            currentText = fullText[..i];
-            textGui.text = currentText;
-            yield return new WaitForSeconds(delay);
+            // Fast forward text
+            if (fastForwadRequested == true)
+            {
+                fastForwadRequested = false;
+                currentText = fullText;
+                textGui.text = currentText;
+                messageRunning = false;
+                yield break;
+            }
+            // Display text slowly
+            else
+            {
+                currentText = fullText[..i];
+                textGui.text = currentText;
+                yield return new WaitForSeconds(delay);
+            }
         }
         messageRunning = false;
     }

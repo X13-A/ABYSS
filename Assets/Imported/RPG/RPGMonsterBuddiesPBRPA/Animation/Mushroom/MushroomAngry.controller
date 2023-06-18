@@ -401,9 +401,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: walkingAnimationPlaying
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 4694234193197904555}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -432,9 +429,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isWalking
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: runningAnimationPlaying
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8568178400880121059}
   m_Solo: 0
@@ -448,7 +442,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1102 &4085371207423995699
 AnimatorState:
   serializedVersion: 6

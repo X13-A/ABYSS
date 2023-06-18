@@ -550,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runningVelocity: 0.07
   walkingVelocity: 0.03
-  runningOffsetFactor: 1.5
+  runningOffsetFactor: 0
   attackDuration: 1
   attackVariantDuration: 2
   attackVariantFrequency: 5

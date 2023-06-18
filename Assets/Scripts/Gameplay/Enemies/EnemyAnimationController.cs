@@ -7,6 +7,11 @@ public class EnemyAnimationController : MonoBehaviour
 {
     private Animator animator;
 
+    private void OnEnable()
+    {
+        animator.Rebind();
+    }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -42,12 +47,9 @@ public class EnemyAnimationController : MonoBehaviour
         {
             animator.SetBool(animating, true);
         }
-        else
+        else if (!actionActive)
         {
-            if (!actionActive)
-            {
-                animator.SetBool(animating, false);
-            }
+            animator.SetBool(animating, false);
         }
     }
 

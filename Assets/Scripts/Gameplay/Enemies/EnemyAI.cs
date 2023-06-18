@@ -72,6 +72,7 @@ public class EnemyAI : MonoBehaviour
         attackCounter = 0;
         distanceToPlayer = Mathf.Infinity;
         status.ClearStatus();
+        animator.Rebind();
     }
 
     private void Update()

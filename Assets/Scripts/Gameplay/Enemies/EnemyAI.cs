@@ -39,18 +39,22 @@ public class EnemyAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        // Make sure the runtimeAnimatorController is of type AnimatorController, not AnimatorOverrideController
-        Animator baseController = animator.runtimeAnimatorController as Animator;
+        // We use the original RuntimeAnimatorController as our base
+        RuntimeAnimatorController baseController = animator.runtimeAnimatorController;
 
-        if (baseController != null) // Ensure the cast was successful
+        if (baseController != null)
         {
+            // Create a new AnimatorOverrideController based on the original
             AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
+
+            // Use the new AnimatorOverrideController
             animator.runtimeAnimatorController = overrideController;
         }
         else
         {
-            Debug.LogError("Animator's runtimeAnimatorController is not an AnimatorController.");
+            Debug.LogError("Animator's runtimeAnimatorController is null.");
         }
+
 
 
         rb = GetComponent<Rigidbody>();

@@ -10,10 +10,22 @@ public class EnemyAnimationController : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        // We use the original RuntimeAnimatorController as our base
         RuntimeAnimatorController baseController = animator.runtimeAnimatorController;
-        AnimatorOverrideController overrideController = new AnimatorOverrideController();
-        overrideController.runtimeAnimatorController = baseController;
-        animator.runtimeAnimatorController = overrideController;
+
+        if (baseController != null)
+        {
+            // Create a new AnimatorOverrideController based on the original
+            AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
+
+            // Use the new AnimatorOverrideController
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else
+        {
+            Debug.LogError("Animator's runtimeAnimatorController is null.");
+        }
     }
 
     private void Update()

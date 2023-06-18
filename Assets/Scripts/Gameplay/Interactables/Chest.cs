@@ -62,12 +62,12 @@ public class Chest : MonoBehaviour
     {
         foreach (ItemId item in content)
         {
-            throwItem(item);
+            ThrowItem(item);
         }
         content.Clear();
     }
 
-    private void throwItem(ItemId item)
+    private void ThrowItem(ItemId item)
     {
         GameObject droppedPrefab = ItemBank.GetDroppedPrefab(item);
         GameObject droppedGameObject = Instantiate(droppedPrefab, throwStart.position, Quaternion.identity);

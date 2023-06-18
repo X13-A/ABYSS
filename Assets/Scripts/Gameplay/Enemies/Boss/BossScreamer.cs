@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BossScreamer : MonoBehaviour
 {
-    [SerializeField] private new GameObject light;
+    [SerializeField] private GameObject myLight;
 
     private void OnEnable()
     {
@@ -41,15 +41,15 @@ public class BossScreamer : MonoBehaviour
 
         Vector3 initPos = transform.position;
         transform.position = PlayerManager.Instance.PlayerReference.transform.position + new Vector3(0f, 0f, 3.2f);
-        light.transform.position = new Vector3(transform.position.x, light.transform.position.y, transform.position.z);
-        light.SetActive(true);
+        myLight.transform.position = new Vector3(transform.position.x, myLight.transform.position.y, transform.position.z);
+        myLight.SetActive(true);
         yield return new WaitForSeconds(0.1f);
-        light.SetActive(false);
+        myLight.SetActive(false);
         yield return new WaitForSeconds(0.1f);
-        light.SetActive(true);
+        myLight.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         transform.position = initPos;
-        light.SetActive(false);
+        myLight.SetActive(false);
 
         EventManager.Instance.Raise(new EndBossScreamerEvent { });
 

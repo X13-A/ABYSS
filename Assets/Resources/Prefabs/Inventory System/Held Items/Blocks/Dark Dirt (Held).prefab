@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1686595625980267826}
   - component: {fileID: 6879185990797225536}
   - component: {fileID: 8536987847051453228}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Dark Dirt (Held)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

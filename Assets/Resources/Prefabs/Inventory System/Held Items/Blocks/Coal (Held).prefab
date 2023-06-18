@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1749775748194614306}
   - component: {fileID: 1757212916765111448}
   - component: {fileID: -2639956994688550433}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Coal (Held)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

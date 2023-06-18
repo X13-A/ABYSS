@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using SDD.Events;
 using System;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -41,7 +42,8 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] private GameObject surpriseBox;
     [SerializeField] private GameObject snow;
 
-    [SerializeField] private AnimationCurve probabilitySpawnPortal;
+    [SerializeField] private float minPortalPos = 0.25f;
+    [SerializeField] private float maxPortalPos = 0.9f;
 
     private BlockType[,,] blocksMap;
     private TerrainType[][] levelArray;
@@ -215,19 +217,23 @@ public class MapGeneration : MonoBehaviour
         Debug.Log(new Vector3(x, y, z));
         spawn.transform.position = new Vector3(x, y, z);
     }
+
     private Vector3 SpawnPortal()
     {
-        float spawnRadius = Mathf.Max(MapWidth / 2f - 2f, 0f); ;
-        Vector2 randomPosition = UnityEngine.Random.insideUnitCircle.normalized * spawnRadius;
-        float normalizedDistance = randomPosition.magnitude / spawnRadius;
-        float spawnProbability = probabilitySpawnPortal.Evaluate(normalizedDistance);
-        float distanceFromCenter = normalizedDistance * spawnRadius;
-        float inverseSpawnProbability = 1f - spawnProbability;
-        float interpolatedDistance = Mathf.Lerp(0f, distanceFromCenter, inverseSpawnProbability);
-        Vector2 spawnPosition = randomPosition.normalized * interpolatedDistance;
-        spawnPosition.x += spawnRadius;
-        spawnPosition.y += spawnRadius;
-        Vector3 spawnPortal = new Vector3(spawnPosition.x, (int) (heightCurve.Evaluate(noiseMap[(int) spawnPosition.x, (int) spawnPosition.y]) * heightMultiplier) + 4, spawnPosition.y);
+        float maxSpawnRadius = Mathf.Max(MapWidth / 2f - 2f, 0f);
+
+        float dist = UnityEngine.Random.Range(minPortalPos, maxPortalPos);
+        Vector2 spawnPosition = UnityEngine.Random.insideUnitCircle.normalized * maxSpawnRadius * dist;
+
+        spawnPosition.x += maxSpawnRadius;
+        spawnPosition.y += maxSpawnRadius;
+
+
+        Vector3 spawnPortal = new Vector3(
+            spawnPosition.x,
+            (int) (heightCurve.Evaluate(noiseMap[(int) spawnPosition.x, (int) spawnPosition.y]) * heightMultiplier) + 4,
+            spawnPosition.y
+        );
         return spawnPortal;
     }
 

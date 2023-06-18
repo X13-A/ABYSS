@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 335871584494449790}
   - component: {fileID: 327710452989436864}
   - component: {fileID: 6391137446084995576}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Sandstone (Held)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

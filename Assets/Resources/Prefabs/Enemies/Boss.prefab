@@ -11219,7 +11219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65ae43f16342b04892225d0b00e8426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 0}
+  myLight: {fileID: 0}
 --- !u!114 &4268592731246366228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11385,7 +11385,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

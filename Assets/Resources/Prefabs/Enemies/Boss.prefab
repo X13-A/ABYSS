@@ -535,7 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 4297669537805280041}
   m_Sword: {fileID: 4268592731246366227}
-  m_Wand: {fileID: 0}
+  m_Wand: {fileID: 750665223}
 --- !u!1 &1395473223065312754
 GameObject:
   m_ObjectHideFlags: 0
@@ -11179,6 +11179,7 @@ GameObject:
   - component: {fileID: 4268592731246366224}
   - component: {fileID: 4268592731246366227}
   - component: {fileID: 750665223}
+  - component: {fileID: 750665230}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
@@ -11317,11 +11318,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ebb0099b40bca4083cc1d67b2a3f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  projectileSpeed: 5
+  damage: 15
+  projectileSpeed: 25
   projectilePrefab: {fileID: 8047378608784370723, guid: eedfd48bc7b27c940b202939d36137a8, type: 3}
   projectileSpawn: {fileID: 77524270}
   audioSource: {fileID: 4930976193517656323}
+--- !u!114 &750665230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268592731246366184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b024c32baec9dd04785c55a82a838469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4268592731546908821
 GameObject:
   m_ObjectHideFlags: 0

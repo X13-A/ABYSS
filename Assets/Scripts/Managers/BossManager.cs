@@ -2,11 +2,7 @@ using SDD.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEditor.PlayerSettings;
 
 public class BossManager : MonoBehaviour
 {
@@ -94,49 +90,6 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (BossHealth <= bossMaxHealth * 0.70 && !particlesActivated70)
-        {
-            particlesActivated70 = true;
-            particlesActivated30 = false;
-            bossParticles[0].SetActive(false);
-            bossParticles[1].SetActive(true);
-            bossSpeedScale = 0.75f;
-            EventManager.Instance.Raise(new ModeBossEvent { });
-        }
-
-        if (BossHealth <= bossMaxHealth * 0.30 && !particlesActivated30)
-        {
-            particlesActivated30 = true;
-            bossParticles[1].SetActive(false);
-            bossParticles[2].SetActive(true);
-            EventManager.Instance.Raise(new ModeBossEvent { });
-            bossSpeedScale = 1f;
-        }
-
-        // HACK: Should use events instead of constant checking
-        if (!defeated && BossHealth <= 0)
-        {
-            defeated = true;
-            EventManager.Instance.Raise(new BossDefeatedEvent {});
-            EventManager.Instance.Raise(new SetScoreEvent { addedScore = 1000 });
-
-            // Roll credits
-            StartCoroutine(CoroutineUtil.DelayAction(5f, () =>
-            {
-                EventManager.Instance.Raise(new SceneAboutToChangeEvent
-                {
-                    levelGenerated = 0,
-                    displayLoading = false,
-                    targetScene = "Credits"
-                });
-            }));
-        }
-
-
-    }
-
     public void ResetLastMagicAttackTime()
     {
         lastMagicAttackTime = Time.time;
@@ -165,7 +118,6 @@ public class BossManager : MonoBehaviour
 
     private void StartCoroutineBossPath(ModeBossEvent e)
     {
-        Debug.Log("tesssssssst");
         StartCoroutine(BossPath());
     }
 
@@ -173,9 +125,8 @@ public class BossManager : MonoBehaviour
     {
         System.Random random = new System.Random();
 
-
         List<Vector3> selectedPositions = new List<Vector3>();
-        while (selectedPositions.Count < coordinates.Length)
+        while (selectedPositions.Count < 5)
         {
             int randomIndex = random.Next(0, coordinates.Length);
             Vector3 selectedPosition = coordinates[randomIndex];
@@ -185,7 +136,7 @@ public class BossManager : MonoBehaviour
             }
         }
 
-        // Parcour des positions sélectionnées
+        // Iterate selected positions
         foreach (Vector3 position in selectedPositions)
         {
             // Warp boss
@@ -209,4 +160,46 @@ public class BossManager : MonoBehaviour
         }
     }
 
+
+    private void Update()
+    {
+        if (BossHealth <= bossMaxHealth * 0.70 && !particlesActivated70)
+        {
+            particlesActivated70 = true;
+            particlesActivated30 = false;
+            bossParticles[0].SetActive(false);
+            bossParticles[1].SetActive(true);
+            bossSpeedScale = 0.75f;
+            EventManager.Instance.Raise(new ModeBossEvent { });
+        }
+
+        if (BossHealth <= bossMaxHealth * 0.30 && !particlesActivated30)
+        {
+            particlesActivated30 = true;
+            bossParticles[1].SetActive(false);
+            bossParticles[2].SetActive(true);
+            EventManager.Instance.Raise(new ModeBossEvent { });
+            bossSpeedScale = 1f;
+        }
+
+        // HACK: Should use events instead of constant checking
+        if (!defeated && BossHealth <= 0)
+        {
+            defeated = true;
+            EventManager.Instance.Raise(new BossDefeatedEvent { });
+            EventManager.Instance.Raise(new SetScoreEvent { addedScore = 1000 });
+
+            // Roll credits
+            StartCoroutine(CoroutineUtil.DelayAction(5f, () =>
+            {
+                EventManager.Instance.Raise(new ClearInventoryEvent { });
+                EventManager.Instance.Raise(new SceneAboutToChangeEvent
+                {
+                    levelGenerated = 0,
+                    displayLoading = false,
+                    targetScene = "Credits"
+                });
+            }));
+        }
+    }
 }

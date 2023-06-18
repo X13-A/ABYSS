@@ -64,7 +64,7 @@ public class CustomCursor : MonoBehaviour
         {
             return PlayerManager.Instance.ActiveAimingMode == AimingMode.CURSOR;
         }
-        else if (GameManager.Instance.State == GAMESTATE.CUTSCENE)
+        else if (GameManager.Instance.State == GAMESTATE.CUTSCENE || GameManager.Instance.State == GAMESTATE.LOADING)
         {
             return false;
         }

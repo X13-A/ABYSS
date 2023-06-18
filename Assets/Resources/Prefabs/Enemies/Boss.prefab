@@ -11240,8 +11240,9 @@ MonoBehaviour:
   hitParticles: {fileID: 4268592731546908816}
   corpse: {fileID: 6376888296568424339, guid: 22c3993f7fdea4e438901d8f0240b32e, type: 3}
   fadeOutTime: 0.25
-  droppedItems: 
-  droppedItemsProbality: []
+  droppedItems: 01000000
+  droppedItemsProbality:
+  - 1
   dropAngle: 75
   throwForce: 5
   torqueForce: 5

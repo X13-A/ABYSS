@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private float jumpForce;
     [SerializeField] private float attackDistanceOffset;
+    [SerializeField] private EnemyType type;
 
     public float detectionRadius;
 
@@ -37,6 +38,25 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        // We use the original RuntimeAnimatorController as our base
+        RuntimeAnimatorController baseController = animator.runtimeAnimatorController;
+
+        if (baseController != null)
+        {
+            // Create a new AnimatorOverrideController based on the original
+            AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
+
+            // Use the new AnimatorOverrideController
+            animator.runtimeAnimatorController = overrideController;
+        }
+        else
+        {
+            Debug.LogError("Animator's runtimeAnimatorController is null.");
+        }
+
+
+
         rb = GetComponent<Rigidbody>();
         enemyCollider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
@@ -199,6 +219,10 @@ public class EnemyAI : MonoBehaviour
         float enemyWidth = GetEnemyHalfWidth();
         Vector3 directionToPlayer = ((PlayerManager.Instance.PlayerReference.position + playerWidth) - (transform.position + new Vector3(enemyWidth, 0, 0))).normalized;
         directionToPlayer.y = 0; // remove any influence from the y axis
+        if (type == EnemyType.Passive)
+        {
+            directionToPlayer *= -1;
+        }
         rb.MoveRotation(Quaternion.LookRotation(directionToPlayer));
         rb.MovePosition(transform.position + directionToPlayer * Velocity);
     }

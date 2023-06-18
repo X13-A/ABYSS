@@ -214,7 +214,6 @@ public class MapGeneration : MonoBehaviour
         int x = Mathf.RoundToInt(playerSpawnCoords.x);
         int z = Mathf.RoundToInt(playerSpawnCoords.z);
         int y = (int) Mathf.Ceil(noiseMap[x, z]) + 5;
-        Debug.Log(new Vector3(x, y, z));
         spawn.transform.position = new Vector3(x, y, z);
     }
 
@@ -227,7 +226,6 @@ public class MapGeneration : MonoBehaviour
 
         spawnPosition.x += maxSpawnRadius;
         spawnPosition.y += maxSpawnRadius;
-
 
         Vector3 spawnPortal = new Vector3(
             spawnPosition.x,

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using SDD.Events;
 
 public class EnemyDamage : MonoBehaviour, IDamageable
 {
@@ -58,5 +59,6 @@ public class EnemyDamage : MonoBehaviour, IDamageable
         {
             StartCoroutine(CoroutineUtil.FadeTo(mesh, fadeOutTime, 0, () => { Destroy(gameObject); }));
         }
+        EventManager.Instance.Raise(new SetScoreEvent { addedScore = 10 });
     }
 }

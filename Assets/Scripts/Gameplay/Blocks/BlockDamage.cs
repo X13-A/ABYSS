@@ -30,7 +30,6 @@ using UnityEngine;
         {
             scaledDamage = damage * damagerTypesFactors[damagerTypes.IndexOf(type)];
         }
-
         health = Mathf.Max(0, health - scaledDamage);
         animationHit.Play("ChangeScalingHit");
         if (health <= 0 + Mathf.Epsilon) Die();

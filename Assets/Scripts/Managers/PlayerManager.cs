@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     [SerializeField] private float health;
     [SerializeField] private float maxShield;
     [SerializeField] private float shield;
+    [SerializeField] private int score;
     [SerializeField] private GameObject playerProjectileStart;
     [SerializeField] private float playerAttackSpeedMultiplier;
 
@@ -24,6 +25,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     public float Health => health;
     public float MaxShield => maxShield;
     public float Shield => shield;
+    public int Score => score;
     public float PlayerAttackSpeedMultiplier
     {
         get => Mathf.Max(playerAttackSpeedMultiplier, 0.01f);
@@ -50,6 +52,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.AddListener<CarePlayerEvent>(SetHealthCare);
         EventManager.Instance.AddListener<DamageShieldPlayerEvent>(SetShieldDamage);
         EventManager.Instance.AddListener<SetShieldPlayerEvent>(SetShieldCare);
+        EventManager.Instance.AddListener<SetScoreEvent>(SetScore);
         EventManager.Instance.AddListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
         // Reset aim mode on menus
@@ -69,6 +72,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
         EventManager.Instance.RemoveListener<CarePlayerEvent>(SetHealthCare);
         EventManager.Instance.RemoveListener<DamageShieldPlayerEvent>(SetShieldDamage);
         EventManager.Instance.RemoveListener<SetShieldPlayerEvent>(SetShieldCare);
+        EventManager.Instance.RemoveListener<SetScoreEvent>(SetScore);
         EventManager.Instance.RemoveListener<AttackSpeedMultiplierEvent>(SetAttackSpeedMultiplier);
 
         // Reset aim mode on menus
@@ -165,6 +169,7 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     private void Die()
     {
         health = 0;
+        EventManager.Instance.Raise(new SaveScoreEvent { });
         EventManager.Instance.Raise(new PlayerDeadEvent { });
         StartCoroutine(CoroutineUtil.DelayAction(1f, () =>
         {
@@ -189,6 +194,12 @@ public class PlayerManager : MonoBehaviour, IEventHandler
     {
         shield = Mathf.Min(shield + e.shield, 100);
         EventManager.Instance.Raise(new UpdateShieldPlayerHealthEvent { newShieldHealth = shield });
+    }
+
+    private void SetScore(SetScoreEvent e)
+    {
+        score += e.addedScore;
+        EventManager.Instance.Raise(new UpdateScoreEvent { updatedScore = score });
     }
 
     private void SetAttackSpeedMultiplier(AttackSpeedMultiplierEvent e)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -88,7 +89,6 @@ public class LevelManager : MonoBehaviour, IEventHandler
         while (operation.progress < 0.9f);
 
         currentLevel = e.levelGenerated;
-
         // Génération proécdurale
         if (currentLevel != 0)
         {

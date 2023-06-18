@@ -854,6 +854,12 @@ MonoBehaviour:
   hitParticles: {fileID: 1279136462472146387}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
   fadeOutTime: 0.1
+  droppedItems: 13000000
+  droppedItemsProbality:
+  - 0.33
+  dropAngle: 65
+  throwForce: 5
+  torqueForce: 5
 --- !u!114 &7583272907918091914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,8 +877,6 @@ MonoBehaviour:
   runningOffsetFactor: 1.5
   attackDuration: 1
   attackVariantDuration: 3
-  attackDamage: 2
-  attackVariantDamage: 4
   attackVariantFrequency: 3
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
   jumpForce: 0.3

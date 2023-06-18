@@ -84,7 +84,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2937060096216795381}
-  m_LocalRotation: {x: -5.551115e-17, y: -4.3368087e-19, z: -0.2246773, w: 0.97443324}
+  m_LocalRotation: {x: -5.551115e-17, y: -4.3368066e-19, z: -0.2246773, w: 0.97443324}
   m_LocalPosition: {x: -0.22764134, y: -5.7731595e-17, z: 7.533981e-17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -180,7 +180,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2937543897773253647}
-  m_LocalRotation: {x: -5.3776428e-17, y: 1.6653345e-16, z: -0.15302908, w: 0.9882217}
+  m_LocalRotation: {x: -5.3776424e-17, y: 1.6653347e-16, z: -0.15302908, w: 0.9882217}
   m_LocalPosition: {x: -0.2780328, y: -1.7763568e-17, z: 1.2912811e-16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -371,7 +371,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2937918349280307103}
-  m_LocalRotation: {x: 0.44996268, y: 0.5454664, z: -0.44996268, w: 0.5454664}
+  m_LocalRotation: {x: 0.6091679, y: 0.35904664, z: -0.6091679, w: 0.35904664}
   m_LocalPosition: {x: -0.12632965, y: 2.1316282e-16, z: 1.0995774e-17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -464,7 +464,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2938423059003274161}
-  m_LocalRotation: {x: 0.4837256, y: 0.8752197, z: 8.989413e-17, w: -2.8923308e-16}
+  m_LocalRotation: {x: 0.4837256, y: 0.8752197, z: -2.3972098e-17, w: -8.3211405e-17}
   m_LocalPosition: {x: 0.05909794, y: -0.1357536, z: -8.4168956e-17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -589,8 +589,6 @@ MonoBehaviour:
   runningOffsetFactor: 1.5
   attackDuration: 1
   attackVariantDuration: 2
-  attackDamage: 3
-  attackVariantDamage: 5
   attackVariantFrequency: 2
   attackSound: {fileID: 8300000, guid: eed245db158e1a84894061f20bffc493, type: 3}
   jumpForce: 0.3
@@ -608,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a786807d616d545b28a3d3207d791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 10
   damagerTypes: 0000000002000000
   damagerTypesFactors:
   - 1
@@ -616,6 +614,14 @@ MonoBehaviour:
   hitParticles: {fileID: 4364036739934437919}
   corpse: {fileID: 6376888296568424339, guid: 288df7c710f81cd4bbf6a88250518e39, type: 3}
   fadeOutTime: 0.1
+  droppedItems: 12000000
+  droppedItemsProbality:
+  - 0.1
+  - 0.1
+  - 0.1
+  dropAngle: 65
+  throwForce: 5
+  torqueForce: 5
 --- !u!114 &8119746744540587389
 MonoBehaviour:
   m_ObjectHideFlags: 0

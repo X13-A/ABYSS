@@ -112,6 +112,4 @@ public class Chest : MonoBehaviour
         float z = Mathf.Sin(yRadians) * Mathf.Sin(xzRadians);
         return new Vector3(x, y, z).normalized;
     }
-
-
 }

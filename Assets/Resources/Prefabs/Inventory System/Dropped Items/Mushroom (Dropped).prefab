@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8677112994479948910}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.093, z: 0}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8675550447295600229}
@@ -101,7 +101,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -163,7 +163,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.13044675, y: 0.17834353, z: 0.12655959}
+  m_Size: {x: 0.33, y: 0.33, z: 0.33}
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!54 &3513787224694529896
 Rigidbody:

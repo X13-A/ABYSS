@@ -3670,7 +3670,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  hitParticles: {fileID: 0}
+  hitParticles: {fileID: 1582132209624106680}
   animatedModel: {fileID: 0}
 --- !u!1 &1003219964976978194
 GameObject:

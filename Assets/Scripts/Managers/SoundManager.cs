@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip LootItem;
     [SerializeField] private AudioClip HitDamage;
     [SerializeField] private AudioClip ButtonClicked;
+    [SerializeField] private AudioClip BossDefeated;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class SoundManager : MonoBehaviour
         EventManager.Instance.AddListener<ItemPickedUpEvent>(LaunchLoot);
         EventManager.Instance.AddListener<DamagePlayerEvent>(LaunchDamageHit);
         EventManager.Instance.AddListener<ButtonClickedEvent>(LaunchButtonClicked);
+        EventManager.Instance.AddListener<BossDefeatedEvent>(LaunchBossDefeated);
     }
 
     public void UnsubscribeEvents()
@@ -53,6 +55,7 @@ public class SoundManager : MonoBehaviour
         EventManager.Instance.RemoveListener<ItemPickedUpEvent>(LaunchLoot);
         EventManager.Instance.RemoveListener<DamagePlayerEvent>(LaunchDamageHit);
         EventManager.Instance.RemoveListener<ButtonClickedEvent>(LaunchButtonClicked);
+        EventManager.Instance.RemoveListener<BossDefeatedEvent>(LaunchBossDefeated);
     }
 
     private void LaunchEnteringIntoPortalSound(SceneAboutToChangeEvent e)
@@ -73,5 +76,10 @@ public class SoundManager : MonoBehaviour
     private void LaunchButtonClicked(ButtonClickedEvent e)
     {
         audioSource.PlayOneShot(ButtonClicked);
+    }
+
+    public void LaunchBossDefeated(BossDefeatedEvent e)
+    {
+        audioSource.PlayOneShot(BossDefeated);
     }
 }

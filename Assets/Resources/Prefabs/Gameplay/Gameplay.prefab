@@ -2595,30 +2595,12 @@ MonoBehaviour:
   chestPrefab: {fileID: 6073799528635424721, guid: ab7af24ea82f44f4b8229e039919e19b, type: 3}
   surpriseBox: {fileID: 949897793888994066, guid: b83a4d50e1d327e4b8f8f3d11bf7a751, type: 3}
   snow: {fileID: 8444163959790749467, guid: 858f315731a8b444f93a86dc45075323, type: 3}
-  probabilitySpawnPortal:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1.0023499
-      inSlope: -0.9952736
-      outSlope: -0.9952736
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.0070762634
-      inSlope: -0.9952736
-      outSlope: -0.9952736
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+<<<<<<< HEAD
+  minPortalPos: 0.3
+=======
+  minPortalPos: 0.25
+>>>>>>> 819a51a6e50f931bc50769103b2299a13ea5adb6
+  maxPortalPos: 0.9
 --- !u!1 &1003219964579762382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3671,7 +3653,7 @@ MonoBehaviour:
   - 1
   - 1
   hitParticles: {fileID: 1582132209624106680}
-  animatedModel: {fileID: 0}
+  animatedModel: {fileID: 2181375545284859538}
 --- !u!1 &1003219964976978194
 GameObject:
   m_ObjectHideFlags: 0
@@ -7773,6 +7755,7 @@ MonoBehaviour:
   LootItem: {fileID: 8300000, guid: 47dd655c257f2544eb80ed213b6a67ea, type: 3}
   HitDamage: {fileID: 8300000, guid: f8c6ede100d3c8e4b8a4ed9fb0754cf7, type: 3}
   ButtonClicked: {fileID: 8300000, guid: 0e22a06f02cbbdc42a69bfc7b071bfbc, type: 3}
+  BossDefeated: {fileID: 8300000, guid: 95ad7d808f438e947b6afb17524b6417, type: 3}
 --- !u!82 &9051366784003123823
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18716,7 +18699,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

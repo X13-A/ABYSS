@@ -10,8 +10,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float runningOffsetFactor;
     [SerializeField] private float attackDuration;
     [SerializeField] private float attackVariantDuration;
-    [SerializeField] private float attackDamage;
-    [SerializeField] private float attackVariantDamage;
     [SerializeField] private int attackVariantFrequency;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private float jumpForce;

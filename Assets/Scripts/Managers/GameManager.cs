@@ -122,9 +122,21 @@ public class GameManager : MonoBehaviour, IEventHandler
                 break;
         }
 
-        m_State = newState;
+        // Hack: Wait 2 seconds before giving hand to player when clicking PLAY from main menu
+        if (m_State == GAMESTATE.MAIN_MENU && newState == GAMESTATE.PLAY)
+        {
+            m_State = GAMESTATE.CUTSCENE;
+            StartCoroutine(CoroutineUtil.DelayAction(2f, () =>
+            {
+                m_State = newState;
+            }));
+        }
+        else
+        {
+            m_State = newState;
+        }
 
-        switch (m_State)
+        switch (newState)
         {
             case GAMESTATE.MAIN_MENU:
                 EventManager.Instance.Raise(new GameMainMenuEvent());
@@ -205,7 +217,7 @@ public class GameManager : MonoBehaviour, IEventHandler
 
     private void StartScreamer(StartBossScreamerEvent e)
     {
-        SetState(GAMESTATE.SCREAMER);
+        SetState(GAMESTATE.CUTSCENE);
     }
 
     private void EndScreamer(EndBossScreamerEvent e)

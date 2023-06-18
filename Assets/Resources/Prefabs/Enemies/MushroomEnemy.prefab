@@ -5781,7 +5781,7 @@ BoxCollider:
   m_GameObject: {fileID: 8152612662696759455}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5799,6 +5799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   damageableTypes: 00000000
+  damagerCollider: {fileID: 6394650759814271155}
 --- !u!1 &8233882507680186546
 GameObject:
   m_ObjectHideFlags: 0

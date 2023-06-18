@@ -9,13 +9,13 @@ public class Damager : MonoBehaviour, IDamager
     [SerializeField] private AttackType type;
     [SerializeField] private List<DamageableType> damageableTypes = new List<DamageableType> { DamageableType.Enemy, DamageableType.Decor };
 
-    private Collider damagerCollider;
+    [SerializeField] private Collider damagerCollider;
     public Collider Collider => damagerCollider;
     public AttackType Type => type;
     public HashSet<IDamageable> collides = new HashSet<IDamageable>();
 
 
-    private void Awake()
+    private void Start()
     {
         damagerCollider = GetComponent<Collider>();
     }

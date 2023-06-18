@@ -91,6 +91,7 @@ public class SettingsManager : MonoBehaviour, IEventHandler
 
     public void SetResolutionScaleEditMode(ResolutionScaleSliderChangeEvent e)
     {
+        if (m_SettingsAfterChanges == null) return;
         m_SettingsAfterChanges.ResolutionScale = e.value;
     }
 
@@ -107,14 +108,17 @@ public class SettingsManager : MonoBehaviour, IEventHandler
 
     public void DiscardChanges(CancelSettingsButtonClickedEvent e)
     {
-        ResolutionScale = m_SettingsBeforeChanges.ResolutionScale;
+        if (m_SettingsBeforeChanges != null)
+        {
+            ResolutionScale = m_SettingsBeforeChanges.ResolutionScale;
+        }
         m_SettingsBeforeChanges = null;
         m_SettingsAfterChanges = null;
     }
 
     public void ApplyChanges(SaveSettingsButtonClickedEvent e)
     {
-        if (ResolutionScale != m_SettingsAfterChanges.ResolutionScale)
+        if (m_SettingsAfterChanges != null && ResolutionScale != m_SettingsAfterChanges.ResolutionScale)
         {
             ResolutionScale = m_SettingsAfterChanges.ResolutionScale;
         }

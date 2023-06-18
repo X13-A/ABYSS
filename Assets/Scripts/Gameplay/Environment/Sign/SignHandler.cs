@@ -7,13 +7,28 @@ public class SignHandler : MonoBehaviour
 {
     [SerializeField] private List<string> messages;
     private bool needToListen;
-
+    private bool playerNearSign;
     private const float FACING_NORMAL_VALUE = 0.7f;
 
-    private void Start() => needToListen = false;
+
+    private void Start()
+    {
+        needToListen = false;
+    }
 
     private void Update()
     {
+        if (playerNearSign)
+        {
+            Vector3 panelForward = transform.forward;
+            Vector3 playerDirection = (PlayerManager.Instance.PlayerReference.transform.position - transform.position).normalized;
+            float angle = Vector3.Dot(panelForward, playerDirection);
+            if (TextManager.Instance.MessageActive == false && angle > FACING_NORMAL_VALUE)
+            {
+                EventManager.Instance.Raise(new ShowSignInteractionMessage());
+                needToListen = true;
+            }
+        }
         if (needToListen)
         {
             ListenToInteractionKey();
@@ -22,27 +37,25 @@ public class SignHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject player = other.gameObject;
-        Vector3 panelForward = transform.forward;
-        Vector3 playerDirection = (player.transform.position - transform.position).normalized;
-
-        float angle = Vector3.Dot(panelForward, playerDirection);
-
-        if (angle > FACING_NORMAL_VALUE)
-        {
-            EventManager.Instance.Raise(new ShowSignInteractionMessage());
-            needToListen = true;
-        }
+        IPlayerCollider player = other.gameObject.GetComponent<IPlayerCollider>();
+        if (player == null) return;
+        playerNearSign = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        EventManager.Instance.Raise(new HideSignInteractionMessage());
-        needToListen = false;
+        IPlayerCollider player = other.gameObject.GetComponent<IPlayerCollider>();
+        if (player != null)
+        {
+            needToListen = false;
+            playerNearSign = false;
+            EventManager.Instance.Raise(new HideSignInteractionMessage());
+        }
     }
 
     private void ListenToInteractionKey()
     {
+        if (TextManager.Instance.TimeSinceLastInteraction < 0.25f) return; // Hack to prevent opening the same at the same time as closing it
         if (Input.GetKeyDown(KeyCode.E))
         {
             EventManager.Instance.Raise(new HideSignInteractionMessage());

@@ -11239,6 +11239,11 @@ MonoBehaviour:
   hitParticles: {fileID: 4268592731546908816}
   corpse: {fileID: 6376888296568424339, guid: 22c3993f7fdea4e438901d8f0240b32e, type: 3}
   fadeOutTime: 0.25
+  droppedItems: 
+  droppedItemsProbality: []
+  dropAngle: 75
+  throwForce: 5
+  torqueForce: 5
 --- !u!54 &4268592731246366230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26919,7 +26924,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9088092765284658783}
-  - component: {fileID: 1706728972904536876}
   m_Layer: 8
   m_Name: ItemHolder
   m_TagString: Untagged
@@ -26943,18 +26947,6 @@ Transform:
   m_Father: {fileID: 1130692431484393883}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1706728972904536876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8324934993439661189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0faa96351e3a0c438ae866c0b85c653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8385165677331007500
 GameObject:
   m_ObjectHideFlags: 0

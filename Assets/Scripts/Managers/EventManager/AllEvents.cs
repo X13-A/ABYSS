@@ -346,11 +346,6 @@ public class PlayerHeldItemUpdateEvent : SDD.Events.Event
     public ItemId? itemId;
 }
 
-public class HeldGameObjectEvent : SDD.Events.Event
-{
-    public GameObject heldGameObject;
-}
-
 public class SelectedItemEvent : SDD.Events.Event
 {
     public ItemId? itemId;

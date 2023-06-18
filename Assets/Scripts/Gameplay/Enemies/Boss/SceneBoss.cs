@@ -6,7 +6,7 @@ using UnityEngine;
 public class SceneBoss : MonoBehaviour
 {
     [SerializeField] GameObject wall;
-    [SerializeField] private GameObject[] toDisactivate;
+    [SerializeField] private GameObject[] toDeactivate;
 
 
     private void OnEnable()
@@ -32,7 +32,7 @@ public class SceneBoss : MonoBehaviour
     private void WallEnable(PlayerDetectorEvent e)
     {
         wall.SetActive(true);
-        foreach (GameObject obj in toDisactivate)
+        foreach (GameObject obj in toDeactivate)
         {
             obj.SetActive(false);
         }

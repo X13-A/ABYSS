@@ -9,6 +9,8 @@ public class Mushroom : MonoBehaviour, IUseItem
 
     public bool Use()
     {
+        Debug.Log("Use");
+
         EventManager.Instance.Raise(new DamagePlayerEvent { damage = damage });
         EventManager.Instance.Raise(new PlayerEatEvent { });
         return true;

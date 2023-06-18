@@ -150,6 +150,7 @@ public class InventoryManager : MonoBehaviour, IEventHandler
     private void RemoveItem(ItemRemovedEvent e)
     {
         // Removes 1 item from inventory
+        Debug.Log("REMOVE ITEM");
         if (items.ContainsKey(e.itemId))
         {
             items[e.itemId].Remove(1);

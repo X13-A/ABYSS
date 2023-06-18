@@ -8,7 +8,7 @@ public class MouseLock : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineFreeLook freeLookCamera;
 
     private CharacterController characterController;
-    private bool isCameraRotationEnabled = false;
+    private bool isCameraRotationEnabled = true;
 
     private void Awake()
     {

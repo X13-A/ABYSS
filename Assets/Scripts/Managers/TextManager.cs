@@ -80,6 +80,7 @@ public class TextManager : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.AddListener<EscapeButtonClickedEvent>(HandlePause);
         EventManager.Instance.AddListener<ResumeButtonClickedEvent>(HandleResume);
+        EventManager.Instance.AddListener<GameOverEvent>(HandleGameOver);
         EventManager.Instance.AddListener<MessageEvent>(HandleTextEvent);
     }
 
@@ -87,6 +88,7 @@ public class TextManager : MonoBehaviour, IEventHandler
     {
         EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(HandlePause);
         EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(HandleResume);
+        EventManager.Instance.RemoveListener<GameOverEvent>(HandleGameOver);
         EventManager.Instance.RemoveListener<MessageEvent>(HandleTextEvent);
     }
 
@@ -98,8 +100,14 @@ public class TextManager : MonoBehaviour, IEventHandler
 
     private void HandleResume(ResumeButtonClickedEvent e)
     {
-        textBubble.SetActive(true);
+        textBubble.SetActive(messageQueue.Count > 0 && messageRunning);
         freeze = false;
+    }
+
+    private void HandleGameOver(GameOverEvent e)
+    {
+        textBubble.SetActive(false);
+        freeze = true;
     }
 
     /// <summary>

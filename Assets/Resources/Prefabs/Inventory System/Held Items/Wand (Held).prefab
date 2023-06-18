@@ -9936,7 +9936,7 @@ MonoBehaviour:
   magicProjectilePrefab: {fileID: 8047378608784370723, guid: d01f8fa9df6fb2c448e1e826db2e6c2e, type: 3}
   magicProjectilePosition: {fileID: 0}
   magicProjectileSpeed: 40
-  magicProjectileDamage: 5
+  magicProjectileDamage: 10
   wandDuration: 1
   wandStartPercentage: 0.5
   wandClip: {fileID: 8300000, guid: 72d7d9c59681cc942aff9de78f735b72, type: 3}

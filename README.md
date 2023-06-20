@@ -31,7 +31,7 @@ Jeu à la troisième personne
 ### Capacités du joueur:
 
 - S’équiper d’armes et outils
-- Attaquer les ennemis à avec différentes armes
+- Attaquer les ennemis avec différentes armes
 - Ouvrir des coffres et casser des boites surprises
 - Ramasser et stacker des objets
 - Consommer des objets
@@ -70,5 +70,3 @@ Jeu à la troisième personne
 https://www.youtube.com/watch?v=jNrJT6lL9J4
 https://www.youtube.com/watch?v=AB6sOhQan9Y |
 | Cube | Single Entity | 39.99€ | https://assetstore.unity.com/packages/3d/environments/cube-world-proto-series-144159 |
-
-[Répartition des tâches ABYSS](https://www.notion.so/a5ffe788356d4649a0f2522d95d68854?pvs=21)
